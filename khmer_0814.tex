@@ -149,8 +149,9 @@ instead of one hash table used in a typical Bloom filter. Secondly, each
 entry in the hash tables is a counter representing the number of k-mers that 
 hash to that location, instead of a single bit in a typical Bloom filter to 
 represent the existence of an item. In our implementation, the hash function 
-is to take the modulus of a number representing the k-mer with the table size. 
-Given a new k-mer, it is hashed to a specific location in each hash table using 
+is to take the modulus of a prime number number close to the size of the 
+hash tables. Given a new k-mer, it is hashed to a specific location in each 
+hash table using 
 the hash function. The counter in that location in each hash table can be 
 updated. Like a Bloom filter, different k-mers can be hashed to the same 
 location in a hash table, which results in collisions.  The effect of the 
