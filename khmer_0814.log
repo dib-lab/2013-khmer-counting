@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.19)  25 SEP 2012 13:56
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.6.19)  25 SEP 2012 16:04
 entering extended mode
  %&-line parsing enabled.
 **khmer_0814.tex
@@ -87,50 +87,44 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 28--29
+Underfull \hbox (badness 10000) in paragraph at lines 49--53
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 30--31
+Underfull \hbox (badness 10000) in paragraph at lines 67--80
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 32--33
+Underfull \hbox (badness 10000) in paragraph at lines 81--100
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 34--35
+Underfull \hbox (badness 10000) in paragraph at lines 101--108
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--40
+Underfull \hbox (badness 10000) in paragraph at lines 121--128
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
-
- []
-
-[3]
 Missing character: There is no ¿ in font cmr10!
-
-Underfull \hbox (badness 10000) in paragraph at lines 53--56
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 138--141
 
  []
 
 [4]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 69.
+(Font)              <7> on input line 208.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 69.
- [5] [6] [7] [8]
+(Font)              <5> on input line 208.
+ [5] [6] [7]
 Missing character: There is no Ê in font cmr10!
- [9] [10] (./khmer_0814.bbl [11] [12])
+ [8] [9] [10] (./khmer_0814.bbl [11] [12])
 Missing character: There is no Ê in font cmr10!
 Missing character: There is no Ê in font cmr10!
 Missing character: There is no Ê in font cmr10!
@@ -401,7 +395,7 @@ Missing character: There is no Ê in font cmr10!
 Missing character: There is no Ê in font cmr10!
 Missing character: There is no Ê in font cmr10!
 
-Overfull \hbox (54.71806pt too wide) in paragraph at lines 150--159
+Overfull \hbox (54.71806pt too wide) in paragraph at lines 507--522
 [][] 
  []
 
@@ -444,32 +438,35 @@ File: ./figure/num_remaining_reads.png Graphic file (type png)
 <./figure/perc_remaining_reads.png, id=59, 578.16pt x 433.62pt>
 File: ./figure/perc_remaining_reads.png Graphic file (type png)
 
-<use ./figure/perc_remaining_reads.png> [13] [14 <./figure/cmp_time.png> <./fig
-ure/cmp_memory.png>] [15 <./figure/cmp_disk.png> <./figure/average_offset.png>]
-[16 <./figure/average_offset_vs_fpr.png> <./figure/perc_unique_pos.png>]
-[17 <./figure/perc_high_abun_pos.png> <./figure/freq_pos.png>] [18 <./figure/nu
-m_remaining_reads.png>] [19 <./figure/perc_remaining_reads.png>]
-(./khmer_0814.aux) ) 
+<use ./figure/perc_remaining_reads.png> [13 <./figure/cmp_time.png>] [14 <./fig
+ure/cmp_memory.png> <./figure/cmp_disk.png>] [15 <./figure/average_offset.png> 
+<./figure/average_offset_vs_fpr.png>] [16 <./figure/perc_unique_pos.png> <./fig
+ure/perc_high_abun_pos.png>] [17 <./figure/freq_pos.png> <./figure/num_remainin
+g_reads.png>] [18 <./figure/perc_remaining_reads.png>] (./khmer_0814.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
  1011 strings out of 495061
  13483 string characters out of 1182621
- 69095 words of memory out of 3000000
+ 67095 words of memory out of 3000000
  4219 multiletter control sequences out of 15000+50000
  7933 words of font info for 28 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 25i,12n,21p,2330b,240s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
-bx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
-usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/te
-xmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/
-fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/
-public/amsfonts/cm/cmr17.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfo
-nts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10
-.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/s
-hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on khmer_0814.pdf (19 pages, 502280 bytes).
+ 25i,12n,21p,355b,240s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public
+/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm
+/cmr17.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></
+usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/t
+exmf-texlive/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-texlive
+/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on khmer_0814.pdf (18 pages, 500319 bytes).
 PDF statistics:
- 125 PDF objects out of 1000 (max. 8388607)
+ 121 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  51 words of extra memory for PDF output out of 10000 (max. 10000000)
 
