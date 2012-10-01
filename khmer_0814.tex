@@ -29,8 +29,8 @@ Here we present the khmer software package for fast and memory efficient
 counting of k-mers. Unlike previous methods based on data structures such as 
 hash tables, suffix arrays, and trie structures, khmer uses a simple 
 probabilistic data structure, the counting Bloom filter, which is similar in 
-concept to the Count-Min sketch data structure(cite) and can be considered an 
-extension of a Bloom filter(cite) . It is highly scalable and has the ability 
+concept to the Count-Min sketch data structure and can be considered an 
+extension of a Bloom filter. It is highly scalable and has the ability 
 to handle large amounts of data, which is difficult to deal with using other 
 methods. We compared the memory usage, disk usage and time usage between 
 khmer and other software packages like Tallymer and Jellyfish to show the 
@@ -268,39 +268,39 @@ approach is independent of the size of the dataset. It only depends on the size(
 and number(N) of hash tables to use (i.e. O(SN)).  As discussed above, for a given  
 dataset, the size and number of hash tables will determine the accuracy of 
 k-mer counting. Thus, the user can control the memory usage based on the 
-desired level of accuracy. For time usage, firstly in the first step 
-of the counting, which is to consume all k-mers in a data set and store the 
-occurrence in hash tables, the time usage depends on the number of total 
-k-mers(T), which is related to the size of data set. O(T). The second step of 
-the counting is the retrieving of count. So in this step, the time usage 
-depends on the number of unique k-mers whose count we want to know.
+desired level of accuracy. The time usage for the first step of k-mer counting 
+, to consume the k-mers into a counting data structure, depends on 
+the total number of k-mers in the dataset since we must walk through every k-mer 
+in each read. The second step, k-mer retrieval, depends on the number of distinct 
+k-mers in the dataset.
+
 \subsection{Implementation}
 
-This approach has been implemented in a software named khmer, written in C++ 
-with a Python wrapper and freely available under the BSD license. 
-http://github.com/ged-lab/khmer. The scripts for the benchmark are also 
-included in the khmer repository as well as many handy scripts that can be used 
+Our approach to k-mer counting has been implemented in a software package 
+named khmer, written in C++ 
+with a Python wrapper and freely available under the BSD license 
+at http://github.com/ged-lab/khmer. The scripts for the benchmark are also 
+included in the khmer repository as well as many useful scripts that can be used 
 for many applications.
 
 \section{Results and Discussion}
 \subsection{Speed and memory usage on soil metagenomic reads data sets}
 To show the time usage and memory usage of the khmer counting approach, we 
-counted the number of unique k-mers in 5 soil metagenomic reads data sets with 
-different size. 
+counted the number of unique k-mers in five soil metagenomic reads data sets with 
+different sizes. 
  
 The time usage and memory usage for counting k-mers in 5 soil metagenomic reads 
-data sets using khmer and other two programs Tallymer and Jellyfish are shown 
+data sets using khmer in comparison to Tallymer and Jellyfish are shown 
 in Figure \ref{cmp_time} and Figure \ref{cmp_memory}.
 Figure \ref{cmp_time} shows that the time usage of our khmer approach is 
-comparable to the other two programs. From Figure \ref{cmp_memory} we can see 
+comparable to the other two programs. From Figure \ref{cmp_memory}, we can see 
 that the memory usage of both Jellyfish and Tallymer increases linearly with 
-data set size, although Jellyfish is more efficient than Tallymer in memory 
-usage. This brings a big problem. Nowadays the size of next generation 
-sequencing reads data set grows bigger and bigger, the memory usage is becoming 
-a heavy burden. For a 5G dataset with 2.7 billion total k-mers, Jellyfish uses 
-5G memory and Tallymer cannot handle a 4G dataset with a machine with 24G 
-memory. So both tools cannot satisfy the k-mer counting requirement for 
-metagenomic data sets. It looks like the memory usage of our khmer approach 
+dataset size, although Jellyfish is more efficient than Tallymer in memory 
+usage. For a 5 GB dataset with 2.7 billion total k-mers, Jellyfish uses 
+5 GB memory while Tallymer cannot handle a 4 GB dataset on a machine with 24 GB 
+memory. Thus, both tools cannot satisfy the k-mer counting requirement for 
+metagenomic data sets on computers with a modest amount of memory. In addition, 
+the memory usage of our khmer approach 
 also increases linearly with data set size. This is because we want to keep the 
 counting error rate unchanged, like 1\% or 5\%. In fact the memory usage of our 
 khmer approach can be adjusted with the tradeoff of counting error rate. We can 
@@ -310,111 +310,126 @@ like 1\%, the memory usage is still considerably lower compared to other
 programs. 
 Another drawback to consider is the disk usage when both Jellyfish and Tallymer 
 generate large index files on hard disk.  Figure \ref{cmp_disk} shows that the 
-disk usage also increases linearly with the data set size. Here for a dataset 
+disk usage also increases linearly with the dataset size. For a dataset 
 of 5 gigabytes, the disk usage of both Jellyfish and Tallymer is around 30 
-gigabytes. For a metagenomic data set as large as hundreds of gigabytes, the 
-huge disk usage is annoying and cannot be neglected. The curve is the size of 
-hash tables used in our khmer approach with fixed counting error rate. There is 
-an option in our implementation to store the hash tables filled with count on 
-hard disk for future use. But the khmer can do everything without doing that
+gigabytes. For larger metagenomic datasets containing, disk usage must be 
+economized . 
+The curve is the size of 
+hash tables used in our khmer approach with fixed counting error rate. While 
+the hash tables for k-mer counting can be stored on disk in khmer, this is 
+not a requirement if the data structure can be held in memory for downstream 
+analysis.
 
-From this comparison, we can conclude that for large metagenomic dataset, other 
+From this comparison, we can conclude that for large metagenomic datasets, 
+other 
 k-mer counting programs like Jellyfish and Tallymer fail to do the counting 
-successfully because of the high memory usage and disk usage, while our khmer 
+successfully because of the high memory and disk usage while our khmer 
 counting approach can do the counting, although with the tradeoff of 
 inaccuracy. However from the discussion in previous section, the inaccuracy can 
-be estimated well and we can evaluate if the counting accuracy suffices the 
-requirement of specific analysis with specific limited memory to use.
+be estimated well, and we can evaluate if the counting accuracy suffices the 
+requirement of a specific Bioinformatic analysis.
 
 \subsection{Assessment of false positive rate and miscount distribution}
 
 We have discussed assessment of counting accuracy in section 4.1.2. In 
 practice, we are more interested in the performance of the approach when it is 
-applied to high diversity dataset. Like metagenomics dataset, a large amount of 
-the k-mers in such high diversity dataset is unique. Here we use real 
+applied to high diversity datasets. Like metagenomics dataset, 
+a large number of 
+the k-mers in such high diversity datasets is unique. Here we use real 
 metagenomics datasets and three simulated high diversity datasets to evaluate 
 the counting performance in practice.
  
 From Figure \ref{average_offset} it is apparent that with larger hash table, 
-the average offset decreases. And the average offset is closely related to the 
+the average offset decreases. The average offset is closely related to the 
 number of total k-mers. For example, simulated reads without error has the most 
-k-mers out of the four data sets. And the average miscount is the highest. This 
-observation proves the conclusion discussed in section 4.1.2, which is, number 
-of total k-mers in data set and hash table size will influence how bad the 
-counts are if they are not correct.
+k-mers and highest average miscount out of the four data sets. This 
+observation proves the conclusion discussed in section 4.1.2, which is that 
+the number 
+of total k-mers in the dataset and hash table sizes will influence how bad the 
+counts.
 
 Figure \ref{average_offset_vs_fpr} shows the relationship between average 
-miscount and counting error rate for different test data sets. For fixed 
+miscount and counting error rate for different test data sets. For a fixed 
 counting error rate, simulated reads without error has the highest average 
-miscount and simulated k-mers has the lowest average miscount. It is because 
-they have the highest and lowest number of total k-mers separately. We can have 
+miscount and simulated k-mers has the lowest average miscount. This is 
+because 
+they have the highest and lowest number of total k-mers, respectively. We can 
+have 
 more correct counting for real error-prone reads from a genome than for 
 randomly generated reads from a genome without error and with a normal 
-distribution of k-mer abundance. So here we can conclude that our counting 
+distribution of k-mer abundance. Thus, we can conclude that our counting 
 approach is more suitable for high diverse data sets, like simulated k-mers and 
 real metagenomics data, in which larger proportion of k-mers are low abundance 
-even unique due to sequencing errors.
+or unique due to sequencing errors.
 
 
 \subsection{Investigation of sequencing error pattern by k-mer abundance 
-distribution}Ê
+distribution}
 
-When dealing with large amount of sequencing data, one annoying concern is the 
-sequencing error. Generally the sequencing error occurs randomly. So if k is 
+When dealing with large amount of sequencing data, one pressing issue is  
+sequencing errors. Generally, the sequencing error occurs randomly. If k is 
 large enough, most of the erroneous k-mers should be unique in the reads 
-dataset.  How to detect those sequencing errors and correct or remove them from 
-reads is always a challenge. Before doing any data analysis, we should have 
-some idea about the sequencing error, like the estimation of sequencing error 
-rate, or the distribution of sequencing error rate. Generally quality score of 
+dataset. Detecting those sequencing errors to correct or remove them from 
+reads can be challenging with large datasets. Before doing any data analysis, 
+we should have 
+some idea about the sequencing error such as the estimation of the sequencing 
+error 
+rate, or error distribution. Generally, the quality score of 
 sequencing reads can be a good reference to detect errors. According to the 
 discussion above, k-mer abundance can be another approach to estimate the 
 pattern of sequencing error. This quality-score free method can also be a 
 useful approach to evaluate the validity of quality score generated by 
 sequencing procedure.
 
-Here we use this method to investigate sequencing error pattern  of an  e.coli 
-Illumina reads data set as an example.
+Here we use this method to investigate the sequencing error pattern of an 
+E. coli 
+Illumina reads dataset as an example.
 
 As shown in Figure \ref{perc_unique_pos} there are more unique k-mers close to 
 the 3' end of reads.  As we have discussed above, sequencing errors can 
 generate unique k-mers. Also Figure \ref{perc_high_abun_pos} shows that there 
-are more k-mers with high abundance (frequency = 255)  close to the 5' end of 
+are more k-mers with high abundance (frequency = 255) close to the 5' end of 
 reads.  
 
 Figure \ref{freq_pos} shows the average frequency of k-mers in different 
-position in reads. Because of the relatively higher sequencing error rate, the 
+position in reads. Because of the higher sequencing error rate, the 
 frequency of k-mers close to the two terminals of reads is slightly lower due 
 to more unique k-mers. All these results are consistent with the knowledge that 
 Illumina reads are error-prone -- especially on the 3' side.
 
-Here we show that using our k-mer counting approach to do the k-mer abundance 
+Using our k-mer counting approach to do k-mer abundance 
 analysis is an effective way to investigate the pattern of sequencing error of 
 Illumina reads data.  Knowing such pattern of sequencing error is important for 
-choosing proper filtering strategy or choosing appropriate filtering threshold, 
-which is otherwise a crucial step in preprocessing data for other data analysis 
+choosing the proper filtering strategy or filtering threshold, 
+which is a crucial step in preprocessing data for sequence data analysis and 
+manipulation 
 like assembly. 
 
 \subsection{Removing reads containing low-abundance k-mers to reduce size of 
 data set for efficient assembly}
 
-An important approach to assemble short reads from next generation sequencer is 
-the de Bruijn graph, which relies on  k-mer graph. This approach has been 
-applied with some success to human microbiome data. Because of technical limit, 
-there are sequencing errors in the reads, which bring about erroneous k-mers. 
+The most common approach to assembling short reads from next-generation 
+sequencers is 
+based on the de Bruijn (i.e. k-mer) graph. This approach has been 
+applied with some success to human microbiome data. Because of technical 
+limitations, 
+there are sequencing errors in the reads, resulting in erroneous k-mers. 
 As discussed in section 5.3, we can detect such erroneous k-mers by detecting 
-low frequency k-mers.  So removing or trimming reads containing unique or 
+low frequency k-mers.  Removing or trimming reads containing unique or 
 low-abundance k-mers will remove many errors. On the other hand, low-abundance 
-k-mers, even some of them are genius,  do not contribute much to the de Bruijn 
-graph assembly. So before we do the assembly, we want to filter out the reads 
-with low frequency k-mers to decrease memory usage and time usage.
+k-mers, even though some of them are correct, do not contribute much to the 
+assembly. 
+In light of this fact, we filter out reads with low frequency k-mers to 
+decrease time and memory usage.
 
 The Bloom counting hash is an efficient and constant-memory data structure for 
 filtering reads based on k-mer abundance, and can be used for arbitrary k. One 
 approach to k-mer abundance filtering involves removing any read that contains 
 even a single low-abundance k-mer. This filtering can be implemented in two 
-passes, the first pass for loading k-mers from reads and the second pass for 
+passes: the first pass for loading k-mers from reads and the second pass for 
 filtering the reads. The counting error of the Bloom counting hash manifests as 
-a too high count in hash entries with one or more collisions, in which case 
+an overestimated count in hash entries with one or more collisions, in which 
+case 
 k-mers hashing to that entry may not be correctly flagged as low-abundance. 
 High counting error rate therefore manifest as "lenient" filtering, in which 
 reads may not be properly removed. However, any read that is removed will be 
@@ -428,29 +443,30 @@ from a human gut microbiome metagenomic dataset(MH0001) with more than 42
 million reads. In fact we want any read with any unique k-mer to be discarded. 
 We used hash tables with different size to show the influence of hash table 
 size. We also showed the effect of iterative filtering to reduce false positive 
-rate. To assess the counting error rate, we used Tallymer to get the actual 
+rate. To assess the counting error rate, we used Tallymer to obtain the actual 
 accurate count of the k-mers in the dataset. 
 
-From Figure \ref{num_remaining_reads} , we can see that after each run, more 
+From Figure \ref{num_remaining_reads}, we see that after each run, more 
 low-abundance reads were discarded. With larger hash table, the low-abundance 
 reads were discarded faster. On the other hand, from Figure 
 \ref{perc_remaining_reads}, we can see that after each iteration of filtering, 
-the percentage of "bad" reads - reads with unique k-mers  decreased. After four 
+the percentage of "bad" reads - reads with unique k-mers - decreased. After 
+four 
 iterations, the percentage of "bad" reads was less than 4\%. The result showed 
-that with our novel method nearly 40\% of the original reads were discarded by 
+that with our method nearly 40\% of the original reads were discarded by 
 removing the low-abundance reads with an acceptable false positive rate (less 
 than 4\% after four iterations of filtering). It can reduce the memory and time 
 requirement effectively in the following effort of assembly.
 
 \subsection{Scaling the Bloom counting by partitioning k-mer space}
 Scaling the Bloom counting hash to extremely large data sets with many unique 
-k-mers requires quite a bit of memory: approximately 446 Gb of memory are 
+k-mers requires a large amount of memory: approximately 446 GB of memory is 
 required to achieve a false positive rate of 1\% for $N ? 50x10^9$. It is 
 possible to reduce the required memory by dividing k-mer space into multiple 
 partitions and counting k-mers separately for each partition. Partitioning 
-k-mer space into A partitions results in a linear decrease in the number of 
-k-mers under consideration, thus reducing the occupancy by a constant factor A 
-and correspondingly reducing the collision rate.
+k-mer space into $N$ partitions results in a linear decrease in the number of 
+k-mers under consideration, thus reducing the occupancy by a constant factor 
+$n$ and correspondingly reducing the collision rate.
 
 Partitioning k-mer space can be a generalization of the systematic prefix 
 filtering approach, where one might first count all k-mers starting with AA, 
