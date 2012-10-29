@@ -1,4 +1,4 @@
-\documentclass{article}
+\message{ !name(khmer_0814.tex)}\documentclass{article}
 \usepackage{simplemargins}
 
 %\usepackage{multirow}
@@ -12,6 +12,9 @@
 \title{A probabilistic approach to k-mer counting}
 \author{QP, Jason,  Rose, Adina, CTB}
 \begin{document}
+
+\message{ !name(khmer_0814.tex) !offset(-3) }
+
 \bibliographystyle{plain}
 \maketitle
 
@@ -28,16 +31,15 @@ efficiently due to high memory requirements or running time.
 Here we present the khmer software package for fast and memory efficient 
 counting of k-mers. Unlike previous methods based on data structures such as 
 hash tables, suffix arrays, and trie structures, khmer uses a simple 
-probabilistic data structure, which is similar in 
+probabilistic data structure, the counting Bloom filter, which is similar in 
 concept to the Count-Min sketch data structure and can be considered an 
 extension of a Bloom filter. It is highly scalable and has the ability 
 to handle large amounts of data, which is difficult to deal with using other 
 methods. We compared the memory usage, disk usage and time usage between 
-khmer and other software like Tallymer and Jellyfish to show the 
+khmer and other software packages like Tallymer and Jellyfish to show the 
 advantage of our method. Additionally, we evaluate the counting accuracy of 
-our approach. Finally, we present two applications of khmer in
-evaluating 
-sequencing error by k-mer abundance distribution in reads and in filtering 
+our approach. Finally, we present two applications of khmer in the evaluation 
+of sequencing error by k-mer abundance distribution in reads and in filtering 
 reads for efficient de Bruijn graph-based assembly.
 \subsection{Conclusion:}
 The khmer software package is an effective and efficient tool in applications 
@@ -50,7 +52,7 @@ using our khmer software.
 A k-mer is a substring of length k in a DNA sequence. The goal of k-mer 
 counting is to determine the number of occurances for each k-mer in a dataset 
 composed of sequence reads. Efficient k-mer counting plays an important role in 
-solving many bioinformatics problems.\\
+solving many Bioinformatics problems.\\
 
 One important problem is de novo assembly of a large number of short reads. 
 With the development of next generation sequencing technology, many research 
@@ -87,11 +89,9 @@ are the values. However, the disadvantage is evident. If the size of sequence
 dataset is sufficiently large, the efficiency of the counting using a simple 
 hash table plummets dramatically. Another k-mer counting tool - Tallymer, 
 uses a suffix array data structure\cite{Kurtz2008}. It is more efficient 
-than simple hash table in general. However, one concern is that the memory 
-requirement is linear to the number of unique k-mers in the
-dataset. So this method is not 
-so scalable. If the size of a dataset is too large and the number of
-unique k-mers is also large, the cost in time and 
+than simple hash table in general. However, one drawback is that the memory 
+requirement is linear to the number of unique k-mers. So this method is not 
+so scalable. If the size of a dataset is too large, the cost in time and 
 memory is intolerable. For example, in a soil metagenomics project, the size 
 of the reads data set generated from one soil sample have already exceeded 
 400GB, with only a limited coverage. (to cite GPGC) Similarly-sized datasets 
@@ -99,16 +99,14 @@ are too difficult for Tallymer to handle. Jellyfish\cite{Marcais2011}, another
 k-mer counting tool, uses a hash-style data structure but also employs a 
 "lock-free" feature to enable parallelism of Jellyfish. However, it still has 
 the same problem as Tallymer with a linear increase of memory usage with 
-respect to the number of unique k-mers in data set to count.????\\
+respect to the number of unique k-mers in data set to count.\\
 
-We employ a simple probabilistic data structure, which 
-is similar to the concept of Count-Min sketch data
-structure\cite{Cormode2005} and can be considered an extension of
-Bloom filter\cite{DBLP:journals/cacm/Bloom70,
-DBLP:journals/im/BroderM03,Melsted2011},
-to show a new approach to counting 
+We employ a Bloom counting hash, a simple probabilistic data structure, which 
+is similar in concept to Bloom 
+filter\cite{DBLP:journals/cacm/Bloom70,DBLP:journals/im/BroderM03,Melsted2011} 
+and Count-Min sketch\cite{Cormode2005}, to show a new approach to counting 
 k-mers effectively and efficiently. It is highly scalable and can be used to 
-count k-mers in large sequence dataset with a one-sided tradeoff of counting 
+count k-mers in large sequence data set with a one-sided tradeoff of counting 
 inaccuracy.\\
 
 
@@ -132,55 +130,32 @@ errors. The four data sets are generated with different size to include
 similar number of unique k-mers. (k=12)\\
 
 \subsection{Comparing with other k-mer counting programs}
+Tallymer is from the genometools package version 1.3.4. It was run with options 
+as below: 
+For suffixerator subroutine: -dna -pl -tis -suf -lcp ødb
 
-We counted the number of unique k-mers in five soil metagenomic 
-reads datasets with different sizes using our khmer counting approach 
-and two other k-mer counting methods - Tallymer and Jellyfish - to 
-compare the performance. To investigate the k-independance of 
-k-mer counting, we use k as 22 and 31 to do the counting seperately.
-
-Tallymer is from the genometools package version 1.3.4. It was run with options as below: 
-For suffixerator subroutine: -dna -pl -tis -suf -lcp
-suffixerator subroutine also has an option -parts n to create the
-index with only 1/n of the total data in main memory. This can reduce
-the memory usage. Here we use -parts 4 and -parts 1 to test the performance.
-
-For subroutine tallymer mkindex: -mersize 31  / -mersize 22
+For subroutine tallymer mkindex: -mersize 32  -esa 3
 
 Jellyfish is version 1.1.2 and multithread option is off.
 
-Jellyfish uses a hash table to store the k-mers and the size of
-hash table can be modified by the user.  When
-the hash table is not larege enough and is full, it will be written to hard disk and a new hash
-table will be initialized to store more k-mers. Here we use 
-similar stratage as used in \cite{}. We found the minimum size of hash
-table which can be used by Jellyfish to store all k-mers in memory. 
-
-We run Jellyfish with the options as below:
-
-jellyfish count -m 22 -c 2 -C  for k=22
-jellyfish count -m 31 -c 2 -C  for k=21
+jellyfish count -m 22 -c 2 -C -s 100000000\\
+jellyfish merge -o jelly.merged mer\_counts\_*\\
+jellyfish stats -o jelly.stats jelly.merged\\
 
 \subsection{A constant-memory probabilistic data structure for k-mer counting}
 
-We implement a simple probabilistic data structure similar to the
-concept of Count-Min sketch for 
-fast and memory efficient counting of k-mers. This data structure is
-similar 
-to Bloom filter, with several difference. Firstly, 
+We implement a simple probabilistic data structure, a Bloom counting hash, for 
+fast and memory efficient counting of k-mers. The concept of the Bloom 
+counting hash is similar to Bloom filter, with several difference. Firstly, 
 the Bloom counting hash consists of one or more hash tables 
 rather than a single hash table used in a typical Bloom filter. Secondly, each 
 entry in the hash tables is a counter representing the number of k-mers that 
 hash to that location, instead of a single bit to 
-represent the existence or absense of an item. Third, in our 
-implementation, the hash function 
+represent the existence or absense of an item. In our implementation, the hash function 
 is to take the modulus of a prime number number close to the size of the 
-hash tables. For each hash table there is a different prime number. In
-other word, each hash table has a different hash function.
- Given a new k-mer,
- it is hashed to a specific location in each 
-hash table using specific hash function. 
-The counter in that location in each hash table can be 
+hash tables. Given a new k-mer, it is hashed to a specific location in each 
+hash table using 
+the hash function. The counter in that location in each hash table can be 
 updated. Like a Bloom filter, different k-mers can be hashed to the same 
 location in a hash table, which results in collisions.  The effect of the 
 collisions is that the counter in a specific bin may not represent the exact 
@@ -229,8 +204,7 @@ there is a tradeoff that the miscount rate will be worse.
 
 \subsection{Assessment of counting error}
 
-We want to use the Count-Min sketch like data structure to count the 
-occurrence of k-mer in a 
+We want to use the Bloom counting hash to count the occurrence of k-mer in a 
 data set. So we define the counting error rate to be the possibility that the 
 count is incorrect (off by 1 or more) 
 
@@ -314,20 +288,20 @@ for many applications.
 
 \section{Results and Discussion}
 \subsection{Speed and memory usage on soil metagenomic reads data sets}
-
+To compare the performance of our khmer counting approach and other
+k-mer counting approaches, we counted the number of unique k-mers in
+five soil metagenomic reads datasets with different sizes using these
+different k-mer counting methods. To investigate the k-independance of
+k-mer counting, we use k as 22 and 31 to do the counting seperately.
  
 The time usage and memory usage for counting k-mers in five soil metagenomic reads 
 data sets using khmer in comparison to Tallymer and Jellyfish are shown 
 in Figure \ref{cmp_time} and Figure \ref{cmp_memory}.
 Figure \ref{cmp_time} shows that the time usage of our khmer approach is 
-comparable to Tallymer, but is slower than Jellyfish. From Figure \ref{cmp_memory}, we see 
+comparable to the other two programs. From Figure \ref{cmp_memory}, we can see 
 that the memory usage of both Jellyfish and Tallymer increases linearly with 
 dataset size, although Jellyfish is more efficient than Tallymer in memory 
-usage for smaller k size. Using option -parts 4 for Tallymer
-subroutine suffix can reduce the memory usage. But the second step of
-Tallymer counting method - subroutine mkindex  will always use more
-memory as dataset to count increases.
-For a 5 GB dataset with 2.7 billion total k-mers, Jellyfish uses 
+usage. For a 5 GB dataset with 2.7 billion total k-mers, Jellyfish uses 
 5 GB memory while Tallymer cannot handle a 4 GB dataset on a machine with 24 GB 
 memory. Thus, both tools cannot satisfy the k-mer counting requirement for 
 metagenomic data sets on computers with a modest amount of memory. In addition, 
@@ -338,19 +312,15 @@ khmer approach can be adjusted with the tradeoff of counting error rate. We can
 decrease the memory usage by increasing counting error rate as shown in this 
 figure. We can also see from the figure that with a decent counting error rate 
 like 1\%, the memory usage is still considerably lower compared to other 
-programs. As shown in Figure \ref{cmp_memory}, our khmer approach and
-Tallymer are both k-independence. Length of k-mer will not influence
-the memory usage, while the memory usage of Jellyfish depends on
-length of k-mer heavily. In fact Jellyfish only allows counting
-k-mers shorter than 32.
+programs. 
 Another drawback to consider is the disk usage when both Jellyfish and Tallymer 
 generate large index files on hard disk.  Figure \ref{cmp_disk} shows that the 
 disk usage also increases linearly with the dataset size. For a dataset 
 of 5 gigabytes, the disk usage of both Jellyfish and Tallymer is around 30 
 gigabytes. For larger metagenomic datasets, disk usage must be 
 economized . 
-The curve for khmer in Figure \ref{cmp_disk} is the size of 
-hash tables used in our khmer approach with fixed counting error rate(1\%). While 
+The curve is the size of 
+hash tables used in our khmer approach with fixed counting error rate. While 
 the hash tables for k-mer counting can be stored on disk in khmer, this is 
 not a requirement if the data structure can be held in memory for downstream 
 analysis.
@@ -440,8 +410,8 @@ which is a crucial step in preprocessing data for sequence data analysis and
 manipulation 
 like assembly. 
 
-\subsection{Removing reads containing low-abundance k-mers
-to reduce size of data set for efficient assembly}
+\subsection{Removing reads containing low-abundance k-mers to reduce size of 
+data set for efficient assembly}
 
 The most common approach to assembling short reads from next-generation 
 sequencers is 
@@ -457,12 +427,12 @@ assembly.
 In light of this fact, we filter out reads with low frequency k-mers to 
 decrease time and memory usage.
 
-Our k-mer counting approach is efficient for 
+The Bloom counting hash is an efficient and constant-memory data structure for 
 filtering reads based on k-mer abundance, and can be used for arbitrary k. One 
 approach to k-mer abundance filtering involves removing any read that contains 
 even a single low-abundance k-mer. This filtering can be implemented in two 
 passes: the first pass for loading k-mers from reads and the second pass for 
-filtering the reads. The counting error here manifests as 
+filtering the reads. The counting error of the Bloom counting hash manifests as 
 an overestimated count in hash entries with one or more collisions, in which 
 case 
 k-mers hashing to that entry may not be correctly flagged as low-abundance. 
@@ -471,7 +441,7 @@ reads may not be properly removed. However, any read that is removed will be
 correctly removed. To reduce the effect of such counting error rate, we can do 
 the filtering iteratively. After each run of filtering, some more reads with 
 low-abundance k-mers will be discarded. This graceful degradation in the face 
-of large amounts of data is a key property of our k-mer counting approach. 
+of large amounts of data is a key property of the Bloom counting hash. 
 
 As an example of this method, we filtered out reads with low abundance k-mers 
 from a human gut microbiome metagenomic dataset(MH0001) with more than 42 
@@ -515,20 +485,21 @@ machine, and the results stored for later comparison or analysis.
 
 K-mer counting has been widely used in many bioinformatics problems, including 
 data preprocessing for de novo assembly, repeat detection, sequencing coverage 
-estimation. Here we present the 
+estimation. However current available tools cannot handle the high throughout 
+data generated by next generation sequencing technology efficiently due to high 
+memory requirements or impractically long running time. Here we present the 
 khmer software package for fast and memory efficient counting of k-mers. Unlike 
-previous methods bases on data structures like hash tables, suffix arrays, 
+previous methods bases on data structures including hash tables, suffix arrays, 
 or trie structures, Khmer uses a simple probabilistic data structure, which is 
-similar in concept to Count-Min sketch. It is 
-highly scalable, effective and efficient in analyzing large next
-generation sequencing dataset involving k-mer counting, despite with 
+similar in concept to Bloom filter and Count-Min sketch data structure. It is 
+highly scalable, effective and efficient in applications involving k-mer 
+counting to analyze large next generation sequencing dataset, despite with 
 certain counting error rate as tradeoff. We compared the memory usage, disk 
 usage and time usage between our khmer program and other programs like Tallymer 
 and Jellyfish to show the advantage of our method. The counting accuracy was 
-also assessed theoretically and was validated using simulated data
-sets. Our k-mer counting approach can be used
-efficiently and effectively for any high diverse dataset with lots of 
-low-abundance k-mers, like next generation sequencing 
+also assessed theoretically and was validated using simulated data sets. Our 
+counting approach can be used efficiently and effectively for any high diverse 
+data set with lots of low-abundance k-mers, like next generation sequencing 
 data sets, which are biased towards low-abundance k-mers due to errors. We 
 further showed applications of khmer software package in tackling problems like 
 detecting sequencing errors in metagenomic reads and removing those erroneous 
@@ -539,20 +510,19 @@ larger data sets with reasonable counting error rate.
 
 \bibliography{khmer_0814}
 
-\begin{tabular}{ |c | c |c| c|c| }
+\begin{tabular}{ |c | c |c| c| }
   \hline                        
-   & size of file(GB) & number of reads & number of unique
-  k-mers & total number of k-mers \\
+  ~        & size of file(GB) & number of reads & number of unique k-mers  \\
   \hline
-dataset1 & 1.90 & 9,744,399 & 561,178,082 & 630,207,985
-\\
-dataset2 & 2.17 & 19,488,798 & 1,060,354,144 & 1,259,079,821
+        dataset1 & 1.90             & 9,744,399       & 561,178,082             
 \\ 
-dataset3 & 3.14 & 29,233,197 & 1,445,923,389 & 1,771,614,378
+        dataset2 & 2.17             & 19,488,798      & 1,060,354,144           
 \\ 
-dataset4 & 4.05 & 38,977,596 & 1,770,589,216 & 2,227,756,662
+        dataset3 & 3.14             & 29,233,197      & 1,445,923,389           
 \\ 
-dataset5 & 5.00 & 48,721,995 & 2,121,474,237 & 2,743,130,683
+        dataset4 & 4.05             & 38,977,596      & 1,770,589,216           
+\\ 
+        dataset5 & 5                & 48,721,995      & 2,121,474,237           
 \\
   \hline  
 \end{tabular}
@@ -646,3 +616,5 @@ microbiome metagenomic dataset(MH0001, 42,458,402 reads)}
 
 \end{document}
 
+
+\message{ !name(khmer_0814.tex) !offset(-620) }
