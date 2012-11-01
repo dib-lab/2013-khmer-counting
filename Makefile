@@ -1,4 +1,6 @@
-all:
+all: khmer_0814.pdf
+
+khmer_0814.pdf: khmer_0814.tex
 	pdflatex khmer_0814.tex
 	pdflatex khmer_0814.tex
 	bibtex khmer_0814
