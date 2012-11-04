@@ -1,9 +1,9 @@
 \relax 
 \bibstyle{plain}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Abstract}{1}}
-\@writefile{toc}{\contentsline {paragraph}{Introduction}{1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Results:}{1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Conclusion:}{1}}
+\@writefile{toc}{\contentsline {paragraph}{Introduction:}{1}}
+\@writefile{toc}{\contentsline {paragraph}{Results:}{1}}
+\@writefile{toc}{\contentsline {paragraph}{Conclusion:}{1}}
 \citation{Metzker2010}
 \citation{Miller2010}
 \citation{Miller2010}
@@ -23,28 +23,38 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3}Methods}{3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Sequence Data}{3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Comparing with other k-mer counting programs}{3}}
+\citation{XX}
+\citation{kmer-percolation}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Count-Min Sketch implementation}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Source code and scripts}{4}}
 \citation{Cormode2005}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}A constant-memory probabilistic data structure for k-mer counting}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Benchmarking}{5}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Results}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}kher memory usage is fixed and low}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Collision rates are predictable and measurable}{5}}
 \citation{Cormode2005}
 \citation{Rusu2008}
 \citation{DBLP:conf/sdm/CormodeM05}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Assessment of counting error}{5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Analysis of memory usage and running time}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Implementation}{7}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Results and Discussion}{7}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Speed and memory usage on soil metagenomic reads data sets}{7}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Assessment of false positive rate and miscount distribution}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Investigation of sequencing error pattern by k-mer abundance distribution}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Removing reads containing low-abundance k-mers to reduce size of data set for efficient assembly}{9}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Scaling the Bloom counting by partitioning k-mer space}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}False positive rates and miscount rates are predictable}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}khmer can count k-mers efficiently}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}The measured miscount rate is low on short-read data}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Sequencing error profiles can be measured with k-mer abundance profiles in reads}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}khmer can trim errors from reads}{10}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}khmer scales k-mer counting significantly and usefully}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Error rates in k-mer counting are low and predictable}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}khmer applications}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Future}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Conclusions}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Scaling the Bloom counting by partitioning k-mer space}{11}}
 \bibdata{khmer_0814}
 \bibcite{DBLP:journals/cacm/Bloom70}{1}
 \bibcite{DBLP:journals/im/BroderM03}{2}
 \bibcite{Butler2008}{3}
 \bibcite{Cormode2005}{4}
 \bibcite{DBLP:conf/sdm/CormodeM05}{5}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{11}}
 \bibcite{Kurtz2008}{6}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusions}{12}}
 \bibcite{Li2010}{7}
 \bibcite{Marcais2011}{8}
 \bibcite{Melsted2011}{9}
@@ -53,23 +63,23 @@
 \bibcite{Rusu2008}{12}
 \bibcite{Simpson2009}{13}
 \bibcite{Zerbino2008}{14}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Time usage of different khmer counting tools}}{13}}
-\newlabel{cmp_time}{{1}{13}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Memory usage of different k-mer counting tools}}{13}}
-\newlabel{cmp_memory}{{2}{13}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Disk storage usage of different k-mer counting tools}}{14}}
-\newlabel{cmp_disk}{{3}{14}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces average miscount with different hash table size}}{14}}
-\newlabel{average_offset}{{4}{14}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces relation between average miscount and counting error rate}}{15}}
-\newlabel{average_offset_vs_fpr}{{5}{15}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Percentage of the unique k-mers starting in different position in reads}}{15}}
-\newlabel{perc_unique_pos}{{6}{15}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Percentage of the high abundance k-mers starting in different position in reads}}{16}}
-\newlabel{perc_high_abun_pos}{{7}{16}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Average frequency of k-mers starting in different position in reads}}{16}}
-\newlabel{freq_pos}{{8}{16}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Number of remaining reads after iterating filtering out low-abundance reads that contain even a single unique k-mer with hash tables with different sizes(1e8 and 1e9) for a human gut microbiome metagenomic dataset(MH0001, 42,458,402 reads)}}{17}}
-\newlabel{num_remaining_reads}{{9}{17}}
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Percentage of incorrect reads in the remaining reads after iterating filtering with hash tables with different sizes(1e8 and 1e9) for a human gut microbiome metagenomic dataset(MH0001, 42,458,402 reads)}}{18}}
-\newlabel{perc_remaining_reads}{{10}{18}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Time usage of different khmer counting tools}}{14}}
+\newlabel{cmp_time}{{1}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Memory usage of different k-mer counting tools}}{14}}
+\newlabel{cmp_memory}{{2}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Disk storage usage of different k-mer counting tools}}{15}}
+\newlabel{cmp_disk}{{3}{15}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces average miscount with different hash table size}}{15}}
+\newlabel{average_offset}{{4}{15}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces relation between average miscount and counting error rate}}{16}}
+\newlabel{average_offset_vs_fpr}{{5}{16}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Percentage of the unique k-mers starting in different position in reads}}{16}}
+\newlabel{perc_unique_pos}{{6}{16}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Percentage of the high abundance k-mers starting in different position in reads}}{17}}
+\newlabel{perc_high_abun_pos}{{7}{17}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Average frequency of k-mers starting in different position in reads}}{17}}
+\newlabel{freq_pos}{{8}{17}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Number of remaining reads after iterating filtering out low-abundance reads that contain even a single unique k-mer with hash tables with different sizes(1e8 and 1e9) for a human gut microbiome metagenomic dataset(MH0001, 42,458,402 reads)}}{18}}
+\newlabel{num_remaining_reads}{{9}{18}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Percentage of incorrect reads in the remaining reads after iterating filtering with hash tables with different sizes(1e8 and 1e9) for a human gut microbiome metagenomic dataset(MH0001, 42,458,402 reads)}}{19}}
+\newlabel{perc_remaining_reads}{{10}{19}}

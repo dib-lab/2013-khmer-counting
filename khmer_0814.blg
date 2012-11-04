@@ -3,9 +3,11 @@ The top-level auxiliary file: khmer_0814.aux
 The style file: plain.bst
 Database file #1: khmer_0814.bib
 Warning--I didn't find a database entry for "Metzker2010"
+Warning--I didn't find a database entry for "XX"
+Warning--I didn't find a database entry for "kmer-percolation"
 You've used 14 entries,
             2118 wiz_defined-function locations,
-            606 strings with 7759 characters,
+            609 strings with 7779 characters,
 and the built_in function-call counts, 6585 in all, are:
 = -- 572
 > -- 541
@@ -44,4 +46,4 @@ warning$ -- 0
 while$ -- 45
 width$ -- 16
 write$ -- 155
-(There was 1 warning)
+(There were 3 warnings)
