@@ -16,6 +16,7 @@ copydata:
 	rm -fr ../data/
 	mkdir ../data/
 	cp *.time *.abun *.newabun *.newabun.v2 *.abund=1 *.abund=255 fp_assessment.out ../data/
+	cp *.wc ../data/
 
 clean:
 	rm -f `cat clean-list.txt`
@@ -242,5 +243,93 @@ ecoli_ref.fastq.fasta.freq.newabun.v2: ecoli_ref.fastq.fasta.freq.newabun
 	python square_root.py ecoli_ref.fastq.fasta.freq.newabun >ecoli_ref.fastq.fasta.freq.newabun.v2
 
 
+# abundance filtering
 
+# hash table size: 1e8
 
+# step1 preprocess tallymer database
+~/genometools-1.3.4/bin/gt suffixerator -dna -pl -tis -suf -lcp -v -parts 4 -db MH0001.trimmed.fa -indexname MH0001
+~/genometools-1.3.4/bin/gt tallymer mkindex -mersize 32 -minocc 1 -maxocc 1 -esa MH0001 -indexname MH0001-reads -counts -pl
+
+MH0001.trimmed.fa.out.e8:  MH0001.trimmed.fa
+python filter-inexact-all_hs.py MH0001.trimmed.fa MH0001.trimmed.fa.out.e8 100000000
+
+MH0001.trimmed.fa.out2.e8:  MH0001.trimmed.fa.out.e8
+python filter-inexact-all_hs.py MH0001.trimmed.fa.out.e8 MH0001.trimmed.fa.out2.e8 100000000
+
+MH0001.trimmed.fa.out3.e8:  MH0001.trimmed.fa.out2.e8
+python filter-inexact-all_hs.py MH0001.trimmed.fa.out2.e8 MH0001.trimmed.fa.out3.e8 100000000
+
+MH0001.trimmed.fa.out4.e8:  MH0001.trimmed.fa.out3.e8
+python filter-inexact-all_hs.py MH0001.trimmed.fa.out3.e8 MH0001.trimmed.fa.out4.e8 100000000
+
+MH0001.trimmed.fa.out.e8.unique: MH0001.trimmed.fa.out.e8
+~/genometools-1.3.4/bin/gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out.e8 >MH0001.trimmed.fa.out.e8.unique
+
+MH0001.trimmed.fa.out2.e8.unique: MH0001.trimmed.fa.out2.e8
+~/genometools-1.3.4/bin/gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out2.e8 >MH0001.trimmed.fa.out2.e8.unique
+
+MH0001.trimmed.fa.out3.e8.unique: MH0001.trimmed.fa.out3.e8
+~/genometools-1.3.4/bin/gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out3.e8 >MH0001.trimmed.fa.out3.e8.unique
+
+MH0001.trimmed.fa.out4.e8.unique: MH0001.trimmed.fa.out4.e8
+~/genometools-1.3.4/bin/gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out4.e8 >MH0001.trimmed.fa.out4.e8.unique
+
+MH0001.trimmed.fa.out.e8.unique.sequence_id: MH0001.trimmed.fa.out.e8.unique
+more MH0001.trimmed.fa.out.e8.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out.e8.unique.sequence_id
+
+MH0001.trimmed.fa.out2.e8.unique.sequence_id: MH0001.trimmed.fa.out2.e8.unique
+more MH0001.trimmed.fa.out2.e8.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out2.e8.unique.sequence_id
+
+MH0001.trimmed.fa.out3.e8.unique.sequence_id: MH0001.trimmed.fa.out3.e8.unique
+more MH0001.trimmed.fa.out3.e8.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out3.e8.unique.sequence_id
+
+MH0001.trimmed.fa.out4.e8.unique.sequence_id: MH0001.trimmed.fa.out4.e8.unique
+more MH0001.trimmed.fa.out4.e8.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out4.e8.unique.sequence_id
+
+# hash table size: 1e9
+
+MH0001.trimmed.fa.out: MH0001.trimmed.fa
+python filter-inexact-all_hs.py MH0001.trimmed.fa MH0001.trimmed.fa.out 1000000000
+
+MH0001.trimmed.fa.out2: MH0001.trimmed.fa.out
+python filter-inexact-all_hs.py MH0001.trimmed.fa.out MH0001.trimmed.fa.out2 1000000000
+
+MH0001.trimmed.fa.out3: MH0001.trimmed.fa.out2
+python filter-inexact-all_hs.py MH0001.trimmed.fa.out2 MH0001.trimmed.fa.out3 1000000000
+
+MH0001.trimmed.fa.out4: MH0001.trimmed.fa.out3
+python filter-inexact-all_hs.py MH0001.trimmed.fa.out3 MH0001.trimmed.fa.out4 1000000000
+
+MH0001.trimmed.fa.out.unique:  MH0001.trimmed.fa.out
+~/genometools-1.3.4/bin/gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out >MH0001.trimmed.fa.out.unique
+
+MH0001.trimmed.fa.out2.unique:  MH0001.trimmed.fa.out2
+~/genometools-1.3.4/bin/gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out2 >MH0001.trimmed.fa.out2.unique
+
+MH0001.trimmed.fa.out3.unique:  MH0001.trimmed.fa.out3
+~/genometools-1.3.4/bin/gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out3 >MH0001.trimmed.fa.out3.unique
+
+MH0001.trimmed.fa.out4.unique:  MH0001.trimmed.fa.out4
+~/genometools-1.3.4/bin/gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out4 >MH0001.trimmed.fa.out4.unique
+
+MH0001.trimmed.fa.out.unique.sequence_id:  MH0001.trimmed.fa.out.unique
+more MH0001.trimmed.fa.out.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out.unique.sequence_id
+
+MH0001.trimmed.fa.out2.unique.sequence_id:  MH0001.trimmed.fa.out2.unique
+more MH0001.trimmed.fa.out2.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out2.unique.sequence_id
+
+MH0001.trimmed.fa.out3.unique.sequence_id:  MH0001.trimmed.fa.out3.unique
+more MH0001.trimmed.fa.out3.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out3.unique.sequence_id
+
+MH0001.trimmed.fa.out4.unique.sequence_id:  MH0001.trimmed.fa.out4.unique
+more MH0001.trimmed.fa.out4.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out4.unique.sequence_id
+
+# get the number of remaining reads and number of bad reads
+# 
+
+sequence_id.wc:
+wc *.sequence_id >sequence_id.wc 
+
+reads.wc:
+wc MH0001.trimmed.fa *.out *.out? *.out.e8 *.out?.e8 >reads.wc

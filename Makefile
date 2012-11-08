@@ -1,10 +1,10 @@
-all: khmer_0814.pdf
+all: khmer-counting.pdf
 
-khmer_0814.pdf: khmer_0814.tex
-	pdflatex khmer_0814.tex
-	pdflatex khmer_0814.tex
-	bibtex khmer_0814
-	pdflatex khmer_0814.tex
+khmer-counting.pdf: khmer-counting.tex
+	pdflatex khmer-counting.tex
+	pdflatex khmer-counting.tex
+	bibtex khmer-counting
+	pdflatex khmer-counting.tex
 
 clean:
 	rm *.aux *.bbl *.blg *.log *.pdf
