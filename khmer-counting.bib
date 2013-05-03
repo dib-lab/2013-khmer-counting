@@ -2,12 +2,51 @@
 %% http://bibdesk.sourceforge.net/
 
 
-%% Created for Qingpeng Zhang at 2012-11-08 15:57:43 -0500 
+%% Created for Qingpeng Zhang at 2013-05-02 19:04:00 -0400 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@article{Minoche2011,
+	Abstract = {BACKGROUND: The generation and analysis of high-throughput sequencing data are becoming a major component of many studies in molecular biology and medical research. Illumina's Genome Analyzer (GA) and HiSeq instruments are currently the most widely used sequencing devices. Here, we comprehensively evaluate properties of genomic HiSeq and GAIIx data derived from two plant genomes and one virus, with read lengths of 95 to 150 bases.
+RESULTS: We provide quantifications and evidence for GC bias, error rates, error sequence context, effects of quality filtering, and the reliability of quality values. By combining different filtering criteria we reduced error rates 7-fold at the expense of discarding 12.5% of alignable bases. While overall error rates are low in HiSeq data we observed regions of accumulated wrong base calls. Only 3% of all error positions accounted for 24.7% of all substitution errors. Analyzing the forward and reverse strands separately revealed error rates of up to 18.7%. Insertions and deletions occurred at very low rates on average but increased to up to 2% in homopolymers. A positive correlation between read coverage and GC content was found depending on the GC content range.
+CONCLUSIONS: The errors and biases we report have implications for the use and the interpretation of Illumina sequencing data. GAIIx and HiSeq data sets show slightly different error profiles. Quality filtering is essential to minimize downstream analysis artifacts. Supporting previous recommendations, the strand-specificity provides a criterion to distinguish sequencing errors from low abundance polymorphisms.},
+	Author = {Minoche, Andr{\'e} E and Dohm, Juliane C and Himmelbauer, Heinz},
+	Date-Added = {2013-05-02 20:51:35 +0000},
+	Date-Modified = {2013-05-02 20:51:35 +0000},
+	Doi = {10.1186/gb-2011-12-11-r112},
+	Journal = {Genome Biol},
+	Journal-Full = {Genome biology},
+	Mesh = {Arabidopsis; Artifacts; Automation, Laboratory; Bacteriophage phi X 174; Base Composition; Base Sequence; Beta vulgaris; Genomics; High-Throughput Nucleotide Sequencing; Molecular Sequence Data; Mutagenesis, Insertional; Polymorphism, Genetic; Reproducibility of Results; Sensitivity and Specificity; Sequence Analysis, DNA; Sequence Deletion},
+	Number = {11},
+	Pages = {R112},
+	Pmc = {PMC3334598},
+	Pmid = {22067484},
+	Pst = {epublish},
+	Title = {Evaluation of genomic high-throughput sequencing data generated on Illumina HiSeq and genome analyzer systems},
+	Volume = {12},
+	Year = {2011},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1186/gb-2011-12-11-r112}}
+
+@article{Rizk2013,
+	Abstract = {SUMMARY: Counting all the k-mers (substrings of length k) in DNA/RNA sequencing reads is the preliminary step of many bioinformatics applications. However, state of the art k-mer counting methods require that a large data structure resides in memory. Such structure typically grows with the number of distinct k-mers to count. We present a new streaming algorithm for k-mer counting, called DSK (disk streaming of k-mers), which only requires a fixed user-defined amount of memory and disk space. This approach realizes a memory, time and disk trade-off. The multi-set of all k-mers present in the reads is partitioned, and partitions are saved to disk. Then, each partition is separately loaded in memory in a temporary hash table. The k-mer counts are returned by traversing each hash table. Low-abundance k-mers are optionally filtered. DSK is the first approach that is able to count all the 27-mers of a human genome dataset using only 4.0 GB of memory and moderate disk space (160 GB), in 17.9 h. DSK can replace a popular k-mer counting software (Jellyfish) on small-memory servers. AVAILABILITY: http://minia.genouest.org/dsk},
+	Author = {Rizk, Guillaume and Lavenier, Dominique and Chikhi, Rayan},
+	Date-Added = {2013-04-23 20:58:04 +0000},
+	Date-Modified = {2013-04-23 20:58:04 +0000},
+	Doi = {10.1093/bioinformatics/btt020},
+	Journal = {Bioinformatics},
+	Journal-Full = {Bioinformatics (Oxford, England)},
+	Month = {Mar},
+	Number = {5},
+	Pages = {652-3},
+	Pmid = {23325618},
+	Pst = {ppublish},
+	Title = {DSK: k-mer counting with very low memory usage},
+	Volume = {29},
+	Year = {2013},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1093/bioinformatics/btt020}}
 
 @article{Pell2012,
 	Abstract = {Deep sequencing has enabled the investigation of a wide range of environmental microbial ecosystems, but the high memory requirements for de novo assembly of short-read shotgun sequencing data from these complex populations are an increasingly large practical barrier. Here we introduce a memory-efficient graph representation with which we can analyze the k-mer connectivity of metagenomic samples. The graph representation is based on a probabilistic data structure, a Bloom filter, that allows us to efficiently store assembly graphs in as little as 4 bits per k-mer, albeit inexactly. We show that this data structure accurately represents DNA assembly graphs in low memory. We apply this data structure to the problem of partitioning assembly graphs into components as a prelude to assembly, and show that this reduces the overall memory requirements for de novo assembly of metagenomes. On one soil metagenome assembly, this approach achieves a nearly 40-fold decrease in the maximum memory requirements for assembly. This probabilistic graph representation is a significant theoretical advance in storing assembly graphs and also yields immediate leverage on metagenomic assembly.},
