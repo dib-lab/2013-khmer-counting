@@ -105,7 +105,7 @@ traversed to extract likely contiguous sequences.  Since k-mers are the
 basis for de Bruijn graph-based assembly, k-mer frequency analysis
 is an important way to preprocess data and study graph characteristics.
 
-On particular application of k-mer freqency analysis is the detection
+On particular application of k-mer frequency analysis is the detection
 and removal of sequencing errors.  Because sequencing errors generate
 many erroneous k-mers with low abundance, we can optimize more
 heavyweight computational approaches such as assembly by filtering out
@@ -316,7 +316,7 @@ in which case k-mers hashing to that entry may not be correctly
 flagged as low-abundance.  High counting error rate therefore manifest
 as "lenient" filtering, in which reads may not be properly
 removed. However, any read that is trimmed will be correctly
-trimmed. To reduce the effect of such counting error rate, Êk-merwe can do
+trimmed. To reduce the effect of such counting error rate, ï¿½k-merwe can do
 the filtering iteratively. After each run of filtering, some more
 reads with low-abundance k-mers will be discarded. This graceful
 degradation in the face of large amounts of data is a key property of
@@ -684,17 +684,17 @@ dataset5 & 5.00 & 48,721,995 & 2,121,474,237 & 2,743,130,683
 
 \begin{tabular}{ |c | c |c| c|c| }
   \hline                        
-  ~ÊÊÊÊÊÊÊ & \bigcell{c}{Real metagenomics\\reads} & \bigcell{c}{Totally random 
+  ~ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ & \bigcell{c}{Real metagenomics\\reads} & \bigcell{c}{Totally random 
 reads\\with randomly\\ generated k-mers} & \bigcell{c}{Simulated reads\\from 
 simulated\\genome with error} & \bigcell{c}{Simulated reads\\from 
 simulated\\genome without error}  \\
   \hline
-ÊÊÊÊÊÊÊÊSize of data set file      & 7.01MÊÊÊ & 3.53MÊÊÊÊ& 5.92MÊÊ   & 9.07M 
-ÊÊÊÊÊÊÊÊÊÊÊÊ \\ 
-ÊÊÊÊÊÊÊÊNumber of total k-mers     & 2917200Ê & 2250006ÊÊ& 3757479ÊÊÊ& 
-5714973ÊÊÊÊÊÊÊÊÊ \\ 
-ÊÊÊÊÊÊÊÊNumber of unique k-mers    & 1944996  & 1973430ÊÊ& 1982403ÊÊ & 
-1991148ÊÊÊÊÊÊÊÊÊÊ \\ 
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Size of data set file      & 7.01Mï¿½ï¿½ï¿½ & 3.53Mï¿½ï¿½ï¿½ï¿½& 5.92Mï¿½ï¿½   & 9.07M 
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ \\ 
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Number of total k-mers     & 2917200ï¿½ & 2250006ï¿½ï¿½& 3757479ï¿½ï¿½ï¿½& 
+5714973ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ \\ 
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Number of unique k-mers    & 1944996  & 1973430ï¿½ï¿½& 1982403ï¿½ï¿½ & 
+1991148ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ \\ 
   \hline  
 \end{tabular}
 
