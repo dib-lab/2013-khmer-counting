@@ -162,43 +162,41 @@ clean:
 
 
 # Assessment of false positive rate and miscount distribution
-random_reads_1.67M_3c_0.03e.fa:
-        python /u/qingpeng/Work/1_KhmerPaper/0_Check_Math/simulate_random_reads.py 1670000 3 0.03 44 random_reads_1.67M_3c_0.03e.fa random_genome_1M.fa
-random_reads_2.54M_3c_0.00e.fa:
-        python /u/qingpeng/Work/1_KhmerPaper/0_Check_Math/simulate_random_reads.py 2540000 3 0.00 44 random_reads_2.54M_3c_0.00e.fa random_genome_1M.fa
-MH0001.trimmed.head176800.fa: MH0001.trimmed.fa
-        head -176800 MH0001.trimmed.fa >MH0001.trimmed.head176800.fa
 
+python simulate_random_reads.py 1670000 3 0.03 44 random_reads_1.67M_3c_0.03e.fa random_genome_1M.fa
+python simulate_random_reads.py 2540000 3 0.00 44 random_reads_2.54M_3c_0.00e.fa random_genome_1M.fa
+head -176800 MH0001.trimmed.fa >MH0001.trimmed.head176800.fa
 
-        python ~/Work/1_KhmerPaper/0_Check_Math/check_math_v2.py "100000,200000,400000,600000,800000,1000000,1200000" "MH0001.trimmed.head176800.fa,random_kmers_1M_3c.fa,random_reads_1.67M_3c_0.03e.fa,random_reads_2.54M_3c_0.00e.fa" data4.log
+python fp_assessment.py fp_assessment.out
+
 
 # Investigation of sequencing error pattern by k-mer abundance distribution
 # raw data:ecoli_ref.fastq
 
 ecoli_ref.fastq.fasta: ecoli_ref.fastq.fastq
-	python ~/Dropbox/Work/Github/newkhmer/sandbox/fastq-to-fasta.py ecoli_ref.fastq >ecoli_ref.fastq.fasta
+	${KHMER}/sandbox/fastq-to-fasta.py ecoli_ref.fastq >ecoli_ref.fastq.fasta
 
 ecoli_ref.fastq.ht: ecoli_ref.fastq
-        python ${KHMER}/scripts/load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht ecoli_ref.fastq
+    load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht ecoli_ref.fastq
 
 ecoli_ref.fastq.fasta.freq: ecoli_ref.fastq.ht
-        python ${KHMER}/sandbox/fasta-to-abundance-hist.py ecoli_ref.fastq.ht ecoli_ref.fastq.fasta
+    ${KHMER}/sandbox/fasta-to-abundance-hist.py ecoli_ref.fastq.ht ecoli_ref.fastq.fasta
 
 ecoli_ref.fastq.fasta.freq.abun: ecoli_ref.fastq.fasta.freq
-        python ${KHMER}/sandbox/abundance-hist-by-position.py ecoli_ref.fastq.fasta.freq >ecoli_ref.fastq.fasta.freq.abun
+    ${KHMER}/sandbox/abundance-hist-by-position.py ecoli_ref.fastq.fasta.freq >ecoli_ref.fastq.fasta.freq.abun
 
 ecoli_ref.fastq.fasta.pos.abund=1: ecoli_ref.fastq.ht
-        python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht ecoli_ref.fastq.fasta 
+    ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht ecoli_ref.fastq.fasta 
 
 
 ecoli_ref.fastq.ht.k32: ecoli_ref.fastq
-        python ${KHMER}/scripts/load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
+    load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 
 ecoli_ref.fastq.fasta.freq32: ecoli_ref.fastq.ht.k32
         python fasta-to-abundance-hist-k32.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq.fasta
 
 ecoli_ref.fastq.fasta.freq32.abun: ecoli_ref.fastq.fasta.freq32
-        python ${KHMER}/sandbox/abundance-hist-by-position.py ecoli_ref.fastq.fasta.freq32 >ecoli_ref.fastq.fasta.freq32.abun
+        ${KHMER}/sandbox/abundance-hist-by-position.py ecoli_ref.fastq.fasta.freq32 >ecoli_ref.fastq.fasta.freq32.abun
 
 ecoli_ref.fastq.fasta.pos32.abund=1: ecoli_ref.fastq.ht.k32
         python hi-lo-abundance-by-position-k32.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq.fasta 
@@ -223,8 +221,8 @@ ecoli_ref.fastq.fasta.freq.newabun.v2: ecoli_ref.fastq.fasta.freq.newabun
 # hash table size: 1e8
 
 # step1 preprocess tallymer database
-~/genometools-1.3.4/bin/gt suffixerator -dna -pl -tis -suf -lcp -v -parts 4 -db MH0001.trimmed.fa -indexname MH0001
-~/genometools-1.3.4/bin/gt tallymer mkindex -mersize 32 -minocc 1 -maxocc 1 -esa MH0001 -indexname MH0001-reads -counts -pl
+gt suffixerator -dna -pl -tis -suf -lcp -v -parts 4 -db MH0001.trimmed.fa -indexname MH0001
+gt tallymer mkindex -mersize 32 -minocc 1 -maxocc 1 -esa MH0001 -indexname MH0001-reads -counts -pl
 
 MH0001.trimmed.fa.out.e8:  MH0001.trimmed.fa
 python filter-inexact-all_hs.py MH0001.trimmed.fa MH0001.trimmed.fa.out.e8 100000000
