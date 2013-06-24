@@ -645,23 +645,25 @@ repository at https://github.com/ged-lab/2013-khmer-counting.
 
 \bibliography{khmer-counting}
 
-\begin{tabular}{ |c | c |c| c|c| }
-  \hline                        
-   & size of file(GB) & number of reads & number of unique
-  k-mers & total number of k-mers \\
-  \hline
-dataset1 & 1.90 & 9,744,399 & 561,178,082 & 630,207,985
-\\
-dataset2 & 2.17 & 19,488,798 & 1,060,354,144 & 1,259,079,821
-\\ 
-dataset3 & 3.14 & 29,233,197 & 1,445,923,389 & 1,771,614,378
-\\ 
-dataset4 & 4.05 & 38,977,596 & 1,770,589,216 & 2,227,756,662
-\\ 
-dataset5 & 5.00 & 48,721,995 & 2,121,474,237 & 2,743,130,683
-\\
-  \hline  
-\end{tabular}
+\begin{table}[ht]
+    \begin{tabular}{ |c | c |c| c|c| }
+      \hline                        
+       & size of file(GB) & number of reads & number of distinct
+      k-mers & total number of k-mers \\
+      \hline
+    dataset1 & 1.90 & 9,744,399 & 561,178,082 & 630,207,985
+    \\
+    dataset2 & 2.17 & 19,488,798 & 1,060,354,144 & 1,259,079,821
+    \\ 
+    dataset3 & 3.14 & 29,233,197 & 1,445,923,389 & 1,771,614,378
+    \\ 
+    dataset4 & 4.05 & 38,977,596 & 1,770,589,216 & 2,227,756,662
+    \\ 
+    dataset5 & 5.00 & 48,721,995 & 2,121,474,237 & 2,743,130,683
+    \\
+      \hline  
+    \end{tabular}
+\end{table}
 
 \newcommand{\bigcell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
 
