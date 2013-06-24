@@ -1,0 +1,104 @@
+==========================================
+Running the diginorm paper script pipeline
+==========================================
+
+:Date: June 20, 2013
+
+Here are some brief notes on how to run the pipeline for our 2013 Khmer paper
+ on an Amazon EC2 rental instance.
+
+The instructions below will reproduce all of the figures in the paper,
+and will then compile the paper from scratch using the new figures.
+
+(Note that you can also start with ami-61885608, which has all the
+below software installed.)
+
+.. and the EC2 snapshot snap-09d7f173 has all
+.. of the data on it.  If you mount that volume and then cp -r everything
+.. into /mnt, you will have all the software and files below installed in
+.. the right place to run the pipline 'make' near the bottom.)
+
+.. put in sofwtare version .tgz download?
+.. https://github.com/ctb/khmer/tarball/2012-paper-diginorm
+
+Starting up a machine and get necessary data for reproduction 
+---------------------------------------------
+
+First, start up an EC2 instance using starcluster::
+
+ % starcluster start -o -s 1 -i m2.2xlarge -n ami-999d49f0 pipeline
+
+You can also do this via the AWS console; just use ami-999d49f0, and
+start an instance with 30gb or more of memory.
+
+Make sure that port 22 (SSH) and port 80 (HTTP) are open; you'll need
+the first one to log in, and the second one to connect to the ipython
+notebook.
+
+Now, log in! ::
+
+ % starcluster sshmaster pipeline
+
+(or just ssh in however you would normally do it.)
+
+Now, check out the source repository and grab the initial data
+sets::
+
+ % git clone git://github.com/ged-lab/2013-khmer-counting.git
+ % cd 2013-khmer-counting
+
+ % curl -O http://athyra.ged.msu.edu/~qingpeng/2013-khmer-counting/pipeline-data-new.tar.gz
+ % tar xzf pipeline-data-new.tar.gz
+ 
+ 
+ Installing necessary software
+---------------------------------------------
+
+Before we get started, we need to install all the necessary softwares, including:
+- Tallymer
+- Jellyfish
+- DSK
+- screed
+- khmer
+- ipython
+- latex
+
+ % cd pipeline
+ % bash software_install.sh
+
+OK, now all your software is installed, hurrah!
+
+
+Running the pipeline
+--------------------
+
+Now go into the pipeline directory and run the pipeline.  This will take
+?-? hours, so you might want to do it in 'screen' (see :doc:`../tutorials-2011/unix_long_jobs`). ::
+
+
+ % cd ~/2013-khmer-counting/pipeline
+ % make KHMER=/usr/local/src/khmer
+
+Once it successfully completes, copy the data over to the ../data/ directory::
+
+ % make copydata
+
+Run the ipython notebook server::
+
+ % cd ../notebook
+ % ipython notebook --pylab=inline --no-browser --ip=* --port=80 &
+
+Connect into the ipython notebook (it will be running at 'http://<your EC2 hostname>'); if the above command succeeded but you can't connect in, you probably forgot to enable port 80 on your EC2 firewall.
+
+Once you're connected in, select the 'khmer-counting' notebook (should be the
+only one on the list) and open it.  Once open, go to the 'Cell...' menu
+and select 'Run all'.
+
+
+Now go back to the command line and execute::
+
+ % cd ../
+ % make
+
+and voila, 'diginorm.pdf' will contain the paper with the figures you just
+created.

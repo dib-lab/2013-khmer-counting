@@ -21,160 +21,161 @@ copydata:
 clean:
 	rm -f `cat clean-list.txt`
 
-# khmer benchmark
-/usr/bin/time -o bloom_1_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_22.kh iowa_prairie_0920.fa.1 
-/usr/bin/time -o bloom_1_1_22.time2 abundance-dist.py bloom_1_1_22.kh iowa_prairie_0920.fa.1 bloom_1_1_22.hist
-/usr/bin/time -o bloom_1_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_22.kh iowa_prairie_0920.fa.1
-/usr/bin/time -o bloom_1_1_22.time2 abundance-dist.py bloom_1_1_22.kh iowa_prairie_0920.fa.1 bloom_1_1_22.hist
-/usr/bin/time -o bloom_2_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 bloom_2_1_22.kh iowa_prairie_0920.fa.2
-/usr/bin/time -o bloom_2_1_22.time2 abundance-dist.py bloom_2_1_22.kh iowa_prairie_0920.fa.2 bloom_2_1_22.hist
-/usr/bin/time -o bloom_3_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 bloom_3_1_22.kh iowa_prairie_0920.fa.3
-/usr/bin/time -o bloom_3_1_22.time2 abundance-dist.py bloom_3_1_22.kh iowa_prairie_0920.fa.3 bloom_3_1_22.hist
-/usr/bin/time -o bloom_4_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 bloom_4_1_22.kh iowa_prairie_0920.fa.4
-/usr/bin/time -o bloom_4_1_22.time2 abundance-dist.py bloom_4_1_22.kh iowa_prairie_0920.fa.4 bloom_4_1_22.hist
-/usr/bin/time -o bloom_5_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 bloom_5_1_22.kh iowa_prairie_0920.fa.5
-/usr/bin/time -o bloom_5_1_22.time2 abundance-dist.py bloom_5_1_22.kh iowa_prairie_0920.fa.5 bloom_5_1_22.hist
-/usr/bin/time -o bloom_1_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 bloom_1_5_22.kh iowa_prairie_0920.fa.1
-/usr/bin/time -o bloom_1_5_22.time2 abundance-dist.py bloom_1_5_22.kh iowa_prairie_0920.fa.1 bloom_1_5_22.hist
-/usr/bin/time -o bloom_2_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 bloom_2_5_22.kh iowa_prairie_0920.fa.2
-/usr/bin/time -o bloom_2_5_22.time2 abundance-dist.py bloom_2_5_22.kh iowa_prairie_0920.fa.2 bloom_2_5_22.hist
-/usr/bin/time -o bloom_3_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 bloom_3_5_22.kh iowa_prairie_0920.fa.3
-/usr/bin/time -o bloom_3_5_22.time2 abundance-dist.py bloom_3_5_22.kh iowa_prairie_0920.fa.3 bloom_3_5_22.hist
-/usr/bin/time -o bloom_4_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 bloom_4_5_22.kh iowa_prairie_0920.fa.4
-/usr/bin/time -o bloom_4_5_22.time2 abundance-dist.py bloom_4_5_22.kh iowa_prairie_0920.fa.4 bloom_4_5_22.hist
-/usr/bin/time -o bloom_5_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_22.kh iowa_prairie_0920.fa.5
-/usr/bin/time -o bloom_5_5_22.time2 abundance-dist.py bloom_5_5_22.kh iowa_prairie_0920.fa.5 bloom_5_5_22.hist
-/usr/bin/time -o bloom_1_1_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_31.kh iowa_prairie_0920.fa.1
-/usr/bin/time -o bloom_1_1_31.time2 abundance-dist.py bloom_1_1_31.kh iowa_prairie_0920.fa.1 bloom_1_1_31.hist
-/usr/bin/time -o bloom_2_1_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 2789448361 --threads 8 bloom_2_1_31.kh iowa_prairie_0920.fa.2
-/usr/bin/time -o bloom_2_1_31.time2 abundance-dist.py bloom_2_1_31.kh iowa_prairie_0920.fa.2 bloom_2_1_31.hist
-/usr/bin/time -o bloom_3_1_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 3803756180 --threads 8 bloom_3_1_31.kh iowa_prairie_0920.fa.3
-/usr/bin/time -o bloom_3_1_31.time2 abundance-dist.py bloom_3_1_31.kh iowa_prairie_0920.fa.3 bloom_3_1_31.hist
-/usr/bin/time -o bloom_4_1_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 4657846829 --threads 8 bloom_4_1_31.kh iowa_prairie_0920.fa.4
-/usr/bin/time -o bloom_4_1_31.time2 abundance-dist.py bloom_4_1_31.kh iowa_prairie_0920.fa.4 bloom_4_1_31.hist
-/usr/bin/time -o bloom_5_1_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 5580911687 --threads 8 bloom_5_1_31.kh iowa_prairie_0920.fa.5
-/usr/bin/time -o bloom_5_1_31.time2 abundance-dist.py bloom_5_1_31.kh iowa_prairie_0920.fa.5 bloom_5_1_31.hist
-/usr/bin/time -o bloom_1_5_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 876416775 --threads 8 bloom_1_5_31.kh iowa_prairie_0920.fa.1
-/usr/bin/time -o bloom_1_5_31.time2 abundance-dist.py bloom_1_5_31.kh iowa_prairie_0920.fa.1 bloom_1_5_31.hist
-/usr/bin/time -o bloom_2_5_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 1656002238 --threads 8 bloom_2_5_31.kh iowa_prairie_0920.fa.2
-/usr/bin/time -o bloom_2_5_31.time2 abundance-dist.py bloom_2_5_31.kh iowa_prairie_0920.fa.2 bloom_2_5_31.hist
-/usr/bin/time -o bloom_3_5_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 2258162881 --threads 8 bloom_3_5_31.kh iowa_prairie_0920.fa.3
-/usr/bin/time -o bloom_3_5_31.time2 abundance-dist.py bloom_3_5_31.kh iowa_prairie_0920.fa.3 bloom_3_5_31.hist
-/usr/bin/time -o bloom_4_5_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 2765207947 --threads 8 bloom_4_5_31.kh iowa_prairie_0920.fa.4
-/usr/bin/time -o bloom_4_5_31.time2 abundance-dist.py bloom_4_5_31.kh iowa_prairie_0920.fa.4 bloom_4_5_31.hist
-/usr/bin/time -o bloom_5_5_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_31.kh iowa_prairie_0920.fa.5
-/usr/bin/time -o bloom_5_5_31.time2 abundance-dist.py bloom_5_5_31.kh iowa_prairie_0920.fa.5 bloom_5_5_31.hist
+benchmark:
+# khmer
+    time -o bloom_1_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_22.kh iowa_prairie_0920.fa.1 
+    time -o bloom_1_1_22.time2 abundance-dist.py bloom_1_1_22.kh iowa_prairie_0920.fa.1 bloom_1_1_22.hist
+    time -o bloom_1_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_22.kh iowa_prairie_0920.fa.1
+    time -o bloom_1_1_22.time2 abundance-dist.py bloom_1_1_22.kh iowa_prairie_0920.fa.1 bloom_1_1_22.hist
+    time -o bloom_2_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 bloom_2_1_22.kh iowa_prairie_0920.fa.2
+    time -o bloom_2_1_22.time2 abundance-dist.py bloom_2_1_22.kh iowa_prairie_0920.fa.2 bloom_2_1_22.hist
+    time -o bloom_3_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 bloom_3_1_22.kh iowa_prairie_0920.fa.3
+    time -o bloom_3_1_22.time2 abundance-dist.py bloom_3_1_22.kh iowa_prairie_0920.fa.3 bloom_3_1_22.hist
+    time -o bloom_4_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 bloom_4_1_22.kh iowa_prairie_0920.fa.4
+    time -o bloom_4_1_22.time2 abundance-dist.py bloom_4_1_22.kh iowa_prairie_0920.fa.4 bloom_4_1_22.hist
+    time -o bloom_5_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 bloom_5_1_22.kh iowa_prairie_0920.fa.5
+    time -o bloom_5_1_22.time2 abundance-dist.py bloom_5_1_22.kh iowa_prairie_0920.fa.5 bloom_5_1_22.hist
+    time -o bloom_1_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 bloom_1_5_22.kh iowa_prairie_0920.fa.1
+    time -o bloom_1_5_22.time2 abundance-dist.py bloom_1_5_22.kh iowa_prairie_0920.fa.1 bloom_1_5_22.hist
+    time -o bloom_2_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 bloom_2_5_22.kh iowa_prairie_0920.fa.2
+    time -o bloom_2_5_22.time2 abundance-dist.py bloom_2_5_22.kh iowa_prairie_0920.fa.2 bloom_2_5_22.hist
+    time -o bloom_3_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 bloom_3_5_22.kh iowa_prairie_0920.fa.3
+    time -o bloom_3_5_22.time2 abundance-dist.py bloom_3_5_22.kh iowa_prairie_0920.fa.3 bloom_3_5_22.hist
+    time -o bloom_4_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 bloom_4_5_22.kh iowa_prairie_0920.fa.4
+    time -o bloom_4_5_22.time2 abundance-dist.py bloom_4_5_22.kh iowa_prairie_0920.fa.4 bloom_4_5_22.hist
+    time -o bloom_5_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_22.kh iowa_prairie_0920.fa.5
+    time -o bloom_5_5_22.time2 abundance-dist.py bloom_5_5_22.kh iowa_prairie_0920.fa.5 bloom_5_5_22.hist
+    time -o bloom_1_1_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_31.kh iowa_prairie_0920.fa.1
+    time -o bloom_1_1_31.time2 abundance-dist.py bloom_1_1_31.kh iowa_prairie_0920.fa.1 bloom_1_1_31.hist
+    time -o bloom_2_1_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 2789448361 --threads 8 bloom_2_1_31.kh iowa_prairie_0920.fa.2
+    time -o bloom_2_1_31.time2 abundance-dist.py bloom_2_1_31.kh iowa_prairie_0920.fa.2 bloom_2_1_31.hist
+    time -o bloom_3_1_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 3803756180 --threads 8 bloom_3_1_31.kh iowa_prairie_0920.fa.3
+    time -o bloom_3_1_31.time2 abundance-dist.py bloom_3_1_31.kh iowa_prairie_0920.fa.3 bloom_3_1_31.hist
+    time -o bloom_4_1_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 4657846829 --threads 8 bloom_4_1_31.kh iowa_prairie_0920.fa.4
+    time -o bloom_4_1_31.time2 abundance-dist.py bloom_4_1_31.kh iowa_prairie_0920.fa.4 bloom_4_1_31.hist
+    time -o bloom_5_1_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 5580911687 --threads 8 bloom_5_1_31.kh iowa_prairie_0920.fa.5
+    time -o bloom_5_1_31.time2 abundance-dist.py bloom_5_1_31.kh iowa_prairie_0920.fa.5 bloom_5_1_31.hist
+    time -o bloom_1_5_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 876416775 --threads 8 bloom_1_5_31.kh iowa_prairie_0920.fa.1
+    time -o bloom_1_5_31.time2 abundance-dist.py bloom_1_5_31.kh iowa_prairie_0920.fa.1 bloom_1_5_31.hist
+    time -o bloom_2_5_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 1656002238 --threads 8 bloom_2_5_31.kh iowa_prairie_0920.fa.2
+    time -o bloom_2_5_31.time2 abundance-dist.py bloom_2_5_31.kh iowa_prairie_0920.fa.2 bloom_2_5_31.hist
+    time -o bloom_3_5_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 2258162881 --threads 8 bloom_3_5_31.kh iowa_prairie_0920.fa.3
+    time -o bloom_3_5_31.time2 abundance-dist.py bloom_3_5_31.kh iowa_prairie_0920.fa.3 bloom_3_5_31.hist
+    time -o bloom_4_5_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 2765207947 --threads 8 bloom_4_5_31.kh iowa_prairie_0920.fa.4
+    time -o bloom_4_5_31.time2 abundance-dist.py bloom_4_5_31.kh iowa_prairie_0920.fa.4 bloom_4_5_31.hist
+    time -o bloom_5_5_31.time1 load-into-counting.py --ksize 31 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_31.kh iowa_prairie_0920.fa.5
+    time -o bloom_5_5_31.time2 abundance-dist.py bloom_5_5_31.kh iowa_prairie_0920.fa.5 bloom_5_5_31.hist
 
 # Jellyfish benchmark
-/usr/bin/time -o jelly_1_22.time1 jellyfish count -m 22 -c 2 -C -s 701472602 -t 8 -o jelly_1_22 iowa_prairie_0920.fa.1
-/usr/bin/time -o jelly_1_22.time2 jellyfish histo -t 8 -o jelly_1_22.hist ./jelly_1_22_0
-/usr/bin/time -o jelly_2_22.time1 jellyfish count -m 22 -c 2 -C -s 1325442680 -t 8 -o jelly_2_22 iowa_prairie_0920.fa.2
-/usr/bin/time -o jelly_2_22.time2 jellyfish histo -t 8 -o jelly_2_22.hist ./jelly_2_22_0
-/usr/bin/time -o jelly_3_22.time1 jellyfish count -m 22 -c 2 -C -s 1807404236 -t 8 -o jelly_3_22 iowa_prairie_0920.fa.3
-/usr/bin/time -o jelly_3_22.time2 jellyfish histo -t 8 -o jelly_3_22.hist ./jelly_3_22_0
-/usr/bin/time -o jelly_4_22.time1 jellyfish count -m 22 -c 2 -C -s 2213236520 -t 8 -o jelly_4_22 iowa_prairie_0920.fa.4
-/usr/bin/time -o jelly_4_22.time2 jellyfish histo -t 8 -o jelly_4_22.hist ./jelly_4_22_0
-/usr/bin/time -o jelly_5_22.time1 jellyfish count -m 22 -c 2 -C -s 2651842796 -t 8 -o jelly_5_22 iowa_prairie_0920.fa.5
-/usr/bin/time -o jelly_5_22.time2 jellyfish histo -t 8 -o jelly_5_22.hist ./jelly_5_22_0
-/usr/bin/time -o jelly_1_31.time1 jellyfish count -m 31 -c 2 -C -s 701472602 -t 8 -o jelly_1_31 iowa_prairie_0920.fa.1
-/usr/bin/time -o jelly_1_31.time2 jellyfish histo -t 8 -o jelly_1_31.hist ./jelly_1_31_0
-/usr/bin/time -o jelly_2_31.time1 jellyfish count -m 31 -c 2 -C -s 1325442680 -t 8 -o jelly_2_31 iowa_prairie_0920.fa.2
-/usr/bin/time -o jelly_2_31.time2 jellyfish histo -t 8 -o jelly_2_31.hist ./jelly_2_31_0
-/usr/bin/time -o jelly_3_31.time1 jellyfish count -m 31 -c 2 -C -s 1807404236 -t 8 -o jelly_3_31 iowa_prairie_0920.fa.3
-/usr/bin/time -o jelly_3_31.time2 jellyfish histo -t 8 -o jelly_3_31.hist ./jelly_3_31_0
-/usr/bin/time -o jelly_4_31.time1 jellyfish count -m 31 -c 2 -C -s 2213236520 -t 8 -o jelly_4_31 iowa_prairie_0920.fa.4
-/usr/bin/time -o jelly_4_31.time2 jellyfish histo -t 8 -o jelly_4_31.hist ./jelly_4_31_0
-/usr/bin/time -o jelly_5_31.time1 jellyfish count -m 31 -c 2 -C -s 2651842796 -t 8 -o jelly_5_31 iowa_prairie_0920.fa.5
-/usr/bin/time -o jelly_5_31.time2 jellyfish histo -t 8 -o jelly_5_31.hist ./jelly_5_31_0
+    time -o jelly_1_22.time1 jellyfish count -m 22 -c 2 -C -s 701472602 -t 8 -o jelly_1_22 iowa_prairie_0920.fa.1
+    time -o jelly_1_22.time2 jellyfish histo -t 8 -o jelly_1_22.hist ./jelly_1_22_0
+    time -o jelly_2_22.time1 jellyfish count -m 22 -c 2 -C -s 1325442680 -t 8 -o jelly_2_22 iowa_prairie_0920.fa.2
+    time -o jelly_2_22.time2 jellyfish histo -t 8 -o jelly_2_22.hist ./jelly_2_22_0
+    time -o jelly_3_22.time1 jellyfish count -m 22 -c 2 -C -s 1807404236 -t 8 -o jelly_3_22 iowa_prairie_0920.fa.3
+    time -o jelly_3_22.time2 jellyfish histo -t 8 -o jelly_3_22.hist ./jelly_3_22_0
+    time -o jelly_4_22.time1 jellyfish count -m 22 -c 2 -C -s 2213236520 -t 8 -o jelly_4_22 iowa_prairie_0920.fa.4
+    time -o jelly_4_22.time2 jellyfish histo -t 8 -o jelly_4_22.hist ./jelly_4_22_0
+    time -o jelly_5_22.time1 jellyfish count -m 22 -c 2 -C -s 2651842796 -t 8 -o jelly_5_22 iowa_prairie_0920.fa.5
+    time -o jelly_5_22.time2 jellyfish histo -t 8 -o jelly_5_22.hist ./jelly_5_22_0
+    time -o jelly_1_31.time1 jellyfish count -m 31 -c 2 -C -s 701472602 -t 8 -o jelly_1_31 iowa_prairie_0920.fa.1
+    time -o jelly_1_31.time2 jellyfish histo -t 8 -o jelly_1_31.hist ./jelly_1_31_0
+    time -o jelly_2_31.time1 jellyfish count -m 31 -c 2 -C -s 1325442680 -t 8 -o jelly_2_31 iowa_prairie_0920.fa.2
+    time -o jelly_2_31.time2 jellyfish histo -t 8 -o jelly_2_31.hist ./jelly_2_31_0
+    time -o jelly_3_31.time1 jellyfish count -m 31 -c 2 -C -s 1807404236 -t 8 -o jelly_3_31 iowa_prairie_0920.fa.3
+    time -o jelly_3_31.time2 jellyfish histo -t 8 -o jelly_3_31.hist ./jelly_3_31_0
+    time -o jelly_4_31.time1 jellyfish count -m 31 -c 2 -C -s 2213236520 -t 8 -o jelly_4_31 iowa_prairie_0920.fa.4
+    time -o jelly_4_31.time2 jellyfish histo -t 8 -o jelly_4_31.hist ./jelly_4_31_0
+    time -o jelly_5_31.time1 jellyfish count -m 31 -c 2 -C -s 2651842796 -t 8 -o jelly_5_31 iowa_prairie_0920.fa.5
+    time -o jelly_5_31.time2 jellyfish histo -t 8 -o jelly_5_31.hist ./jelly_5_31_0
 
 # Tallymer benchmark
 
-/usr/bin/time -o suffix_1_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.1 -indexname 1_part1
-/usr/bin/time -o suffix_2_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.2 -indexname 2_part1
-/usr/bin/time -o suffix_3_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.3 -indexname 3_part1
-/usr/bin/time -o suffix_4_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.4 -indexname 4_part1
-/usr/bin/time -o suffix_5_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.5 -indexname 5_part1
+    time -o suffix_1_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.1 -indexname 1_part1
+    time -o suffix_2_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.2 -indexname 2_part1
+    time -o suffix_3_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.3 -indexname 3_part1
+    time -o suffix_4_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.4 -indexname 4_part1
+    time -o suffix_5_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.5 -indexname 5_part1
 
-/usr/bin/time -o suffix_1_part4.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.1 -indexname 1_part4 -parts 4
-/usr/bin/time -o suffix_2_part4.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.2 -indexname 2_part4 -parts 4
-/usr/bin/time -o suffix_3_part4.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.3 -indexname 3_part4 -parts 4
-/usr/bin/time -o suffix_4_part4.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.4 -indexname 4_part4 -parts 4
-/usr/bin/time -o suffix_5_part4.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.5 -indexname 5_part4 -parts 4
+    time -o suffix_1_part4.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.1 -indexname 1_part4 -parts 4
+    time -o suffix_2_part4.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.2 -indexname 2_part4 -parts 4
+    time -o suffix_3_part4.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.3 -indexname 3_part4 -parts 4
+    time -o suffix_4_part4.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.4 -indexname 4_part4 -parts 4
+    time -o suffix_5_part4.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.5 -indexname 5_part4 -parts 4
 
-/usr/bin/time -o mkindex_1_part1_22.time gt tallymer mkindex -mersize 22  -esa 1_part1 >1_part1_22.hist
-/usr/bin/time -o mkindex_2_part1_22.time gt tallymer mkindex -mersize 22  -esa 2_part1 >2_part1_22.hist
-/usr/bin/time -o mkindex_3_part1_22.time gt tallymer mkindex -mersize 22  -esa 3_part1 >3_part1_22.hist
-/usr/bin/time -o mkindex_4_part1_22.time gt tallymer mkindex -mersize 22  -esa 4_part1 >4_part1_22.hist
-/usr/bin/time -o mkindex_5_part1_22.time gt tallymer mkindex -mersize 22  -esa 5_part1 >5_part1_22.hist
-/usr/bin/time -o mkindex_1_part1_31.time gt tallymer mkindex -mersize 31  -esa 1_part1 >1_part1_31.hist
-/usr/bin/time -o mkindex_2_part1_31.time gt tallymer mkindex -mersize 31  -esa 2_part1 >2_part1_31.hist
-/usr/bin/time -o mkindex_3_part1_31.time gt tallymer mkindex -mersize 31  -esa 3_part1 >3_part1_31.hist
-/usr/bin/time -o mkindex_4_part1_31.time gt tallymer mkindex -mersize 31  -esa 4_part1 >4_part1_31.hist
-/usr/bin/time -o mkindex_5_part1_31.time gt tallymer mkindex -mersize 31  -esa 5_part1 >5_part1_31.hist
+    time -o mkindex_1_part1_22.time gt tallymer mkindex -mersize 22  -esa 1_part1 >1_part1_22.hist
+    time -o mkindex_2_part1_22.time gt tallymer mkindex -mersize 22  -esa 2_part1 >2_part1_22.hist
+    time -o mkindex_3_part1_22.time gt tallymer mkindex -mersize 22  -esa 3_part1 >3_part1_22.hist
+    time -o mkindex_4_part1_22.time gt tallymer mkindex -mersize 22  -esa 4_part1 >4_part1_22.hist
+    time -o mkindex_5_part1_22.time gt tallymer mkindex -mersize 22  -esa 5_part1 >5_part1_22.hist
+    time -o mkindex_1_part1_31.time gt tallymer mkindex -mersize 31  -esa 1_part1 >1_part1_31.hist
+    time -o mkindex_2_part1_31.time gt tallymer mkindex -mersize 31  -esa 2_part1 >2_part1_31.hist
+    time -o mkindex_3_part1_31.time gt tallymer mkindex -mersize 31  -esa 3_part1 >3_part1_31.hist
+    time -o mkindex_4_part1_31.time gt tallymer mkindex -mersize 31  -esa 4_part1 >4_part1_31.hist
+    time -o mkindex_5_part1_31.time gt tallymer mkindex -mersize 31  -esa 5_part1 >5_part1_31.hist
 
 
-/usr/bin/time -o mkindex_1_part4_22.time gt tallymer mkindex -mersize 22  -esa 1_part4 >1_part4_22.hist
-/usr/bin/time -o mkindex_2_part4_22.time gt tallymer mkindex -mersize 22  -esa 2_part4 >2_part4_22.hist
-/usr/bin/time -o mkindex_3_part4_22.time gt tallymer mkindex -mersize 22  -esa 3_part4 >3_part4_22.hist
-/usr/bin/time -o mkindex_4_part4_22.time gt tallymer mkindex -mersize 22  -esa 4_part4 >4_part4_22.hist
-/usr/bin/time -o mkindex_5_part4_22.time gt tallymer mkindex -mersize 22  -esa 5_part4 >5_part4_22.hist
-/usr/bin/time -o mkindex_1_part4_31.time gt tallymer mkindex -mersize 31  -esa 1_part4 >1_part4_31.hist
-/usr/bin/time -o mkindex_2_part4_31.time gt tallymer mkindex -mersize 31  -esa 2_part4 >2_part4_31.hist
-/usr/bin/time -o mkindex_3_part4_31.time gt tallymer mkindex -mersize 31  -esa 3_part4 >3_part4_31.hist
-/usr/bin/time -o mkindex_4_part4_31.time gt tallymer mkindex -mersize 31  -esa 4_part4 >4_part4_31.hist
-/usr/bin/time -o mkindex_5_part4_31.time gt tallymer mkindex -mersize 31  -esa 5_part4 >5_part4_31.hist
+    time -o mkindex_1_part4_22.time gt tallymer mkindex -mersize 22  -esa 1_part4 >1_part4_22.hist
+    time -o mkindex_2_part4_22.time gt tallymer mkindex -mersize 22  -esa 2_part4 >2_part4_22.hist
+    time -o mkindex_3_part4_22.time gt tallymer mkindex -mersize 22  -esa 3_part4 >3_part4_22.hist
+    time -o mkindex_4_part4_22.time gt tallymer mkindex -mersize 22  -esa 4_part4 >4_part4_22.hist
+    time -o mkindex_5_part4_22.time gt tallymer mkindex -mersize 22  -esa 5_part4 >5_part4_22.hist
+    time -o mkindex_1_part4_31.time gt tallymer mkindex -mersize 31  -esa 1_part4 >1_part4_31.hist
+    time -o mkindex_2_part4_31.time gt tallymer mkindex -mersize 31  -esa 2_part4 >2_part4_31.hist
+    time -o mkindex_3_part4_31.time gt tallymer mkindex -mersize 31  -esa 3_part4 >3_part4_31.hist
+    time -o mkindex_4_part4_31.time gt tallymer mkindex -mersize 31  -esa 4_part4 >4_part4_31.hist
+    time -o mkindex_5_part4_31.time gt tallymer mkindex -mersize 31  -esa 5_part4 >5_part4_31.hist
 
 # dsk benchmark
-/usr/bin/time -o dsk_1_22.time dsk iowa_prairie_0920.fa.1 22 -histo
-/usr/bin/time -o dsk_1_31.time dsk iowa_prairie_0920.fa.1 31 -histo
-/usr/bin/time -o dsk_2_22.time dsk iowa_prairie_0920.fa.2 22 -histo
-/usr/bin/time -o dsk_2_31.time dsk iowa_prairie_0920.fa.2 31 -histo
-/usr/bin/time -o dsk_3_22.time dsk iowa_prairie_0920.fa.3 22 -histo
-/usr/bin/time -o dsk_3_31.time dsk iowa_prairie_0920.fa.3 31 -histo
-/usr/bin/time -o dsk_4_22.time dsk iowa_prairie_0920.fa.4 22 -histo
-/usr/bin/time -o dsk_4_31.time dsk iowa_prairie_0920.fa.4 31 -histo
-/usr/bin/time -o dsk_5_22.time dsk iowa_prairie_0920.fa.5 22 -histo
-/usr/bin/time -o dsk_5_31.time dsk iowa_prairie_0920.fa.5 31 -histo
+    time -o dsk_1_22.time dsk iowa_prairie_0920.fa.1 22 -histo
+    time -o dsk_1_31.time dsk iowa_prairie_0920.fa.1 31 -histo
+    time -o dsk_2_22.time dsk iowa_prairie_0920.fa.2 22 -histo
+    time -o dsk_2_31.time dsk iowa_prairie_0920.fa.2 31 -histo
+    time -o dsk_3_22.time dsk iowa_prairie_0920.fa.3 22 -histo
+    time -o dsk_3_31.time dsk iowa_prairie_0920.fa.3 31 -histo
+    time -o dsk_4_22.time dsk iowa_prairie_0920.fa.4 22 -histo
+    time -o dsk_4_31.time dsk iowa_prairie_0920.fa.4 31 -histo
+    time -o dsk_5_22.time dsk iowa_prairie_0920.fa.5 22 -histo
+    time -o dsk_5_31.time dsk iowa_prairie_0920.fa.5 31 -histo
 
-/usr/bin/time -o dsk_1_22_60G.time dsk iowa_prairie_0920.fa.1 22 -m 60000 -histo 
-/usr/bin/time -o dsk_1_31_60G.time dsk iowa_prairie_0920.fa.1 31 -m 60000 -histo
-/usr/bin/time -o dsk_2_22_60G.time dsk iowa_prairie_0920.fa.2 22 -m 60000 -histo
-/usr/bin/time -o dsk_2_31_60G.time dsk iowa_prairie_0920.fa.2 31 -m 60000 -histo
-/usr/bin/time -o dsk_3_22_60G.time dsk iowa_prairie_0920.fa.3 22 -m 60000 -histo
-/usr/bin/time -o dsk_3_31_60G.time dsk iowa_prairie_0920.fa.3 31 -m 60000 -histo
-/usr/bin/time -o dsk_4_22_60G.time dsk iowa_prairie_0920.fa.4 22 -m 60000 -histo
-/usr/bin/time -o dsk_4_31_60G.time dsk iowa_prairie_0920.fa.4 31 -m 60000 -histo
-/usr/bin/time -o dsk_5_22_60G.time dsk iowa_prairie_0920.fa.5 22 -m 60000 -histo
-/usr/bin/time -o dsk_5_31_60G.time dsk iowa_prairie_0920.fa.5 31 -m 60000 -histo
+    time -o dsk_1_22_60G.time dsk iowa_prairie_0920.fa.1 22 -m 60000 -histo 
+    time -o dsk_1_31_60G.time dsk iowa_prairie_0920.fa.1 31 -m 60000 -histo
+    time -o dsk_2_22_60G.time dsk iowa_prairie_0920.fa.2 22 -m 60000 -histo
+    time -o dsk_2_31_60G.time dsk iowa_prairie_0920.fa.2 31 -m 60000 -histo
+    time -o dsk_3_22_60G.time dsk iowa_prairie_0920.fa.3 22 -m 60000 -histo
+    time -o dsk_3_31_60G.time dsk iowa_prairie_0920.fa.3 31 -m 60000 -histo
+    time -o dsk_4_22_60G.time dsk iowa_prairie_0920.fa.4 22 -m 60000 -histo
+    time -o dsk_4_31_60G.time dsk iowa_prairie_0920.fa.4 31 -m 60000 -histo
+    time -o dsk_5_22_60G.time dsk iowa_prairie_0920.fa.5 22 -m 60000 -histo
+    time -o dsk_5_31_60G.time dsk iowa_prairie_0920.fa.5 31 -m 60000 -histo
 
-/usr/bin/time -o dsk_1_22_100Gdisk.time dsk iowa_prairie_0920.fa.1 22 -d 100000 -histo 
-/usr/bin/time -o dsk_1_31_100Gdisk.time dsk iowa_prairie_0920.fa.1 31 -d 100000 -histo
-/usr/bin/time -o dsk_2_22_100Gdisk.time dsk iowa_prairie_0920.fa.2 22 -d 100000 -histo
-/usr/bin/time -o dsk_2_31_100Gdisk.time dsk iowa_prairie_0920.fa.2 31 -d 100000 -histo
-/usr/bin/time -o dsk_3_22_100Gdisk.time dsk iowa_prairie_0920.fa.3 22 -d 100000 -histo
-/usr/bin/time -o dsk_3_31_100Gdisk.time dsk iowa_prairie_0920.fa.3 31 -d 100000 -histo
-/usr/bin/time -o dsk_4_22_100Gdisk.time dsk iowa_prairie_0920.fa.4 22 -d 100000 -histo
-/usr/bin/time -o dsk_4_31_100Gdisk.time dsk iowa_prairie_0920.fa.4 31 -d 100000 -histo
-/usr/bin/time -o dsk_5_22_100Gdisk.time dsk iowa_prairie_0920.fa.5 22 -d 100000 -histo
-/usr/bin/time -o dsk_5_31_100Gdisk.time dsk iowa_prairie_0920.fa.5 31 -d 100000 -histo
-
-
+    time -o dsk_1_22_100Gdisk.time dsk iowa_prairie_0920.fa.1 22 -d 100000 -histo 
+    time -o dsk_1_31_100Gdisk.time dsk iowa_prairie_0920.fa.1 31 -d 100000 -histo
+    time -o dsk_2_22_100Gdisk.time dsk iowa_prairie_0920.fa.2 22 -d 100000 -histo
+    time -o dsk_2_31_100Gdisk.time dsk iowa_prairie_0920.fa.2 31 -d 100000 -histo
+    time -o dsk_3_22_100Gdisk.time dsk iowa_prairie_0920.fa.3 22 -d 100000 -histo
+    time -o dsk_3_31_100Gdisk.time dsk iowa_prairie_0920.fa.3 31 -d 100000 -histo
+    time -o dsk_4_22_100Gdisk.time dsk iowa_prairie_0920.fa.4 22 -d 100000 -histo
+    time -o dsk_4_31_100Gdisk.time dsk iowa_prairie_0920.fa.4 31 -d 100000 -histo
+    time -o dsk_5_22_100Gdisk.time dsk iowa_prairie_0920.fa.5 22 -d 100000 -histo
+    time -o dsk_5_31_100Gdisk.time dsk iowa_prairie_0920.fa.5 31 -d 100000 -histo
 
 
+
+check_fp_rate:
 # Assessment of false positive rate and miscount distribution
 
-python simulate_random_reads.py 1670000 3 0.03 44 random_reads_1.67M_3c_0.03e.fa random_genome_1M.fa
-python simulate_random_reads.py 2540000 3 0.00 44 random_reads_2.54M_3c_0.00e.fa random_genome_1M.fa
-head -176800 MH0001.trimmed.fa >MH0001.trimmed.head176800.fa
+    python simulate_random_reads.py 1670000 3 0.03 44 random_reads_1.67M_3c_0.03e.fa random_genome_1M.fa
+    python simulate_random_reads.py 2540000 3 0.00 44 random_reads_2.54M_3c_0.00e.fa random_genome_1M.fa
+    head -176800 MH0001.trimmed.fa >MH0001.trimmed.head176800.fa
 
-python fp_assessment.py fp_assessment.out
+    python fp_assessment.py fp_assessment.out
 
-
+check_error:
 # Investigation of sequencing error pattern by k-mer abundance distribution
 # raw data:ecoli_ref.fastq
 
 ecoli_ref.fastq.fasta: ecoli_ref.fastq.fastq
-	${KHMER}/sandbox/fastq-to-fasta.py ecoli_ref.fastq >ecoli_ref.fastq.fasta
+    ${KHMER}/sandbox/fastq-to-fasta.py ecoli_ref.fastq >ecoli_ref.fastq.fasta
 
 ecoli_ref.fastq.ht: ecoli_ref.fastq
     load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht ecoli_ref.fastq
@@ -204,19 +205,18 @@ ecoli_ref.fastq.fasta.pos32.abund=1: ecoli_ref.fastq.ht.k32
 # with error bar
 
 ecoli_ref.fastq.fasta.freq.newabun: ecoli_ref.fastq.fasta.freq
-	python abundance-hist-by-position-with-ster.py ecoli_ref.fastq.fasta.freq >ecoli_ref.fastq.fasta.freq.newabun
+    python abundance-hist-by-position-with-ster.py ecoli_ref.fastq.fasta.freq >ecoli_ref.fastq.fasta.freq.newabun
 
 ecoli_ref.fastq.fasta.freq32.newabun: ecoli_ref.fastq.fasta.freq32
-	python abundance-hist-by-position-with-ster.py ecoli_ref.fastq.fasta.freq32 >ecoli_ref.fastq.fasta.freq32.newabun
+    python abundance-hist-by-position-with-ster.py ecoli_ref.fastq.fasta.freq32 >ecoli_ref.fastq.fasta.freq32.newabun
 
 ecoli_ref.fastq.fasta.freq32.newabun.v2: ecoli_ref.fastq.fasta.freq32.newabun
-	python square_root.py ecoli_ref.fastq.fasta.freq32.newabun >ecoli_ref.fastq.fasta.freq32.newabun.v2
+    python square_root.py ecoli_ref.fastq.fasta.freq32.newabun >ecoli_ref.fastq.fasta.freq32.newabun.v2
 
 ecoli_ref.fastq.fasta.freq.newabun.v2: ecoli_ref.fastq.fasta.freq.newabun
-	python square_root.py ecoli_ref.fastq.fasta.freq.newabun >ecoli_ref.fastq.fasta.freq.newabun.v2
+    python square_root.py ecoli_ref.fastq.fasta.freq.newabun >ecoli_ref.fastq.fasta.freq.newabun.v2
 
-
-# abundance filtering
+#abundance_filtering:
 
 # hash table size: 1e8
 

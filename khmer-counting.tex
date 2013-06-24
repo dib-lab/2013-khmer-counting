@@ -143,9 +143,9 @@ Count-Min Sketch, a generalized probabilistic data structure for
 storing the frequency distributions of distinct elements
 \cite{Cormode2005}.  Our implementation is based on an extension of
 the Bloom filter, which has been previously used for k-mer counting
-and de Bruijn graph storage and traversal
-\cite{Bloom70} 
-  DBLP:journals/im/BroderM03,Melsted2011,pellpnas}.
+and de Bruijn graph storage and traversal.
+\cite{Bloom70} \cite{BroderM03} \cite{Melsted2011} \cite{Pell2012}
+
 
 % @CTB mention altmetirc
   
@@ -164,7 +164,7 @@ sequencing data sets, and in particular on metagenomic data sets.
 \subsection{Implementing a CountMin Sketch for k-mers}
 
 The implementation details are similar to those of the Bloom filter in
-\cite{pellpnas}, but with the use of 8 bit counters instead of 1 bit
+\cite{Pell2012}, but with the use of 8 bit counters instead of 1 bit
 counters.  Briefly, Z hash tables are allocated, each with a different
 size of approximately H bytes; the sum of these hash table sizes must
 fit within available main memory.  To increment the count for a
@@ -175,7 +175,7 @@ incremented by 1.  To retrieve the count for a k-mer, the same hash is
 computed and the minimum count across all hash tables is computed.
 While different in detail from the standard CountMin Sketch
 implementation, which uses a single hash table with many hash
-functions, the performance details are identical \cite{pellpnas}.
+functions, the performance details are identical \cite{Pell2012}.
 
 To analyze the false positive rate -- the probability with which a
 given k-mer count will be incorrect -- we can look at the hash table
@@ -232,7 +232,7 @@ same as its memory.
 \subsection{The measured counting error rate is low on short-read data}
 
 A large number of the k-mers in such high diversity metagenomics
-dataset are unique (cite Melsted). Here we use both real and simulated
+dataset are unique \cite{Melsted2011}. Here we use both real and simulated
 datasets to evaluate the counting performance in practice.  Our
 primary measure for evaluation is the {\em offset}, which is the
 difference between the true k-mer frequency and the frequency reported
@@ -443,7 +443,7 @@ diverse data sets, like simulated k-mers and real metagenomics data,
 in which larger proportion of k-mers are low abundance or unique due
 to sequencing errors.
 
-\subsection{khmer applications}
+\subsection{Khmer applications}
 
 For many applications, the accurate count of k-mers is not
 necessary. For example, when we want to eliminate reads with low
@@ -491,17 +491,36 @@ partitions can be calculated independently, either across multiple
 machines or iteratively on a single machine, and the results stored
 for later comparison or analysis.
 
-Runtime optimization. (Eric's work to summarize)
+Multi-core architectures are becoming more popular nowadays. It is 
+promising to try to take advantage of them using parallelization.
+However, because k-mer 
+counting problem relies on high throughput processing of data, I/O bandwidth 
+will be essential constraint beyond a certain point of parallelization.
+That said, we still implemented the parallelization in some degree. We
+have implemented a prefetch buffer in conjunction with direct input that
+can be used by multiple threads. Such parallel computing makes the good
+ scaling of the khmer software possible.
 
-In summary this is a generally useful approach. It can be widely used to
-deal with next generation sequencing short reads data sets effectively 
-and efficiently.
+In the future, after the basic performance issues is solved, we will be
+focused on the growing of the programmer's API. Currently Khmer has been
+widely used by many groups because of the versatility of this package. 
+It can not only do the routine k-mer counting or k-mer abundance distribution
+analysis as other k-mer counting tools, but also has a user-friendly API 
+which can be used to do more fancy job and many useful scripts working right 
+out of the box. Next We will still work on providing more well-characterized
+components that can be integrated into larger pipelines and providing more
+well tested use cases and documentation to make it more accessible to people
+lack of computing experience.
+
+
 
 \section{Conclusions}
 % 1. Fairly general solution given the error rates.
 % 2. Scales a wide range of applications.
 % 3. Tunable mem usage/fp rate.
-
+In summary this is a generally useful approach. It can be widely used to
+deal with next generation sequencing short reads data sets effectively 
+and efficiently.
 K-mer counting has been widely used in many bioinformatics problems,
 including data preprocessing for de novo assembly, repeat detection,
 sequencing coverage estimation. Here we present the khmer software
@@ -575,7 +594,7 @@ Jellyfish uses a hash table to store the k-mers and the size of the
 hash table can be modified by the user.  When the specified hash table
 size is not large enough and fills up, jellyfish writes it to the hard
 disk and initializes a new hash table to more k-mers.  Here we use a
-similar stratage as in \cite{XX} and chose the minimum size of the hash
+similar stratage as in \cite{Melsted2011} and chose the minimum size of the hashf 
 tables for Jellyfish so that all k-mers were stored in memory.
 
 We ran Jellyfish with the options as below:
@@ -595,7 +614,7 @@ prime number of counters $M$.  The hashing function for each hash
 table is fixed, and bijectively converts each DNA k-mer (for k $<=$ 32)
 into a 64-bit number to which the modulus of the hash table size is
 applied.  This provides $N$ distinct hash functions (see also
-\cite{kmer-percolation}).
+\cite{adina2013}).
 
 To increment the count associated with a k-mer, the counter associated
 with the hashed k-mer in each of the $N$ hash tables is incremented.
@@ -615,8 +634,9 @@ named khmer, written in C++ with a Python wrapper.  khmer is freely
 available under the BSD license at http://github.com/ged-lab/khmer/.
 
 The version of khmer used to generate the results below is available
-at @@@.  Scripts specific to this paper are available in the paper
-repository at @@@.
+at 
+bleeding-edge  http://github.com/ged-lab/khmer.git.(retrieved on 2013-05-31)  Scripts specific to this paper are available in the paper
+repository at https://github.com/ged-lab/2013-khmer-counting.
 
 
 
@@ -664,19 +684,19 @@ simulated\\genome without error}  \\
 %\graphicspath{./figure/}
 
 \begin{figure}
-\center{\includegraphics[width=5in]{./figure/cmp_time_v3}}
+\center{\includegraphics[width=5in]{./figure/time_benchmark}}
 \caption{Time usage of different khmer counting tools}
 \label{cmp_time}
 \end{figure}
 
 \begin{figure}
-\center{\includegraphics[width=5in]{./figure/cmp_mem_v3}}
+\center{\includegraphics[width=5in]{./figure/memory_benchmark}}
 \caption{Memory usage of different k-mer counting tools}
 \label{cmp_memory}
 \end{figure}
 
 \begin{figure}
-\center{\includegraphics[width=5in]{./figure/cmp_disk}}
+\center{\includegraphics[width=5in]{./figure/disk_benchmark}}
 \caption{Disk storage usage of different k-mer counting tools}
 \label{cmp_disk}
 \end{figure}
@@ -713,16 +733,3 @@ sizes(1e8 and 1e9) for a human gut microbiome metagenomic dataset(MH0001,
 42,458,402 reads)}
 \label{num_bad_reads}
 \end{figure}
-
-
-
-\begin{figure}
-\center{\includegraphics[width=5in]{./figure/perc_remaining_reads}}
-\caption{Percentage of incorrect reads in the remaining reads after iterating 
-filtering with hash tables with different sizes(1e8 and 1e9) for a human gut 
-microbiome metagenomic dataset(MH0001, 42,458,402 reads)}
-\label{perc_remaining_reads}
-\end{figure}
-
-\end{document}
-
