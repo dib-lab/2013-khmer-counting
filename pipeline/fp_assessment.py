@@ -1,4 +1,5 @@
-
+# check the relationship between counting offset and false positive rate
+#
 
 import khmer
 import sys
@@ -11,6 +12,7 @@ def process_file(filename,HT_SIZE_array):
     K = 12
 
     list_average_miscount = []
+    list_average_miscount_perc = []
     list_fp_miscount0 = []
 
     print filename
@@ -30,6 +32,7 @@ def process_file(filename,HT_SIZE_array):
                 ktable.count(kmer)
 
         list_miscount = []
+        list_miscount_perc = []
         total_kmer = 0 # total number of unique k-mers
         miscount0 = 0
         
@@ -38,23 +41,28 @@ def process_file(filename,HT_SIZE_array):
             if n:
                 total_kmer = total_kmer + 1
                 kmer2 = ktable.reverse_hash(i)
-                miscount = ht.get(kmer2) - ktable.get(kmer2)
+                miscount = ht.get(kmer2) - ktable.get(kmer2)######
+                miscount_perc = miscount/ktable.get(kmer2)
                 list_miscount.append(miscount)
+                list_miscount_perc.append(miscount_perc)
                 if miscount > 0:
                     miscount0 = miscount0 + 1
 
         average_miscount = float(sum(list_miscount))/len(list_miscount)
         list_average_miscount.append(average_miscount)
+        average_miscount_perc = float(sum(list_miscount_perc))/len(list_miscount_perc)
+        list_average_miscount_perc.append(average_miscount_perc)
+        
         fp_miscount0 = float(miscount0)/total_kmer
         list_fp_miscount0.append(fp_miscount0)
 
-    to_return = [list_average_miscount,list_fp_miscount0,total_kmer]
+    to_return = [list_average_miscount,list_fp_miscount0,total_kmer,list_average_miscount_perc]
     return to_return
 
 def write_result(file,result,file_out_fp):
     file = file+'\n'
     file_out_fp.write(file)
-    for i in range(2):
+    for i in [0,1,3]:
         r_list = result[i]
         line = ''
         for m in range(len(HT_SIZE_array)):
@@ -77,6 +85,7 @@ file_out_fp = open(file_out,'w')
 for file_name in file_lists:
     result = process_file(file_name,HT_SIZE_array)
     write_result(file_name,result,file_out_fp)
+    print result
 
     
 

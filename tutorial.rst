@@ -1,5 +1,5 @@
 ==========================================
-Running the diginorm paper script pipeline
+Running the Khmer paper script pipeline
 ==========================================
 
 :Date: June 20, 2013
@@ -49,7 +49,11 @@ sets::
 
  % curl -O http://athyra.ged.msu.edu/~qingpeng/2013-khmer-counting/pipeline-data-new.tar.gz
  % tar xzf pipeline-data-new.tar.gz
- 
+
+Move raw data to working directory
+ % cd pipeline-data-new
+ % mv * ~/2013-khmer-counting/pipeline
+
  
  Installing necessary software
 ---------------------------------------------
@@ -58,13 +62,34 @@ Before we get started, we need to install all the necessary softwares, including
 - Tallymer
 - Jellyfish
 - DSK
-- screed
-- khmer
 - ipython
 - latex
 
  % cd pipeline
  % bash software_install.sh
+
+
+Next you'll need to install our packages 'screed' and 'khmer'.
+In this case we're going to use the versions tagged for the paper sub.::
+
+ % cd /usr/local/src
+
+ % git clone git://github.com/ged-lab/screed.git
+ % cd screed
+ % git checkout 2012-paper-diginorm
+ % python setup.py install
+ % cd ..
+# retrieved on May31,2013
+ % git clone -b bleeding-edge  http://github.com/ged-lab/khmer.git khmer
+ % cd khmer
+ % make test
+ % cd ..
+
+ % echo 'export PYTHONPATH=/usr/local/src/khmer/python' >> ~/.bashrc
+ % echo 'export PATH=$PATH:/usr/local/src/khmer/scripts' >> ~/.bashrc
+ % echo 'export PATH=$PATH:/usr/local/src/khmer/sandbox' >> ~/.bashrc
+ % source ~/.bashrc
+
 
 OK, now all your software is installed, hurrah!
 
@@ -100,5 +125,5 @@ Now go back to the command line and execute::
  % cd ../
  % make
 
-and voila, 'diginorm.pdf' will contain the paper with the figures you just
+and voila, 'khmer-counting.pdf' will contain the paper with the figures you just
 created.
