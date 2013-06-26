@@ -1,11 +1,12 @@
-==========================================
-Running the Khmer paper script pipeline
-==========================================
+=======================================
+Running the khmer paper script pipeline
+=======================================
 
 :Date: June 20, 2013
 
-Here are some brief notes on how to run the pipeline for our 2013 Khmer paper
- on an Amazon EC2 rental instance.
+Here are some brief notes on how to run the pipeline for our 2013
+khmer counting paper on an Amazon EC2 rental instance.  Using these
+commands you should be able to completely recapitulate the paper.
 
 The instructions below will reproduce all of the figures in the paper,
 and will then compile the paper from scratch using the new figures.
@@ -22,11 +23,11 @@ below software installed.)
 .. https://github.com/ctb/khmer/tarball/2012-paper-diginorm
 
 Starting up a machine and get necessary data for reproduction 
----------------------------------------------
+-------------------------------------------------------------
 
 First, start up an EC2 instance using starcluster::
 
- % starcluster start -o -s 1 -i m2.2xlarge -n ami-999d49f0 pipeline
+ starcluster start -o -s 1 -i m2.2xlarge -n ami-999d49f0 pipeline
 
 You can also do this via the AWS console; just use ami-999d49f0, and
 start an instance with 30gb or more of memory.
@@ -37,7 +38,7 @@ notebook.
 
 Now, log in! ::
 
- % starcluster sshmaster pipeline
+ starcluster sshmaster pipeline
 
 (or just ssh in however you would normally do it.)
 
@@ -47,52 +48,55 @@ First go to /mnt/ because we do not have enough space in home directory.
 Now, check out the source repository and grab the initial data
 sets::
 
- % git clone git://github.com/ged-lab/2013-khmer-counting.git
- % cd 2013-khmer-counting
+ cd /mnt
+ git clone git://github.com/ged-lab/2013-khmer-counting.git
+ cd 2013-khmer-counting
 
- % curl -O http://athyra.ged.msu.edu/~qingpeng/2013-khmer-counting/pipeline-data-new.tar.gz
- % tar xzf pipeline-data-new.tar.gz
+ curl -O http://athyra.ged.msu.edu/~qingpeng/2013-khmer-counting/pipeline-data-new.tar.gz
+ tar xzf pipeline-data-new.tar.gz
 
-Move raw data to working directory
- % cd pipeline-data-new
- % mv * /mnt/2013-khmer-counting/pipeline
+Move raw data to working directory::
+
+ cd pipeline-data-new
+ mv * ~/2013-khmer-counting/pipeline
 
  
- Installing necessary software
----------------------------------------------
+Installing necessary software
+-----------------------------
 
-Before we get started, we need to install all the necessary softwares, including:
-- Tallymer
-- Jellyfish
-- DSK
-- ipython
-- latex
+Before we get started, we need to install all the necessary software, including:
 
- % cd pipeline
- % bash software_install.sh
+ - Tallymer
+ - Jellyfish
+ - DSK
+ - ipython
+ - latex
 
+To do so, run::
+
+ cd pipeline
+ bash software_install.sh
 
 Next you'll need to install our packages 'screed' and 'khmer'.
 In this case we're going to use the versions tagged for the paper sub.::
 
- % cd /usr/local/src
+ cd /usr/local/src
 
- % git clone git://github.com/ged-lab/screed.git
- % cd screed
- % git checkout 2012-paper-diginorm
- % python setup.py install
- % cd ..
-# retrieved on May31,2013
- % git clone -b bleeding-edge  http://github.com/ged-lab/khmer.git khmer
- % cd khmer
- % make test
- % cd ..
+ git clone git://github.com/ged-lab/screed.git -b 2012-paper-diginorm
+ cd screed
+ git checkout 2012-paper-diginorm
+ python setup.py install
+ cd ..
 
- % echo 'export PYTHONPATH=/usr/local/src/khmer/python' >> ~/.bashrc
- % echo 'export PATH=$PATH:/usr/local/src/khmer/scripts' >> ~/.bashrc
- % echo 'export PATH=$PATH:/usr/local/src/khmer/sandbox' >> ~/.bashrc
- % source ~/.bashrc
+ git clone -b bleeding-edge  http://github.com/ged-lab/khmer.git khmer
+ cd khmer
+ make test
+ cd ..
 
+ echo 'export PYTHONPATH=/usr/local/src/khmer/python' >> ~/.bashrc
+ echo 'export PATH=$PATH:/usr/local/src/khmer/scripts' >> ~/.bashrc
+ echo 'export PATH=$PATH:/usr/local/src/khmer/sandbox' >> ~/.bashrc
+ source ~/.bashrc
 
 OK, now all your software is installed, hurrah!
 
@@ -100,21 +104,21 @@ OK, now all your software is installed, hurrah!
 Running the pipeline
 --------------------
 
-Now go into the pipeline directory and run the pipeline.  This will take
-?-? hours, so you might want to do it in 'screen' (see :doc:`../tutorials-2011/unix_long_jobs`). ::
+Now go into the pipeline directory and run the pipeline.  This will take a few
+hours hours, so you might want to do it in 'screen' (see `"Running long jobs on
+UNIX" <http://ged.msu.edu/angus/tutorials-2011/unix_long_jobs.html>`__). ::
 
-
- % cd /mnt/2013-khmer-counting/pipeline
- % make KHMER=/usr/local/src/khmer
+ cd /mnt/2013-khmer-counting/pipeline
+ make KHMER=/usr/local/src/khmer
 
 Once it successfully completes, copy the data over to the ../data/ directory::
 
- % make copydata
+ make copydata
 
 Run the ipython notebook server::
 
- % cd ../notebook
- % ipython notebook --pylab=inline --no-browser --ip=* --port=80 &
+ cd ../notebook
+ ipython notebook --pylab=inline --no-browser --ip=* --port=80 &
 
 Connect into the ipython notebook (it will be running at 'http://<your EC2 hostname>'); if the above command succeeded but you can't connect in, you probably forgot to enable port 80 on your EC2 firewall.
 
