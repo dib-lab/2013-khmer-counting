@@ -20,7 +20,9 @@ cd ..
 # Install DSK
 wget http://minia.genouest.org/dsk/dsk-1.5031.tar.gz
 tar zxvf dsk-1.5031.tar.gz
+cd dsk-1.5031
 make
+cp dsk /usr/local/bin
 cd ..
 
 # Install ipython
