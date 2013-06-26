@@ -18,6 +18,9 @@
 % @CTB discuss tunable error rate.
 % @CTB mention altmetrics/popularity; API
 % @CTB put in 'diff' command in Makefile
+% @CTB abundance hist computation/comparison => text
+% @CTB for figure 1 (time) do we want x axis to be reads or k-mers? would argue
+%    reads, not k-mers.
 
 % @CTB new stuff/TODO for submission:
 % @CTB   put in full author names, etc
@@ -116,6 +119,7 @@ A variety of k-mer counting approaches, and standalone software
 packages implementing them, have emerged in recent years; this
 includes Tallymer\cite{Kurtz2008}, Jellyfish\cite{Marcais2011}, BF-Counter\cite{Melsted2011}, DSK\cite{Rizk2013}, KMC\cite{Deorowicz2013}, and Turtle (@cite).
 % @CTB see http://arxiv.org/abs/1305.1861)
+% @CTB include more discussion of BFcounter & turtle?
 These
 approaches and implementations each offer different algorithmic
 tradeoffs and different efficiencies, and enable a non-overlapping set
@@ -194,9 +198,11 @@ distribution, which must be determined empirically.  We analyze this below.
 
 \subsection{khmer can count k-mers efficiently}
 
-We measured the time and memory usage for k-mer counting in five soil
-metagenomic read data sets using khmer, Tallymer, and Jellyfish
-(Figure \ref{cmp_time} and Figure \ref{cmp_memory}).
+We measured the time and memory usage to calculate k-mer abundance
+histograms in five soil metagenomic read data sets using khmer,
+Tallymer, Jellyfish, and DSK (Figure \ref{cmp_time} and Figure
+\ref{cmp_memory}).  We chose to benchmark abundance histograms because
+this was a built-in feature common to all four software packages.
 
 Figure \ref{cmp_time} shows that the time usage of our khmer approach
 is comparable to Tallymer, but is slower than Jellyfish. From Figure
@@ -209,28 +215,39 @@ mkindex subroutine -- will always use more memory as the number of k-mers
 being counted increases.  For a 5 GB dataset with 2.7 billion total k-mers,
 Jellyfish uses 5 GB memory; Tallymer exceeds 24 GB of memory usage for
 a smaller 4 GB data set.
-% @CTB we need to choose data sets with the same k-mer #.
-In addition, the memory usage of khmer also increases
-linearly with data set size as long as we hold the error rate
-constant.  However, the memory usage of khmer varies substantially
-with the desired false positive rate: we can decrease the memory usage by increasing
-the false positive rate, as shown in Figure \ref{cmp_memory}.  We can also
-see from the figure that with a low counting error rate of 1\%, the
-memory usage is competitive with other programs.
 
-Another concern is the disk usage: both Jellyfish and Tallymer use
-large index files stored on the hard disk.  Figure \ref{cmp_disk}
-shows that the disk usage also increases linearly with the dataset
-size. For a dataset of 5 GB, the disk usage of both Jellyfish and
-Tallymer is around 30 GB.  khmer does not rely on any on-disk storage,
-although for practicality the hash tables can be saved for later
-reuse; thus the uncompressed disk usage for khmer in Figure \ref{cmp_disk} is the
+In addition, the memory usage of khmer also increases linearly with
+data set size as long as we hold the error rate constant.  However,
+the memory usage of khmer varies substantially with the desired false
+positive rate: we can decrease the memory usage by increasing the
+false positive rate, as shown in Figure \ref{cmp_memory}.  We can also
+see from the figure that with a low false positive rate of 1\%, the
+memory usage is competitive with other programs; with a higher 5\%
+false positive rate, the memory usage is better than all but the
+disk-based DSK.
+
+Another concern is disk usage: both Jellyfish and Tallymer use large
+index files stored on the hard disk.  Figure \ref{cmp_disk} shows that
+the disk usage also increases linearly with the dataset size. For a
+dataset of 5 GB, the disk usage of both Jellyfish and Tallymer is
+around 30 GB.  khmer does not rely on any on-disk storage, although
+for practicality the hash tables can be saved for later reuse; thus
+the uncompressed disk usage for khmer in Figure \ref{cmp_disk} is the
 same as its memory.
 
-% @CTB more discussions about DSK...
+DSK performs extremely well in memory, speed and disk space for
+calculating the abundance distribution of k-mers. However, in exchange
+for this efficiency, retrieving specific k-mer counts at random is
+likely to be quite slow, as DSK is optimized for iterating across
+partition sets of k-mers rather than retrieving individual k-mer
+counts.  For this reason, DSK is not a general solution to k-mer
+counting.  Since neither Tallymer nor Jellyfish have a programmatic
+API for retrieving specific k-mer counts, we could not compare
+performance for retrieving the counts of specific k-mers.
 
-% @CTB ref UW ...
-% @CTB include more discussion of BFcounter & turtle
+% @CTB ref UW QUIP?
+% @CTB is this the benchmark we should be doing? probably. sigh.
+% see last para :)
 
 \subsection{The measured counting error rate is low on short-read data}
 
@@ -248,12 +265,8 @@ Even when the counting error rate is as high as 0.9, which means that
 90\% of k-mers will have an incorrect count, the average offset can
 still be kept pretty low.
 
-% @CTB can you also show this figure with % miscount?
-% @QP this is the average offset(miscount) for all the k-mers with different counting
-% numbers. Does the % make sense?
 % @CTB what is the coverage of the simulated data sets?
 % @QP coverage=3
-% @CTB expand sentence!!
 
 
 \subsection{Sequencing error profiles can be measured with k-mer abundance
@@ -301,11 +314,10 @@ which can help scale de Bruijn graph based assembly methods.
 (@cite Qin MetaHIT paper, Mackelprang paper, and rumen paper, all of
 which used low abundance trimming for metagenomic data).
 
-Our k-mer counting approach is efficient for filtering reads based on
+The khmer k-mer counting approach can filter reads based on
 k-mer abundance, and can be used for arbitrary k. One approach to
 k-mer abundance filtering involves removing any read that contains
 even a single low-abundance k-mer.
-% @CTB are you using filter-abund? That trims, not removes. QP?
 This filtering can be implemented
 in two passes: the first pass for counting k-mers from reads and the
 second pass for filtering the reads. The counting error here manifests
@@ -315,11 +327,8 @@ flagged as low-abundance.  High counting error rate therefore manifest
 as "lenient" filtering, in which reads may not be properly
 removed. However, any read that is trimmed will be correctly
 trimmed. To reduce the effect of such counting error rate, we can do
-the filtering iteratively. After each run of filtering, some more
-reads with low-abundance k-mers will be discarded. This graceful
-degradation in the face of large amounts of data is a key property of
-this k-mer counting approach.
-% @CTB move this last sentence into discussion?
+the filtering iteratively; after each run of filtering, more
+reads with low-abundance k-mers will be discarded.
 
 As an example of this method, we filtered out reads with low abundance
 k-mers from a human gut microbiome metagenomic dataset (MH0001) with
@@ -334,7 +343,6 @@ From Figure \ref{num_remaining_reads}, we see that after each run,
 more low-abundance reads were discarded. With larger hash table, the
 low-abundance reads were discarded faster. On the other hand, from
 Figure \ref{num_remaining_reads}, we can see that after each
-% @CTB fix figure reference
 iteration of filtering, the percentage of ``bad'' reads - reads with
 unique k-mers - decreased. After four iterations, the percentage of
 bad reads was less than 4\%. The result showed that with our method
@@ -484,9 +492,13 @@ length of k-mer and the size of the sequence data set to count. Our
 method will never break an imposed memory bound, unlike some other
 methods.
 
+@CTB This graceful
+degradation in the face of large amounts of data is a key property of
+this k-mer counting approach.
+
 @CTB discuss API
 
-@CTB mention why we disqualify DSK
+@CTB mention again why we disqualify DSK
 
 \subsection{Future}
 
@@ -609,11 +621,13 @@ This behavior is configurable via a compile-time option.
 
 \subsection{Comparing with other k-mer counting programs}
 
-We counted the number of unique k-mers in five soil metagenomic reads
-datasets with different sizes using our khmer counting package and
-three other k-mer counting packages - Tallymer, Jellyfish and DSK- to compare
-the performance. To investigate the k-independence of k-mer counting,
-we used both k=22 and k=31.
+We generated k-mer abundance histograms from five soil metagenomic reads
+datasets of different sizes using our khmer counting package and
+three other k-mer counting packages - Tallymer, Jellyfish and DSK -  to compare
+performance.  We fixed k at 22.
+
+For khmer, we set hash table sizes to fix the false positive rate at
+either 1\% or 5\%, and used 8 threads in loading the data.
 
 Tallymer is from the genometools package version 1.3.4, and was run
 with the following options. For the suffixerator subroutine we used:
@@ -624,8 +638,7 @@ reduces the memory usage.  We separately used {\tt -parts 4} and {\tt
 
 For the mkindex subroutine, we used: {\tt -mersize 31} and {\tt -mersize 22}.
 
-Jellyfish is version 1.1.2 and the multithreading option is off. @CTB
-
+Jellyfish is version 1.1.2 and the multithreading option is set to 8 threads.
 
 Jellyfish uses a hash table to store the k-mers and the size of the
 hash table can be modified by the user.  When the specified hash table
@@ -724,7 +737,7 @@ simulated\\genome without error}  \\
 
 \begin{figure}
 \center{\includegraphics[width=5in]{./figure/time_benchmark}}
-\caption{Time usage of different khmer counting tools. @CTB x axis:reads?}
+\caption{Time usage of different khmer counting tools. @CTB :reads?}
 \label{cmp_time}
 \end{figure}
 
