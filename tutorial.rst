@@ -1,11 +1,12 @@
-==========================================
-Running the Khmer paper script pipeline
-==========================================
+=======================================
+Running the khmer paper script pipeline
+=======================================
 
 :Date: June 20, 2013
 
-Here are some brief notes on how to run the pipeline for our 2013 Khmer paper
- on an Amazon EC2 rental instance.
+Here are some brief notes on how to run the pipeline for our 2013
+khmer counting paper on an Amazon EC2 rental instance.  Using these
+commands you should be able to completely recapitulate the paper.
 
 The instructions below will reproduce all of the figures in the paper,
 and will then compile the paper from scratch using the new figures.
@@ -22,7 +23,7 @@ below software installed.)
 .. https://github.com/ctb/khmer/tarball/2012-paper-diginorm
 
 Starting up a machine and get necessary data for reproduction 
----------------------------------------------
+-------------------------------------------------------------
 
 First, start up an EC2 instance using starcluster::
 
@@ -61,11 +62,14 @@ Installing necessary software
 -----------------------------
 
 Before we get started, we need to install all the necessary software, including:
-- Tallymer
-- Jellyfish
-- DSK
-- ipython
-- latex
+
+ - Tallymer
+ - Jellyfish
+ - DSK
+ - ipython
+ - latex
+
+To do so, run::
 
  cd pipeline
  bash software_install.sh
@@ -97,8 +101,9 @@ OK, now all your software is installed, hurrah!
 Running the pipeline
 --------------------
 
-Now go into the pipeline directory and run the pipeline.  This will take
-?-? hours, so you might want to do it in 'screen' (see :doc:`../tutorials-2011/unix_long_jobs`). ::
+Now go into the pipeline directory and run the pipeline.  This will take a few
+hours hours, so you might want to do it in 'screen' (see `"Running long jobs on
+UNIX" <http://ged.msu.edu/angus/tutorials-2011/unix_long_jobs.html>`__). ::
 
  cd /mnt/2013-khmer-counting/pipeline
  make KHMER=/usr/local/src/khmer
