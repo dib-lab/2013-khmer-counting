@@ -21,12 +21,15 @@ copydata:
 clean:
 	rm -f `cat clean-list.txt`
 
-benchmark:
+bloom_1_1_22.hist:
 	time -o bloom_1_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_22.kh iowa_prairie_0920.fa.1
 	time -o bloom_1_1_22.time2 abundance-dist.py bloom_1_1_22.kh iowa_prairie_0920.fa.1 bloom_1_1_22.hist
 
+bloom_2_1_22.hist:
 	    time -o bloom_2_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 bloom_2_1_22.kh iowa_prairie_0920.fa.2
 	    time -o bloom_2_1_22.time2 abundance-dist.py bloom_2_1_22.kh iowa_prairie_0920.fa.2 bloom_2_1_22.hist
+
+benchmark: bloom_1_1_22.hist bloom_2_1_22.hist
 
 	time -o bloom_3_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 bloom_3_1_22.kh iowa_prairie_0920.fa.3
 	time -o bloom_3_1_22.time2 abundance-dist.py bloom_3_1_22.kh iowa_prairie_0920.fa.3 bloom_3_1_22.hist
@@ -124,11 +127,15 @@ check_error:
 
 	load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht ecoli_ref.fastq
 	python ${KHMER}/sandbox/fasta-to-abundance-hist.py ecoli_ref.fastq.ht ecoli_ref.fastq.fasta
+	#@CTB I think this should be replaced with scripts/abundance-dist.py?
+	# or not, leave this here and we will fix later.  But, I think you
+	# you can feed fastq files diretly into these.
 	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht ecoli_ref.fastq.fasta 
 
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 	python fasta-to-abundance-hist-k32.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq.fasta
 	python hi-lo-abundance-by-position-k32.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq.fasta 
+	# @CTB put in an mv afterwards to rename the files appropriately
 
 
 abundance_filtering:
@@ -158,6 +165,9 @@ abundance_filtering:
 	python filter-inexact-all_hs.py MH0001.trimmed.fa.out MH0001.trimmed.fa.out2 1000000000
 	python filter-inexact-all_hs.py MH0001.trimmed.fa.out2 MH0001.trimmed.fa.out3 1000000000
 	python filter-inexact-all_hs.py MH0001.trimmed.fa.out3 MH0001.trimmed.fa.out4 1000000000
+	% @CTB use filter-abund instead.
+	% basically, load-into-counting -x ... -N ... -k ... khfile seqfile
+	% then filter-abund.py khfile seqfile
 
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out >MH0001.trimmed.fa.out.unique
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out2 >MH0001.trimmed.fa.out2.unique
