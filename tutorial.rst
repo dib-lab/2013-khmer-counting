@@ -49,7 +49,11 @@ sets::
 
  % curl -O http://athyra.ged.msu.edu/~qingpeng/2013-khmer-counting/pipeline-data-new.tar.gz
  % tar xzf pipeline-data-new.tar.gz
- 
+
+Move raw data to working directory
+ % cd pipeline-data-new
+ % mv * ~/2013-khmer-counting/pipeline
+
  
  Installing necessary software
 ---------------------------------------------
