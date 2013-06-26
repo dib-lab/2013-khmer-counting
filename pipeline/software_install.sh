@@ -23,19 +23,6 @@ tar zxvf dsk-1.5031.tar.gz
 make
 cd ..
 
-# Install screed
-git clone git://github.com/ged-lab/screed.git
-cd screed
-git checkout 2012-paper-diginorm
-python setup.py install
-cd ..
-
-# Install khmer
-git clone -b bleeding-edge  http://github.com/ged-lab/khmer.git khmer
-cd khmer
-make test
-cd ..
-
 # Install ipython
 git clone https://github.com/ipython/ipython.git
 cd ipython
@@ -46,9 +33,7 @@ apt-get install texlive-latex-recommended
 
 # Install environment variables
 
-echo 'export PYTHONPATH=/usr/local/src/khmer/python' >> ~/.bashrc
-echo 'export PATH=$PATH:/usr/local/src/khmer/scripts' >> ~/.bashrc
-echo 'export PATH=$PATH:/usr/local/src/khmer/sandbox' >> ~/.bashrc
+
 echo 'export PATH=$PATH:/home/qingpeng/bin/dsk-1.5031' >> ~/.bashrc
 
 
