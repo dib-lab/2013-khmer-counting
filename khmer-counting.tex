@@ -24,12 +24,32 @@
 %      but that this is relatively straightforward.
 % @CTB reverse complement issues.
 % @CTB ref whatsisname paper
-
-\title{A probabilistic approach to k-mer counting}
-\author{QP, Jason, Eric McDonald, Rose, Adina, CTB}
-\begin{document}
 \bibliographystyle{plain}
-\maketitle
+
+\begin{document}
+
+
+
+% Title must be 150 characters or less
+\begin{flushleft}
+{\Large \textbf{A Probabilistic Approach to k-mer Counting} }
+% Insert Author names, affiliations and corresponding author email.
+\\
+Qingpeng Zhang$^{1}$, 
+Eric McDonald$^{1}$,
+Jason Pell$^{1}$,
+Rosangela Canino-Koning$^{1}$,
+Adina Chuang Howe$^{2,3}$,and 
+C. Titus Brown$^{1,2\ast}$
+\\
+\bf{1} Computer Science and Engineering, Michigan State University, East Lansing, MI, USA
+\\
+\bf{2} Microbiology and Molecular Genetics, Michigan State University, East Lansing, MI, USA
+\\
+\bf{3} Plant, Soil, and Microbial Sciences, Michigan State University, East Lansing, MI, USA
+\\
+$\ast$ E-mail: ctb@msu.edu
+\end{flushleft}
 
 \section{Abstract}
 
@@ -89,7 +109,7 @@ many erroneous k-mers with low abundance, we can optimize for more
 heavyweight computational approaches such as assembly by removing out
 reads with too many low-abundance k-mers prior to assembly. Similarly,
 we can estimate coverage and remove redundancy by analyzing k-mer
-distributions within reads \cite{diginorm}.  In both cases,
+distributions within reads \cite{Brown2012}.  In both cases,
 pre-assembly filtering of reads to reduce dataset sizes is a crucial
 component of time and memory reduction. Additionally, we can use k-mer
 counting to evaluate genome size and the coverage of sequencing reads,
@@ -151,7 +171,7 @@ and de Bruijn graph storage and traversal.
   
 The CountMin Sktech approach is particularly memory efficient, with
 memory usage that can significantly outperform exact data structures
-\cite{pellpnas, ConwayBromage}.  However, the use of a probabilistic
+ \cite{Pell2012}\cite{Conway2011}.  However, the use of a probabilistic
 data structure introduces counting errors, which have effects that
 must be analyzed in the context of specific problems.  Below, we
 compare CPU, memory and disk usage of our implementation with that of
@@ -421,7 +441,7 @@ sketch\cite{Cormode2005}, the offset between the incorrect count and
 actual count is related to the total number of k-mers in a dataset and
 the size of each hash table. Further study has shown that the behavior of
 Count-Min sketch depends on the characteristics of data set such as
-skewness\cite{Rusu2008}.
+skewness\cite{Rusu2008}\cite{CormodeM05}.
 
 Such probabilistic properties suit the next generation sequencing
 short reads data sets well; that is, the counts are not so wrong for
@@ -608,7 +628,7 @@ We ran DSK with default parameters.
 \subsection{Count-Min Sketch implementation}
 
 We implemented the Count-Min Sketch data structure, a simple
-probabilistic data structure for counting distinct elements (@cite).  Our
+probabilistic data structure for counting distinct elements \cite{Cormode2005}.  Our
 implementation uses $N$ independent hash tables, each containing a
 prime number of counters $M$.  The hashing function for each hash
 table is fixed, and bijectively converts each DNA k-mer (for k $<=$ 32)

@@ -41,6 +41,9 @@ Now, log in! ::
 
 (or just ssh in however you would normally do it.)
 
+First go to /mnt/ because we do not have enough space in home directory.
+ % cd /mnt/
+ 
 Now, check out the source repository and grab the initial data
 sets::
 
@@ -52,7 +55,7 @@ sets::
 
 Move raw data to working directory
  % cd pipeline-data-new
- % mv * ~/2013-khmer-counting/pipeline
+ % mv * /mnt/2013-khmer-counting/pipeline
 
  
  Installing necessary software
@@ -101,7 +104,7 @@ Now go into the pipeline directory and run the pipeline.  This will take
 ?-? hours, so you might want to do it in 'screen' (see :doc:`../tutorials-2011/unix_long_jobs`). ::
 
 
- % cd ~/2013-khmer-counting/pipeline
+ % cd /mnt/2013-khmer-counting/pipeline
  % make KHMER=/usr/local/src/khmer
 
 Once it successfully completes, copy the data over to the ../data/ directory::
