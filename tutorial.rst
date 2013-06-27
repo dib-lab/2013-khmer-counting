@@ -12,7 +12,7 @@ The instructions below will reproduce all of the figures in the paper,
 and will then compile the paper from scratch using the new figures.
 
 (Note that you can also start with ami-61885608, which has all the
-below software installed.)
+below software installed.) % not yet
 
 .. and the EC2 snapshot snap-09d7f173 has all
 .. of the data on it.  If you mount that volume and then cp -r everything
@@ -42,8 +42,9 @@ Now, log in! ::
 
 (or just ssh in however you would normally do it.)
 
-First go to /mnt/ because we do not have enough space in home directory.
- % cd /mnt/
+First go to /mnt/ because we do not have enough space in home directory::
+
+ cd /mnt/
  
 Now, check out the source repository and grab the initial data
 sets::
@@ -70,7 +71,7 @@ Before we get started, we need to install all the necessary software, including:
  - Jellyfish
  - DSK
  - ipython
- - latex
+ - LaTex
 
 To do so, run::
 
@@ -78,7 +79,7 @@ To do so, run::
  bash software_install.sh
 
 Next you'll need to install our packages 'screed' and 'khmer'.
-In this case we're going to use the versions tagged for the paper sub.::
+In this case we're going to use the versions tagged for the paper :: % not yet
 
  cd /usr/local/src
 
