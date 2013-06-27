@@ -202,71 +202,71 @@ MH0001-reads.mer:
 	gt tallymer mkindex -mersize 32 -minocc 1 -maxocc 1 -esa MH0001 -indexname MH0001-reads -counts -pl
 
 	# hash table size: 1e8
-e8_MH0001.trimmed.fa.abundfilt:
+e8_MH0001.trimmed.fa.abundfilt: MH0001.trimmed.fa
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 100000000 --threads 8 MH0001.trimmed.fa.kh MH0001.trimmed.fa
 	filter-abund.py MH0001.trimmed.fa.kh MH0001.trimmed.fa
 	mv MH0001.trimmed.fa.abundfilt e8_MH0001.trimmed.fa.abundfilt
 
-e8_MH0001.trimmed.fa.abundfilt.abundfilt:
+e8_MH0001.trimmed.fa.abundfilt.abundfilt: e8_MH0001.trimmed.fa.abundfilt
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 100000000 --threads 8 e8_MH0001.trimmed.fa.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt
 	filter-abund.py e8_MH0001.trimmed.fa.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt
 
-e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt:
+e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt: e8_MH0001.trimmed.fa.abundfilt.abundfilt
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 100000000 --threads 8 e8_MH0001.trimmed.fa.abundfilt.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt.abundfilt
 	filter-abund.py e8_MH0001.trimmed.fa.abundfilt.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt.abundfilt
 
-e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt:
+e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt: e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 100000000 --threads 8 e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	filter-abund.py e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	
-e8_MH0001.trimmed.fa.abundfilt.unique.sequence_id: MH0001-reads.mer
+e8_MH0001.trimmed.fa.abundfilt.unique.sequence_id: MH0001-reads.mer e8_MH0001.trimmed.fa.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e8_MH0001.trimmed.fa.abundfilt >e8_MH0001.trimmed.fa.abundfilt.unique
 	more e8_MH0001.trimmed.fa.abundfilt.unique |cut -f 1|sort -u >e8_MH0001.trimmed.fa.abundfilt.unique.sequence_id
 	
-e8_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+e8_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer e8_MH0001.trimmed.fa.abundfilt.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e8_MH0001.trimmed.fa.abundfilt.abundfilt >e8_MH0001.trimmed.fa.abundfilt.abundfilt.unique
 	more e8_MH0001.trimmed.fa.abundfilt.abundfilt.unique |cut -f 1|sort -u >e8_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id
 
-e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt >e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique
 	more e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique |cut -f 1|sort -u >e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id
 
-e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt >e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique
 	more e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique |cut -f 1|sort -u >e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id
 
 	# hash table size: 1e9
-e9_MH0001.trimmed.fa.abundfilt:
+e9_MH0001.trimmed.fa.abundfilt: MH0001.trimmed.fa
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 MH0001.trimmed.fa.kh MH0001.trimmed.fa
 	filter-abund.py MH0001.trimmed.fa.kh MH0001.trimmed.fa
-    mv MH0001.trimmed.fa.abundfilt e9_MH0001.trimmed.fa.abundfilt
-    
-e9_MH0001.trimmed.fa.abundfilt.abundfilt:
+	mv MH0001.trimmed.fa.abundfilt e9_MH0001.trimmed.fa.abundfilt
+
+e9_MH0001.trimmed.fa.abundfilt.abundfilt: e9_MH0001.trimmed.fa.abundfilt
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt
 	filter-abund.py e9_MH0001.trimmed.fa.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt
 
-e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt:
+e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt: e9_MH0001.trimmed.fa.abundfilt.abundfilt
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt
 	filter-abund.py e9_MH0001.trimmed.fa.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt
 
-e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt:
+e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt: e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	filter-abund.py e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	
 	
-e9_MH0001.trimmed.fa.abundfilt.unique.sequence_id: MH0001-reads.mer
+e9_MH0001.trimmed.fa.abundfilt.unique.sequence_id: MH0001-reads.mer e9_MH0001.trimmed.fa.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e9_MH0001.trimmed.fa.abundfilt >e9_MH0001.trimmed.fa.abundfilt.unique
 	more e9_MH0001.trimmed.fa.abundfilt.unique |cut -f 1|sort -u >e9_MH0001.trimmed.fa.abundfilt.unique.sequence_id
 	
-e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer e9_MH0001.trimmed.fa.abundfilt.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e9_MH0001.trimmed.fa.abundfilt.abundfilt >e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique
 	more e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique |cut -f 1|sort -u >e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id
 
-e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt >e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique
 	more e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique |cut -f 1|sort -u >e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id
 
-e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt >e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique
 	more e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique |cut -f 1|sort -u >e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id
 

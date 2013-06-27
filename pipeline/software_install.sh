@@ -30,6 +30,10 @@ git clone https://github.com/ipython/ipython.git
 cd ipython
 python setup.py install
 
+# Upgrade pyzmq, which is required by ipython notebook
+pip install pyzmq --upgrade
+
+
 # Upgrade the latex install with a few recommended packages
 apt-get install texlive-latex-recommended
 
