@@ -1,4 +1,4 @@
-KHMER=~/dev/khmer
+KHMER=/usr/local/src/khmer
 
 # khmer paper pipeline
 # raw data:
@@ -137,16 +137,16 @@ dsk: dsk_1_22.time dsk_2_22.time dsk_3_22.time dsk_4_22.time dsk_5_22.time
 dsk_1_22.time:
 	time -o dsk_1_22.time dsk iowa_prairie_0920.fa.1 22 -histo
 	
-dsk_2_22.time
+dsk_2_22.time:
 	time -o dsk_2_22.time dsk iowa_prairie_0920.fa.2 22 -histo
 	
-dsk_3_22.time
+dsk_3_22.time:
 	time -o dsk_3_22.time dsk iowa_prairie_0920.fa.3 22 -histo
 	
-dsk_4_22.time
+dsk_4_22.time:
 	time -o dsk_4_22.time dsk iowa_prairie_0920.fa.4 22 -histo
 	
-dsk_5_22.time
+dsk_5_22.time:
 	time -o dsk_5_22.time dsk iowa_prairie_0920.fa.5 22 -histo
 
 
@@ -169,73 +169,125 @@ MH0001.trimmed.head176800.fa:
 fp_assessment.out: random_kmers_1M_3c.fa random_reads_1.67M_3c_0.03e.fa random_reads_2.54M_3c_0.00e.fa MH0001.trimmed.head176800.fa
 	python fp_assessment.py fp_assessment.out
 
-check_error: ecoli_ref.fastq.fasta.pos.abund=1 ecoli_ref.fastq.fasta.pos32.abund=1
+#check_error: ecoli_ref.fastq.fasta.pos.abund\=1 ecoli_ref.fastq.fasta.pos32.abund\=1
 # Investigation of sequencing error pattern by k-mer abundance distribution
 # raw data:ecoli_ref.fastq
 
-ecoli_ref.fastq.ht:
-	load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht ecoli_ref.fastq
+#ecoli_ref.fastq.ht.k17:
+#	load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 
-ecoli_ref.fastq.fasta.pos.abund=1:
-	python ${KHMER}/sandbox/fasta-to-abundance-hist.py ecoli_ref.fastq.ht ecoli_ref.fastq.fasta
-	#@CTB I think this should be replaced with scripts/abundance-dist.py?
-	# or not, leave this here and we will fix later.  But, I think you
-	# you can feed fastq files diretly into these.
-	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht ecoli_ref.fastq.fasta 
 
-ecoli_ref.fastq.fasta.pos32.abund=1:
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
-	python fasta-to-abundance-hist-k32.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq.fasta
-	python hi-lo-abundance-by-position-k32.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq.fasta 
+#	#@CTB I think this should be replaced with scripts/abundance-dist.py?
+#	# or not, leave this here and we will fix later.  But, I think you
+#	# you can feed fastq files diretly into these.
+#ecoli_ref.fastq.fasta.pos17.abund1:
+#	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht.k17 ecoli_ref.fastq.fasta 
+
+
+#ecoli_ref.fastq.ht.k32:
+#	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
+	
+#ecoli_ref.fastq.fasta.pos32.abund\=1:
+#	python hi-lo-abundance-by-position-k32.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq.fasta 
 
 	# @CTB put in an mv afterwards to rename the files appropriately
 
 
 
-abundance_filtering:
+abundance_filtering: bad_reads.wc remaining_reads.wc
 
 	# step1 preprocess tallymer database
+MH0001-reads.mer:
 	gt suffixerator -dna -pl -tis -suf -lcp -v -parts 4 -db MH0001.trimmed.fa -indexname MH0001
 	gt tallymer mkindex -mersize 32 -minocc 1 -maxocc 1 -esa MH0001 -indexname MH0001-reads -counts -pl
 
 	# hash table size: 1e8
-	python filter-inexact-all_hs.py MH0001.trimmed.fa MH0001.trimmed.fa.out.e8 100000000
-	python filter-inexact-all_hs.py MH0001.trimmed.fa.out.e8 MH0001.trimmed.fa.out2.e8 100000000
-	python filter-inexact-all_hs.py MH0001.trimmed.fa.out2.e8 MH0001.trimmed.fa.out3.e8 100000000
-	python filter-inexact-all_hs.py MH0001.trimmed.fa.out3.e8 MH0001.trimmed.fa.out4.e8 100000000
+e8_MH0001.trimmed.fa.abundfilt:
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 100000000 --threads 8 MH0001.trimmed.fa.kh MH0001.trimmed.fa
+	filter-abund.py MH0001.trimmed.fa.kh MH0001.trimmed.fa
+	mv MH0001.trimmed.fa.abundfilt e8_MH0001.trimmed.fa.abundfilt
 
-	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out.e8 >MH0001.trimmed.fa.out.e8.unique
-	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out2.e8 >MH0001.trimmed.fa.out2.e8.unique
-	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out3.e8 >MH0001.trimmed.fa.out3.e8.unique
-	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out4.e8 >MH0001.trimmed.fa.out4.e8.unique
+e8_MH0001.trimmed.fa.abundfilt.abundfilt:
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 100000000 --threads 8 e8_MH0001.trimmed.fa.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt
+	filter-abund.py e8_MH0001.trimmed.fa.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt
 
-	more MH0001.trimmed.fa.out.e8.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out.e8.unique.sequence_id
-	more MH0001.trimmed.fa.out2.e8.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out2.e8.unique.sequence_id
-	more MH0001.trimmed.fa.out3.e8.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out3.e8.unique.sequence_id
-	more MH0001.trimmed.fa.out4.e8.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out4.e8.unique.sequence_id
+e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt:
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 100000000 --threads 8 e8_MH0001.trimmed.fa.abundfilt.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt.abundfilt
+	filter-abund.py e8_MH0001.trimmed.fa.abundfilt.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt.abundfilt
+
+e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt:
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 100000000 --threads 8 e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
+	filter-abund.py e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
+	
+e8_MH0001.trimmed.fa.abundfilt.unique.sequence_id: MH0001-reads.mer
+	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e8_MH0001.trimmed.fa.abundfilt >e8_MH0001.trimmed.fa.abundfilt.unique
+	more e8_MH0001.trimmed.fa.abundfilt.unique |cut -f 1|sort -u >e8_MH0001.trimmed.fa.abundfilt.unique.sequence_id
+	
+e8_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e8_MH0001.trimmed.fa.abundfilt.abundfilt >e8_MH0001.trimmed.fa.abundfilt.abundfilt.unique
+	more e8_MH0001.trimmed.fa.abundfilt.abundfilt.unique |cut -f 1|sort -u >e8_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id
+
+e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt >e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique
+	more e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique |cut -f 1|sort -u >e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id
+
+e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt >e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique
+	more e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique |cut -f 1|sort -u >e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id
 
 	# hash table size: 1e9
-	python filter-inexact-all_hs.py MH0001.trimmed.fa MH0001.trimmed.fa.out 1000000000
-	python filter-inexact-all_hs.py MH0001.trimmed.fa.out MH0001.trimmed.fa.out2 1000000000
-	python filter-inexact-all_hs.py MH0001.trimmed.fa.out2 MH0001.trimmed.fa.out3 1000000000
-	python filter-inexact-all_hs.py MH0001.trimmed.fa.out3 MH0001.trimmed.fa.out4 1000000000
+e9_MH0001.trimmed.fa.abundfilt:
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 MH0001.trimmed.fa.kh MH0001.trimmed.fa
+	filter-abund.py MH0001.trimmed.fa.kh MH0001.trimmed.fa
+    mv MH0001.trimmed.fa.abundfilt e9_MH0001.trimmed.fa.abundfilt
+    
+e9_MH0001.trimmed.fa.abundfilt.abundfilt:
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt
+	filter-abund.py e9_MH0001.trimmed.fa.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt
 
-	% @CTB use filter-abund instead.
-	% basically, load-into-counting -x ... -N ... -k ... khfile seqfile
-	% then filter-abund.py khfile seqfile
+e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt:
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt
+	filter-abund.py e9_MH0001.trimmed.fa.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt
 
+e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt:
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
+	filter-abund.py e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
+	
+	
+e9_MH0001.trimmed.fa.abundfilt.unique.sequence_id: MH0001-reads.mer
+	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e9_MH0001.trimmed.fa.abundfilt >e9_MH0001.trimmed.fa.abundfilt.unique
+	more e9_MH0001.trimmed.fa.abundfilt.unique |cut -f 1|sort -u >e9_MH0001.trimmed.fa.abundfilt.unique.sequence_id
+	
+e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e9_MH0001.trimmed.fa.abundfilt.abundfilt >e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique
+	more e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique |cut -f 1|sort -u >e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id
 
-	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out >MH0001.trimmed.fa.out.unique
-	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out2 >MH0001.trimmed.fa.out2.unique
-	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out3 >MH0001.trimmed.fa.out3.unique
-	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q MH0001.trimmed.fa.out4 >MH0001.trimmed.fa.out4.unique
+e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt >e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique
+	more e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique |cut -f 1|sort -u >e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id
 
-	more MH0001.trimmed.fa.out.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out.unique.sequence_id
-	more MH0001.trimmed.fa.out2.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out2.unique.sequence_id
-	more MH0001.trimmed.fa.out3.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out3.unique.sequence_id
-	more MH0001.trimmed.fa.out4.unique |cut -f 1|sort -u >MH0001.trimmed.fa.out4.unique.sequence_id
+e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer
+	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt >e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique
+	more e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique |cut -f 1|sort -u >e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id
 
 	# get the number of remaining reads and number of bad reads
-
+bad_reads.wc: e8_MH0001.trimmed.fa.abundfilt.unique.sequence_id \
+	e8_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id \
+	e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id \
+	e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id \
+	e9_MH0001.trimmed.fa.abundfilt.unique.sequence_id \
+	e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id \
+	e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id \
+	e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id 
+	
 	wc *.sequence_id >bad_reads.wc 
-	wc MH0001.trimmed.fa *.out *.out? *.out.e8 *.out?.e8 >remaining_reads.wc
+remaining_reads.wc: e8_MH0001.trimmed.fa.abundfilt \
+	e8_MH0001.trimmed.fa.abundfilt.abundfilt \
+	e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt \
+	e8_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt \
+	e9_MH0001.trimmed.fa.abundfilt \
+	e9_MH0001.trimmed.fa.abundfilt.abundfilt \
+	e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt \
+	e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
+	
+	wc MH0001.trimmed.fa *.abundfilt >remaining_reads.wc
