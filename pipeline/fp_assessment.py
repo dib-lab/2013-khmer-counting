@@ -71,7 +71,8 @@ def write_result(file,result,file_out_fp):
         file_out_fp.write(line)
         
 #ht_size = "100000,200000,400000"
-ht_size = "100000,200000,400000,600000,800000,1000000,1200000"
+#ht_size = "100000,200000,400000,600000,800000,1000000,1200000"
+ht_size = "100000,200000,400000,600000,800000,1000000,1200000,1400000,1800000,2200000,2600000,3000000,4000000,6000000"
 file_list = "MH0001.trimmed.head176800.fa,random_kmers_1M_3c.fa,random_reads_1.67M_3c_0.03e.fa,random_reads_2.54M_3c_0.00e.fa"
 file_out = sys.argv[1]
 

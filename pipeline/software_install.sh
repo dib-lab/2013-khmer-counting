@@ -20,13 +20,19 @@ cd ..
 # Install DSK
 wget http://minia.genouest.org/dsk/dsk-1.5031.tar.gz
 tar zxvf dsk-1.5031.tar.gz
+cd dsk-1.5031
 make
+cp dsk /usr/local/bin
 cd ..
 
 # Install ipython
 git clone https://github.com/ipython/ipython.git
 cd ipython
 python setup.py install
+
+# Upgrade pyzmq, which is required by ipython notebook
+pip install pyzmq --upgrade
+
 
 # Upgrade the latex install with a few recommended packages
 apt-get install texlive-latex-recommended
