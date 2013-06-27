@@ -16,6 +16,7 @@ cd jellyfish-1.1.10/
 make
 make install
 cd ..
+ldconfig
 
 # Install DSK
 wget http://minia.genouest.org/dsk/dsk-1.5031.tar.gz
@@ -35,14 +36,4 @@ pip install pyzmq --upgrade
 
 
 # Upgrade the latex install with a few recommended packages
-apt-get install texlive-latex-recommended
-
-# Install environment variables
-
-
-echo 'export PATH=$PATH:/home/qingpeng/bin/dsk-1.5031' >> ~/.bashrc
-
-
-source ~/.bashrc
-
-
+apt-get -y install texlive-latex-recommended
