@@ -2,7 +2,7 @@
 %% http://bibdesk.sourceforge.net/
 
 
-%% Created for Qingpeng Zhang at 2013-06-26 23:13:25 -0400 
+%% Created for Qingpeng Zhang at 2013-06-27 01:13:56 -0400 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
@@ -10,16 +10,82 @@
 
 
 @article{Howe2012,
-	Abstract = {Sequencing errors and biases in metagenomic datasets affect coverage-based assemblies and are often ignored during analysis. Here, we analyze read connectivity in metagenomes and identify the presence of problematic and likely a-biological connectivity within metagenome assembly graphs. Specifically, we identify highly connected sequences which join a large proportion of reads within each real metagenome. These sequences show position-specific bias in shotgun reads, suggestive of sequencing artifacts, and are only minimally incorporated into contigs by assembly. The removal of these sequences prior to assembly results in similar assembly content for most metagenomes and enables the use of graph partitioning to decrease assembly memory and time requirements.},
-	Author = {Adina Chuang Howe and Jason Pell and Rosangela Canino-Koning and Rachel Mackelprang and Susannah Tringe and Janet Jansson and James M. Tiedje and C. Titus Brown},
-	Date-Added = {2013-06-26 03:00:11 +0000},
-	Date-Modified = {2013-06-26 03:00:11 +0000},
-	Eprint = {1212.0159},
+	Abstract = {The large volumes of sequencing data required to sample complex environments deeply pose new challenges to sequence analysis approaches. De novo metagenomic assembly effectively reduces the total amount of data to be analyzed but requires significant computational resources. We apply two pre-assembly filtering approaches, digital normalization and partitioning, to make large metagenome assemblies more comput\ ationaly tractable. Using a human gut mock community dataset, we demonstrate that these methods result in assemblies nearly identical to assemblies from unprocessed data. We then assemble two large soil metagenomes from matched Iowa corn and native prairie soils. The predicted functional content and phylogenetic origin of the assembled contigs indicate significant taxonomic differences despite similar function. The assembly strategies presented are generic and can be extended to any metagenome; full source code is freely available under a BSD license.},
+	Author = {Adina Chuang Howe and Janet Jansson and Stephanie A. Malfatti and Susannah G. Tringe and James M. Tiedje and C. Titus Brown},
+	Date-Added = {2013-06-27 05:02:46 +0000},
+	Date-Modified = {2013-06-27 05:02:46 +0000},
+	Eprint = {1212.2832},
 	Month = {12},
-	Title = {Illumina Sequencing Artifacts Revealed by Connectivity Analysis of Metagenomic Datasets},
-	Url = {http://arxiv.org/abs/1212.0159},
+	Title = {Assembling large, complex environmental metagenomes},
+	Url = {http://arxiv.org/abs/1212.2832},
 	Year = {2012},
-	Bdsk-Url-1 = {http://arxiv.org/abs/1212.0159}}
+	Bdsk-Url-1 = {http://arxiv.org/abs/1212.2832}}
+
+@article{Kelley2010,
+	Abstract = {We introduce Quake, a program to detect and correct errors in DNA sequencing reads. Using a maximum likelihood approach incorporating quality values and nucleotide specific miscall rates, Quake achieves the highest accuracy on realistically simulated reads. We further demonstrate substantial improvements in de novo assembly and SNP detection after using Quake. Quake can be used for any size project, including more than one billion human reads, and is freely available as open source software from http://www.cbcb.umd.edu/software/quake.},
+	Author = {Kelley, David R and Schatz, Michael C and Salzberg, Steven L},
+	Date-Added = {2013-06-27 05:00:53 +0000},
+	Date-Modified = {2013-06-27 05:00:53 +0000},
+	Doi = {10.1186/gb-2010-11-11-r116},
+	Journal = {Genome Biol},
+	Journal-Full = {Genome biology},
+	Mesh = {Algorithms; Computational Biology; DNA, Bacterial; Escherichia coli; Genome, Human; Humans; Likelihood Functions; Models, Biological; Polymorphism, Single Nucleotide; Sequence Alignment; Sequence Analysis, DNA; Software},
+	Number = {11},
+	Pages = {R116},
+	Pmc = {PMC3156955},
+	Pmid = {21114842},
+	Pst = {ppublish},
+	Title = {Quake: quality-aware detection and correction of sequencing errors},
+	Volume = {11},
+	Year = {2010},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1186/gb-2010-11-11-r116}}
+
+@article{Medvedev2011,
+	Abstract = {MOTIVATION: The continuing improvements to high-throughput sequencing (HTS) platforms have begun to unfold a myriad of new applications. As a result, error correction of sequencing reads remains an important problem. Though several tools do an excellent job of correcting datasets where the reads are sampled close to uniformly, the problem of correcting reads coming from drastically non-uniform datasets, such as those from single-cell sequencing, remains open.
+RESULTS: In this article, we develop the method Hammer for error correction without any uniformity assumptions. Hammer is based on a combination of a Hamming graph and a simple probabilistic model for sequencing errors. It is a simple and adaptable algorithm that improves on other tools on non-uniform single-cell data, while achieving comparable results on normal multi-cell data.
+AVAILABILITY: http://www.cs.toronto.edu/~pashadag.
+CONTACT: pmedvedev@cs.ucsd.edu.},
+	Author = {Medvedev, Paul and Scott, Eric and Kakaradov, Boyko and Pevzner, Pavel},
+	Date-Added = {2013-06-27 04:55:52 +0000},
+	Date-Modified = {2013-06-27 04:55:52 +0000},
+	Doi = {10.1093/bioinformatics/btr208},
+	Journal = {Bioinformatics},
+	Journal-Full = {Bioinformatics (Oxford, England)},
+	Mesh = {Algorithms; Escherichia coli; High-Throughput Nucleotide Sequencing; Models, Statistical; Single-Cell Analysis},
+	Month = {Jul},
+	Number = {13},
+	Pages = {i137-41},
+	Pmc = {PMC3117386},
+	Pmid = {21685062},
+	Pst = {ppublish},
+	Title = {Error correction of high-throughput sequencing datasets with non-uniform coverage},
+	Volume = {27},
+	Year = {2011},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1093/bioinformatics/btr208}}
+
+@article{Roy2013,
+	Abstract = {Counting the frequencies of k-mers in read libraries is often a first step in the analysis of high-throughput sequencing experiments. Infrequent k-mers are assumed to be a result of sequencing errors. The frequent k-mers constitute a reduced but error-free representation of the experiment, which can inform read error correction or serve as the input to de novo assembly methods. Ideally, the memory requirement for counting should be linear in the number of frequent k-mers and not in the, typically much larger, total number of k-mers in the read library.},
+	Author = {Rajat Shuvro Roy and Debashish Bhattacharya and Alexander Schliep},
+	Date-Added = {2013-06-27 04:49:42 +0000},
+	Date-Modified = {2013-06-27 04:49:42 +0000},
+	Eprint = {1305.1861},
+	Month = {05},
+	Title = {Turtle: Identifying frequent k-mers with cache-efficient algorithms},
+	Url = {http://arxiv.org/abs/1305.1861},
+	Year = {2013},
+	Bdsk-Url-1 = {http://arxiv.org/abs/1305.1861}}
+
+@article{Chikhi2013,
+	Abstract = {Genome assembly tools based on the de Bruijn graph framework rely on a parameter k, which represents a trade-off between several competing effects that are difficult to quantify. There is currently a lack of tools that would automatically estimate the best k to use and/or quickly generate histograms of k-mer abundances that would allow the user to make an informed decision.},
+	Author = {Rayan Chikhi and Paul Medvedev},
+	Date-Added = {2013-06-27 04:48:37 +0000},
+	Date-Modified = {2013-06-27 04:48:37 +0000},
+	Eprint = {1304.5665},
+	Month = {04},
+	Title = {Informed and Automated k-Mer Size Selection for Genome Assembly},
+	Url = {http://arxiv.org/abs/1304.5665},
+	Year = {2013},
+	Bdsk-Url-1 = {http://arxiv.org/abs/1304.5665}}
 
 @article{Brown2012,
 	Abstract = {Deep shotgun sequencing and analysis of genomes, transcriptomes, amplified single-cell genomes, and metagenomes has enabled investigation of a wide range of organisms and ecosystems. However, sampling variation in short-read data sets and high sequencing error rates of modern sequencers present many new computational challenges in data interpretation. These challenges have led to the development of new classes of mapping tools and {\em de novo} assemblers. These algorithms are challenged by the continued improvement in sequencing throughput. We here describe digital normalization, a single-pass computational algorithm that systematizes coverage in shotgun sequencing data sets, thereby decreasing sampling variation, discarding redundant data, and removing the majority of errors. Digital normalization substantially reduces the size of shotgun data sets and decreases the memory and time requirements for {\em de novo} sequence assembly, all without significantly impacting content of the generated contigs. We apply digital normalization to the assembly of microbial genomic data, amplified single-cell genomic data, and transcriptomic data. Our implementation is freely available for use and modification.},
@@ -61,6 +127,7 @@
 
 @article{Minoche2011,
 	Abstract = {BACKGROUND: The generation and analysis of high-throughput sequencing data are becoming a major component of many studies in molecular biology and medical research. Illumina's Genome Analyzer (GA) and HiSeq instruments are currently the most widely used sequencing devices. Here, we comprehensively evaluate properties of genomic HiSeq and GAIIx data derived from two plant genomes and one virus, with read lengths of 95 to 150 bases.
+RESULTS: We provide quantifications and evidence for GC bias, error rates, error sequence context, effects of quality filtering, and the reliability of quality values. By combining different filtering criteria we reduced error rates 7-fold at the expense of discarding 12.5% of alignable bases. While overall error rates are low in HiSeq data we observed regions of accumulated wrong base calls. Only 3% of all error positions accounted for 24.7% of all substitution errors. Analyzing the forward and reverse strands separately revealed error rates of up to 18.7%. Insertions and deletions occurred at very low rates on average but increased to up to 2% in homopolymers. A positive correlation between read coverage and GC content was found depending on the GC content range.
 CONCLUSIONS: The errors and biases we report have implications for the use and the interpretation of Illumina sequencing data. GAIIx and HiSeq data sets show slightly different error profiles. Quality filtering is essential to minimize downstream analysis artifacts. Supporting previous recommendations, the strand-specificity provides a criterion to distinguish sequencing errors from low abundance polymorphisms.},
 	Author = {Minoche, Andr{\'e} E and Dohm, Juliane C and Himmelbauer, Heinz},
 	Date-Added = {2013-05-02 20:51:35 +0000},

@@ -130,7 +130,7 @@ set.  The high error rate (Illumina has a ~0.1-1\% per-base error rate) generate
 as the total number of
 reads generated increases, the total number of errors grows linearly,
 leading to data sets where the erroneous k-mers vastly outnumber the
-true k-mers \cite{ConwayBromage}.  Dealing with the resulting large numbers of k-mers, most of which
+true k-mers \cite{Conway2011}.  Dealing with the resulting large numbers of k-mers, most of which
 are erroneous, has become an unavoidable and challenging task
 \cite{Minoche2011}.
 
@@ -156,7 +156,7 @@ memory.
 Our motivation for exploring efficient k-mer counting comes from our
 work with metagenomic data, where we routinely encounter data sets
 that contain 300e12 bases of DNA and over 50 billion distinct k-mers
-\cite{adina2013}.  In order to efficiently filter, partition, and
+\cite{Howe2012}.  In order to efficiently filter, partition, and
 assemble these data, we need to store counts for each of these k-mers
 in main memory.  This has dictated our exploration of efficient
 in-memory k-mer counting techniques.
@@ -330,8 +330,8 @@ As discussed above, we can detect erroneous k-mers in high coverage
 data sets by finding low abundance k-mers.  Removing or trimming reads
 containing unique or low-abundance k-mers will remove many errors,
 which can help scale de Bruijn graph based assembly methods.
-(@cite Qin MetaHIT paper, Mackelprang paper, and rumen paper, all of
-which used low abundance trimming for metagenomic data).
+\cite{Qin2010} \cite{Hess2011} \cite{Mackelprang2011}
+% all of which used low abundance trimming for metagenomic data).
 
 The khmer k-mer counting approach can filter reads based on
 k-mer abundance, and can be used for arbitrary k. One approach to
@@ -398,7 +398,7 @@ The memory usage of khmer is also quite low for sparse data sets,
 especially since only main memory is used and no disk space is
 necessary beyond that required for the read data sets.  This is no
 surprise: the information theoretic comparison shown in
-\cite{pellpnas} shows that, for sparse sequencing data sets, Bloom
+\cite{Pell2012} shows that, for sparse sequencing data sets, Bloom
 filters require considerably less memory than any possible exact
 information storage for a wide range of error rates and data set
 sparseness.
@@ -458,7 +458,7 @@ sketch\cite{Cormode2005}, the offset between the incorrect count and
 actual count is related to the total number of k-mers in a dataset and
 the size of each hash table. Further study has shown that the behavior of
 Count-Min sketch depends on the characteristics of data set such as
-skewness\cite{Rusu2008}\cite{CormodeM05}.
+skewness\cite{Rusu2008} \cite{CormodeM05}.
 
 Such probabilistic properties suit short reads from next
 generation sequencing data sets; that is, the counts
@@ -530,7 +530,7 @@ for each partition. Partitioning k-mer space into $N$ partitions
 results in a linear decrease in the number of k-mers under
 consideration, thus reducing the occupancy by a constant factor $n$
 and correspondingly reducing the collision rate.  This is similar to
-the approach taken by DSK @cite.
+the approach taken by DSK \cite{Rizk2013}.
 
 % @CTB combine
 Partitioning k-mer space is a generalization of the systematic
