@@ -62,7 +62,7 @@ analysis, including data preprocessing for de novo assembly, repeat
 detection, and sequencing coverage estimation.  Recently, a number of
 new k-mer counting libraries have emerged to handle the increasing
 amount of data available from sequencing platforms; these libraries
-offer various tradeoffs between memory and disk usage.
+offer various trade-offs between memory and disk usage.
 
 \paragraph{Results:}
 
@@ -72,7 +72,7 @@ sets. Unlike previous methods based on data structures such as hash
 tables, suffix arrays, and trie structures, khmer relies entirely on a
 simple probabilistic data structure, a Count-Min Sketch.  On sparse
 data sets, this data structure is considerably more memory efficient
-than any exact data structure.  The tradeoff for this memory
+than any exact data structure.  The trade-off for this memory
 efficiency is that the use of a Count-Min Sketch introduces a
 systematic positive overcount for k-mers.  Here we analyze the
 analysis speed, memory usage, and miscount rate of our Count-Min
@@ -90,7 +90,7 @@ The Count-Min Sketch, as implemented in khmer, is an effective and
 efficient tool for k-mer counting in biological sequences.  In
 particular, the miscount behavior of the Count-Min Sketch performs
 well on error-prone short-read sequencing data.  We show that the
-khmer package offers an efficient set of tradeoffs for certain k-mer
+khmer package offers an efficient set of trade-offs for certain k-mer
 counting applications.  khmer is implemented in C++ wrapped with a
 Python interface, and is freely available under the BSD license at
 github.com/ged-lab/khmer.
@@ -105,7 +105,7 @@ counting plays an important role in many bioinformatics approaches,
 including data preprocessing for de novo assembly, repeat detection,
 and sequencing coverage estimation
 
-One particular application of k-mer freqency analysis is the detection
+One particular application of k-mer frequency analysis is the detection
 and removal of sequencing errors.  Because sequencing errors generate
 many erroneous k-mers with low abundance, we can optimize for more
 heavyweight computational approaches such as assembly by removing
@@ -116,7 +116,7 @@ pre-assembly filtering of reads to reduce dataset sizes is a crucial
 component of time and memory reduction. Additionally, we can use k-mer
 counting to evaluate genome size and the coverage of sequencing reads,
 which can help determine parameter settings and analyze assembly
-results (@cite - KmerGenie?). K-mer counting can also give important information for
+results \cite{Chikhi2013}. K-mer counting can also give important information for
 predicting regions with repetitive elements such as
 transposons \cite{Kurtz2008}.
 
@@ -136,20 +136,20 @@ are erroneous, has become an unavoidable and challenging task
 
 A variety of k-mer counting approaches, and standalone software
 packages implementing them, have emerged in recent years; this
-includes Tallymer\cite{Kurtz2008}, Jellyfish\cite{Marcais2011}, BF-Counter\cite{Melsted2011}, DSK\cite{Rizk2013}, KMC\cite{Deorowicz2013}, and Turtle (@cite).
+includes Tallymer\cite{Kurtz2008}, Jellyfish\cite{Marcais2011}, BF-Counter\cite{Melsted2011}, DSK\cite{Rizk2013}, KMC\cite{Deorowicz2013}, and Turtle\cite{Roy2013}.
 % @CTB see http://arxiv.org/abs/1305.1861)
 % @CTB include more discussion of BFcounter & turtle?
 These
 approaches and implementations each offer different algorithmic
-tradeoffs and different efficiencies, and enable a non-overlapping set
+trade-offs and different efficiencies, and enable a non-overlapping set
 of functionality.  Tallymer uses a suffix tree to store k-mer counts
 in memory and on disk.  Jellyfish stores k-mer counts in in-memory
 hash tables, and makes use of disk storage to scale to larger
-data sets.  BF-Counter uses a Bloom filter as a prefilter to avoid
+data sets.  BF-Counter uses a Bloom filter as a pre-filter to avoid
 counting unique k-mers, and is the first published probabilistic approach
 to k-mer counting.  DSK adopts a streaming approach to k-mers that
 enables time- and memory-efficient k-mer counting with an explicit
-tradeoff between disk and memory usage.  And KMC relies primarily
+trade-off between disk and memory usage.  And KMC relies primarily
 on fast and inexpensive disk access to count k-mers in very little
 memory.
 
@@ -292,12 +292,12 @@ still be kept pretty low.
 profiles in reads}
 
 One specific use for khmer is detecting random sequencing errors by
-looking at the k-mer spectrum within reads (@cite Pevzner spectral
-analysis).  Low-abundance k-mers contained in a high-coverage data set
+looking at the k-mer spectrum within reads \cite{Medvedev2011}
+. Low-abundance k-mers contained in a high-coverage data set
 typically represent random sequencing errors, and a variety of read
 trimming and error correcting tools use k-mer counting to reduce the
 error content of the read data set, independent of quality scores or
-reference genomes (@CTB for example...? Quake?).  This is an application where the counting error
+reference genomes \cite{Kelley2010}.  This is an application where the counting error
 effect of the CountMin Sketch approach used by khmer may be particularly tolerable,
 because khmer never underestimates counts, so will never falsely call an erroneous k-mer.
 
@@ -368,7 +368,7 @@ bad reads was less than 4\%. The result showed that with our method
 nearly 40\% of the original reads were discarded by removing the
 low-abundance reads with an acceptable false positive rate (less than
 4\% after four iterations of filtering). This reduces the memory and
-time requirements considerably in follow-on assembly (@cite adina/large metagenomes).
+time requirements considerably in follow-on assembly \cite{Howe2012}.
 
 % @CTB what is the initial false positive rate here? It'd be nice
 % to show how iterative filtering can lead to substantial improvements
@@ -417,8 +417,8 @@ we use 1 byte to store the count of each k-mer in the data
 structure. This means that the maximum count for a k-mer will be 255.
 In cases where tracking bigger counts is required, khmer also provides an
 option to use an STL map data structure to store counts above 255,
-with the tradeoff of significantly higher memory usage.  In the
-future, we may extend khmer to counters of arbitrary bitsizes.
+with the trade-off of significantly higher memory usage.  In the
+future, we may extend khmer to counters of arbitrary bit sizes.
 
 \subsection{khmer scales k-mer counting significantly and usefully}
 
@@ -427,7 +427,7 @@ counting packages, we can conclude that for large metagenomic
 datasets, it becomes impractical to count k-mers using Jellyfish and
 Tallymer because of the high memory and disk usage.  (What about DSK?
 @CTB) However, the khmer counting approach can do the counting in
-lower memory and disk usage, although with the tradeoff of
+lower memory and disk usage, although with the trade-off of
 inaccuracy. For sparse data sets like metagenomic sequencing reads,
 this memory usage is better than any possible exact counting scheme,
 \cite{Pell2012}.  More generally, we show above that for sequencing
@@ -494,7 +494,7 @@ next step. Another
 example is measuring sequencing error profiles within reads using k-mer abundance
 profiles. As shown in above section, we can
 use the abundance distribution of unique k-mers, since the counting
-errors from collison will not influence the count of these unique
+errors from collision will not influence the count of these unique
 k-mers. Furthermore, because the rate of inaccurate counting can be
 predicted, we can adjust the parameters of the data
 structure to make sure the count accuracy satisfies our downstream
@@ -548,7 +548,7 @@ However, because k-mer
 counting problem relies on high throughput processing of data, I/O bandwidth 
 will be essential constraint beyond a certain point of parallelization.
 That said, we still implemented the parallelization in some degree. We
-have implemented a prefetch buffer in conjunction with direct input that
+have implemented a pre-fetch buffer in conjunction with direct input that
 can be used by multiple threads. Such parallel computing makes the good
  scaling of the khmer software possible.
 
@@ -663,7 +663,7 @@ Jellyfish uses a hash table to store the k-mers and the size of the
 hash table can be modified by the user.  When the specified hash table
 size is not large enough and fills up, jellyfish writes it to the hard
 disk and initializes a new hash table to more k-mers.  Here we use a
-similar stratage as in \cite{Melsted2011} and chose the minimum size of the hashf 
+similar strategy as in \cite{Melsted2011} and chose the minimum size of the hash 
 tables for Jellyfish so that all k-mers were stored in memory.
 
 We ran Jellyfish with the options as below:
