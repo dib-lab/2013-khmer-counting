@@ -169,27 +169,27 @@ MH0001.trimmed.head176800.fa:
 fp_assessment.out: random_kmers_1M_3c.fa random_reads_1.67M_3c_0.03e.fa random_reads_2.54M_3c_0.00e.fa MH0001.trimmed.head176800.fa
 	python fp_assessment.py fp_assessment.out
 
-#check_error: ecoli_ref.fastq.fasta.pos.abund\=1 ecoli_ref.fastq.fasta.pos32.abund\=1
+check_error: ecoli_ref.fastq.fasta.pos17.abund1 ecoli_ref.fastq.fasta.pos32.abund1
 # Investigation of sequencing error pattern by k-mer abundance distribution
 # raw data:ecoli_ref.fastq
 
-#ecoli_ref.fastq.ht.k17:
-#	load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
+ecoli_ref.fastq.ht.k17: ecoli_ref.fastq
+	load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 
 
 #	#@CTB I think this should be replaced with scripts/abundance-dist.py?
 #	# or not, leave this here and we will fix later.  But, I think you
-#	# you can feed fastq files diretly into these.
-#ecoli_ref.fastq.fasta.pos17.abund1:
-#	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht.k17 ecoli_ref.fastq.fasta 
+#	# you can feed fastq files directly into these.
+ecoli_ref.fastq.fasta.pos17.abund1: ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
+	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
+	mv ecoli_ref.fastq.pos.abund\=1 ecoli_ref.fastq.pos17.abund1
 
-
-#ecoli_ref.fastq.ht.k32:
-#	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
+ecoli_ref.fastq.ht.k32: ecoli_ref.fastq
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 	
-#ecoli_ref.fastq.fasta.pos32.abund\=1:
-#	python hi-lo-abundance-by-position-k32.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq.fasta 
-
+ecoli_ref.fastq.fasta.pos32.abund1: ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
+	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
+	mv ecoli_ref.fastq.pos.abund\=1 ecoli_ref.fastq.pos32.abund1
 	# @CTB put in an mv afterwards to rename the files appropriately
 
 
