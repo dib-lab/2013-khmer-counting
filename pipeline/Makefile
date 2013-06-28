@@ -10,12 +10,12 @@ KHMER=/usr/local/src/khmer
 #	MH0001.trimmed.fa
 #	ecoli_ref.fastq
 
-all: benchmark check_fp_rate check_error abundance_filtering counts
+all: benchmark jellyfish tallymer dsk check_fp_rate check_error abundance_filtering counts
 
 copydata:
 	rm -fr ../data/
 	mkdir ../data/
-	cp jelly_*_22.hist *.time *.abund=1 fp_assessment.out *.wc ../data/
+	cp jelly_*_22.hist *.time* ecoli_ref.fastq.pos*.abund1 fp_assessment.out *.wc ../data/
 
 
 clean:
@@ -72,7 +72,7 @@ bloom_5_5_22.hist:
 	time -o bloom_5_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_22.kh iowa_prairie_0920.fa.5
 	time -o bloom_5_5_22.time2 abundance-dist.py bloom_5_5_22.kh iowa_prairie_0920.fa.5 bloom_5_5_22.hist
 
-jellyfish: jelly_1_22.hist jelly_1_22.hist jelly_1_22.hist jelly_1_22.hist jelly_1_22.hist\
+jellyfish: jelly_1_22.hist jelly_2_22.hist jelly_3_22.hist jelly_4_22.hist jelly_5_22.hist\
     jelly_1_31.hist jelly_2_31.hist jelly_3_31.hist jelly_4_31.hist jelly_5_31.hist
 	# Jellyfish benchmark k=22 and k=31
 
