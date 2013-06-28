@@ -67,7 +67,7 @@ bloom_5_5_22.hist:
 jellyfish: jelly_1_22.hist jelly_1_22.hist jelly_1_22.hist jelly_1_22.hist jelly_1_22.hist\
     jelly_1_31.hist jelly_2_31.hist jelly_3_31.hist jelly_4_31.hist jelly_5_31.hist
 	# Jellyfish benchmark k=22 and k=31
-	
+
 jelly_1_22.hist:
 	time -o jelly_1_22.time1 jellyfish count -m 22 -c 2 -C -s 701472602 -t 8 -o jelly_1_22 iowa_prairie_0920.fa.1
 	time -o jelly_1_22.time2 jellyfish histo -t 8 -o jelly_1_22.hist ./jelly_1_22_0
@@ -114,7 +114,7 @@ tallymer: 1_part1_22.hist 2_part1_22.hist 3_part1_22.hist 4_part1_22.hist 5_part
 1_part1_22.hist:
 	time -o suffix_1_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.1 -indexname 1_part1
 	time -o mkindex_1_part1_22.time gt tallymer mkindex -mersize 22  -esa 1_part1 >1_part1_22.hist
-	
+
 2_part1_22.hist:
 	time -o suffix_2_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.2 -indexname 2_part1
 	time -o mkindex_2_part1_22.time gt tallymer mkindex -mersize 22  -esa 2_part1 >2_part1_22.hist
@@ -122,11 +122,11 @@ tallymer: 1_part1_22.hist 2_part1_22.hist 3_part1_22.hist 4_part1_22.hist 5_part
 3_part1_22.hist:
 	time -o suffix_3_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.3 -indexname 3_part1
 	time -o mkindex_3_part1_22.time gt tallymer mkindex -mersize 22  -esa 3_part1 >3_part1_22.hist
-	
+
 4_part1_22.hist:
 	time -o suffix_4_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.4 -indexname 4_part1
 	time -o mkindex_4_part1_22.time gt tallymer mkindex -mersize 22  -esa 4_part1 >4_part1_22.hist
-	
+
 5_part1_22.hist:
 	time -o suffix_5_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.5 -indexname 5_part1
 	time -o mkindex_5_part1_22.time gt tallymer mkindex -mersize 22  -esa 5_part1 >5_part1_22.hist
@@ -136,36 +136,36 @@ dsk: dsk_1_22.time dsk_2_22.time dsk_3_22.time dsk_4_22.time dsk_5_22.time
 	# dsk benchmark k=22
 dsk_1_22.time:
 	time -o dsk_1_22.time dsk iowa_prairie_0920.fa.1 22 -histo
-	
+
 dsk_2_22.time:
 	time -o dsk_2_22.time dsk iowa_prairie_0920.fa.2 22 -histo
-	
+
 dsk_3_22.time:
 	time -o dsk_3_22.time dsk iowa_prairie_0920.fa.3 22 -histo
-	
+
 dsk_4_22.time:
 	time -o dsk_4_22.time dsk iowa_prairie_0920.fa.4 22 -histo
-	
+
 dsk_5_22.time:
 	time -o dsk_5_22.time dsk iowa_prairie_0920.fa.5 22 -histo
 
 
 check_fp_rate: fp_assessment.out
 	# Assessment of false positive rate and miscount distribution
-	
+
 random_kmers_1M_3c.fa:
 	python get_random_kmers_1M_C3.py >random_kmers_1M_3c.fa
-	
+
 	# get random reads with the same number of unique k-mers 
 random_reads_1.67M_3c_0.03e.fa:
 	python simulate_random_reads.py 1670000 3 0.03 44 random_reads_1.67M_3c_0.03e.fa random_genome_1M.fa
-	
+
 random_reads_2.54M_3c_0.00e.fa:
 	python simulate_random_reads.py 2540000 3 0.00 44 random_reads_2.54M_3c_0.00e.fa random_genome_1M.fa
-	
+
 MH0001.trimmed.head176800.fa:
 	head -176800 MH0001.trimmed.fa >MH0001.trimmed.head176800.fa
-	
+
 fp_assessment.out: random_kmers_1M_3c.fa random_reads_1.67M_3c_0.03e.fa random_reads_2.54M_3c_0.00e.fa MH0001.trimmed.head176800.fa
 	python fp_assessment.py fp_assessment.out
 
@@ -186,7 +186,7 @@ ecoli_ref.fastq.pos17.abund1: ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 
 ecoli_ref.fastq.ht.k32: ecoli_ref.fastq
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
-	
+
 ecoli_ref.fastq.pos32.abund1: ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 	mv ecoli_ref.fastq.pos.abund\=1 ecoli_ref.fastq.pos32.abund1
@@ -218,11 +218,11 @@ e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt: e10_MH0001.trimmed.fa.abund
 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt: e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	filter-abund.py e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
-	
+
 e10_MH0001.trimmed.fa.abundfilt.unique.sequence_id: MH0001-reads.mer e10_MH0001.trimmed.fa.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e10_MH0001.trimmed.fa.abundfilt >e10_MH0001.trimmed.fa.abundfilt.unique
 	more e10_MH0001.trimmed.fa.abundfilt.unique |cut -f 1|sort -u >e10_MH0001.trimmed.fa.abundfilt.unique.sequence_id
-	
+
 e10_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer e10_MH0001.trimmed.fa.abundfilt.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e10_MH0001.trimmed.fa.abundfilt.abundfilt >e10_MH0001.trimmed.fa.abundfilt.abundfilt.unique
 	more e10_MH0001.trimmed.fa.abundfilt.abundfilt.unique |cut -f 1|sort -u >e10_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id
@@ -252,12 +252,12 @@ e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt: e9_MH0001.trimmed.fa.abundfi
 e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt: e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	filter-abund.py e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
-	
-	
+
+
 e9_MH0001.trimmed.fa.abundfilt.unique.sequence_id: MH0001-reads.mer e9_MH0001.trimmed.fa.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e9_MH0001.trimmed.fa.abundfilt >e9_MH0001.trimmed.fa.abundfilt.unique
 	more e9_MH0001.trimmed.fa.abundfilt.unique |cut -f 1|sort -u >e9_MH0001.trimmed.fa.abundfilt.unique.sequence_id
-	
+
 e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id: MH0001-reads.mer e9_MH0001.trimmed.fa.abundfilt.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e9_MH0001.trimmed.fa.abundfilt.abundfilt >e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique
 	more e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique |cut -f 1|sort -u >e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id
@@ -279,7 +279,7 @@ bad_reads.wc: e10_MH0001.trimmed.fa.abundfilt.unique.sequence_id \
 	e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id \
 	e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id \
 	e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id 
-	
+
 	wc *.sequence_id >bad_reads.wc 
 remaining_reads.wc: e10_MH0001.trimmed.fa.abundfilt \
 	e10_MH0001.trimmed.fa.abundfilt.abundfilt \
@@ -289,5 +289,5 @@ remaining_reads.wc: e10_MH0001.trimmed.fa.abundfilt \
 	e9_MH0001.trimmed.fa.abundfilt.abundfilt \
 	e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt \
 	e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
-	
+
 	wc MH0001.trimmed.fa *.abundfilt >remaining_reads.wc
