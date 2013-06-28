@@ -44,6 +44,12 @@ bloom_5_1_22.hist:
 	time -o bloom_5_1_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 bloom_5_1_22.kh iowa_prairie_0920.fa.5
 	time -o bloom_5_1_22.time2 abundance-dist.py bloom_5_1_22.kh iowa_prairie_0920.fa.5 bloom_5_1_22.hist
 
+bloom_1_1_22.count.time: bloom_1_1_22.hist
+	time -o bloom_1_1_22.count.time python khmer-count-kmers.py bloom_1_1_22.kh kmerlist2
+
+bloom_5_1_22.count.time: bloom_5_1_22.hist
+	time -o bloom_5_1_22.count.time python khmer-count-kmers.py bloom_5_1_22.kh kmerlist2
+
 bloom_1_5_22.hist:
 	time -o bloom_1_5_22.time1 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 bloom_1_5_22.kh iowa_prairie_0920.fa.1
 	time -o bloom_1_5_22.time2 abundance-dist.py bloom_1_5_22.kh iowa_prairie_0920.fa.1 bloom_1_5_22.hist
@@ -72,6 +78,9 @@ jelly_1_22.hist:
 	time -o jelly_1_22.time1 jellyfish count -m 22 -c 2 -C -s 701472602 -t 8 -o jelly_1_22 iowa_prairie_0920.fa.1
 	time -o jelly_1_22.time2 jellyfish histo -t 8 -o jelly_1_22.hist ./jelly_1_22_0
 
+jelly_1_22.count.time: jelly_1_22.hist
+	time -o jelly_1_22.count.time bash jelly-search.sh jelly_1_22_0 kmerlist2
+
 jelly_2_22.hist:
 	time -o jelly_2_22.time1 jellyfish count -m 22 -c 2 -C -s 1325442680 -t 8 -o jelly_2_22 iowa_prairie_0920.fa.2
 	time -o jelly_2_22.time2 jellyfish histo -t 8 -o jelly_2_22.hist ./jelly_2_22_0
@@ -87,6 +96,9 @@ jelly_4_22.hist:
 jelly_5_22.hist:
 	time -o jelly_5_22.time1 jellyfish count -m 22 -c 2 -C -s 2651842796 -t 8 -o jelly_5_22 iowa_prairie_0920.fa.5
 	time -o jelly_5_22.time2 jellyfish histo -t 8 -o jelly_5_22.hist ./jelly_5_22_0
+
+jelly_5_22.count.time: jelly_5_22.hist
+	time -o jelly_5_22.count.time bash jelly-search.sh jelly_5_22_0 kmerlist2
 
 jelly_1_31.hist:
 	time -o jelly_1_31.time1 jellyfish count -m 31 -c 2 -C -s 701472602 -t 8 -o jelly_1_31 iowa_prairie_0920.fa.1
@@ -118,6 +130,9 @@ tallymer: 1_part1_22.hist 2_part1_22.hist 3_part1_22.hist 4_part1_22.hist 5_part
 1_part1_22.mct: 1_part1_22.hist
 	gt tallymer mkindex -mersize 22 -esa 1_part1 -counts -pl 8 -indexname 1_part1 -minocc 1
 
+1_part1_22.count.time: 1_part1.mct
+	time -o 1_part1_22.count.time bash tallymer-search.sh 1_part1 kmerlist2.fa
+
 2_part1_22.hist:
 	time -o suffix_2_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.2 -indexname 2_part1
 	time -o mkindex_2_part1_22.time gt tallymer mkindex -mersize 22  -esa 2_part1 >2_part1_22.hist
@@ -133,6 +148,12 @@ tallymer: 1_part1_22.hist 2_part1_22.hist 3_part1_22.hist 4_part1_22.hist 5_part
 5_part1_22.hist:
 	time -o suffix_5_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.5 -indexname 5_part1
 	time -o mkindex_5_part1_22.time gt tallymer mkindex -mersize 22  -esa 5_part1 >5_part1_22.hist
+
+5_part1_22.mct: 5_part1_22.hist
+	gt tallymer mkindex -mersize 22 -esa 5_part1 -counts -pl 8 -indexname 5_part1 -minocc 1
+
+5_part1_22.count.time: 5_part1.mct
+	time -o 5_part1_22.count.time bash tallymer-search.sh 5_part1 kmerlist2.fa
 
 
 dsk: dsk_1_22.time dsk_2_22.time dsk_3_22.time dsk_4_22.time dsk_5_22.time
@@ -180,9 +201,6 @@ ecoli_ref.fastq.ht.k17: ecoli_ref.fastq
 	load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 
 
-#	#@CTB I think this should be replaced with scripts/abundance-dist.py?
-#	# or not, leave this here and we will fix later.  But, I think you
-#	# you can feed fastq files directly into these.
 ecoli_ref.fastq.pos17.abund1: ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 	mv ecoli_ref.fastq.pos.abund\=1 ecoli_ref.fastq.pos17.abund1
@@ -193,8 +211,6 @@ ecoli_ref.fastq.ht.k32: ecoli_ref.fastq
 ecoli_ref.fastq.pos32.abund1: ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 	mv ecoli_ref.fastq.pos.abund\=1 ecoli_ref.fastq.pos32.abund1
-	# @CTB put in an mv afterwards to rename the files appropriately
-
 
 
 abundance_filtering: bad_reads.wc remaining_reads.wc
