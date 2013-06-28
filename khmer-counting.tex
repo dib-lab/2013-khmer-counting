@@ -22,9 +22,11 @@
 % @CTB abundance hist computation/comparison => text
 % @CTB for figure 1 (time) do we want x axis to be reads or k-mers? would argue
 %    reads, not k-mers.
+% @CTB for disk space, do we want to make it .gzipped?
+% @CTB emphasize annoying size of data, etc.
 
 % @CTB new stuff/TODO for submission:
-% @CTB   put in full author names, etc
+% @CTB   citation combine
 % @CTB   spellcheck
 % @CTB   put in github tag references
 % @CTB   ref the use of Amazon for benchmarks; cloud environment.
@@ -32,6 +34,7 @@
 % @CTB   add in k-mer search
 % @CTB   adjust to rayan's language
 % @CTB   do we add in .mct building into benchmarks?
+% @CTB   point out we are memory bound
 
 \begin{document}
 
@@ -72,7 +75,7 @@ offer various trade-offs between memory and disk usage.
 \paragraph{Results:}
 
 We present the khmer software package for fast and memory efficient
-counting of individual k-mer abundances in sequencing data
+online counting of individual k-mer abundances in sequencing data
 sets. Unlike previous methods based on data structures such as hash
 tables, suffix arrays, and trie structures, khmer relies entirely on a
 simple probabilistic data structure, a Count-Min Sketch.  On sparse
@@ -84,21 +87,23 @@ analysis speed, memory usage, and miscount rate of our Count-Min
 Sketch implementation for generating the k-mer frequency distribution
 in simulated and real sequencing data sets.  We also compare the
 performance of khmer to several other k-mer counting packages,
-Tallymer, Jellyfish, and DSK.  Finally, we present two applications of
-khmer on short-read sequencing data: first, doing reference-free error
-analysis of short-read data with k-mer abundances; and second,
-trimming errors from short reads.
+Tallymer, Jellyfish, and DSK.  We discuss the tradeoffs and benefits
+of khmer, which, while slower than Jellyfish and DSK, is very simple to
+implement and allows online updating of k-mer counts.  Finally, we
+present two applications of khmer on short-read sequencing data:
+first, doing reference-free error analysis of short-read data with
+k-mer abundances; and second, trimming errors from short reads.
 
 \paragraph{Conclusion:}
 
 The Count-Min Sketch, as implemented in khmer, is an effective and
-efficient tool for k-mer counting in biological sequences.  In
+efficient tool for online k-mer counting in biological sequences.  In
 particular, the miscount behavior of the Count-Min Sketch performs
 well on error-prone short-read sequencing data.  We show that the
-khmer package offers an efficient set of trade-offs for certain k-mer
+khmer package offers a useful set of trade-offs for certain k-mer
 counting applications.  khmer is implemented in C++ wrapped with a
-Python interface, and is freely available under the BSD license at
-github.com/ged-lab/khmer.
+Python interface, offers a tested and robust API, and is freely
+available under the BSD license at github.com/ged-lab/khmer.
 
 \section{Introduction}
 
@@ -110,20 +115,21 @@ counting plays an important role in many bioinformatics approaches,
 including data preprocessing for de novo assembly, repeat detection,
 and sequencing coverage estimation
 
-One particular application of k-mer frequency analysis is the detection
-and removal of sequencing errors.  Because sequencing errors generate
-many erroneous k-mers with low abundance, we can optimize for more
-heavyweight computational approaches such as assembly by removing
+One particular application of k-mer frequency analysis is the
+detection and removal of sequencing errors.  Because sequencing errors
+generate many erroneous k-mers with low abundance, we can optimize for
+more heavyweight computational approaches such as assembly by removing
 reads with too many low-abundance k-mers prior to assembly. Similarly,
 we can estimate coverage and remove redundancy by analyzing k-mer
 distributions within reads \cite{Brown2012}.  In both cases,
 pre-assembly filtering of reads to reduce dataset sizes is a crucial
-component of time and memory reduction. Additionally, we can use k-mer
-counting to evaluate genome size and the coverage of sequencing reads,
-which can help determine parameter settings and analyze assembly
-results \cite{Chikhi2013}. K-mer counting can also give important information for
-predicting regions with repetitive elements such as
-transposons \cite{Kurtz2008}.
+component of assembly time and memory reduction (cite SGA paper,
+Simpson JT). Additionally, we can use k-mer counting to evaluate
+genome size and the coverage of sequencing reads, which can help
+determine parameter settings and analyze assembly results
+\cite{Chikhi2013}. K-mer counting can also give important information
+for predicting regions with repetitive elements such as transposons
+\cite{Kurtz2008}.
 
 The central challenge for k-mer counting in short-read shotgun
 sequencing data set is that these data sets are both relatively sparse
@@ -160,11 +166,13 @@ memory.
 
 Our motivation for exploring efficient k-mer counting comes from our
 work with metagenomic data, where we routinely encounter data sets
-that contain 300e12 bases of DNA and over 50 billion distinct k-mers
+that contain $300^9$ bases of DNA and over 50 billion distinct k-mers
 \cite{Howe2012}.  In order to efficiently filter, partition, and
 assemble these data, we need to store counts for each of these k-mers
-in main memory.  This has dictated our exploration of efficient
-in-memory k-mer counting techniques.
+in main memory, and query and update them in realtime -- a set of
+functionality not readily offered by any current packages.  This has
+dictated our exploration of efficient in-memory k-mer counting
+techniques.
 
 Below, we describe an implementation of a simple probabilistic data
 structure for k-mer counting.  This data structure is based on a
@@ -173,7 +181,8 @@ storing the frequency distributions of distinct elements
 \cite{Cormode2005}.  Our implementation is based on an extension of
 a Bloom filter, which has been previously used for k-mer counting
 and de Bruijn graph storage and traversal
-\cite{Bloom70} \cite{BroderM03} \cite{Melsted2011} \cite{Pell2012}.
+\cite{Bloom70,BroderM03,Melsted2011,Pell2012}.
+% @CTB also cite Quip, Jones et al.
 
 
 The CountMin Sketch approach is particularly memory efficient, with
