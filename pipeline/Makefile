@@ -169,7 +169,7 @@ MH0001.trimmed.head176800.fa:
 fp_assessment.out: random_kmers_1M_3c.fa random_reads_1.67M_3c_0.03e.fa random_reads_2.54M_3c_0.00e.fa MH0001.trimmed.head176800.fa
 	python fp_assessment.py fp_assessment.out
 
-check_error: ecoli_ref.fastq.fasta.pos17.abund1 ecoli_ref.fastq.fasta.pos32.abund1
+check_error: ecoli_ref.fastq.pos17.abund1 ecoli_ref.fastq.pos32.abund1
 # Investigation of sequencing error pattern by k-mer abundance distribution
 # raw data:ecoli_ref.fastq
 
@@ -180,14 +180,14 @@ ecoli_ref.fastq.ht.k17: ecoli_ref.fastq
 #	#@CTB I think this should be replaced with scripts/abundance-dist.py?
 #	# or not, leave this here and we will fix later.  But, I think you
 #	# you can feed fastq files directly into these.
-ecoli_ref.fastq.fasta.pos17.abund1: ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
+ecoli_ref.fastq.pos17.abund1: ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 	mv ecoli_ref.fastq.pos.abund\=1 ecoli_ref.fastq.pos17.abund1
 
 ecoli_ref.fastq.ht.k32: ecoli_ref.fastq
 	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 	
-ecoli_ref.fastq.fasta.pos32.abund1: ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
+ecoli_ref.fastq.pos32.abund1: ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 	mv ecoli_ref.fastq.pos.abund\=1 ecoli_ref.fastq.pos32.abund1
 	# @CTB put in an mv afterwards to rename the files appropriately
@@ -203,20 +203,20 @@ MH0001-reads.mer:
 
 	# hash table size: 1e10
 e10_MH0001.trimmed.fa.abundfilt: MH0001.trimmed.fa
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 10000000000 --threads 8 MH0001.trimmed.fa.kh MH0001.trimmed.fa
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 MH0001.trimmed.fa.kh MH0001.trimmed.fa
 	filter-abund.py MH0001.trimmed.fa.kh MH0001.trimmed.fa
 	mv MH0001.trimmed.fa.abundfilt e10_MH0001.trimmed.fa.abundfilt
 
 e10_MH0001.trimmed.fa.abundfilt.abundfilt: e10_MH0001.trimmed.fa.abundfilt
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 10000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt
 	filter-abund.py e10_MH0001.trimmed.fa.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt
 
 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt: e10_MH0001.trimmed.fa.abundfilt.abundfilt
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 10000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt
 	filter-abund.py e10_MH0001.trimmed.fa.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt
 
 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt: e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 10000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
+	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	filter-abund.py e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 	
 e10_MH0001.trimmed.fa.abundfilt.unique.sequence_id: MH0001-reads.mer e10_MH0001.trimmed.fa.abundfilt
