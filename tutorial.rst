@@ -14,14 +14,6 @@ and will then compile the paper from scratch using the new figures.
 (Note that you can also start with ami-61885608, which has all the
 below software installed.) % not yet
 
-.. and the EC2 snapshot snap-09d7f173 has all
-.. of the data on it.  If you mount that volume and then cp -r everything
-.. into /mnt, you will have all the software and files below installed in
-.. the right place to run the pipline 'make' near the bottom.)
-
-.. put in sofwtare version .tgz download?
-.. https://github.com/ctb/khmer/tarball/2012-paper-diginorm
-
 Starting up a machine and get necessary data for reproduction 
 -------------------------------------------------------------
 
@@ -44,23 +36,16 @@ Now, log in! ::
 
 First go to /mnt/ because we do not have enough space in home directory::
 
- cd /mnt/
+ cd /mnt
  
 Now, check out the source repository and grab the initial data
 sets::
 
- cd /mnt
  git clone git://github.com/ged-lab/2013-khmer-counting.git
  cd 2013-khmer-counting
 
- curl -O http://athyra.ged.msu.edu/~qingpeng/2013-khmer-counting/pipeline-data-new.tar.gz
- tar xzf pipeline-data-new.tar.gz
-
-Move raw data to working directory::
-
- cd pipeline-data-new
- mv * ~/2013-khmer-counting/pipeline
-
+ curl -O http://athyra.ged.msu.edu/~t/2013-khmer-counting-data.tar.gz
+ tar xzf 2013-khmer-counting-data
  
 Installing necessary software
 -----------------------------
@@ -75,22 +60,25 @@ Before we get started, we need to install all the necessary software, including:
 
 To do so, run::
 
- cd pipeline
+ cd /mnt/2013-khmer-counting/pipeline
  bash software_install.sh
 
+.. @CTB fix tags
+
 Next you'll need to install our packages 'screed' and 'khmer'.
-In this case we're going to use the versions tagged for the paper :: % not yet
+In this case we're going to use the versions tagged for the paper ::
 
  cd /usr/local/src
 
- git clone git://github.com/ged-lab/screed.git -b 2012-paper-diginorm
+ git clone git://github.com/ged-lab/screed.git
  cd screed
- git checkout 2012-paper-diginorm
+ git checkout 2013-khmer-counting
  python setup.py install
  cd ..
 
- git clone -b bleeding-edge  http://github.com/ged-lab/khmer.git khmer
+ git clone http://github.com/ged-lab/khmer.git
  cd khmer
+ git checkout 2013-khmer-counting
  make test
  cd ..
 

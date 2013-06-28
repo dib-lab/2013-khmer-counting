@@ -3,14 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.8.1: http://docutils.sourceforge.net/" />
 <title>Running the khmer paper script pipeline</title>
 <meta name="date" content="June 20, 2013" />
 <style type="text/css">
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id$
+:Id: $Id: html4css1.css 7056 2011-06-17 10:50:48Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
@@ -78,7 +78,7 @@ div.tip p.admonition-title {
 
 div.attention p.admonition-title, div.caution p.admonition-title,
 div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title, .code .error {
+div.warning p.admonition-title {
   color: red ;
   font-weight: bold ;
   font-family: sans-serif }
@@ -250,18 +250,9 @@ pre.address {
   margin-top: 0 ;
   font: inherit }
 
-pre.literal-block, pre.doctest-block, pre.math, pre.code {
+pre.literal-block, pre.doctest-block, pre.math {
   margin-left: 2em ;
   margin-right: 2em }
-
-pre.code .ln { color: grey; } /* line numbers */
-pre.code, code { background-color: #eeeeee }
-pre.code .comment, code .comment { color: #5C6576 }
-pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
-pre.code .literal.string, code .literal.string { color: #0C5404 }
-pre.code .name.builtin, code .name.builtin { color: #352B84 }
-pre.code .deleted, code .deleted { background-color: #DEB0A1}
-pre.code .inserted, code .inserted { background-color: #A3D289}
 
 span.classifier {
   font-family: sans-serif ;
@@ -314,21 +305,6 @@ table.docutils th.field-name, table.docinfo th.docinfo-name {
   white-space: nowrap ;
   padding-left: 0 }
 
-/* "booktabs" style (no vertical lines) */
-table.docutils.booktabs {
-  border: 0px;
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-  border-collapse: collapse;
-}
-table.docutils.booktabs * {
-  border: 0px;
-}
-table.docutils.booktabs th {
-  border-bottom: thin solid;
-  text-align: left;
-}
-
 h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
 h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
   font-size: 100% }
@@ -356,12 +332,6 @@ commands you should be able to completely recapitulate the paper.</p>
 and will then compile the paper from scratch using the new figures.</p>
 <p>(Note that you can also start with ami-61885608, which has all the
 below software installed.) % not yet</p>
-<!-- and the EC2 snapshot snap-09d7f173 has all -->
-<!-- of the data on it.  If you mount that volume and then cp -r everything -->
-<!-- into /mnt, you will have all the software and files below installed in -->
-<!-- the right place to run the pipline 'make' near the bottom.) -->
-<!-- put in sofwtare version .tgz download? -->
-<!-- https://github.com/ctb/khmer/tarball/2012-paper-diginorm -->
 <div class="section" id="starting-up-a-machine-and-get-necessary-data-for-reproduction">
 <h1>Starting up a machine and get necessary data for reproduction</h1>
 <p>First, start up an EC2 instance using starcluster:</p>
@@ -380,22 +350,16 @@ starcluster sshmaster pipeline
 <p>(or just ssh in however you would normally do it.)</p>
 <p>First go to /mnt/ because we do not have enough space in home directory:</p>
 <pre class="literal-block">
-cd /mnt/
+cd /mnt
 </pre>
 <p>Now, check out the source repository and grab the initial data
 sets:</p>
 <pre class="literal-block">
-cd /mnt
 git clone git://github.com/ged-lab/2013-khmer-counting.git
 cd 2013-khmer-counting
 
-curl -O http://athyra.ged.msu.edu/~qingpeng/2013-khmer-counting/pipeline-data-new.tar.gz
-tar xzf pipeline-data-new.tar.gz
-</pre>
-<p>Move raw data to working directory:</p>
-<pre class="literal-block">
-cd pipeline-data-new
-mv * ~/2013-khmer-counting/pipeline
+curl -O http://athyra.ged.msu.edu/~t/2013-khmer-counting-data.tar.gz
+tar xzf 2013-khmer-counting-data
 </pre>
 </div>
 <div class="section" id="installing-necessary-software">
@@ -412,27 +376,32 @@ mv * ~/2013-khmer-counting/pipeline
 </blockquote>
 <p>To do so, run:</p>
 <pre class="literal-block">
-cd pipeline
+cd /mnt/2013-khmer-counting/pipeline
 bash software_install.sh
 </pre>
+<!-- @CTB fix tags -->
 <p>Next you'll need to install our packages 'screed' and 'khmer'.
-In this case we're going to use the versions tagged for the paper :: % not yet</p>
-<blockquote>
-<p>cd /usr/local/src</p>
-<p>git clone git://github.com/ged-lab/screed.git -b 2012-paper-diginorm
+In this case we're going to use the versions tagged for the paper</p>
+<pre class="literal-block">
+cd /usr/local/src
+
+git clone git://github.com/ged-lab/screed.git
 cd screed
-git checkout 2012-paper-diginorm
+git checkout 2013-khmer-counting
 python setup.py install
-cd ..</p>
-<p>git clone -b bleeding-edge  <a class="reference external" href="http://github.com/ged-lab/khmer.git">http://github.com/ged-lab/khmer.git</a> khmer
+cd ..
+
+git clone http://github.com/ged-lab/khmer.git
 cd khmer
+git checkout 2013-khmer-counting
 make test
-cd ..</p>
-<p>echo 'export PYTHONPATH=/usr/local/src/khmer/python' &gt;&gt; ~/.bashrc
+cd ..
+
+echo 'export PYTHONPATH=/usr/local/src/khmer/python' &gt;&gt; ~/.bashrc
 echo 'export PATH=$PATH:/usr/local/src/khmer/scripts' &gt;&gt; ~/.bashrc
 echo 'export PATH=$PATH:/usr/local/src/khmer/sandbox' &gt;&gt; ~/.bashrc
-source ~/.bashrc</p>
-</blockquote>
+source ~/.bashrc
+</pre>
 <p>OK, now all your software is installed, hurrah!</p>
 </div>
 <div class="section" id="running-the-pipeline">
