@@ -1,9 +1,9 @@
- 1300071  1300071 11180379 MH0001.trimmed.fa.out2.e8.unique.sequence_id
- 1215404  1215404 10449775 MH0001.trimmed.fa.out2.unique.sequence_id
- 1016694  1016694  8735258 MH0001.trimmed.fa.out3.e8.unique.sequence_id
-  985620   985620  8467071 MH0001.trimmed.fa.out3.unique.sequence_id
-  898195   898195  7713213 MH0001.trimmed.fa.out4.e8.unique.sequence_id
-  882361   882361  7576684 MH0001.trimmed.fa.out4.unique.sequence_id
- 2458213  2458213 21206440 MH0001.trimmed.fa.out.e8.unique.sequence_id
- 1953741  1953741 16832733 MH0001.trimmed.fa.out.unique.sequence_id
-10710299 10710299 92161553 total
+  2555255   2555255  22068310 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id
+  2572986   2572986  22223477 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id
+  2636504   2636504  22778518 e10_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id
+  3032980   3032980  26251713 e10_MH0001.trimmed.fa.abundfilt.unique.sequence_id
+  2555258   2555258  22068329 e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id
+  2573002   2573002  22223612 e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.unique.sequence_id
+  2636582   2636582  22779200 e9_MH0001.trimmed.fa.abundfilt.abundfilt.unique.sequence_id
+  3038796   3038796  26302321 e9_MH0001.trimmed.fa.abundfilt.unique.sequence_id
+ 21601363  21601363 186695480 total
