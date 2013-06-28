@@ -4,6 +4,8 @@
 import random
 import sys
 
+random.seed(1)
+
 #10000000
 #N=10000*20
 N = 1000000*6
