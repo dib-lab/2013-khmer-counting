@@ -268,19 +268,14 @@ for practicality the hash tables can be saved for later reuse; thus
 the uncompressed disk usage for khmer in Figure \ref{cmp_disk} is the
 same as its memory.
 
-DSK performs extremely well in memory, speed and disk space for
+DSK performs especially well in terms of memory usage for
 calculating the abundance distribution of k-mers. However, in exchange
 for this efficiency, retrieving specific k-mer counts at random is
 likely to be quite slow, as DSK is optimized for iterating across
-partition sets of k-mers rather than retrieving individual k-mer
-counts.  For this reason, DSK is not a general solution to k-mer
-counting.  Since neither Tallymer nor Jellyfish have a programmatic
-API for retrieving specific k-mer counts, we could not compare
-performance for retrieving the counts of specific k-mers.
+partition sets of k-mers rather than randomly accessing k-mer
+counts.
 
 % @CTB ref UW QUIP?
-% @CTB is this the benchmark we should be doing? probably. sigh.
-% see last para :)
 
 \subsection{The measured counting error rate is low on short-read data}
 
