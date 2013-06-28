@@ -10,7 +10,7 @@ KHMER=/usr/local/src/khmer
 #	MH0001.trimmed.fa
 #	ecoli_ref.fastq
 
-all: benchmark check_fp_rate check_error abundance_filtering
+all: benchmark check_fp_rate check_error abundance_filtering counts
 
 copydata:
 	rm -fr ../data/
@@ -20,6 +20,8 @@ copydata:
 
 clean:
 	rm -f `cat clean-list.txt`
+
+counts: bloom_1_1_22.count.time bloom_5_1_22.count.time jelly_1_22.count.time jelly_5_22.count.time 1_part1_22.count.time 5_part1_22.count.time
 
 benchmark: bloom_1_1_22.hist bloom_2_1_22.hist bloom_3_1_22.hist bloom_4_1_22.hist bloom_5_1_22.hist \
     bloom_1_5_22.hist bloom_2_5_22.hist bloom_3_5_22.hist bloom_4_5_22.hist bloom_5_5_22.hist
