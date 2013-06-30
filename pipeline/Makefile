@@ -33,7 +33,7 @@ kmerlist2: kmerlist2.fa
 	grep -v ^'>' kmerlist2.fa > kmerlist2
 
 bloom_1_1_22.hist:
-	time -o bloom_1_1_22.time1 abundance-dist-inmem.py --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_1_22.hist
+	time -o bloom_1_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_1_22.hist
 
 bloom_1_1_22.kh:
 	time -o bloom_1_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_22.kh iowa_prairie_0920.fa.1
@@ -42,7 +42,7 @@ bloom_1_1_22.count.time: bloom_1_1_22.kh kmerlist2
 	time -o bloom_1_1_22.count.time python khmer-count-kmers.py bloom_1_1_22.kh kmerlist2
 
 bloom_2_1_22.hist:
-	time -o bloom_2_1_22.time1 abundance-dist-inmem.py --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_1_22.hist
+	time -o bloom_2_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_1_22.hist
 
 bloom_2_1_22.kh:
 	time -o bloom_2_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 bloom_2_1_22.kh iowa_prairie_0920.fa.2
@@ -51,7 +51,7 @@ bloom_2_1_22.count.time: bloom_2_1_22.kh kmerlist2
 	time -o bloom_2_1_22.count.time python khmer-count-kmers.py bloom_2_1_22.kh kmerlist2
 
 bloom_3_1_22.hist:
-	time -o bloom_3_1_22.time1 abundance-dist-inmem.py --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_1_22.hist
+	time -o bloom_3_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_1_22.hist
 
 bloom_3_1_22.kh:
 	time -o bloom_3_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 bloom_3_1_22.kh iowa_prairie_0920.fa.3
@@ -60,7 +60,7 @@ bloom_3_1_22.count.time: bloom_3_1_22.kh kmerlist2
 	time -o bloom_3_1_22.count.time python khmer-count-kmers.py bloom_3_1_22.kh kmerlist2
 
 bloom_4_1_22.hist:
-	time -o bloom_4_1_22.time1 abundance-dist-inmem.py --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_1_22.hist
+	time -o bloom_4_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_1_22.hist
 
 bloom_4_1_22.kh:
 	time -o bloom_4_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 bloom_4_1_22.kh iowa_prairie_0920.fa.4
@@ -69,7 +69,7 @@ bloom_4_1_22.count.time: bloom_4_1_22.kh kmerlist2
 	time -o bloom_4_1_22.count.time python khmer-count-kmers.py bloom_4_1_22.kh kmerlist2
 
 bloom_5_1_22.hist:
-	time -o bloom_5_1_22.time1 abundance-dist-inmem.py --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_1_22.hist
+	time -o bloom_5_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_1_22.hist
 
 bloom_5_1_22.kh:
 	time -o bloom_5_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 bloom_5_1_22.kh iowa_prairie_0920.fa.5
@@ -78,34 +78,34 @@ bloom_5_1_22.count.time: bloom_5_1_22.kh kmerlist2
 	time -o bloom_5_1_22.count.time python khmer-count-kmers.py bloom_5_1_22.kh kmerlist2
 
 bloom_1_5_22.hist:
-	time -o bloom_1_5_22.time1 abundance-dist-inmem.py --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_5_22.hist
+	time -o bloom_1_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_5_22.hist
 
 bloom_1_5_22.kh:
 	time -o bloom_1_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 bloom_1_5_22.kh iowa_prairie_0920.fa.1
 
 bloom_2_5_22.hist:
-	time -o bloom_2_5_22.time1 abundance-dist-inmem.py --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_5_22.hist
+	time -o bloom_2_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_5_22.hist
 
 bloom_2_5_22.kh:
 	time -o bloom_2_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 bloom_2_5_22.kh iowa_prairie_0920.fa.2
 
 bloom_3_5_22.hist:
-	time -o bloom_3_5_22.time1 abundance-dist-inmem.py --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_5_22.hist
+	time -o bloom_3_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_5_22.hist
 
 bloom_3_5_22.kh:
 	time -o bloom_3_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 bloom_3_5_22.kh iowa_prairie_0920.fa.3
 
 bloom_4_5_22.hist:
-	time -o bloom_4_5_22.time1 abundance-dist-inmem.py --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 -s iowa_prairie_0920.fa.3 bloom_4_5_22.hist
+	time -o bloom_4_5_22.time1 abundance-dist-inmem.py --threads 8 --threads 8 --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_5_22.hist
 
 bloom_4_5_22.kh:
-	time -o bloom_4_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 bloom_4_5_22.kh iowa_prairie_0920.fa.3
+	time -o bloom_4_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 bloom_4_5_22.kh iowa_prairie_0920.fa.4
 
 bloom_5_5_22.hist:
-	time -o bloom_5_5_22.time1 abundance-dist-inmem.py --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 -s iowa_prairie_0920.fa.3 bloom_5_5_22.hist
+	time -o bloom_5_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_5_22.hist
 
 bloom_5_5_22.kh:
-	time -o bloom_5_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_22.kh iowa_prairie_0920.fa.3
+	time -o bloom_5_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_22.kh iowa_prairie_0920.fa.5
 
 jellyfish: jelly_1_22.hist jelly_2_22.hist jelly_3_22.hist jelly_4_22.hist jelly_5_22.hist\
     jelly_1_31.hist jelly_2_31.hist jelly_3_31.hist jelly_4_31.hist jelly_5_31.hist
