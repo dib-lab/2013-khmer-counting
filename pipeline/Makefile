@@ -24,7 +24,8 @@ clean:
 counts: bloom_1_1_22.count.time bloom_2_1_22.count.time bloom_3_1_22.count.time bloom_4_1_22.count.time bloom_5_1_22.count.time jelly_1_22.count.time jelly_2_22.count.time jelly_3_22.count.time jelly_4_22.count.time jelly_5_22.count.time 1_part1_22.count.time 2_part1_22.count.time 3_part1_22.count.time 4_part1_22.count.time 5_part1_22.count.time
 
 benchmark: bloom_1_1_22.hist bloom_2_1_22.hist bloom_3_1_22.hist bloom_4_1_22.hist bloom_5_1_22.hist \
-    bloom_1_5_22.hist bloom_2_5_22.hist bloom_3_5_22.hist bloom_4_5_22.hist bloom_5_5_22.hist
+    bloom_1_5_22.hist bloom_2_5_22.hist bloom_3_5_22.hist bloom_4_5_22.hist bloom_5_5_22.hist \
+	bloom_1_5_22.kh bloom_2_5_22.kh bloom_3_5_22.kh bloom_4_5_22.kh bloom_5_5_22.kh
 
 kmerlist2.fa:
 	cut -c 1-22 iowa_prairie_0920.fa.1 > kmerlist2.fa
