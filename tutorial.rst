@@ -45,7 +45,7 @@ sets::
  cd 2013-khmer-counting
 
  curl -O http://athyra.ged.msu.edu/~t/2013-khmer-counting-data.tar.gz
- tar xzf 2013-khmer-counting-data
+ tar xzf 2013-khmer-counting-data.tar.gz
  
 Installing necessary software
 -----------------------------
