@@ -191,7 +191,7 @@ Bruijn graph storage and traversal
 % @CTB also cite Quip, Jones et al.
 
 
-The CountMin Sketch approach is particularly memory efficient, with
+The Count-Min Sketch approach is particularly memory efficient, with
 memory usage that can significantly outperform exact data structures
  \cite{Conway2011,Pell2012}.  However, the use of a probabilistic
 data structure introduces counting errors, which have effects that
@@ -215,7 +215,7 @@ assembly \cite{Brown2012}.
 
 \section{Results}
 
-\subsection{Implementing a CountMin Sketch for k-mers}
+\subsection{Implementing a Count-Min Sketch for k-mers}
 
 The implementation details are similar to those of the Bloom filter in
 \cite{Pell2012}, but with the use of 8 bit counters instead of 1 bit
@@ -227,7 +227,7 @@ modulus of that hash with each hash table's size H gives the location
 for each hash table; the associated count in each hash table is then
 incremented by 1.  To retrieve the count for a k-mer, the same hash is
 computed and the minimum count across all hash tables is computed.
-While different in implementation detail from the standard CountMin Sketch,
+While different in implementation detail from the standard Count-Min Sketch,
 which uses a single hash table with many hash
 functions, the performance details are identical \cite{Pell2012}.
 
@@ -317,7 +317,7 @@ time once the hash tables are loaded into memory.
 Miscounts are a significant concern for probabilistic counters.
 However, a large number of the k-mers in short-read dataset are
 low-abundance, leading to a skewed k-mer abundance distribution which
-should result in good performance for CountMin Sketch-like approaches
+should result in good performance for Count-Min Sketch-like approaches
 \cite{Melsted2011} (also @cite CMS basics). Here we use both real and
 simulated datasets to evaluate the counting performance in practice.
 Our primary measure for evaluation is the {\em offset}, which is the
@@ -355,7 +355,7 @@ represent random sequencing errors, and a variety of read trimming and
 error correcting tools use k-mer counting to reduce the error content
 of the read data set, independent of quality scores or reference
 genomes \cite{Kelley2010}.  This is an application where the counting
-error effect of the CountMin Sketch approach used by khmer may be
+error effect of the Count-Min Sketch approach used by khmer may be
 particularly tolerable, because khmer never underestimates counts, so
 will never falsely call an erroneous k-mer.
 
@@ -461,7 +461,7 @@ normalization \cite{Brown2012}.
 
 \subsection{khmer memory usage is fixed and low}
 
-The memory usage of the basic CountMin Sketch approach is fixed, which means
+The memory usage of the basic Count-Min Sketch approach is fixed, which means
 that khmer will never crash due to memory limitations, and all
 operations can be performed in main memory without recourse to disk
 storage.  However, the memory size chosen must be considered in light
@@ -561,7 +561,7 @@ increase, graceful degradation of data structures in the face of large
 amounts of data becomes quite useful.  This is especially true when
 the theoretical and practical effects of the degradation can be
 predicted (see e.g. \cite{Melsted2011, Pell2012, Roy2013}).  This
-graceful degradation is a key property of the CountMin Sketch
+graceful degradation is a key property of the Count-Min Sketch
 approach, and its implementation in khmer.
 
 The khmer implementation offers good performance, a robust and
@@ -839,7 +839,7 @@ sizes(1e8 and 1e9) for a human gut microbiome metagenomic dataset(MH0001,
 \caption{Number of reads with low-abundance k-mers after iterating filtering out low-abundance 
 reads that contain even a single unique k-mer with hash tables with different 
 sizes(1e8 and 1e9) for a human gut microbiome metagenomic dataset(MH0001, 
-42,458,402 reads).  What is FP rate for hashtable size? @CTB WILLCHANGE}
+42,458,402 reads).  What is FP rate for hash table size? @CTB WILLCHANGE}
 \label{num_bad_reads}
 \end{figure}
 
