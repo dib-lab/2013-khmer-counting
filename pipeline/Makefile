@@ -376,3 +376,318 @@ remaining_reads.wc: e10_MH0001.trimmed.fa.abundfilt \
 	e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 
 	wc MH0001.trimmed.fa *.abundfilt >remaining_reads.wc
+
+###
+
+loop_filter: ecoli_ref.fastq.ka.r1.fq ecoli_ref.fastq.ka.r1.fq.hist \
+	ecoli_ref.fastq.ka.r1.fq.endcount \
+	ecoli_ref.fastq.ka.r2.fq \
+	ecoli_ref.fastq.ka.r2.fq.hist \
+	ecoli_ref.fastq.ka.r2.fq.endcount \
+	ecoli_ref.fastq.ka.r3.fq \
+	ecoli_ref.fastq.ka.r3.fq.hist \
+	ecoli_ref.fastq.ka.r4.fq \
+	ecoli_ref.fastq.ka.r4.fq.hist \
+	ecoli_ref.fastq.ka.r5.fq \
+	ecoli_ref.fastq.ka.r5.fq.hist \
+	ecoli_ref.fastq.ka.r6.fq \
+	ecoli_ref.fastq.ka.r6.fq.hist \
+	ecoli_ref.fastq.keep.fq.hist ecoli_ref.fastq.keep.fq.endcount
+
+ecoli_ref.fastq.keep.fq: ecoli_ref.fastq
+	normalize-by-median.py -x 2e8 -N 4 -C 20 -k 20 ecoli_ref.fastq
+	mv ecoli_ref.fastq.keep ecoli_ref.fastq.keep.fq
+
+ecoli_ref.fastq.keep.fq.hist: ecoli_ref.fastq.keep.fq
+	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.keep.fq ecoli_ref.fastq.keep.fq.hist
+
+ecoli_ref.fastq.keep.fq.endcount: ecoli_ref.fastq.keep.fq
+	python count-singleton-kmers-at-end.py -x 1e9 -k 20 -N 4 ecoli_ref.fastq.keep.fq | grep ^singletons > ecoli_ref.fastq.keep.fq.endcount
+
+ecoli_ref.fastq.ka.r1.fq: ecoli_ref.fastq.keep.fq
+	filter-abund-single.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.fq > ecoli_ref.fastq.ka.r1.fq.out 2>&1
+	mv ecoli_ref.fastq.keep.fq.abundfilt ecoli_ref.fastq.ka.r1.fq
+
+ecoli_ref.fastq.ka.r1.fq.hist: ecoli_ref.fastq.ka.r1.fq
+	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r1.fq ecoli_ref.fastq.ka.r1.fq.hist
+
+ecoli_ref.fastq.ka.r1.fq.endcount: ecoli_ref.fastq.ka.r1.fq
+	python count-singleton-kmers-at-end.py -x 1e9 -k 20 -N 4 ecoli_ref.fastq.ka.r1.fq | grep ^singletons > ecoli_ref.fastq.ka.r1.fq.endcount
+
+ecoli_ref.fastq.ka.r2.fq: ecoli_ref.fastq.ka.r1.fq
+	filter-abund-single.py -x 9.9e6 -N 4 -k 20 ecoli_ref.fastq.ka.r1.fq > ecoli_ref.fastq.ka.r2.fq.out 2>&1
+	mv ecoli_ref.fastq.ka.r1.fq.abundfilt ecoli_ref.fastq.ka.r2.fq
+
+ecoli_ref.fastq.ka.r2.fq.hist: ecoli_ref.fastq.ka.r2.fq
+	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r2.fq ecoli_ref.fastq.ka.r2.fq.hist
+
+ecoli_ref.fastq.ka.r2.fq.endcount: ecoli_ref.fastq.ka.r2.fq
+	python count-singleton-kmers-at-end.py -x 1e9 -k 20 -N 4 ecoli_ref.fastq.ka.r2.fq | grep ^singletons > ecoli_ref.fastq.ka.r2.fq.endcount
+
+ecoli_ref.fastq.ka.r3.fq: ecoli_ref.fastq.ka.r2.fq
+	filter-abund-single.py -x 9.8e6 -N 4 -k 20 ecoli_ref.fastq.ka.r2.fq > ecoli_ref.fastq.ka.r3.fq.out 2>&1
+	mv ecoli_ref.fastq.ka.r2.fq.abundfilt ecoli_ref.fastq.ka.r3.fq
+
+ecoli_ref.fastq.ka.r3.fq.hist: ecoli_ref.fastq.ka.r3.fq
+	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r3.fq ecoli_ref.fastq.ka.r3.fq.hist
+
+ecoli_ref.fastq.ka.r4.fq: ecoli_ref.fastq.ka.r3.fq
+	filter-abund-single.py -x 9.7e6 -N 4 -k 20 ecoli_ref.fastq.ka.r3.fq > ecoli_ref.fastq.ka.r4.fq.out 2>&1
+	mv ecoli_ref.fastq.ka.r3.fq.abundfilt ecoli_ref.fastq.ka.r4.fq
+
+ecoli_ref.fastq.ka.r4.fq.hist: ecoli_ref.fastq.ka.r4.fq
+	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r4.fq ecoli_ref.fastq.ka.r4.fq.hist
+
+ecoli_ref.fastq.ka.r5.fq: ecoli_ref.fastq.ka.r4.fq
+	filter-abund-single.py -x 9.6e6 -N 4 -k 20 ecoli_ref.fastq.ka.r4.fq > ecoli_ref.fastq.ka.r5.fq.out 2>&1
+	mv ecoli_ref.fastq.ka.r4.fq.abundfilt ecoli_ref.fastq.ka.r5.fq
+
+ecoli_ref.fastq.ka.r5.fq.hist: ecoli_ref.fastq.ka.r5.fq
+	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r5.fq ecoli_ref.fastq.ka.r5.fq.hist
+
+ecoli_ref.fastq.ka.r6.fq: ecoli_ref.fastq.ka.r5.fq
+	filter-abund-single.py -x 9.5e6 -N 4 -k 20 ecoli_ref.fastq.ka.r5.fq > ecoli_ref.fastq.ka.r6.fq.out 2>&1
+	mv ecoli_ref.fastq.ka.r5.fq.abundfilt ecoli_ref.fastq.ka.r6.fq
+
+ecoli_ref.fastq.ka.r6.fq.hist: ecoli_ref.fastq.ka.r6.fq
+	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r6.fq ecoli_ref.fastq.ka.r6.fq.hist
+
+###
+
+loop_norm: ecoli_ref.fastq.keep.keep1e7.fq \
+	ecoli_ref.fastq.keep.keep1e7.fq.kh \
+	ecoli_ref.fastq.keep.keep1e7.fq.kh.x.genome \
+	ecoli_ref.fastq.keep.keep1e7.fq.abundfilt \
+	ecoli_ref.fastq.keep.keep1e7.fq.abundfilt.keep \
+	ecoli_ref.fastq.keep.keep2e7.fq \
+	ecoli_ref.fastq.keep.keep2e7.fq.kh \
+	ecoli_ref.fastq.keep.keep2e7.fq.kh.x.genome \
+	ecoli_ref.fastq.keep.keep2e7.fq.abundfilt \
+	ecoli_ref.fastq.keep.keep2e7.fq.abundfilt.keep \
+	ecoli_ref.fastq.keep.keep3e7.fq \
+	ecoli_ref.fastq.keep.keep4e7.fq \
+	ecoli_ref.fastq.keep.keep5e7.fq \
+	ecoli_ref.fastq.keep.keep6e7.fq \
+	ecoli_ref.fastq.keep.keep7e7.fq \
+	ecoli_ref.fastq.keep.keep8e7.fq \
+	ecoli_ref.fastq.keep.keep9e7.fq \
+	ecoli_ref.fastq.keep.keep1e8.fq \
+	mg1655.x.keep1e7.hist \
+	mg1655.x.keep2e7.hist \
+	mg1655.x.keep.hist \
+	keep.x.mg1655.hist \
+	keep1e7.x.mg1655.hist \
+	keep2e7.x.mg1655.hist \
+	ecoli_ref.fastq.keep.abundfilt.fq \
+	ecoli_ref.fastq.keep.keep1e7.abundfilt.fq \
+	ecoli_ref.fastq.keep.keep2e7.abundfilt.fq \
+	ecoli_ref.fastq.kak5.fq \
+	ecoli_ref.fastq.kak5.1e7.fq \
+	ecoli_ref.fastq.kak5.2e7.fq \
+	velvet.kak5/contigs.fa \
+	velvet.kak5.1e7/contigs.fa \
+	velvet.kak5.2e7/contigs.fa \
+
+ecoli_ref.fastq.keep.fq.kh: ecoli_ref.fastq.keep.fq
+	load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.fq.kh ecoli_ref.fastq.keep.fq
+
+round0.1e7.hist: ecoli_ref.fastq.keep.fq.kh
+	abundance-dist-inmem.py -x 1e7 -k 20 ecoli_ref.fastq.keep.fq round0.1e7.hist
+
+round0.2e8.hist: ecoli_ref.fastq.keep.fq.kh
+	abundance-dist-inmem.py -x 2e8 -k 20 ecoli_ref.fastq.keep.fq round0.2e8.hist
+
+ecoli_ref.fastq.keep.abundfilt.fq.kh: ecoli_ref.fastq.keep.fq.kh
+	filter-abund.py ecoli_ref.fastq.keep.fq.kh ecoli_ref.fastq.keep.fq
+	mv ecoli_ref.fastq.keep.fq.abundfilt ecoli_ref.fastq.keep.abundfilt.fq
+	load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.fq
+
+round1.1e7.hist: ecoli_ref.fastq.keep.abundfilt.fq.kh
+	abundance-dist-inmem.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.fq round1.1e7.hist
+
+round1.2e8.hist: ecoli_ref.fastq.keep.abundfilt.fq.kh
+	abundance-dist-inmem.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.fq round1.2e8.hist
+
+ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh: ecoli_ref.fastq.keep.abundfilt.fq.kh
+	filter-abund.py ecoli_ref.fastq.keep.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.fq
+	mv ecoli_ref.fastq.keep.abundfilt.fq.abundfilt ecoli_ref.fastq.keep.abundfilt.abundfilt.fq
+	load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.fq
+
+round2.1e7.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh
+	abundance-dist-inmem.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.fq round2.1e7.hist
+
+round2.2e8.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh
+	abundance-dist-inmem.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.fq round2.2e8.hist
+
+ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh: ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh 
+	filter-abund.py ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.fq
+	mv ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.abundfilt ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq
+	load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq
+
+round3.1e7.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh
+	abundance-dist-inmem.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq round3.1e7.hist
+
+round3.2e8.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh
+	abundance-dist-inmem.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq round3.2e8.hist
+
+ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq.kh: ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh 
+	filter-abund.py ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq
+	mv ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.abundfilt ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq
+	load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq
+ 
+round4.1e7.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq.kh
+	abundance-dist-inmem.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq round4.1e7.hist
+
+round4.2e8.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq.kh
+	abundance-dist-inmem.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq round4.2e8.hist
+
+ecoli-iter-filter.data: round0.1e7.hist round0.2e8.hist round1.1e7.hist \
+	round1.2e8.hist round2.1e7.hist round2.2e8.hist round3.1e7.hist \
+	round3.2e8.hist round4.1e7.hist round4.2e8.hist
+	python extract-filter-abund-rounds.py > ecoli-iter-filter.data
+
+ecoli_ref.fastq.keep.keep1e7.fq: ecoli_ref.fastq.keep.fq
+	-normalize-by-median.py -k 20 -C 20 -x 1e7 ecoli_ref.fastq.keep.fq > norm1e7.out 2>&1
+	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep1e7.fq
+
+ecoli_ref.fastq.keep.keep1e7.fq.kh: ecoli_ref.fastq.keep.keep1e7.fq
+	load-into-counting.py -x 2e8 -N 4 -k 20 ecoli_ref.fastq.keep.keep1e7.fq.kh ecoli_ref.fastq.keep.keep1e7.fq
+
+ecoli_ref.fastq.keep.keep1e7.fq.kh.x.genome: ecoliMG1655.fa ecoli_ref.fastq.keep.keep1e7.fq.kh
+	abundance-dist.py -s -z ecoli_ref.fastq.keep.keep1e7.fq.kh ecoliMG1655.fa ecoli_ref.fastq.keep.keep1e7.fq.kh.x.genome
+
+ecoli_ref.fastq.keep.keep1e7.fq.abundfilt: ecoli_ref.fastq.keep.keep1e7.fq
+	filter-abund-single.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep1e7.fq
+
+ecoli_ref.fastq.keep.keep1e7.fq.abundfilt.keep: ecoli_ref.fastq.keep.keep1e7.fq.abundfilt
+	normalize-by-median.py -C 5 -k 20 -x 1e7 -N 4 ecoli_ref.fastq.keep.keep1e7.fq.abundfilt
+
+ecoli_ref.fastq.keep.keep2e7.fq: ecoli_ref.fastq.keep.fq
+	-normalize-by-median.py -k 20 -C 20 -x 2e7 ecoli_ref.fastq.keep.fq > norm2e7.out 2>&1
+	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep2e7.fq
+
+ecoli_ref.fastq.keep.keep2e7.fq.kh: ecoli_ref.fastq.keep.keep2e7.fq
+	load-into-counting.py -x 2e8 -N 4 -k 20 ecoli_ref.fastq.keep.keep2e7.fq.kh ecoli_ref.fastq.keep.keep2e7.fq
+
+ecoli_ref.fastq.keep.keep2e7.fq.kh.x.genome: ecoliMG1655.fa ecoli_ref.fastq.keep.keep2e7.fq.kh
+	abundance-dist.py -s -z ecoli_ref.fastq.keep.keep2e7.fq.kh ecoliMG1655.fa ecoli_ref.fastq.keep.keep2e7.fq.kh.x.genome
+
+ecoli_ref.fastq.keep.keep2e7.fq.abundfilt: ecoli_ref.fastq.keep.keep2e7.fq
+	filter-abund-single.py -x 2e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep2e7.fq
+
+ecoli_ref.fastq.keep.keep2e7.fq.abundfilt.keep: ecoli_ref.fastq.keep.keep2e7.fq.abundfilt
+	normalize-by-median.py -C 5 -k 20 -x 2e7 -N 4 ecoli_ref.fastq.keep.keep2e7.fq.abundfilt
+
+ecoli_ref.fastq.keep.keep3e7.fq: ecoli_ref.fastq.keep.fq
+	-normalize-by-median.py -k 20 -C 20 -x 3e7 ecoli_ref.fastq.keep.fq > norm3e7.out 2>&1
+	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep3e7.fq
+
+ecoli_ref.fastq.keep.keep4e7.fq: ecoli_ref.fastq.keep.fq
+	-normalize-by-median.py -k 20 -C 20 -x 4e7 ecoli_ref.fastq.keep.fq > norm4e7.out 2>&1
+	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep4e7.fq
+
+ecoli_ref.fastq.keep.keep5e7.fq: ecoli_ref.fastq.keep.fq
+	-normalize-by-median.py -k 20 -C 20 -x 5e7 ecoli_ref.fastq.keep.fq > norm5e7.out 2>&1
+	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep5e7.fq
+
+ecoli_ref.fastq.keep.keep6e7.fq: ecoli_ref.fastq.keep.fq
+	-normalize-by-median.py -k 20 -C 20 -x 6e7 ecoli_ref.fastq.keep.fq > norm6e7.out 2>&1
+	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep6e7.fq
+
+ecoli_ref.fastq.keep.keep7e7.fq: ecoli_ref.fastq.keep.fq
+	-normalize-by-median.py -k 20 -C 20 -x 7e7 ecoli_ref.fastq.keep.fq > norm7e7.out 2>&1
+	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep7e7.fq
+
+ecoli_ref.fastq.keep.keep8e7.fq: ecoli_ref.fastq.keep.fq
+	-normalize-by-median.py -k 20 -C 20 -x 8e7 ecoli_ref.fastq.keep.fq > norm8e7.out 2>&1
+	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep8e7.fq
+
+ecoli_ref.fastq.keep.keep9e7.fq: ecoli_ref.fastq.keep.fq
+	-normalize-by-median.py -k 20 -C 20 -x 9e7 ecoli_ref.fastq.keep.fq > norm9e7.out 2>&1
+	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep9e7.fq
+
+ecoli_ref.fastq.keep.keep1e8.fq: ecoli_ref.fastq.keep.fq
+	-normalize-by-median.py -k 20 -C 20 -x 1e8 ecoli_ref.fastq.keep.fq > norm1e8.out 2>&1
+	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep1e8.fq
+
+ecoliMG1655.fa.kh: ecoliMG1655.fa
+	load-into-counting.py -k 20 -x 1e8 -N 4 ecoliMG1655.fa.kh ecoliMG1655.fa
+
+mg1655.x.keep1e7.hist: ecoliMG1655.fa.kh ecoli_ref.fastq.keep.keep1e7.fq
+	abundance-dist.py ecoliMG1655.fa.kh ecoli_ref.fastq.keep.keep1e7.fq \
+		mg1655.x.keep1e7.hist
+
+mg1655.x.keep2e7.hist: ecoliMG1655.fa.kh ecoli_ref.fastq.keep.keep2e7.fq
+	abundance-dist.py ecoliMG1655.fa.kh ecoli_ref.fastq.keep.keep2e7.fq \
+		mg1655.x.keep2e7.hist
+
+mg1655.x.keep.hist: ecoliMG1655.fa.kh ecoli_ref.fastq.keep.fq
+	abundance-dist.py ecoliMG1655.fa.kh ecoli_ref.fastq.keep.fq \
+		mg1655.x.keep.hist
+
+keep.kh: ecoli_ref.fastq.keep.fq
+	load-into-counting.py -x 2e8 -N 4 -k 20 keep.kh ecoli_ref.fastq.keep.fq
+
+keep1e7.kh: ecoli_ref.fastq.keep.keep1e7.fq
+	load-into-counting.py -x 2e8 -N 4 -k 20 keep1e7.kh ecoli_ref.fastq.keep.keep1e7.fq
+
+keep2e7.kh: ecoli_ref.fastq.keep.keep2e7.fq
+	load-into-counting.py -x 2e8 -N 4 -k 20 keep2e7.kh ecoli_ref.fastq.keep.keep2e7.fq
+
+ecoli_ref.fastq.keep.abundfilt.fq: ecoli_ref.fastq.keep.fq
+	filter-abund-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.keep.fq
+	mv ecoli_ref.fastq.keep.fq.abundfilt ecoli_ref.fastq.keep.abundfilt.fq
+
+ecoli_ref.fastq.keep.keep1e7.abundfilt.fq: ecoli_ref.fastq.keep.keep1e7.fq
+	filter-abund-single.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep1e7.fq
+	mv ecoli_ref.fastq.keep.keep1e7.fq.abundfilt ecoli_ref.fastq.keep.keep1e7.abundfilt.fq
+
+ecoli_ref.fastq.keep.keep2e7.abundfilt.fq: ecoli_ref.fastq.keep.keep2e7.fq
+	filter-abund-single.py -x 2e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep2e7.fq
+	mv ecoli_ref.fastq.keep.keep2e7.fq.abundfilt ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
+
+ecoli_ref.fastq.kak5.fq: ecoli_ref.fastq.keep.abundfilt.fq
+	normalize-by-median.py -x 1e9 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.abundfilt.fq
+	mv ecoli_ref.fastq.keep.abundfilt.fq.keep ecoli_ref.fastq.kak5.fq
+
+ecoli_ref.fastq.kak5.1e7.fq: ecoli_ref.fastq.keep.keep1e7.abundfilt.fq
+	normalize-by-median.py -x 1e7 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.keep1e7.abundfilt.fq
+	mv ecoli_ref.fastq.keep.keep1e7.abundfilt.fq.keep ecoli_ref.fastq.kak5.1e7.fq
+
+ecoli_ref.fastq.kak5.2e7.fq: ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
+	normalize-by-median.py -x 2e7 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
+	mv ecoli_ref.fastq.keep.keep2e7.abundfilt.fq.keep ecoli_ref.fastq.kak5.2e7.fq
+
+velvet.kak5/contigs.fa: ecoli_ref.fastq.kak5.fq
+	python ${KHMER}/sandbox/strip-and-split-for-assembly.py ecoli_ref.fastq.kak5.fq
+	velveth velvet.kak5 37 -fasta -shortPaired ecoli_ref.fastq.kak5.fq.pe -short ecoli_ref.fastq.kak5.fq.se
+	velvetg velvet.kak5 -exp_cov auto
+
+velvet.kak5.1e7/contigs.fa: ecoli_ref.fastq.kak5.1e7.fq
+	python ${KHMER}/sandbox/strip-and-split-for-assembly.py ecoli_ref.fastq.kak5.1e7.fq
+	velveth velvet.kak5.1e7 37 -fasta -shortPaired ecoli_ref.fastq.kak5.1e7.fq.pe -short ecoli_ref.fastq.kak5.1e7.fq.se
+	velvetg velvet.kak5.1e7 -exp_cov auto
+
+velvet.kak5.2e7/contigs.fa: ecoli_ref.fastq.kak5.2e7.fq
+	python ${KHMER}/sandbox/strip-and-split-for-assembly.py ecoli_ref.fastq.kak5.2e7.fq
+	velveth velvet.kak5.2e7 37 -fasta -shortPaired ecoli_ref.fastq.kak5.2e7.fq.pe -short ecoli_ref.fastq.kak5.2e7.fq.se
+	velvetg velvet.kak5.2e7 -exp_cov auto
+
+ecoli-reads.kh: ecoli_ref.fastq
+	load-into-counting.py -x 4e9 -N 4 -k 20 ecoli-reads.kh ecoli_ref.fastq
+
+ecoli-reads.x.mg1655.hist: ecoli-reads.kh ecoliMG1655.fa
+	-rm -f ecoli-reads.x.mg1655.hist
+	abundance-dist.py ecoli-reads.kh ecoliMG1655.fa ecoli-reads.x.mg1655.hist
+
+keep.x.mg1655.hist: keep.kh ecoliMG1655.fa
+	abundance-dist.py keep.kh ecoliMG1655.fa keep.x.mg1655.hist
+
+keep1e7.x.mg1655.hist: keep1e7.kh ecoliMG1655.fa
+	abundance-dist.py keep1e7.kh ecoliMG1655.fa keep1e7.x.mg1655.hist
+
+keep2e7.x.mg1655.hist: keep2e7.kh ecoliMG1655.fa
+	abundance-dist.py keep2e7.kh ecoliMG1655.fa keep2e7.x.mg1655.hist
+
+small_dn: ecoli_ref.fastq.keep.keep1e7.fq ecoli_ref.fastq.keep.keep2e7.fq ecoli_ref.fastq.keep.keep3e7.fq ecoli_ref.fastq.keep.keep4e7.fq ecoli_ref.fastq.keep.keep5e7.fq ecoli_ref.fastq.keep.keep6e7.fq ecoli_ref.fastq.keep.keep7e7.fq ecoli_ref.fastq.keep.keep8e7.fq ecoli_ref.fastq.keep.keep9e7.fq ecoli_ref.fastq.keep.keep1e8.fq
+
