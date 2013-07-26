@@ -486,7 +486,7 @@ loop_norm: ecoli_ref.fastq.keep.keep1e7.fq \
 	ecoli_ref.fastq.kak5.2e7.fq \
 	velvet.kak5/contigs.fa \
 	velvet.kak5.1e7/contigs.fa \
-	velvet.kak5.2e7/contigs.fa \
+	velvet.kak5.2e7/contigs.fa
 
 ecoli_ref.fastq.keep.fq.kh: ecoli_ref.fastq.keep.fq
 	load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.fq.kh ecoli_ref.fastq.keep.fq
