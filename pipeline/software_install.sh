@@ -22,7 +22,7 @@ ldconfig
 wget http://minia.genouest.org/dsk/dsk-1.5031.tar.gz
 tar zxvf dsk-1.5031.tar.gz
 cd dsk-1.5031
-make
+make omp=1
 cp dsk /usr/local/bin
 cd ..
 
