@@ -19,7 +19,7 @@ copydata:
 
 
 clean:
-	rm -f `cat clean-list.txt`
+	rm -fr `cat clean-list.txt`
 
 counts: bloom_1_1_22.count.time bloom_2_1_22.count.time bloom_3_1_22.count.time bloom_4_1_22.count.time bloom_5_1_22.count.time jelly_1_22.count.time jelly_2_22.count.time jelly_3_22.count.time jelly_4_22.count.time jelly_5_22.count.time 1_part1_22.count.time 2_part1_22.count.time 3_part1_22.count.time 4_part1_22.count.time 5_part1_22.count.time
 
@@ -660,17 +660,17 @@ ecoli_ref.fastq.kak5.2e7.fq: ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
 
 velvet.kak5/contigs.fa: ecoli_ref.fastq.kak5.fq
 	python ${KHMER}/sandbox/strip-and-split-for-assembly.py ecoli_ref.fastq.kak5.fq
-	velveth velvet.kak5 37 -fasta -shortPaired ecoli_ref.fastq.kak5.fq.pe -short ecoli_ref.fastq.kak5.fq.se
+	velveth velvet.kak5 37 -fastq -shortPaired ecoli_ref.fastq.kak5.fq.pe -short ecoli_ref.fastq.kak5.fq.se
 	velvetg velvet.kak5 -exp_cov auto
 
 velvet.kak5.1e7/contigs.fa: ecoli_ref.fastq.kak5.1e7.fq
 	python ${KHMER}/sandbox/strip-and-split-for-assembly.py ecoli_ref.fastq.kak5.1e7.fq
-	velveth velvet.kak5.1e7 37 -fasta -shortPaired ecoli_ref.fastq.kak5.1e7.fq.pe -short ecoli_ref.fastq.kak5.1e7.fq.se
+	velveth velvet.kak5.1e7 37 -fastq -shortPaired ecoli_ref.fastq.kak5.1e7.fq.pe -short ecoli_ref.fastq.kak5.1e7.fq.se
 	velvetg velvet.kak5.1e7 -exp_cov auto
 
 velvet.kak5.2e7/contigs.fa: ecoli_ref.fastq.kak5.2e7.fq
 	python ${KHMER}/sandbox/strip-and-split-for-assembly.py ecoli_ref.fastq.kak5.2e7.fq
-	velveth velvet.kak5.2e7 37 -fasta -shortPaired ecoli_ref.fastq.kak5.2e7.fq.pe -short ecoli_ref.fastq.kak5.2e7.fq.se
+	velveth velvet.kak5.2e7 37 -fastq -shortPaired ecoli_ref.fastq.kak5.2e7.fq.pe -short ecoli_ref.fastq.kak5.2e7.fq.se
 	velvetg velvet.kak5.2e7 -exp_cov auto
 
 ecoli-reads.kh: ecoli_ref.fastq
