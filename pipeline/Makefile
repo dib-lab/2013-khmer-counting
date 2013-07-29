@@ -34,78 +34,103 @@ kmerlist2: kmerlist2.fa
 	grep -v ^'>' kmerlist2.fa > kmerlist2
 
 bloom_1_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_1_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_1_22.hist
 
 bloom_1_1_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_1_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_22.kh iowa_prairie_0920.fa.1
 
 bloom_1_1_22.count.time: bloom_1_1_22.kh kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_1_1_22.count.time python khmer-count-kmers.py bloom_1_1_22.kh kmerlist2
 
 bloom_2_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_2_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_1_22.hist
 
 bloom_2_1_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_2_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 bloom_2_1_22.kh iowa_prairie_0920.fa.2
 
 bloom_2_1_22.count.time: bloom_2_1_22.kh kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_2_1_22.count.time python khmer-count-kmers.py bloom_2_1_22.kh kmerlist2
 
 bloom_3_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_3_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_1_22.hist
 
 bloom_3_1_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_3_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 bloom_3_1_22.kh iowa_prairie_0920.fa.3
 
 bloom_3_1_22.count.time: bloom_3_1_22.kh kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_3_1_22.count.time python khmer-count-kmers.py bloom_3_1_22.kh kmerlist2
 
 bloom_4_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_4_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_1_22.hist
 
 bloom_4_1_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_4_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 bloom_4_1_22.kh iowa_prairie_0920.fa.4
 
 bloom_4_1_22.count.time: bloom_4_1_22.kh kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_4_1_22.count.time python khmer-count-kmers.py bloom_4_1_22.kh kmerlist2
 
 bloom_5_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_5_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_1_22.hist
 
 bloom_5_1_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_5_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 bloom_5_1_22.kh iowa_prairie_0920.fa.5
 
 bloom_5_1_22.count.time: bloom_5_1_22.kh kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_5_1_22.count.time python khmer-count-kmers.py bloom_5_1_22.kh kmerlist2
 
 bloom_1_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_1_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_5_22.hist
 
 bloom_1_5_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_1_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 bloom_1_5_22.kh iowa_prairie_0920.fa.1
 
 bloom_2_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_2_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_5_22.hist
 
 bloom_2_5_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_2_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 bloom_2_5_22.kh iowa_prairie_0920.fa.2
 
 bloom_3_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_3_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_5_22.hist
 
 bloom_3_5_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_3_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 bloom_3_5_22.kh iowa_prairie_0920.fa.3
 
 bloom_4_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_4_5_22.time1 abundance-dist-inmem.py --threads 8 --threads 8 --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_5_22.hist
 
 bloom_4_5_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_4_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 bloom_4_5_22.kh iowa_prairie_0920.fa.4
 
 bloom_5_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_5_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_5_22.hist
 
 bloom_5_5_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_5_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_22.kh iowa_prairie_0920.fa.5
 
 jellyfish: jelly_1_22.hist jelly_2_22.hist jelly_3_22.hist jelly_4_22.hist jelly_5_22.hist\
@@ -113,130 +138,175 @@ jellyfish: jelly_1_22.hist jelly_2_22.hist jelly_3_22.hist jelly_4_22.hist jelly
 	# Jellyfish benchmark k=22 and k=31
 
 jelly_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_22.time1 jellyfish count -m 22 -c 2 -C -s 701472602 -t 8 -o jelly_1_22 iowa_prairie_0920.fa.1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_22.time2 jellyfish histo -t 8 -o jelly_1_22.hist ./jelly_1_22_0
 
 jelly_1_22.count.time: jelly_1_22.hist kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_22.count.time bash jelly-search.sh jelly_1_22_0 kmerlist2
 
 jelly_2_22.count.time: jelly_2_22.hist kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_22.count.time bash jelly-search.sh jelly_2_22_0 kmerlist2
 
 jelly_3_22.count.time: jelly_3_22.hist kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_22.count.time bash jelly-search.sh jelly_3_22_0 kmerlist2
 
 
 jelly_4_22.count.time: jelly_4_22.hist kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_22.count.time bash jelly-search.sh jelly_4_22_0 kmerlist2
 
 jelly_2_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_22.time1 jellyfish count -m 22 -c 2 -C -s 1325442680 -t 8 -o jelly_2_22 iowa_prairie_0920.fa.2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_22.time2 jellyfish histo -t 8 -o jelly_2_22.hist ./jelly_2_22_0
 
 jelly_3_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_22.time1 jellyfish count -m 22 -c 2 -C -s 1807404236 -t 8 -o jelly_3_22 iowa_prairie_0920.fa.3
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_22.time2 jellyfish histo -t 8 -o jelly_3_22.hist ./jelly_3_22_0
 
 jelly_4_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_22.time1 jellyfish count -m 22 -c 2 -C -s 2213236520 -t 8 -o jelly_4_22 iowa_prairie_0920.fa.4
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_22.time2 jellyfish histo -t 8 -o jelly_4_22.hist ./jelly_4_22_0
 
 jelly_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_22.time1 jellyfish count -m 22 -c 2 -C -s 2651842796 -t 8 -o jelly_5_22 iowa_prairie_0920.fa.5
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_22.time2 jellyfish histo -t 8 -o jelly_5_22.hist ./jelly_5_22_0
 
 jelly_5_22.count.time: jelly_5_22.hist kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_22.count.time bash jelly-search.sh jelly_5_22_0 kmerlist2
 
 jelly_1_31.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_31.time1 jellyfish count -m 31 -c 2 -C -s 701472602 -t 8 -o jelly_1_31 iowa_prairie_0920.fa.1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_31.time2 jellyfish histo -t 8 -o jelly_1_31.hist ./jelly_1_31_0
 
 jelly_2_31.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_31.time1 jellyfish count -m 31 -c 2 -C -s 1325442680 -t 8 -o jelly_2_31 iowa_prairie_0920.fa.2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_31.time2 jellyfish histo -t 8 -o jelly_2_31.hist ./jelly_2_31_0
 
 jelly_3_31.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_31.time1 jellyfish count -m 31 -c 2 -C -s 1807404236 -t 8 -o jelly_3_31 iowa_prairie_0920.fa.3
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_31.time2 jellyfish histo -t 8 -o jelly_3_31.hist ./jelly_3_31_0
 
 jelly_4_31.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_31.time1 jellyfish count -m 31 -c 2 -C -s 2213236520 -t 8 -o jelly_4_31 iowa_prairie_0920.fa.4
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_31.time2 jellyfish histo -t 8 -o jelly_4_31.hist ./jelly_4_31_0
 
 jelly_5_31.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_31.time1 jellyfish count -m 31 -c 2 -C -s 2651842796 -t 8 -o jelly_5_31 iowa_prairie_0920.fa.5
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_31.time2 jellyfish histo -t 8 -o jelly_5_31.hist ./jelly_5_31_0
 
 	# Tallymer benchmark part=1,k =22
 tallymer: 1_part1_22.hist 2_part1_22.hist 3_part1_22.hist 4_part1_22.hist 5_part1_22.hist
 
 1_part1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o suffix_1_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.1 -indexname 1_part1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o mkindex_1_part1_22.time gt tallymer mkindex -mersize 22  -esa 1_part1 >1_part1_22.hist
 
 1_part1.mct: 1_part1_22.hist
 	gt tallymer mkindex -mersize 22 -esa 1_part1 -counts -pl 8 -indexname 1_part1 -minocc 1
 
 1_part1_22.count.time: 1_part1.mct kmerlist2.fa
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o 1_part1_22.count.time bash tallymer-search.sh 1_part1 kmerlist2.fa
 
 2_part1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o suffix_2_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.2 -indexname 2_part1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o mkindex_2_part1_22.time gt tallymer mkindex -mersize 22  -esa 2_part1 >2_part1_22.hist
 
 2_part1.mct: 2_part1_22.hist
 	gt tallymer mkindex -mersize 22 -esa 2_part1 -counts -pl 8 -indexname 2_part1 -minocc 1
 
 2_part1_22.count.time: 2_part1.mct kmerlist2.fa
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o 2_part1_22.count.time bash tallymer-search.sh 2_part1 kmerlist2.fa
 
 3_part1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o suffix_3_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.3 -indexname 3_part1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o mkindex_3_part1_22.time gt tallymer mkindex -mersize 22  -esa 3_part1 >3_part1_22.hist
 
 3_part1.mct: 3_part1_22.hist
 	gt tallymer mkindex -mersize 22 -esa 3_part1 -counts -pl 8 -indexname 3_part1 -minocc 1
 
 3_part1_22.count.time: 3_part1.mct kmerlist2.fa
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o 3_part1_22.count.time bash tallymer-search.sh 3_part1 kmerlist2.fa
 
 4_part1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o suffix_4_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.4 -indexname 4_part1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o mkindex_4_part1_22.time gt tallymer mkindex -mersize 22  -esa 4_part1 >4_part1_22.hist
 
 4_part1.mct: 4_part1_22.hist
 	gt tallymer mkindex -mersize 22 -esa 4_part1 -counts -pl 8 -indexname 4_part1 -minocc 1
 
 4_part1_22.count.time: 4_part1.mct kmerlist2.fa
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o 4_part1_22.count.time bash tallymer-search.sh 4_part1 kmerlist2.fa
 
 5_part1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o suffix_5_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.5 -indexname 5_part1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o mkindex_5_part1_22.time gt tallymer mkindex -mersize 22  -esa 5_part1 >5_part1_22.hist
 
 5_part1.mct: 5_part1_22.hist
 	gt tallymer mkindex -mersize 22 -esa 5_part1 -counts -pl 8 -indexname 5_part1 -minocc 1
 
 5_part1_22.count.time: 5_part1.mct kmerlist2.fa
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o 5_part1_22.count.time bash tallymer-search.sh 5_part1 kmerlist2.fa
 
 
 dsk: dsk_1_22.time dsk_2_22.time dsk_3_22.time dsk_4_22.time dsk_5_22.time
 	# dsk benchmark k=22
 dsk_1_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o dsk_1_22.time dsk iowa_prairie_0920.fa.1 22 -histo
 
 dsk_2_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o dsk_2_22.time dsk iowa_prairie_0920.fa.2 22 -histo
 
 dsk_3_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o dsk_3_22.time dsk iowa_prairie_0920.fa.3 22 -histo
 
 dsk_4_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o dsk_4_22.time dsk iowa_prairie_0920.fa.4 22 -histo
 
 dsk_5_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o dsk_5_22.time dsk iowa_prairie_0920.fa.5 22 -histo
 
 
