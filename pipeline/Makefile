@@ -35,11 +35,11 @@ kmerlist2: kmerlist2.fa
 
 bloom_1_1_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_1_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_1_22.hist
+	time -o bloom_1_1_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_1_22.hist
 
 bloom_1_1_22.kh:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_1_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_22.kh iowa_prairie_0920.fa.1
+	time -o bloom_1_1_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_22.kh iowa_prairie_0920.fa.1
 
 bloom_1_1_22.count.time: bloom_1_1_22.kh kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
@@ -47,11 +47,11 @@ bloom_1_1_22.count.time: bloom_1_1_22.kh kmerlist2
 
 bloom_2_1_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_2_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_1_22.hist
+	time -o bloom_2_1_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_1_22.hist
 
 bloom_2_1_22.kh:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_2_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 bloom_2_1_22.kh iowa_prairie_0920.fa.2
+	time -o bloom_2_1_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 bloom_2_1_22.kh iowa_prairie_0920.fa.2
 
 bloom_2_1_22.count.time: bloom_2_1_22.kh kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
@@ -59,11 +59,11 @@ bloom_2_1_22.count.time: bloom_2_1_22.kh kmerlist2
 
 bloom_3_1_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_3_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_1_22.hist
+	time -o bloom_3_1_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_1_22.hist
 
 bloom_3_1_22.kh:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_3_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 bloom_3_1_22.kh iowa_prairie_0920.fa.3
+	time -o bloom_3_1_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 bloom_3_1_22.kh iowa_prairie_0920.fa.3
 
 bloom_3_1_22.count.time: bloom_3_1_22.kh kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
@@ -71,11 +71,11 @@ bloom_3_1_22.count.time: bloom_3_1_22.kh kmerlist2
 
 bloom_4_1_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_4_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_1_22.hist
+	time -o bloom_4_1_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_1_22.hist
 
 bloom_4_1_22.kh:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_4_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 bloom_4_1_22.kh iowa_prairie_0920.fa.4
+	time -o bloom_4_1_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 bloom_4_1_22.kh iowa_prairie_0920.fa.4
 
 bloom_4_1_22.count.time: bloom_4_1_22.kh kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
@@ -83,11 +83,11 @@ bloom_4_1_22.count.time: bloom_4_1_22.kh kmerlist2
 
 bloom_5_1_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_5_1_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_1_22.hist
+	time -o bloom_5_1_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_1_22.hist
 
 bloom_5_1_22.kh:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_5_1_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 bloom_5_1_22.kh iowa_prairie_0920.fa.5
+	time -o bloom_5_1_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 bloom_5_1_22.kh iowa_prairie_0920.fa.5
 
 bloom_5_1_22.count.time: bloom_5_1_22.kh kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
@@ -95,43 +95,43 @@ bloom_5_1_22.count.time: bloom_5_1_22.kh kmerlist2
 
 bloom_1_5_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_1_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_5_22.hist
+	time -o bloom_1_5_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_5_22.hist
 
 bloom_1_5_22.kh:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_1_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 bloom_1_5_22.kh iowa_prairie_0920.fa.1
+	time -o bloom_1_5_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 bloom_1_5_22.kh iowa_prairie_0920.fa.1
 
 bloom_2_5_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_2_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_5_22.hist
+	time -o bloom_2_5_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_5_22.hist
 
 bloom_2_5_22.kh:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_2_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 bloom_2_5_22.kh iowa_prairie_0920.fa.2
+	time -o bloom_2_5_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 bloom_2_5_22.kh iowa_prairie_0920.fa.2
 
 bloom_3_5_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_3_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_5_22.hist
+	time -o bloom_3_5_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_5_22.hist
 
 bloom_3_5_22.kh:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_3_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 bloom_3_5_22.kh iowa_prairie_0920.fa.3
+	time -o bloom_3_5_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 bloom_3_5_22.kh iowa_prairie_0920.fa.3
 
 bloom_4_5_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_4_5_22.time1 abundance-dist-inmem.py --threads 8 --threads 8 --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_5_22.hist
+	time -o bloom_4_5_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --threads 8 --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_5_22.hist
 
 bloom_4_5_22.kh:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_4_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 bloom_4_5_22.kh iowa_prairie_0920.fa.4
+	time -o bloom_4_5_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 bloom_4_5_22.kh iowa_prairie_0920.fa.4
 
 bloom_5_5_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_5_5_22.time1 abundance-dist-inmem.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_5_22.hist
+	time -o bloom_5_5_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_5_22.hist
 
 bloom_5_5_22.kh:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o bloom_5_5_22.time2 load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_22.kh iowa_prairie_0920.fa.5
+	time -o bloom_5_5_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_22.kh iowa_prairie_0920.fa.5
 
 jellyfish: jelly_1_22.hist jelly_2_22.hist jelly_3_22.hist jelly_4_22.hist jelly_5_22.hist\
     jelly_1_31.hist jelly_2_31.hist jelly_3_31.hist jelly_4_31.hist jelly_5_31.hist
@@ -334,7 +334,7 @@ check_error: ecoli_ref.fastq.pos17.abund1 ecoli_ref.fastq.pos32.abund1
 # raw data:ecoli_ref.fastq
 
 ecoli_ref.fastq.ht.k17: ecoli_ref.fastq
-	load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
+	${KHMER}/scripts/load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 
 
 ecoli_ref.fastq.pos17.abund1: ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
@@ -342,7 +342,7 @@ ecoli_ref.fastq.pos17.abund1: ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 	mv ecoli_ref.fastq.pos.abund\=1 ecoli_ref.fastq.pos17.abund1
 
 ecoli_ref.fastq.ht.k32: ecoli_ref.fastq
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
+	${KHMER}/scripts/load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 
 ecoli_ref.fastq.pos32.abund1: ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
@@ -358,21 +358,21 @@ MH0001-reads.mer:
 
 	# hash table size: 1e10
 e10_MH0001.trimmed.fa.abundfilt: MH0001.trimmed.fa
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 MH0001.trimmed.fa.kh MH0001.trimmed.fa
-	filter-abund.py MH0001.trimmed.fa.kh MH0001.trimmed.fa
+	${KHMER}/scripts/load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 MH0001.trimmed.fa.kh MH0001.trimmed.fa
+	${KHMER}/scripts/filter-abund.py MH0001.trimmed.fa.kh MH0001.trimmed.fa
 	mv MH0001.trimmed.fa.abundfilt e10_MH0001.trimmed.fa.abundfilt
 
 e10_MH0001.trimmed.fa.abundfilt.abundfilt: e10_MH0001.trimmed.fa.abundfilt
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt
-	filter-abund.py e10_MH0001.trimmed.fa.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt
+	${KHMER}/scripts/load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt
+	${KHMER}/scripts/filter-abund.py e10_MH0001.trimmed.fa.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt
 
 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt: e10_MH0001.trimmed.fa.abundfilt.abundfilt
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt
-	filter-abund.py e10_MH0001.trimmed.fa.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt
+	${KHMER}/scripts/load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt
+	${KHMER}/scripts/filter-abund.py e10_MH0001.trimmed.fa.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt
 
 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt: e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
-	filter-abund.py e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
+	${KHMER}/scripts/load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 2000000000 --threads 8 e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
+	${KHMER}/scripts/filter-abund.py e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 
 e10_MH0001.trimmed.fa.abundfilt.unique.sequence_id: MH0001-reads.mer e10_MH0001.trimmed.fa.abundfilt
 	gt tallymer search -output qseqnum qpos counts -tyr MH0001-reads  -q e10_MH0001.trimmed.fa.abundfilt >e10_MH0001.trimmed.fa.abundfilt.unique
@@ -392,21 +392,21 @@ e10_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt.unique.sequence_id
 
 	# hash table size: 1e9
 e9_MH0001.trimmed.fa.abundfilt: MH0001.trimmed.fa
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 MH0001.trimmed.fa.kh MH0001.trimmed.fa
-	filter-abund.py MH0001.trimmed.fa.kh MH0001.trimmed.fa
+	${KHMER}/scripts/load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 MH0001.trimmed.fa.kh MH0001.trimmed.fa
+	${KHMER}/scripts/filter-abund.py MH0001.trimmed.fa.kh MH0001.trimmed.fa
 	mv MH0001.trimmed.fa.abundfilt e9_MH0001.trimmed.fa.abundfilt
 
 e9_MH0001.trimmed.fa.abundfilt.abundfilt: e9_MH0001.trimmed.fa.abundfilt
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt
-	filter-abund.py e9_MH0001.trimmed.fa.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt
+	${KHMER}/scripts/load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt
+	${KHMER}/scripts/filter-abund.py e9_MH0001.trimmed.fa.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt
 
 e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt: e9_MH0001.trimmed.fa.abundfilt.abundfilt
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt
-	filter-abund.py e9_MH0001.trimmed.fa.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt
+	${KHMER}/scripts/load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt
+	${KHMER}/scripts/filter-abund.py e9_MH0001.trimmed.fa.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt
 
 e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.abundfilt: e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
-	load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
-	filter-abund.py e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
+	${KHMER}/scripts/load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1000000000 --threads 8 e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
+	${KHMER}/scripts/filter-abund.py e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt.kh e9_MH0001.trimmed.fa.abundfilt.abundfilt.abundfilt
 
 
 e9_MH0001.trimmed.fa.abundfilt.unique.sequence_id: MH0001-reads.mer e9_MH0001.trimmed.fa.abundfilt
@@ -469,58 +469,58 @@ ecoli_ref.fastq.keep.fq: ecoli_ref.fastq
 	mv ecoli_ref.fastq.keep ecoli_ref.fastq.keep.fq
 
 ecoli_ref.fastq.keep.fq.hist: ecoli_ref.fastq.keep.fq
-	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.keep.fq ecoli_ref.fastq.keep.fq.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.keep.fq ecoli_ref.fastq.keep.fq.hist
 
 ecoli_ref.fastq.keep.fq.endcount: ecoli_ref.fastq.keep.fq
 	python count-singleton-kmers-at-end.py -x 1e9 -k 20 -N 4 ecoli_ref.fastq.keep.fq | grep ^singletons > ecoli_ref.fastq.keep.fq.endcount
 
 ecoli_ref.fastq.ka.r1.fq: ecoli_ref.fastq.keep.fq
-	filter-abund-single.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.fq > ecoli_ref.fastq.ka.r1.fq.out 2>&1
+	${KHMER}/scripts/filter-abund-single.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.fq > ecoli_ref.fastq.ka.r1.fq.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.abundfilt ecoli_ref.fastq.ka.r1.fq
 
 ecoli_ref.fastq.ka.r1.fq.hist: ecoli_ref.fastq.ka.r1.fq
-	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r1.fq ecoli_ref.fastq.ka.r1.fq.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r1.fq ecoli_ref.fastq.ka.r1.fq.hist
 
 ecoli_ref.fastq.ka.r1.fq.endcount: ecoli_ref.fastq.ka.r1.fq
 	python count-singleton-kmers-at-end.py -x 1e9 -k 20 -N 4 ecoli_ref.fastq.ka.r1.fq | grep ^singletons > ecoli_ref.fastq.ka.r1.fq.endcount
 
 ecoli_ref.fastq.ka.r2.fq: ecoli_ref.fastq.ka.r1.fq
-	filter-abund-single.py -x 9.9e6 -N 4 -k 20 ecoli_ref.fastq.ka.r1.fq > ecoli_ref.fastq.ka.r2.fq.out 2>&1
+	${KHMER}/scripts/filter-abund-single.py -x 9.9e6 -N 4 -k 20 ecoli_ref.fastq.ka.r1.fq > ecoli_ref.fastq.ka.r2.fq.out 2>&1
 	mv ecoli_ref.fastq.ka.r1.fq.abundfilt ecoli_ref.fastq.ka.r2.fq
 
 ecoli_ref.fastq.ka.r2.fq.hist: ecoli_ref.fastq.ka.r2.fq
-	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r2.fq ecoli_ref.fastq.ka.r2.fq.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r2.fq ecoli_ref.fastq.ka.r2.fq.hist
 
 ecoli_ref.fastq.ka.r2.fq.endcount: ecoli_ref.fastq.ka.r2.fq
 	python count-singleton-kmers-at-end.py -x 1e9 -k 20 -N 4 ecoli_ref.fastq.ka.r2.fq | grep ^singletons > ecoli_ref.fastq.ka.r2.fq.endcount
 
 ecoli_ref.fastq.ka.r3.fq: ecoli_ref.fastq.ka.r2.fq
-	filter-abund-single.py -x 9.8e6 -N 4 -k 20 ecoli_ref.fastq.ka.r2.fq > ecoli_ref.fastq.ka.r3.fq.out 2>&1
+	${KHMER}/scripts/filter-abund-single.py -x 9.8e6 -N 4 -k 20 ecoli_ref.fastq.ka.r2.fq > ecoli_ref.fastq.ka.r3.fq.out 2>&1
 	mv ecoli_ref.fastq.ka.r2.fq.abundfilt ecoli_ref.fastq.ka.r3.fq
 
 ecoli_ref.fastq.ka.r3.fq.hist: ecoli_ref.fastq.ka.r3.fq
-	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r3.fq ecoli_ref.fastq.ka.r3.fq.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r3.fq ecoli_ref.fastq.ka.r3.fq.hist
 
 ecoli_ref.fastq.ka.r4.fq: ecoli_ref.fastq.ka.r3.fq
-	filter-abund-single.py -x 9.7e6 -N 4 -k 20 ecoli_ref.fastq.ka.r3.fq > ecoli_ref.fastq.ka.r4.fq.out 2>&1
+	${KHMER}/scripts/filter-abund-single.py -x 9.7e6 -N 4 -k 20 ecoli_ref.fastq.ka.r3.fq > ecoli_ref.fastq.ka.r4.fq.out 2>&1
 	mv ecoli_ref.fastq.ka.r3.fq.abundfilt ecoli_ref.fastq.ka.r4.fq
 
 ecoli_ref.fastq.ka.r4.fq.hist: ecoli_ref.fastq.ka.r4.fq
-	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r4.fq ecoli_ref.fastq.ka.r4.fq.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r4.fq ecoli_ref.fastq.ka.r4.fq.hist
 
 ecoli_ref.fastq.ka.r5.fq: ecoli_ref.fastq.ka.r4.fq
-	filter-abund-single.py -x 9.6e6 -N 4 -k 20 ecoli_ref.fastq.ka.r4.fq > ecoli_ref.fastq.ka.r5.fq.out 2>&1
+	${KHMER}/scripts/filter-abund-single.py -x 9.6e6 -N 4 -k 20 ecoli_ref.fastq.ka.r4.fq > ecoli_ref.fastq.ka.r5.fq.out 2>&1
 	mv ecoli_ref.fastq.ka.r4.fq.abundfilt ecoli_ref.fastq.ka.r5.fq
 
 ecoli_ref.fastq.ka.r5.fq.hist: ecoli_ref.fastq.ka.r5.fq
-	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r5.fq ecoli_ref.fastq.ka.r5.fq.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r5.fq ecoli_ref.fastq.ka.r5.fq.hist
 
 ecoli_ref.fastq.ka.r6.fq: ecoli_ref.fastq.ka.r5.fq
-	filter-abund-single.py -x 9.5e6 -N 4 -k 20 ecoli_ref.fastq.ka.r5.fq > ecoli_ref.fastq.ka.r6.fq.out 2>&1
+	${KHMER}/scripts/filter-abund-single.py -x 9.5e6 -N 4 -k 20 ecoli_ref.fastq.ka.r5.fq > ecoli_ref.fastq.ka.r6.fq.out 2>&1
 	mv ecoli_ref.fastq.ka.r5.fq.abundfilt ecoli_ref.fastq.ka.r6.fq
 
 ecoli_ref.fastq.ka.r6.fq.hist: ecoli_ref.fastq.ka.r6.fq
-	abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r6.fq ecoli_ref.fastq.ka.r6.fq.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.ka.r6.fq ecoli_ref.fastq.ka.r6.fq.hist
 
 ###
 
@@ -559,57 +559,57 @@ loop_norm: ecoli_ref.fastq.keep.keep1e7.fq \
 	velvet.kak5.2e7/contigs.fa
 
 ecoli_ref.fastq.keep.fq.kh: ecoli_ref.fastq.keep.fq
-	load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.fq.kh ecoli_ref.fastq.keep.fq
+	${KHMER}/scripts/load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.fq.kh ecoli_ref.fastq.keep.fq
 
 round0.1e7.hist: ecoli_ref.fastq.keep.fq.kh
-	abundance-dist-inmem.py -x 1e7 -k 20 ecoli_ref.fastq.keep.fq round0.1e7.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e7 -k 20 ecoli_ref.fastq.keep.fq round0.1e7.hist
 
 round0.2e8.hist: ecoli_ref.fastq.keep.fq.kh
-	abundance-dist-inmem.py -x 2e8 -k 20 ecoli_ref.fastq.keep.fq round0.2e8.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 2e8 -k 20 ecoli_ref.fastq.keep.fq round0.2e8.hist
 
 ecoli_ref.fastq.keep.abundfilt.fq.kh: ecoli_ref.fastq.keep.fq.kh
-	filter-abund.py ecoli_ref.fastq.keep.fq.kh ecoli_ref.fastq.keep.fq
+	${KHMER}/scripts/filter-abund.py ecoli_ref.fastq.keep.fq.kh ecoli_ref.fastq.keep.fq
 	mv ecoli_ref.fastq.keep.fq.abundfilt ecoli_ref.fastq.keep.abundfilt.fq
-	load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.fq
+	${KHMER}/scripts/load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.fq
 
 round1.1e7.hist: ecoli_ref.fastq.keep.abundfilt.fq.kh
-	abundance-dist-inmem.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.fq round1.1e7.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.fq round1.1e7.hist
 
 round1.2e8.hist: ecoli_ref.fastq.keep.abundfilt.fq.kh
-	abundance-dist-inmem.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.fq round1.2e8.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.fq round1.2e8.hist
 
 ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh: ecoli_ref.fastq.keep.abundfilt.fq.kh
-	filter-abund.py ecoli_ref.fastq.keep.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.fq
+	${KHMER}/scripts/filter-abund.py ecoli_ref.fastq.keep.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.fq
 	mv ecoli_ref.fastq.keep.abundfilt.fq.abundfilt ecoli_ref.fastq.keep.abundfilt.abundfilt.fq
-	load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.fq
+	${KHMER}/scripts/load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.fq
 
 round2.1e7.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh
-	abundance-dist-inmem.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.fq round2.1e7.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.fq round2.1e7.hist
 
 round2.2e8.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh
-	abundance-dist-inmem.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.fq round2.2e8.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.fq round2.2e8.hist
 
 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh: ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh 
-	filter-abund.py ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.fq
+	${KHMER}/scripts/filter-abund.py ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.fq
 	mv ecoli_ref.fastq.keep.abundfilt.abundfilt.fq.abundfilt ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq
-	load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq
+	${KHMER}/scripts/load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq
 
 round3.1e7.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh
-	abundance-dist-inmem.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq round3.1e7.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq round3.1e7.hist
 
 round3.2e8.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh
-	abundance-dist-inmem.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq round3.2e8.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq round3.2e8.hist
 
 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq.kh: ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh 
-	filter-abund.py ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq
+	${KHMER}/scripts/filter-abund.py ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq
 	mv ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.fq.abundfilt ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq
-	load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq
+	${KHMER}/scripts/load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq.kh ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq
  
 round4.1e7.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq.kh
-	abundance-dist-inmem.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq round4.1e7.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 1e7 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq round4.1e7.hist
 
 round4.2e8.hist: ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq.kh
-	abundance-dist-inmem.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq round4.2e8.hist
+	${KHMER}/scripts/abundance-dist-single.py -x 2e8 -k 20 ecoli_ref.fastq.keep.abundfilt.abundfilt.abundfilt.abundfilt.fq round4.2e8.hist
 
 ecoli-iter-filter.data: round0.1e7.hist round0.2e8.hist round1.1e7.hist \
 	round1.2e8.hist round2.1e7.hist round2.2e8.hist round3.1e7.hist \
@@ -617,115 +617,115 @@ ecoli-iter-filter.data: round0.1e7.hist round0.2e8.hist round1.1e7.hist \
 	python extract-filter-abund-rounds.py > ecoli-iter-filter.data
 
 ecoli_ref.fastq.keep.keep1e7.fq: ecoli_ref.fastq.keep.fq
-	-normalize-by-median.py -k 20 -C 20 -x 1e7 ecoli_ref.fastq.keep.fq > norm1e7.out 2>&1
+	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 1e7 ecoli_ref.fastq.keep.fq > norm1e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep1e7.fq
 
 ecoli_ref.fastq.keep.keep1e7.fq.kh: ecoli_ref.fastq.keep.keep1e7.fq
-	load-into-counting.py -x 2e8 -N 4 -k 20 ecoli_ref.fastq.keep.keep1e7.fq.kh ecoli_ref.fastq.keep.keep1e7.fq
+	${KHMER}/scripts/load-into-counting.py -x 2e8 -N 4 -k 20 ecoli_ref.fastq.keep.keep1e7.fq.kh ecoli_ref.fastq.keep.keep1e7.fq
 
 ecoli_ref.fastq.keep.keep1e7.fq.kh.x.genome: ecoliMG1655.fa ecoli_ref.fastq.keep.keep1e7.fq.kh
-	abundance-dist.py -s -z ecoli_ref.fastq.keep.keep1e7.fq.kh ecoliMG1655.fa ecoli_ref.fastq.keep.keep1e7.fq.kh.x.genome
+	${KHMER}/scripts/abundance-dist.py -s -z ecoli_ref.fastq.keep.keep1e7.fq.kh ecoliMG1655.fa ecoli_ref.fastq.keep.keep1e7.fq.kh.x.genome
 
 ecoli_ref.fastq.keep.keep1e7.fq.abundfilt: ecoli_ref.fastq.keep.keep1e7.fq
-	filter-abund-single.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep1e7.fq
+	${KHMER}/scripts/filter-abund-single.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep1e7.fq
 
 ecoli_ref.fastq.keep.keep1e7.fq.abundfilt.keep: ecoli_ref.fastq.keep.keep1e7.fq.abundfilt
-	normalize-by-median.py -C 5 -k 20 -x 1e7 -N 4 ecoli_ref.fastq.keep.keep1e7.fq.abundfilt
+	${KHMER}/scripts/normalize-by-median.py -C 5 -k 20 -x 1e7 -N 4 ecoli_ref.fastq.keep.keep1e7.fq.abundfilt
 
 ecoli_ref.fastq.keep.keep2e7.fq: ecoli_ref.fastq.keep.fq
-	-normalize-by-median.py -k 20 -C 20 -x 2e7 ecoli_ref.fastq.keep.fq > norm2e7.out 2>&1
+	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 2e7 ecoli_ref.fastq.keep.fq > norm2e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep2e7.fq
 
 ecoli_ref.fastq.keep.keep2e7.fq.kh: ecoli_ref.fastq.keep.keep2e7.fq
-	load-into-counting.py -x 2e8 -N 4 -k 20 ecoli_ref.fastq.keep.keep2e7.fq.kh ecoli_ref.fastq.keep.keep2e7.fq
+	${KHMER}/scripts/load-into-counting.py -x 2e8 -N 4 -k 20 ecoli_ref.fastq.keep.keep2e7.fq.kh ecoli_ref.fastq.keep.keep2e7.fq
 
 ecoli_ref.fastq.keep.keep2e7.fq.kh.x.genome: ecoliMG1655.fa ecoli_ref.fastq.keep.keep2e7.fq.kh
-	abundance-dist.py -s -z ecoli_ref.fastq.keep.keep2e7.fq.kh ecoliMG1655.fa ecoli_ref.fastq.keep.keep2e7.fq.kh.x.genome
+	${KHMER}/scripts/abundance-dist.py -s -z ecoli_ref.fastq.keep.keep2e7.fq.kh ecoliMG1655.fa ecoli_ref.fastq.keep.keep2e7.fq.kh.x.genome
 
 ecoli_ref.fastq.keep.keep2e7.fq.abundfilt: ecoli_ref.fastq.keep.keep2e7.fq
-	filter-abund-single.py -x 2e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep2e7.fq
+	${KHMER}/scripts/filter-abund-single.py -x 2e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep2e7.fq
 
 ecoli_ref.fastq.keep.keep2e7.fq.abundfilt.keep: ecoli_ref.fastq.keep.keep2e7.fq.abundfilt
-	normalize-by-median.py -C 5 -k 20 -x 2e7 -N 4 ecoli_ref.fastq.keep.keep2e7.fq.abundfilt
+	${KHMER}/scripts/normalize-by-median.py -C 5 -k 20 -x 2e7 -N 4 ecoli_ref.fastq.keep.keep2e7.fq.abundfilt
 
 ecoli_ref.fastq.keep.keep3e7.fq: ecoli_ref.fastq.keep.fq
-	-normalize-by-median.py -k 20 -C 20 -x 3e7 ecoli_ref.fastq.keep.fq > norm3e7.out 2>&1
+	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 3e7 ecoli_ref.fastq.keep.fq > norm3e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep3e7.fq
 
 ecoli_ref.fastq.keep.keep4e7.fq: ecoli_ref.fastq.keep.fq
-	-normalize-by-median.py -k 20 -C 20 -x 4e7 ecoli_ref.fastq.keep.fq > norm4e7.out 2>&1
+	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 4e7 ecoli_ref.fastq.keep.fq > norm4e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep4e7.fq
 
 ecoli_ref.fastq.keep.keep5e7.fq: ecoli_ref.fastq.keep.fq
-	-normalize-by-median.py -k 20 -C 20 -x 5e7 ecoli_ref.fastq.keep.fq > norm5e7.out 2>&1
+	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 5e7 ecoli_ref.fastq.keep.fq > norm5e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep5e7.fq
 
 ecoli_ref.fastq.keep.keep6e7.fq: ecoli_ref.fastq.keep.fq
-	-normalize-by-median.py -k 20 -C 20 -x 6e7 ecoli_ref.fastq.keep.fq > norm6e7.out 2>&1
+	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 6e7 ecoli_ref.fastq.keep.fq > norm6e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep6e7.fq
 
 ecoli_ref.fastq.keep.keep7e7.fq: ecoli_ref.fastq.keep.fq
-	-normalize-by-median.py -k 20 -C 20 -x 7e7 ecoli_ref.fastq.keep.fq > norm7e7.out 2>&1
+	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 7e7 ecoli_ref.fastq.keep.fq > norm7e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep7e7.fq
 
 ecoli_ref.fastq.keep.keep8e7.fq: ecoli_ref.fastq.keep.fq
-	-normalize-by-median.py -k 20 -C 20 -x 8e7 ecoli_ref.fastq.keep.fq > norm8e7.out 2>&1
+	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 8e7 ecoli_ref.fastq.keep.fq > norm8e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep8e7.fq
 
 ecoli_ref.fastq.keep.keep9e7.fq: ecoli_ref.fastq.keep.fq
-	-normalize-by-median.py -k 20 -C 20 -x 9e7 ecoli_ref.fastq.keep.fq > norm9e7.out 2>&1
+	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 9e7 ecoli_ref.fastq.keep.fq > norm9e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep9e7.fq
 
 ecoli_ref.fastq.keep.keep1e8.fq: ecoli_ref.fastq.keep.fq
-	-normalize-by-median.py -k 20 -C 20 -x 1e8 ecoli_ref.fastq.keep.fq > norm1e8.out 2>&1
+	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 1e8 ecoli_ref.fastq.keep.fq > norm1e8.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep1e8.fq
 
 ecoliMG1655.fa.kh: ecoliMG1655.fa
-	load-into-counting.py -k 20 -x 1e8 -N 4 ecoliMG1655.fa.kh ecoliMG1655.fa
+	${KHMER}/scripts/load-into-counting.py -k 20 -x 1e8 -N 4 ecoliMG1655.fa.kh ecoliMG1655.fa
 
 mg1655.x.keep1e7.hist: ecoliMG1655.fa.kh ecoli_ref.fastq.keep.keep1e7.fq
-	abundance-dist.py ecoliMG1655.fa.kh ecoli_ref.fastq.keep.keep1e7.fq \
+	${KHMER}/scripts/abundance-dist.py ecoliMG1655.fa.kh ecoli_ref.fastq.keep.keep1e7.fq \
 		mg1655.x.keep1e7.hist
 
 mg1655.x.keep2e7.hist: ecoliMG1655.fa.kh ecoli_ref.fastq.keep.keep2e7.fq
-	abundance-dist.py ecoliMG1655.fa.kh ecoli_ref.fastq.keep.keep2e7.fq \
+	${KHMER}/scripts/abundance-dist.py ecoliMG1655.fa.kh ecoli_ref.fastq.keep.keep2e7.fq \
 		mg1655.x.keep2e7.hist
 
 mg1655.x.keep.hist: ecoliMG1655.fa.kh ecoli_ref.fastq.keep.fq
-	abundance-dist.py ecoliMG1655.fa.kh ecoli_ref.fastq.keep.fq \
+	${KHMER}/scripts/abundance-dist.py ecoliMG1655.fa.kh ecoli_ref.fastq.keep.fq \
 		mg1655.x.keep.hist
 
 keep.kh: ecoli_ref.fastq.keep.fq
-	load-into-counting.py -x 2e8 -N 4 -k 20 keep.kh ecoli_ref.fastq.keep.fq
+	${KHMER}/scripts/load-into-counting.py -x 2e8 -N 4 -k 20 keep.kh ecoli_ref.fastq.keep.fq
 
 keep1e7.kh: ecoli_ref.fastq.keep.keep1e7.fq
-	load-into-counting.py -x 2e8 -N 4 -k 20 keep1e7.kh ecoli_ref.fastq.keep.keep1e7.fq
+	${KHMER}/scripts/load-into-counting.py -x 2e8 -N 4 -k 20 keep1e7.kh ecoli_ref.fastq.keep.keep1e7.fq
 
 keep2e7.kh: ecoli_ref.fastq.keep.keep2e7.fq
-	load-into-counting.py -x 2e8 -N 4 -k 20 keep2e7.kh ecoli_ref.fastq.keep.keep2e7.fq
+	${KHMER}/scripts/load-into-counting.py -x 2e8 -N 4 -k 20 keep2e7.kh ecoli_ref.fastq.keep.keep2e7.fq
 
 ecoli_ref.fastq.keep.abundfilt.fq: ecoli_ref.fastq.keep.fq
-	filter-abund-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.keep.fq
+	${KHMER}/scripts/filter-abund-single.py -x 1e9 -N 4 -k 20 ecoli_ref.fastq.keep.fq
 	mv ecoli_ref.fastq.keep.fq.abundfilt ecoli_ref.fastq.keep.abundfilt.fq
 
 ecoli_ref.fastq.keep.keep1e7.abundfilt.fq: ecoli_ref.fastq.keep.keep1e7.fq
-	filter-abund-single.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep1e7.fq
+	${KHMER}/scripts/filter-abund-single.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep1e7.fq
 	mv ecoli_ref.fastq.keep.keep1e7.fq.abundfilt ecoli_ref.fastq.keep.keep1e7.abundfilt.fq
 
 ecoli_ref.fastq.keep.keep2e7.abundfilt.fq: ecoli_ref.fastq.keep.keep2e7.fq
-	filter-abund-single.py -x 2e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep2e7.fq
+	${KHMER}/scripts/filter-abund-single.py -x 2e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep2e7.fq
 	mv ecoli_ref.fastq.keep.keep2e7.fq.abundfilt ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
 
 ecoli_ref.fastq.kak5.fq: ecoli_ref.fastq.keep.abundfilt.fq
-	normalize-by-median.py -x 1e9 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.abundfilt.fq
+	${KHMER}/scripts/normalize-by-median.py -x 1e9 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.abundfilt.fq
 	mv ecoli_ref.fastq.keep.abundfilt.fq.keep ecoli_ref.fastq.kak5.fq
 
 ecoli_ref.fastq.kak5.1e7.fq: ecoli_ref.fastq.keep.keep1e7.abundfilt.fq
-	normalize-by-median.py -x 1e7 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.keep1e7.abundfilt.fq
+	${KHMER}/scripts/normalize-by-median.py -x 1e7 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.keep1e7.abundfilt.fq
 	mv ecoli_ref.fastq.keep.keep1e7.abundfilt.fq.keep ecoli_ref.fastq.kak5.1e7.fq
 
 ecoli_ref.fastq.kak5.2e7.fq: ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
-	normalize-by-median.py -x 2e7 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
+	${KHMER}/normalize-by-median.py -x 2e7 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
 	mv ecoli_ref.fastq.keep.keep2e7.abundfilt.fq.keep ecoli_ref.fastq.kak5.2e7.fq
 
 velvet.kak5/contigs.fa: ecoli_ref.fastq.kak5.fq
@@ -744,20 +744,20 @@ velvet.kak5.2e7/contigs.fa: ecoli_ref.fastq.kak5.2e7.fq
 	velvetg velvet.kak5.2e7 -exp_cov auto
 
 ecoli-reads.kh: ecoli_ref.fastq
-	load-into-counting.py -x 4e9 -N 4 -k 20 ecoli-reads.kh ecoli_ref.fastq
+	${KHMER}/scripts/load-into-counting.py -x 4e9 -N 4 -k 20 ecoli-reads.kh ecoli_ref.fastq
 
 ecoli-reads.x.mg1655.hist: ecoli-reads.kh ecoliMG1655.fa
 	-rm -f ecoli-reads.x.mg1655.hist
-	abundance-dist.py ecoli-reads.kh ecoliMG1655.fa ecoli-reads.x.mg1655.hist
+	${KHMER}/scripts/abundance-dist.py ecoli-reads.kh ecoliMG1655.fa ecoli-reads.x.mg1655.hist
 
 keep.x.mg1655.hist: keep.kh ecoliMG1655.fa
-	abundance-dist.py keep.kh ecoliMG1655.fa keep.x.mg1655.hist
+	${KHMER}/scripts/abundance-dist.py keep.kh ecoliMG1655.fa keep.x.mg1655.hist
 
 keep1e7.x.mg1655.hist: keep1e7.kh ecoliMG1655.fa
-	abundance-dist.py keep1e7.kh ecoliMG1655.fa keep1e7.x.mg1655.hist
+	${KHMER}/scripts/abundance-dist.py keep1e7.kh ecoliMG1655.fa keep1e7.x.mg1655.hist
 
 keep2e7.x.mg1655.hist: keep2e7.kh ecoliMG1655.fa
-	abundance-dist.py keep2e7.kh ecoliMG1655.fa keep2e7.x.mg1655.hist
+	${KHMER}/scripts/abundance-dist.py keep2e7.kh ecoliMG1655.fa keep2e7.x.mg1655.hist
 
 small_dn: ecoli_ref.fastq.keep.keep1e7.fq ecoli_ref.fastq.keep.keep2e7.fq ecoli_ref.fastq.keep.keep3e7.fq ecoli_ref.fastq.keep.keep4e7.fq ecoli_ref.fastq.keep.keep5e7.fq ecoli_ref.fastq.keep.keep6e7.fq ecoli_ref.fastq.keep.keep7e7.fq ecoli_ref.fastq.keep.keep8e7.fq ecoli_ref.fastq.keep.keep9e7.fq ecoli_ref.fastq.keep.keep1e8.fq
 
