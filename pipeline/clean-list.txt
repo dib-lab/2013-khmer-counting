@@ -264,7 +264,6 @@ suffix_4_part1.time
 suffix_5_part1.time
 kmerlist2
 kmerlist2.fa
-MH0001.trimmed.fa
 ecoliMG1655.fa.kh
 ecoliMG1655.fa.kh.info
 ecoli_ref.fastq.ka.r1.fq

@@ -10,7 +10,7 @@ KHMER=/usr/local/src/khmer
 #	MH0001.trimmed.fa
 #	ecoli_ref.fastq
 
-all: benchmark jellyfish tallymer dsk check_fp_rate check_error abundance_filtering counts
+all: benchmark jellyfish tallymer dsk check_fp_rate check_error abundance_filtering counts loop_filter loop_norm
 
 copydata:
 	rm -fr ../data/
@@ -465,7 +465,7 @@ loop_filter: ecoli_ref.fastq.ka.r1.fq ecoli_ref.fastq.ka.r1.fq.hist \
 	ecoli_ref.fastq.keep.fq.hist ecoli_ref.fastq.keep.fq.endcount
 
 ecoli_ref.fastq.keep.fq: ecoli_ref.fastq
-	normalize-by-median.py -x 2e8 -N 4 -C 20 -k 20 ecoli_ref.fastq
+	${KHMER}/scripts/normalize-by-median.py -x 2e8 -N 4 -C 20 -k 20 ecoli_ref.fastq
 	mv ecoli_ref.fastq.keep ecoli_ref.fastq.keep.fq
 
 ecoli_ref.fastq.keep.fq.hist: ecoli_ref.fastq.keep.fq
@@ -617,7 +617,7 @@ ecoli-iter-filter.data: round0.1e7.hist round0.2e8.hist round1.1e7.hist \
 	python extract-filter-abund-rounds.py > ecoli-iter-filter.data
 
 ecoli_ref.fastq.keep.keep1e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 1e7 ecoli_ref.fastq.keep.fq > norm1e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 1e7 ecoli_ref.fastq.keep.fq > norm1e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep1e7.fq
 
 ecoli_ref.fastq.keep.keep1e7.fq.kh: ecoli_ref.fastq.keep.keep1e7.fq
@@ -630,10 +630,10 @@ ecoli_ref.fastq.keep.keep1e7.fq.abundfilt: ecoli_ref.fastq.keep.keep1e7.fq
 	${KHMER}/scripts/filter-abund-single.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep1e7.fq
 
 ecoli_ref.fastq.keep.keep1e7.fq.abundfilt.keep: ecoli_ref.fastq.keep.keep1e7.fq.abundfilt
-	${KHMER}/scripts/normalize-by-median.py -C 5 -k 20 -x 1e7 -N 4 ecoli_ref.fastq.keep.keep1e7.fq.abundfilt
+	-${KHMER}/scripts/normalize-by-median.py -C 5 -k 20 -x 1e7 -N 4 ecoli_ref.fastq.keep.keep1e7.fq.abundfilt
 
 ecoli_ref.fastq.keep.keep2e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 2e7 ecoli_ref.fastq.keep.fq > norm2e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 2e7 ecoli_ref.fastq.keep.fq > norm2e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep2e7.fq
 
 ecoli_ref.fastq.keep.keep2e7.fq.kh: ecoli_ref.fastq.keep.keep2e7.fq
@@ -646,34 +646,34 @@ ecoli_ref.fastq.keep.keep2e7.fq.abundfilt: ecoli_ref.fastq.keep.keep2e7.fq
 	${KHMER}/scripts/filter-abund-single.py -x 2e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep2e7.fq
 
 ecoli_ref.fastq.keep.keep2e7.fq.abundfilt.keep: ecoli_ref.fastq.keep.keep2e7.fq.abundfilt
-	${KHMER}/scripts/normalize-by-median.py -C 5 -k 20 -x 2e7 -N 4 ecoli_ref.fastq.keep.keep2e7.fq.abundfilt
+	-${KHMER}/scripts/normalize-by-median.py -C 5 -k 20 -x 2e7 -N 4 ecoli_ref.fastq.keep.keep2e7.fq.abundfilt
 
 ecoli_ref.fastq.keep.keep3e7.fq: ecoli_ref.fastq.keep.fq
 	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 3e7 ecoli_ref.fastq.keep.fq > norm3e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep3e7.fq
 
 ecoli_ref.fastq.keep.keep4e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 4e7 ecoli_ref.fastq.keep.fq > norm4e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 4e7 ecoli_ref.fastq.keep.fq > norm4e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep4e7.fq
 
 ecoli_ref.fastq.keep.keep5e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 5e7 ecoli_ref.fastq.keep.fq > norm5e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 5e7 ecoli_ref.fastq.keep.fq > norm5e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep5e7.fq
 
 ecoli_ref.fastq.keep.keep6e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 6e7 ecoli_ref.fastq.keep.fq > norm6e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 6e7 ecoli_ref.fastq.keep.fq > norm6e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep6e7.fq
 
 ecoli_ref.fastq.keep.keep7e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 7e7 ecoli_ref.fastq.keep.fq > norm7e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 7e7 ecoli_ref.fastq.keep.fq > norm7e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep7e7.fq
 
 ecoli_ref.fastq.keep.keep8e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 8e7 ecoli_ref.fastq.keep.fq > norm8e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 8e7 ecoli_ref.fastq.keep.fq > norm8e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep8e7.fq
 
 ecoli_ref.fastq.keep.keep9e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 9e7 ecoli_ref.fastq.keep.fq > norm9e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 9e7 ecoli_ref.fastq.keep.fq > norm9e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep9e7.fq
 
 ecoli_ref.fastq.keep.keep1e8.fq: ecoli_ref.fastq.keep.fq
@@ -725,7 +725,7 @@ ecoli_ref.fastq.kak5.1e7.fq: ecoli_ref.fastq.keep.keep1e7.abundfilt.fq
 	mv ecoli_ref.fastq.keep.keep1e7.abundfilt.fq.keep ecoli_ref.fastq.kak5.1e7.fq
 
 ecoli_ref.fastq.kak5.2e7.fq: ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
-	${KHMER}/normalize-by-median.py -x 2e7 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
+	${KHMER}/scripts/normalize-by-median.py -x 2e7 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
 	mv ecoli_ref.fastq.keep.keep2e7.abundfilt.fq.keep ecoli_ref.fastq.kak5.2e7.fq
 
 velvet.kak5/contigs.fa: ecoli_ref.fastq.kak5.fq
