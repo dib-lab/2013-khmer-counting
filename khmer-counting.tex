@@ -10,7 +10,7 @@
 
 % figures: khmer blue; tallymer green; jellyfish red; dsk yellow
 
-% @CTB acknowledgements: USDA; NSF; BEACON; include MBL.
+% @CTB acknowledgements: USDA; NSF; BEACON; include MBL.  Eric McDonald.
 
 % @CTB discuss online nature of Basic Khmer operations early, in results.
 % @CTB do we want to talk about k-mer frequency spectrum instead of k-mer
@@ -53,7 +53,6 @@ online k-mer counting using a probabilistic data structure}}
 \\
 Qingpeng Zhang$^{1}$, 
 Jason Pell$^{1}$,
-Eric McDonald$^{1}$,
 Rosangela Canino-Koning$^{1}$,
 Adina Chuang Howe$^{2,3}$,and 
 C. Titus Brown$^{1,2\ast}$
@@ -147,7 +146,7 @@ novo assembly, repeat detection, and sequencing coverage estimation
 
 The central challenge for k-mer counting in short-read shotgun
 sequencing data is that these data are both relatively sparse in
-k-mers and contain many erroneous k-mers.  F or typical values of k such as k=32 the data sets are sparse as only a small fraction of
+k-mers and contain many erroneous k-mers.  For typical values of k such as k=32 the data sets are sparse as only a small fraction of
 the total possible number of k-mers ($4^{32}$) are actually present in
 the data set [CITE].  The high error rate (e.g. Illumina has a ~0.1-1\%
 per-base error rate \cite{pubmed19997069}) generates many unique k-mers and as the total number of generated reads increases the
@@ -216,9 +215,9 @@ in turn supports streaming applications such as digital normalization
 
 % @CTB streaming => discussion
 
-For two problems we compare time, memory, and disk usage of our k-mer counting
-implementation with that of Tallymer, Jellyfish, and DSK: first, generating a k-mer abundance distribution for large
-data sets; and second, querying individual k-mer counts at random from
+We compare time, memory, and disk usage of our k-mer counting
+implementation with that of Tallymer, Jellyfish, and DSK, for two problems. First, we generate a k-mer abundance distribution for large
+data sets; and second, we query many individual k-mer counts at random from
 a previously constructed k-mer count database.  We show that khmer
 is competitive in speed, memory, and disk usage for these
 problems.  We also analyze the effects of counting error on
