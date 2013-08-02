@@ -44,7 +44,8 @@ sets::
  git clone git://github.com/ged-lab/2013-khmer-counting.git
  cd 2013-khmer-counting
 
- curl -O http://athyra.ged.msu.edu/~t/2013-khmer-counting-data.tar.gz
+ curl -O http://public.ged.msu.edu.s3.amazonaws.com/2013-khmer-counting/2013-khmer-counting-data.tar.gz
+
  tar xzf 2013-khmer-counting-data.tar.gz
  
 Installing necessary software
