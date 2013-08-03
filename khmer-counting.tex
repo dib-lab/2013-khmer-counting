@@ -127,7 +127,7 @@ A variety of k-mer counting approaches, and standalone software
 packages implementing them, have emerged in recent years; this
 includes Tallymer, Jellyfish, BF-Counter, DSK, KMC, and Turtle \cite{Kurtz2008,Marcais2011, Melsted2011, Rizk2013, Deorowicz2013, Roy2013}.
 % @CTB see http://arxiv.org/abs/1305.1861)
-% @CTB include more discussion of BFcounter & turtle?
+% @CTB include more discussion of BFcounter & turtle? What about KMC?
 These
 approaches and implementations each offer different algorithmic
 trade-offs and enable a non-overlapping set
@@ -254,8 +254,7 @@ histograms in five soil metagenomic read data sets using khmer,
 Tallymer, Jellyfish, and DSK (Figures \ref{cmp_time} and
 \ref{cmp_memory}).  We chose to benchmark abundance histograms because
 this functionality is common to all four software packages, and is a
-common analysis approach for determing assembly parameters \cite{ChikhiXXX}.
-%@CTB
+common analysis approach for determing assembly parameters \cite{Chikhi2013}.
 We applied each package to increasing subsets of a 50m read soil
 metagenome data set \cite{Howe2012}.
 
@@ -392,11 +391,15 @@ each iteration.
 % @CTB discuss application to larger genomes in discussion
 We performed four iterations of unique k-mer trimming on 5 million
 Illumina reads from sequencing of {\em E. coli}, with a maximum memory
-usage of 40 MB.  In the first round, the estimated error
+usage of 40 MB.  For each iteration we measured empirical error rate
+compared with number of bases trimmed as well as the total number of
+k-mers
+(Table \ref{table:loop_trim}).
+In the first round, the estimated error
 rate was 78.1\%, and 22\% of the total bases were removed by trimming
 reads at low-abundance k-mers; the second iteration had an error
 rate of 10\%, and removed only 2.9\% additional data; and by
-the fourth iteration the error rate was down to 3.1\% with 0.0\% of the data removed (Table @XXX.).
+the fourth iteration the error rate was down to 3.1\% with 0.0\% of the data removed.
 
 % data in pipeline/ecoli_ref.fastq.ka.r?.fq.out
 \begin{table}[ht]
@@ -420,6 +423,8 @@ the fourth iteration the error rate was down to 3.1\% with 0.0\% of the data rem
   of unique (and likely erroneous) k-mers remaining, and the
   number of unique k-mers present at the 3' end of reads.}
 
+\label{table:loop_trim}
+
 \end{table}
 
 The elimination of so many unique k-mers (column 5) in the first pass
@@ -432,7 +437,7 @@ these runs are typically trimmed after the first few unique k-mers,
 leaving unique k-mers at the 3' end.
 Because of this we hypothesized that high-FP rate trimming would
 result in the retention of many unique k-mers at the 3' end of the
-read, and this was confirmed upon measurement (column 6, pass 1 vs
+read, and this was confirmed upon measurement (Table \ref{table:loop_trim}, column 6, pass 1 vs
 pass 2).
 
 \subsection{Using khmer for digital normalization, a streaming algorithm}
@@ -446,7 +451,7 @@ post), digital normalization can be efficiently implemented as a {\em
 are never counted.  This has the advantage of enabling low-memory
 preprocessing of both high-coverage genomic data sets and mRNAseq or
 metagenomic data sets with high-coverage components \cite{Brown2012,
-  @Adina}.  While digital normalization is already
+  Howe2012}.  While digital normalization is already
 implemented inside khmer, previous work did not explore the lower bound
 on memory usage for effective digital normalization.
 
@@ -456,19 +461,19 @@ above; choosing three different CountMin Sketch sizes yielded three different
 error rates: 40 MB RAM (82.9\%), 80 MB RAM (39.3\%), and 800 MB RAM
 (0.00\%).  Data sets were normalized to a k-mer coverage of 20 and the
 resulting data were evaluated for retention of true and erroneous
-k-mers, as in \cite{Brown2012} (Table XXX).  The results show that
+k-mers, as in \cite{Brown2012} (Table \ref{table:loop_norm}).  The results show that
 digital normalization retains the same set of underlying
-k-mers even at the highest error rate (column 3), while discarding only
-about 2\% additional reads (column 4).
+k-mers even at the highest error rate (Table \ref{table:loop_norm}, column 3), while discarding only
+about 2\% additional reads (Table \ref{table:loop_norm}, column 4).
 
 To evaluate the effect on actual genome assembly, we next performed
 error trimming and normalization to a coverage of 5 (the
 ``three-pass'' protocol from \cite{Brown2012} recommended for
 genome assembly), staying within the specified memory bounds.  We then
 assembled this data with Velvet and compared the resulting assemblies to the known
-{\em E. coli} MG1655 genome \cite{Zerbino2008}.  In terms of contiguity, overall size,
+{\em E. coli} MG1655 genome (Table \ref{table:assembly} \cite{Zerbino2008}.  In terms of overall size
 and genome content, all three assemblies were nearly identical (table
-XXX).  Thus digital normalization is surprisingly refractory to high
+\ref{table:assembly}, column 4).  Thus digital normalization is surprisingly refractory to high
 error rates even for practical assembly outcomes.  (Note that
 the Velvet assembler itself used considerably more memory than digital
 normalization.)
@@ -498,6 +503,8 @@ normalization.)
   error rates, reads are erroneously removed due to inflation
   of k-mer counts.}
 
+\label{table:loop_norm}
+
 \end{table}
 
 % data in *.cover
@@ -520,6 +527,8 @@ normalization.)
   low-abundance k-mer trimming, followed by normalization to C=5; see
   \cite{Brown2012} for more information) and measured total sequence recovered,
   as well as percent of true MG1655 genome covered by the assembly.}
+
+\label{table:assembly}
 
 \end{table}
 
@@ -804,11 +813,7 @@ individually.
 
 \paragraph{Tallymer:}
 Tallymer is from the genometools package version 1.3.4. For the suffixerator subroutine we used:
-{\tt -dna -pl -tis -suf -lcp}.  We varied the {\tt -parts n} option to
-create the index with only 1/n of the total data in main memory, which
-reduces the memory usage.  We separately used {\tt -parts 4} and {\tt
-  -parts 1} to test performance.
-% @CTB do we still do this, QP?
+{\tt -dna -pl -tis -suf -lcp -parts 4}.
 
 For the mkindex subroutine, we used: {\tt -mersize 31} and {\tt -mersize 22}.
 
