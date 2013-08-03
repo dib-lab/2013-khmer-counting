@@ -556,7 +556,15 @@ loop_norm: ecoli_ref.fastq.keep.keep1e7.fq \
 	ecoli_ref.fastq.kak5.2e7.fq \
 	velvet.kak5/contigs.fa \
 	velvet.kak5.1e7/contigs.fa \
-	velvet.kak5.2e7/contigs.fa
+	velvet.kak5.2e7/contigs.fa \
+	kak5.2e7.x.mg1655 \
+	kak5.1e7.x.mg1655 \
+	kak5.x.mg1655 \
+	mg1655.x.kak5.2e7 \
+	mg1655.x.kak5.1e7 \
+	mg1655.x.kak5 \
+	kak5.cover kak5.1e7.cover kak5.2e7.cover
+
 
 ecoli_ref.fastq.keep.fq.kh: ecoli_ref.fastq.keep.fq
 	${KHMER}/scripts/load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.fq.kh ecoli_ref.fastq.keep.fq
@@ -742,6 +750,46 @@ velvet.kak5.2e7/contigs.fa: ecoli_ref.fastq.kak5.2e7.fq
 	python ${KHMER}/sandbox/strip-and-split-for-assembly.py ecoli_ref.fastq.kak5.2e7.fq
 	velveth velvet.kak5.2e7 37 -fastq -shortPaired ecoli_ref.fastq.kak5.2e7.fq.pe -short ecoli_ref.fastq.kak5.2e7.fq.se
 	velvetg velvet.kak5.2e7 -exp_cov auto
+
+ecoliMG1655.fa.nin: ecoliMG1655.fa
+	formatdb -i ecoliMG1655.fa -o T -p F
+
+kak5.2e7.x.mg1655: velvet.kak5.2e7/contigs.fa ecoliMG1655.fa.nin
+	blastall -i velvet.kak5.2e7/contigs.fa -d ecoliMG1655.fa -o \
+		kak5.2e7.x.mg1655 -e 1e-20 -p blastn
+
+kak5.1e7.x.mg1655: velvet.kak5.1e7/contigs.fa ecoliMG1655.fa.nin
+	blastall -i velvet.kak5.1e7/contigs.fa -d ecoliMG1655.fa -o \
+		kak5.1e7.x.mg1655 -e 1e-20 -p blastn
+
+kak5.x.mg1655: velvet.kak5/contigs.fa ecoliMG1655.fa.nin
+	blastall -i velvet.kak5/contigs.fa -d ecoliMG1655.fa -o \
+		kak5.x.mg1655 -e 1e-20 -p blastn
+
+mg1655.x.kak5.2e7: ecoliMG1655.fa velvet.kak5.2e7/contigs.fa
+	formatdb -i velvet.kak5.2e7/contigs.fa -o T -p F
+	blastall -d velvet.kak5.2e7/contigs.fa -i ecoliMG1655.fa -o \
+		mg1655.x.kak5.2e7 -e 1e-20 -p blastn -b 1000 -v 1000
+
+mg1655.x.kak5.1e7: ecoliMG1655.fa velvet.kak5.1e7/contigs.fa
+	formatdb -i velvet.kak5.1e7/contigs.fa -o T -p F
+	blastall -d velvet.kak5.1e7/contigs.fa -i ecoliMG1655.fa -o \
+		mg1655.x.kak5.1e7 -e 1e-20 -p blastn -b 1000 -v 1000
+
+mg1655.x.kak5: ecoliMG1655.fa velvet.kak5/contigs.fa
+	formatdb -i velvet.kak5/contigs.fa -o T -p F
+	blastall -d velvet.kak5/contigs.fa -i ecoliMG1655.fa -o \
+		mg1655.x.kak5 -e 1e-20 -p blastn -b 1000 -v 1000
+
+kak5.cover: kak5.x.mg1655
+	python ../../ngs-scripts/blast/calc-blast-cover.py ecoliMG1655.fa kak5.x.mg1655 100 velvet.kak5/contigs.fa > kak5.cover
+
+kak5.1e7.cover: kak5.1e7.x.mg1655
+	python ../../ngs-scripts/blast/calc-blast-cover.py ecoliMG1655.fa kak5.1e7.x.mg1655 100 velvet.kak5.1e7/contigs.fa > kak5.1e7.cover
+
+kak5.2e7.cover: kak5.2e7.x.mg1655
+	python ../../ngs-scripts/blast/calc-blast-cover.py ecoliMG1655.fa kak5.2e7.x.mg1655 100 velvet.kak5.2e7/contigs.fa > kak5.2e7.cover
+
 
 ecoli-reads.kh: ecoli_ref.fastq
 	${KHMER}/scripts/load-into-counting.py -x 4e9 -N 4 -k 20 ecoli-reads.kh ecoli_ref.fastq
