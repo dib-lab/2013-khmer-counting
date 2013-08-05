@@ -60,6 +60,7 @@ Before we get started, we need to install all the necessary software, including:
  - DSK
  - ipython
  - LaTex
+ - Velvet
 
 To do so, run::
 

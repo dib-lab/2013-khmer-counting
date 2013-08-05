@@ -37,3 +37,6 @@ pip install pyzmq --upgrade
 
 # Upgrade the latex install with a few recommended packages
 apt-get -y install texlive-latex-recommended
+
+# Install Velvet
+apt-get install velvet
