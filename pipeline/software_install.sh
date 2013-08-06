@@ -5,7 +5,7 @@ set -x
 
 # Install pre-requisites (these are included with Starcluster)
 
-apt-get -y update && apt-get -y install git make gcc g++ bc zlib1g-dev
+apt-get -y update && apt-get -y install git make gcc g++ bc zlib1g-dev python-pip python-dev python-jinja2 python-tornado
 
 cd /usr/local/src
 
