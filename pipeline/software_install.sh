@@ -1,3 +1,12 @@
+#!/bin/bash
+
+# Die early if there is any problem
+set -x
+
+# Install pre-requisites (these are included with Starcluster)
+
+apt-get -y update && apt-get -y install git make gcc g++ bc zlib1g-dev
+
 cd /usr/local/src
 
 # Install Tallymer
