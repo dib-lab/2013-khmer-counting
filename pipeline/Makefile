@@ -10,7 +10,7 @@ KHMER=/usr/local/src/khmer
 #	MH0001.trimmed.fa
 #	ecoli_ref.fastq
 
-all: benchmark jellyfish tallymer dsk check_fp_rate check_error abundance_filtering counts
+all: benchmark jellyfish tallymer dsk check_fp_rate check_error abundance_filtering counts loop_filter loop_norm
 
 copydata:
 	rm -fr ../data/
@@ -19,7 +19,7 @@ copydata:
 
 
 clean:
-	rm -f `cat clean-list.txt`
+	rm -fr `cat clean-list.txt`
 
 counts: bloom_1_1_22.count.time bloom_2_1_22.count.time bloom_3_1_22.count.time bloom_4_1_22.count.time bloom_5_1_22.count.time jelly_1_22.count.time jelly_2_22.count.time jelly_3_22.count.time jelly_4_22.count.time jelly_5_22.count.time 1_part1_22.count.time 2_part1_22.count.time 3_part1_22.count.time 4_part1_22.count.time 5_part1_22.count.time
 
@@ -34,78 +34,103 @@ kmerlist2: kmerlist2.fa
 	grep -v ^'>' kmerlist2.fa > kmerlist2
 
 bloom_1_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_1_1_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_1_22.hist
 
 bloom_1_1_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_1_1_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1476277798 --threads 8 bloom_1_1_22.kh iowa_prairie_0920.fa.1
 
 bloom_1_1_22.count.time: bloom_1_1_22.kh kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_1_1_22.count.time python khmer-count-kmers.py bloom_1_1_22.kh kmerlist2
 
 bloom_2_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_2_1_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_1_22.hist
 
 bloom_2_1_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_2_1_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2789448361 --threads 8 bloom_2_1_22.kh iowa_prairie_0920.fa.2
 
 bloom_2_1_22.count.time: bloom_2_1_22.kh kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_2_1_22.count.time python khmer-count-kmers.py bloom_2_1_22.kh kmerlist2
 
 bloom_3_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_3_1_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_1_22.hist
 
 bloom_3_1_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_3_1_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3803756180 --threads 8 bloom_3_1_22.kh iowa_prairie_0920.fa.3
 
 bloom_3_1_22.count.time: bloom_3_1_22.kh kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_3_1_22.count.time python khmer-count-kmers.py bloom_3_1_22.kh kmerlist2
 
 bloom_4_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_4_1_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_1_22.hist
 
 bloom_4_1_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_4_1_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 4657846829 --threads 8 bloom_4_1_22.kh iowa_prairie_0920.fa.4
 
 bloom_4_1_22.count.time: bloom_4_1_22.kh kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_4_1_22.count.time python khmer-count-kmers.py bloom_4_1_22.kh kmerlist2
 
 bloom_5_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_5_1_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_1_22.hist
 
 bloom_5_1_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_5_1_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 5580911687 --threads 8 bloom_5_1_22.kh iowa_prairie_0920.fa.5
 
 bloom_5_1_22.count.time: bloom_5_1_22.kh kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_5_1_22.count.time python khmer-count-kmers.py bloom_5_1_22.kh kmerlist2
 
 bloom_1_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_1_5_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_5_22.hist
 
 bloom_1_5_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_1_5_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 876416775 --threads 8 bloom_1_5_22.kh iowa_prairie_0920.fa.1
 
 bloom_2_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_2_5_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_5_22.hist
 
 bloom_2_5_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_2_5_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1656002238 --threads 8 bloom_2_5_22.kh iowa_prairie_0920.fa.2
 
 bloom_3_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_3_5_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_5_22.hist
 
 bloom_3_5_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_3_5_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2258162881 --threads 8 bloom_3_5_22.kh iowa_prairie_0920.fa.3
 
 bloom_4_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_4_5_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --threads 8 --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_5_22.hist
 
 bloom_4_5_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_4_5_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 2765207947 --threads 8 bloom_4_5_22.kh iowa_prairie_0920.fa.4
 
 bloom_5_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_5_5_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_5_22.hist
 
 bloom_5_5_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_5_5_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_22.kh iowa_prairie_0920.fa.5
 
 jellyfish: jelly_1_22.hist jelly_2_22.hist jelly_3_22.hist jelly_4_22.hist jelly_5_22.hist\
@@ -113,130 +138,175 @@ jellyfish: jelly_1_22.hist jelly_2_22.hist jelly_3_22.hist jelly_4_22.hist jelly
 	# Jellyfish benchmark k=22 and k=31
 
 jelly_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_22.time1 jellyfish count -m 22 -c 2 -C -s 701472602 -t 8 -o jelly_1_22 iowa_prairie_0920.fa.1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_22.time2 jellyfish histo -t 8 -o jelly_1_22.hist ./jelly_1_22_0
 
 jelly_1_22.count.time: jelly_1_22.hist kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_22.count.time bash jelly-search.sh jelly_1_22_0 kmerlist2
 
 jelly_2_22.count.time: jelly_2_22.hist kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_22.count.time bash jelly-search.sh jelly_2_22_0 kmerlist2
 
 jelly_3_22.count.time: jelly_3_22.hist kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_22.count.time bash jelly-search.sh jelly_3_22_0 kmerlist2
 
 
 jelly_4_22.count.time: jelly_4_22.hist kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_22.count.time bash jelly-search.sh jelly_4_22_0 kmerlist2
 
 jelly_2_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_22.time1 jellyfish count -m 22 -c 2 -C -s 1325442680 -t 8 -o jelly_2_22 iowa_prairie_0920.fa.2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_22.time2 jellyfish histo -t 8 -o jelly_2_22.hist ./jelly_2_22_0
 
 jelly_3_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_22.time1 jellyfish count -m 22 -c 2 -C -s 1807404236 -t 8 -o jelly_3_22 iowa_prairie_0920.fa.3
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_22.time2 jellyfish histo -t 8 -o jelly_3_22.hist ./jelly_3_22_0
 
 jelly_4_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_22.time1 jellyfish count -m 22 -c 2 -C -s 2213236520 -t 8 -o jelly_4_22 iowa_prairie_0920.fa.4
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_22.time2 jellyfish histo -t 8 -o jelly_4_22.hist ./jelly_4_22_0
 
 jelly_5_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_22.time1 jellyfish count -m 22 -c 2 -C -s 2651842796 -t 8 -o jelly_5_22 iowa_prairie_0920.fa.5
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_22.time2 jellyfish histo -t 8 -o jelly_5_22.hist ./jelly_5_22_0
 
 jelly_5_22.count.time: jelly_5_22.hist kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_22.count.time bash jelly-search.sh jelly_5_22_0 kmerlist2
 
 jelly_1_31.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_31.time1 jellyfish count -m 31 -c 2 -C -s 701472602 -t 8 -o jelly_1_31 iowa_prairie_0920.fa.1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_31.time2 jellyfish histo -t 8 -o jelly_1_31.hist ./jelly_1_31_0
 
 jelly_2_31.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_31.time1 jellyfish count -m 31 -c 2 -C -s 1325442680 -t 8 -o jelly_2_31 iowa_prairie_0920.fa.2
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_31.time2 jellyfish histo -t 8 -o jelly_2_31.hist ./jelly_2_31_0
 
 jelly_3_31.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_31.time1 jellyfish count -m 31 -c 2 -C -s 1807404236 -t 8 -o jelly_3_31 iowa_prairie_0920.fa.3
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_31.time2 jellyfish histo -t 8 -o jelly_3_31.hist ./jelly_3_31_0
 
 jelly_4_31.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_31.time1 jellyfish count -m 31 -c 2 -C -s 2213236520 -t 8 -o jelly_4_31 iowa_prairie_0920.fa.4
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_31.time2 jellyfish histo -t 8 -o jelly_4_31.hist ./jelly_4_31_0
 
 jelly_5_31.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_31.time1 jellyfish count -m 31 -c 2 -C -s 2651842796 -t 8 -o jelly_5_31 iowa_prairie_0920.fa.5
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_31.time2 jellyfish histo -t 8 -o jelly_5_31.hist ./jelly_5_31_0
 
 	# Tallymer benchmark part=1,k =22
 tallymer: 1_part1_22.hist 2_part1_22.hist 3_part1_22.hist 4_part1_22.hist 5_part1_22.hist
 
 1_part1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o suffix_1_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.1 -indexname 1_part1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o mkindex_1_part1_22.time gt tallymer mkindex -mersize 22  -esa 1_part1 >1_part1_22.hist
 
 1_part1.mct: 1_part1_22.hist
 	gt tallymer mkindex -mersize 22 -esa 1_part1 -counts -pl 8 -indexname 1_part1 -minocc 1
 
 1_part1_22.count.time: 1_part1.mct kmerlist2.fa
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o 1_part1_22.count.time bash tallymer-search.sh 1_part1 kmerlist2.fa
 
 2_part1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o suffix_2_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.2 -indexname 2_part1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o mkindex_2_part1_22.time gt tallymer mkindex -mersize 22  -esa 2_part1 >2_part1_22.hist
 
 2_part1.mct: 2_part1_22.hist
 	gt tallymer mkindex -mersize 22 -esa 2_part1 -counts -pl 8 -indexname 2_part1 -minocc 1
 
 2_part1_22.count.time: 2_part1.mct kmerlist2.fa
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o 2_part1_22.count.time bash tallymer-search.sh 2_part1 kmerlist2.fa
 
 3_part1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o suffix_3_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.3 -indexname 3_part1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o mkindex_3_part1_22.time gt tallymer mkindex -mersize 22  -esa 3_part1 >3_part1_22.hist
 
 3_part1.mct: 3_part1_22.hist
 	gt tallymer mkindex -mersize 22 -esa 3_part1 -counts -pl 8 -indexname 3_part1 -minocc 1
 
 3_part1_22.count.time: 3_part1.mct kmerlist2.fa
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o 3_part1_22.count.time bash tallymer-search.sh 3_part1 kmerlist2.fa
 
 4_part1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o suffix_4_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.4 -indexname 4_part1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o mkindex_4_part1_22.time gt tallymer mkindex -mersize 22  -esa 4_part1 >4_part1_22.hist
 
 4_part1.mct: 4_part1_22.hist
 	gt tallymer mkindex -mersize 22 -esa 4_part1 -counts -pl 8 -indexname 4_part1 -minocc 1
 
 4_part1_22.count.time: 4_part1.mct kmerlist2.fa
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o 4_part1_22.count.time bash tallymer-search.sh 4_part1 kmerlist2.fa
 
 5_part1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o suffix_5_part1.time gt suffixerator -dna -pl -tis -suf -lcp -db iowa_prairie_0920.fa.5 -indexname 5_part1
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o mkindex_5_part1_22.time gt tallymer mkindex -mersize 22  -esa 5_part1 >5_part1_22.hist
 
 5_part1.mct: 5_part1_22.hist
 	gt tallymer mkindex -mersize 22 -esa 5_part1 -counts -pl 8 -indexname 5_part1 -minocc 1
 
 5_part1_22.count.time: 5_part1.mct kmerlist2.fa
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o 5_part1_22.count.time bash tallymer-search.sh 5_part1 kmerlist2.fa
 
 
 dsk: dsk_1_22.time dsk_2_22.time dsk_3_22.time dsk_4_22.time dsk_5_22.time
 	# dsk benchmark k=22
 dsk_1_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o dsk_1_22.time dsk iowa_prairie_0920.fa.1 22 -histo
 
 dsk_2_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o dsk_2_22.time dsk iowa_prairie_0920.fa.2 22 -histo
 
 dsk_3_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o dsk_3_22.time dsk iowa_prairie_0920.fa.3 22 -histo
 
 dsk_4_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o dsk_4_22.time dsk iowa_prairie_0920.fa.4 22 -histo
 
 dsk_5_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
 	time -o dsk_5_22.time dsk iowa_prairie_0920.fa.5 22 -histo
 
 
@@ -395,7 +465,7 @@ loop_filter: ecoli_ref.fastq.ka.r1.fq ecoli_ref.fastq.ka.r1.fq.hist \
 	ecoli_ref.fastq.keep.fq.hist ecoli_ref.fastq.keep.fq.endcount
 
 ecoli_ref.fastq.keep.fq: ecoli_ref.fastq
-	normalize-by-median.py -x 2e8 -N 4 -C 20 -k 20 ecoli_ref.fastq
+	${KHMER}/scripts/normalize-by-median.py -x 2e8 -N 4 -C 20 -k 20 ecoli_ref.fastq
 	mv ecoli_ref.fastq.keep ecoli_ref.fastq.keep.fq
 
 ecoli_ref.fastq.keep.fq.hist: ecoli_ref.fastq.keep.fq
@@ -486,7 +556,15 @@ loop_norm: ecoli_ref.fastq.keep.keep1e7.fq \
 	ecoli_ref.fastq.kak5.2e7.fq \
 	velvet.kak5/contigs.fa \
 	velvet.kak5.1e7/contigs.fa \
-	velvet.kak5.2e7/contigs.fa
+	velvet.kak5.2e7/contigs.fa \
+	kak5.2e7.x.mg1655 \
+	kak5.1e7.x.mg1655 \
+	kak5.x.mg1655 \
+	mg1655.x.kak5.2e7 \
+	mg1655.x.kak5.1e7 \
+	mg1655.x.kak5 \
+	kak5.cover kak5.1e7.cover kak5.2e7.cover
+
 
 ecoli_ref.fastq.keep.fq.kh: ecoli_ref.fastq.keep.fq
 	${KHMER}/scripts/load-into-counting.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.fq.kh ecoli_ref.fastq.keep.fq
@@ -547,7 +625,7 @@ ecoli-iter-filter.data: round0.1e7.hist round0.2e8.hist round1.1e7.hist \
 	python extract-filter-abund-rounds.py > ecoli-iter-filter.data
 
 ecoli_ref.fastq.keep.keep1e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 1e7 ecoli_ref.fastq.keep.fq > norm1e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 1e7 ecoli_ref.fastq.keep.fq > norm1e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep1e7.fq
 
 ecoli_ref.fastq.keep.keep1e7.fq.kh: ecoli_ref.fastq.keep.keep1e7.fq
@@ -560,10 +638,10 @@ ecoli_ref.fastq.keep.keep1e7.fq.abundfilt: ecoli_ref.fastq.keep.keep1e7.fq
 	${KHMER}/scripts/filter-abund-single.py -x 1e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep1e7.fq
 
 ecoli_ref.fastq.keep.keep1e7.fq.abundfilt.keep: ecoli_ref.fastq.keep.keep1e7.fq.abundfilt
-	${KHMER}/scripts/normalize-by-median.py -C 5 -k 20 -x 1e7 -N 4 ecoli_ref.fastq.keep.keep1e7.fq.abundfilt
+	-${KHMER}/scripts/normalize-by-median.py -C 5 -k 20 -x 1e7 -N 4 ecoli_ref.fastq.keep.keep1e7.fq.abundfilt
 
 ecoli_ref.fastq.keep.keep2e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 2e7 ecoli_ref.fastq.keep.fq > norm2e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 2e7 ecoli_ref.fastq.keep.fq > norm2e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep2e7.fq
 
 ecoli_ref.fastq.keep.keep2e7.fq.kh: ecoli_ref.fastq.keep.keep2e7.fq
@@ -576,34 +654,34 @@ ecoli_ref.fastq.keep.keep2e7.fq.abundfilt: ecoli_ref.fastq.keep.keep2e7.fq
 	${KHMER}/scripts/filter-abund-single.py -x 2e7 -N 4 -k 20 ecoli_ref.fastq.keep.keep2e7.fq
 
 ecoli_ref.fastq.keep.keep2e7.fq.abundfilt.keep: ecoli_ref.fastq.keep.keep2e7.fq.abundfilt
-	${KHMER}/scripts/normalize-by-median.py -C 5 -k 20 -x 2e7 -N 4 ecoli_ref.fastq.keep.keep2e7.fq.abundfilt
+	-${KHMER}/scripts/normalize-by-median.py -C 5 -k 20 -x 2e7 -N 4 ecoli_ref.fastq.keep.keep2e7.fq.abundfilt
 
 ecoli_ref.fastq.keep.keep3e7.fq: ecoli_ref.fastq.keep.fq
 	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 3e7 ecoli_ref.fastq.keep.fq > norm3e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep3e7.fq
 
 ecoli_ref.fastq.keep.keep4e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 4e7 ecoli_ref.fastq.keep.fq > norm4e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 4e7 ecoli_ref.fastq.keep.fq > norm4e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep4e7.fq
 
 ecoli_ref.fastq.keep.keep5e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 5e7 ecoli_ref.fastq.keep.fq > norm5e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 5e7 ecoli_ref.fastq.keep.fq > norm5e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep5e7.fq
 
 ecoli_ref.fastq.keep.keep6e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 6e7 ecoli_ref.fastq.keep.fq > norm6e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 6e7 ecoli_ref.fastq.keep.fq > norm6e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep6e7.fq
 
 ecoli_ref.fastq.keep.keep7e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 7e7 ecoli_ref.fastq.keep.fq > norm7e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 7e7 ecoli_ref.fastq.keep.fq > norm7e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep7e7.fq
 
 ecoli_ref.fastq.keep.keep8e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 8e7 ecoli_ref.fastq.keep.fq > norm8e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 8e7 ecoli_ref.fastq.keep.fq > norm8e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep8e7.fq
 
 ecoli_ref.fastq.keep.keep9e7.fq: ecoli_ref.fastq.keep.fq
-	${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 9e7 ecoli_ref.fastq.keep.fq > norm9e7.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py -k 20 -C 20 -x 9e7 ecoli_ref.fastq.keep.fq > norm9e7.out 2>&1
 	mv ecoli_ref.fastq.keep.fq.keep ecoli_ref.fastq.keep.keep9e7.fq
 
 ecoli_ref.fastq.keep.keep1e8.fq: ecoli_ref.fastq.keep.fq
@@ -655,23 +733,63 @@ ecoli_ref.fastq.kak5.1e7.fq: ecoli_ref.fastq.keep.keep1e7.abundfilt.fq
 	mv ecoli_ref.fastq.keep.keep1e7.abundfilt.fq.keep ecoli_ref.fastq.kak5.1e7.fq
 
 ecoli_ref.fastq.kak5.2e7.fq: ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
-	${KHMER}/normalize-by-median.py -x 2e7 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
+	${KHMER}/scripts/normalize-by-median.py -x 2e7 -N 4 -k 20 -C 5 ecoli_ref.fastq.keep.keep2e7.abundfilt.fq
 	mv ecoli_ref.fastq.keep.keep2e7.abundfilt.fq.keep ecoli_ref.fastq.kak5.2e7.fq
 
 velvet.kak5/contigs.fa: ecoli_ref.fastq.kak5.fq
 	python ${KHMER}/sandbox/strip-and-split-for-assembly.py ecoli_ref.fastq.kak5.fq
-	velveth velvet.kak5 37 -fasta -shortPaired ecoli_ref.fastq.kak5.fq.pe -short ecoli_ref.fastq.kak5.fq.se
+	velveth velvet.kak5 37 -fastq -shortPaired ecoli_ref.fastq.kak5.fq.pe -short ecoli_ref.fastq.kak5.fq.se
 	velvetg velvet.kak5 -exp_cov auto
 
 velvet.kak5.1e7/contigs.fa: ecoli_ref.fastq.kak5.1e7.fq
 	python ${KHMER}/sandbox/strip-and-split-for-assembly.py ecoli_ref.fastq.kak5.1e7.fq
-	velveth velvet.kak5.1e7 37 -fasta -shortPaired ecoli_ref.fastq.kak5.1e7.fq.pe -short ecoli_ref.fastq.kak5.1e7.fq.se
+	velveth velvet.kak5.1e7 37 -fastq -shortPaired ecoli_ref.fastq.kak5.1e7.fq.pe -short ecoli_ref.fastq.kak5.1e7.fq.se
 	velvetg velvet.kak5.1e7 -exp_cov auto
 
 velvet.kak5.2e7/contigs.fa: ecoli_ref.fastq.kak5.2e7.fq
 	python ${KHMER}/sandbox/strip-and-split-for-assembly.py ecoli_ref.fastq.kak5.2e7.fq
-	velveth velvet.kak5.2e7 37 -fasta -shortPaired ecoli_ref.fastq.kak5.2e7.fq.pe -short ecoli_ref.fastq.kak5.2e7.fq.se
+	velveth velvet.kak5.2e7 37 -fastq -shortPaired ecoli_ref.fastq.kak5.2e7.fq.pe -short ecoli_ref.fastq.kak5.2e7.fq.se
 	velvetg velvet.kak5.2e7 -exp_cov auto
+
+ecoliMG1655.fa.nin: ecoliMG1655.fa
+	formatdb -i ecoliMG1655.fa -o T -p F
+
+kak5.2e7.x.mg1655: velvet.kak5.2e7/contigs.fa ecoliMG1655.fa.nin
+	blastall -i velvet.kak5.2e7/contigs.fa -d ecoliMG1655.fa -o \
+		kak5.2e7.x.mg1655 -e 1e-20 -p blastn
+
+kak5.1e7.x.mg1655: velvet.kak5.1e7/contigs.fa ecoliMG1655.fa.nin
+	blastall -i velvet.kak5.1e7/contigs.fa -d ecoliMG1655.fa -o \
+		kak5.1e7.x.mg1655 -e 1e-20 -p blastn
+
+kak5.x.mg1655: velvet.kak5/contigs.fa ecoliMG1655.fa.nin
+	blastall -i velvet.kak5/contigs.fa -d ecoliMG1655.fa -o \
+		kak5.x.mg1655 -e 1e-20 -p blastn
+
+mg1655.x.kak5.2e7: ecoliMG1655.fa velvet.kak5.2e7/contigs.fa
+	formatdb -i velvet.kak5.2e7/contigs.fa -o T -p F
+	blastall -d velvet.kak5.2e7/contigs.fa -i ecoliMG1655.fa -o \
+		mg1655.x.kak5.2e7 -e 1e-20 -p blastn -b 1000 -v 1000
+
+mg1655.x.kak5.1e7: ecoliMG1655.fa velvet.kak5.1e7/contigs.fa
+	formatdb -i velvet.kak5.1e7/contigs.fa -o T -p F
+	blastall -d velvet.kak5.1e7/contigs.fa -i ecoliMG1655.fa -o \
+		mg1655.x.kak5.1e7 -e 1e-20 -p blastn -b 1000 -v 1000
+
+mg1655.x.kak5: ecoliMG1655.fa velvet.kak5/contigs.fa
+	formatdb -i velvet.kak5/contigs.fa -o T -p F
+	blastall -d velvet.kak5/contigs.fa -i ecoliMG1655.fa -o \
+		mg1655.x.kak5 -e 1e-20 -p blastn -b 1000 -v 1000
+
+kak5.cover: kak5.x.mg1655
+	python ../../ngs-scripts/blast/calc-blast-cover.py ecoliMG1655.fa kak5.x.mg1655 100 velvet.kak5/contigs.fa > kak5.cover
+
+kak5.1e7.cover: kak5.1e7.x.mg1655
+	python ../../ngs-scripts/blast/calc-blast-cover.py ecoliMG1655.fa kak5.1e7.x.mg1655 100 velvet.kak5.1e7/contigs.fa > kak5.1e7.cover
+
+kak5.2e7.cover: kak5.2e7.x.mg1655
+	python ../../ngs-scripts/blast/calc-blast-cover.py ecoliMG1655.fa kak5.2e7.x.mg1655 100 velvet.kak5.2e7/contigs.fa > kak5.2e7.cover
+
 
 ecoli-reads.kh: ecoli_ref.fastq
 	${KHMER}/scripts/load-into-counting.py -x 4e9 -N 4 -k 20 ecoli-reads.kh ecoli_ref.fastq

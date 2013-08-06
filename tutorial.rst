@@ -41,10 +41,13 @@ First go to /mnt/ because we do not have enough space in home directory::
 Now, check out the source repository and grab the initial data
 sets::
 
+ git clone https://github.com/ngs-docs/ngs-scripts
+
  git clone git://github.com/ged-lab/2013-khmer-counting.git
  cd 2013-khmer-counting
 
- curl -O http://athyra.ged.msu.edu/~t/2013-khmer-counting-data.tar.gz
+ curl -O http://public.ged.msu.edu.s3.amazonaws.com/2013-khmer-counting/2013-khmer-counting-data.tar.gz
+
  tar xzf 2013-khmer-counting-data.tar.gz
  
 Installing necessary software
@@ -57,6 +60,7 @@ Before we get started, we need to install all the necessary software, including:
  - DSK
  - ipython
  - LaTex
+ - Velvet
 
 To do so, run::
 
