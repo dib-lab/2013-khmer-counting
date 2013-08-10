@@ -24,7 +24,7 @@ def error(string,error_rate):
     for l in error:
         error_base = string_list[l]
         while error_base == string_list[l]:
-            error_base_list = random.sample(['a','c','t','g'],1)
+            error_base_list = random.sample(['A','C','T','G'],1)
             error_base = error_base_list[0]
         string_list[l] = error_base
 
@@ -74,9 +74,9 @@ if error_rate==0:
 else:
     reads_error = error(reads,error_rate)
 
-count = 1
-while count<number_of_reads+1:
+count = 0
+while count<number_of_reads:
     start = count*length
     read = reads_error[start:start+length]
-    fw.write('>%s\n%s\n' %(count,read))
+    fw.write('>%s\n%s\n' %(count+1,read))
     count=count+1

@@ -4,7 +4,7 @@
 import khmer
 import sys
 import screed
-from screed.fasta import fasta_iter
+#from screed.fasta import fasta_iter
 
 def process_file(filename,HT_SIZE_array):
 
@@ -22,14 +22,10 @@ def process_file(filename,HT_SIZE_array):
         ht.consume_fasta(filename)
                 
         ktable = khmer.new_ktable(K)
-        for n, record in enumerate(fasta_iter(open(filename))):
+        f = screed.open(filename)
+        for n, record in f:
             sequence = record['sequence']
-#            ktable.consume(sequence)
-
-            seq_len = len(sequence)
-            for n in range(0,seq_len+1-K):
-                kmer = sequence[n:n+K]
-                ktable.count(kmer)
+            ktable.consume(sequence)
 
         list_miscount = []
         list_miscount_perc = []
@@ -42,6 +38,8 @@ def process_file(filename,HT_SIZE_array):
                 total_kmer = total_kmer + 1
                 kmer2 = ktable.reverse_hash(i)
                 miscount = ht.get(kmer2) - ktable.get(kmer2)######
+#                if ht.get(kmer2)<ktable.get(kmer2):
+#                    print kmer2,ht.get(kmer2),ktable.get(kmer2)
                 miscount_perc = miscount/ktable.get(kmer2)
                 list_miscount.append(miscount)
                 list_miscount_perc.append(miscount_perc)
@@ -73,7 +71,8 @@ def write_result(file,result,file_out_fp):
 #ht_size = "100000,200000,400000"
 #ht_size = "100000,200000,400000,600000,800000,1000000,1200000"
 ht_size = "100000,200000,400000,600000,800000,1000000,1200000,1400000,1800000,2200000,2600000,3000000,4000000,6000000"
-file_list = "MH0001.trimmed.head176800.fa,random_kmers_1M_3c.fa,random_reads_1.67M_3c_0.03e.fa,random_reads_2.54M_3c_0.00e.fa"
+file_list = "MH0001.trimmed.head176800.fa,random_kmers_1M_3c.fa,random_reads_1.67M_3c_0.03e.fa,random_reads_2.54M_3c_0.00e.fa,ecoli_ref_head200000.fastq"
+
 file_out = sys.argv[1]
 
 HT_SIZE = ht_size.split(',')
