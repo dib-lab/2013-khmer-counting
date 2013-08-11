@@ -23,7 +23,7 @@ def process_file(filename,HT_SIZE_array):
                 
         ktable = khmer.new_ktable(K)
         f = screed.open(filename)
-        for n, record in f:
+        for record in f:
             sequence = record['sequence']
             ktable.consume(sequence)
 
