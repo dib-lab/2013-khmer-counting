@@ -165,7 +165,6 @@ storing the frequency distributions of distinct elements
 implementation of a Bloom filter, which has been previously used for
 both k-mer counting and de Bruijn graph storage and traversal
 \cite{Bloom70,BroderM03,Melsted2011,Pell2012,Rizk2013,Jones2012}
-% @CTB fix jones cite/quip
 
 Probabilistic approaches can be particularly memory efficient for
 certain problems, with memory usage significantly lower than any exact
@@ -445,8 +444,7 @@ pass 2).
 Digital normalization is a lossy compression algorithm that discards
 short reads based on saturating coverage of a de Bruijn graph
 \cite{Brown2012}.  While several non-streaming implementations exist, including
-Trinity's {\em in silico} normalization (@cite new Trinity paper, blog
-post), digital normalization can be efficiently implemented as a {\em
+Trinity's {\em in silico} normalization \cite{Haas2013,Brown2012blog}, digital normalization can be efficiently implemented as a {\em
   streaming} algorithm in which the majority of k-mers in a data set
 are never loaded into the counting structure.  This has the advantage of enabling low-memory
 preprocessing of both high-coverage genomic data sets and mRNAseq or
@@ -715,7 +713,7 @@ analysis.  This is similar to the approach taken by DSK
 Further optimization of khmer on single machines, e.g. for multi-core
 architectures, is unlikely to achieve significantly greater speed.
 Past a certain point k-mer counting is fundamentally I/O bound
-(@cite McDonald and Brown POSA chapter on arXiv).
+\cite{McDonald2013}.
 
 Perhaps the most interesting future direction for probabilistic k-mer
 counting is that taken by Turtle \cite{Roy2013}, in which several
@@ -737,15 +735,13 @@ at https://github.com/ged-lab/2013-khmer-counting.  (Tutorials etc. @CTB.)
 
 \subsection{Sequence Data}
 
-Two human gut metagenome reads data sets (MH0001 and MH0002) were used from the 
-MetaHIT (Metagenomics of the Human Intestinal Tract) project\cite{Qin2010}. 
-The MH0001 data set contains approximately 59 million reads, each 44bp long. 
-The MH0002 data set consists of about 61 million 75bp long reads.
-Each FASTA file was trimmed to remove low quality sequences. 
+One human gut metagenome reads data set (MH0001) from the 
+MetaHIT (Metagenomics of the Human Intestinal Tract) project\cite{Qin2010} were used. 
+It contains approximately 59 million reads, each 44bp long and it was trimmed to remove low quality sequences. 
 
 Five soil metagenomics reads data sets with different size were taken
 from GPGC project for benchmark purpose.
-(@CTB Iowa Prairie Table 1\ to cite here.)
+(Table \ref{table:datasets})
 % @CTB we will need accession numbers.  Adina has them.
 
 We also generated four short-read data sets to assess the error

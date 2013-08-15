@@ -25,6 +25,7 @@ counts: bloom_1_1_22.count.time bloom_2_1_22.count.time bloom_3_1_22.count.time 
 
 benchmark: bloom_1_1_22.hist bloom_2_1_22.hist bloom_3_1_22.hist bloom_4_1_22.hist bloom_5_1_22.hist \
     bloom_1_5_22.hist bloom_2_5_22.hist bloom_3_5_22.hist bloom_4_5_22.hist bloom_5_5_22.hist \
+    bloom_1_20_22.hist bloom_2_20_22.hist bloom_3_20_22.hist bloom_4_20_22.hist bloom_5_20_22.hist \
 	bloom_1_5_22.kh bloom_2_5_22.kh bloom_3_5_22.kh bloom_4_5_22.kh bloom_5_5_22.kh
 
 kmerlist2.fa:
@@ -132,6 +133,47 @@ bloom_5_5_22.hist:
 bloom_5_5_22.kh:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o bloom_5_5_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 3313200694 --threads 8 bloom_5_5_22.kh iowa_prairie_0920.fa.5
+
+bloom_1_20_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o bloom_1_20_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 507921205 --threads 8 -s iowa_prairie_0920.fa.1 bloom_1_20_22.hist
+
+bloom_1_20_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o bloom_1_20_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 507921205 --threads 8 bloom_1_20_22.kh iowa_prairie_0920.fa.1
+
+bloom_2_20_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o bloom_2_20_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 959724501 --threads 8 -s iowa_prairie_0920.fa.2 bloom_2_20_22.hist
+
+bloom_2_20_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o bloom_2_20_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 959724501 --threads 8 bloom_2_20_22.kh iowa_prairie_0920.fa.2
+
+bloom_3_20_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o bloom_3_20_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1308702486 --threads 8 -s iowa_prairie_0920.fa.3 bloom_3_20_22.hist
+
+bloom_3_20_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o bloom_3_20_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1308702486 --threads 8 bloom_3_20_22.kh iowa_prairie_0920.fa.3
+
+bloom_4_20_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o bloom_4_20_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --threads 8 --ksize 22 --n_hashes 4 --hashsize 1602556903 --threads 8 -s iowa_prairie_0920.fa.4 bloom_4_20_22.hist
+
+bloom_4_20_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o bloom_4_20_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1602556903 --threads 8 bloom_4_20_22.kh iowa_prairie_0920.fa.4
+
+bloom_5_20_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o bloom_5_20_22.time1 ${KHMER}/scripts/abundance-dist-single.py --threads 8 --ksize 22 --n_hashes 4 --hashsize 1920142262 --threads 8 -s iowa_prairie_0920.fa.5 bloom_5_20_22.hist
+
+bloom_5_20_22.kh:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o bloom_5_20_22.time2 ${KHMER}/scripts/load-into-counting.py --ksize 22 --n_hashes 4 --hashsize 1920142262 --threads 8 bloom_5_20_22.kh iowa_prairie_0920.fa.5
+
 
 jellyfish: jelly_1_22.hist jelly_2_22.hist jelly_3_22.hist jelly_4_22.hist jelly_5_22.hist\
     jelly_1_31.hist jelly_2_31.hist jelly_3_31.hist jelly_4_31.hist jelly_5_31.hist

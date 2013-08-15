@@ -50,4 +50,6 @@ make 'MAXKMERLENGTH=49'
 cp velveth /usr/bin
 cp velvetg /usr/bin
 
+# Install Blast
+apt-get install blast2
 
