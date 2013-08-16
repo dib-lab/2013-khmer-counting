@@ -1,6 +1,6 @@
 import random
 import sys
-random.seed()
+random.seed(0) # Reproducibility, FTW
 
 # simulation reads with certain coverage and error rate from a random generated genome
 
