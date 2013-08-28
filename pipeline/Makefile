@@ -368,10 +368,10 @@ random_reads_2.54M_3c_0.00e.fa:
 MH0001.trimmed.head176800.fa:
 	head -176800 MH0001.trimmed.fa >MH0001.trimmed.head176800.fa
 	
-ecoli_ref_head200000.fastq:
-	head -200000 ecoli_ref.fastq > ecoli_ref_head200000.fastq
+ecoli_ref_head200000.fasta:
+	python get_ecoli_reads.py ecoli_ref.fastq ecoli_ref_head200000.fasta
 	
-fp_assessment.out: random_kmers_1M_3c.fa random_reads_1.67M_3c_0.03e.fa random_reads_2.54M_3c_0.00e.fa MH0001.trimmed.head176800.fa ecoli_ref_head200000.fastq
+fp_assessment.out: random_kmers_1M_3c.fa random_reads_1.67M_3c_0.03e.fa random_reads_2.54M_3c_0.00e.fa MH0001.trimmed.head176800.fa ecoli_ref_head200000.fasta
 	python fp_assessment.py fp_assessment.out
 
 check_error: ecoli_ref.fastq.pos17.abund1 ecoli_ref.fastq.pos32.abund1
