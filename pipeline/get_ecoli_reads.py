@@ -13,5 +13,5 @@ for record in f:
         out.write('>'+str(head)+'\n')
         out.write(sequence+'\n')
         head = head + 1
-    if head  == 200000:
+    if head  == 45000:
         break

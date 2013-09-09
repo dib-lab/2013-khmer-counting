@@ -260,6 +260,31 @@ common analysis approach for determing assembly parameters \cite{Chikhi2013}.
 We applied each package to increasingly large subsets of a 50m read soil
 metagenome data set \cite{Howe2012}.
 
+% @CTB fix data set names/descr; caption; reference.
+\begin{table}[ht]
+    \begin{tabular}{ |c | c |c| c|c| }
+      \hline                        
+       & size of file (GB) & number of reads & number of distinct
+      k-mers & total number of k-mers \\
+      \hline
+    subset 1 & 1.90 & 9,744,399 & 561,178,082 & 630,207,985
+    \\
+    subset 2 & 2.17 & 19,488,798 & 1,060,354,144 & 1,259,079,821
+    \\ 
+    subset 3 & 3.14 & 29,233,197 & 1,445,923,389 & 1,771,614,378
+    \\ 
+    subset 4 & 4.05 & 38,977,596 & 1,770,589,216 & 2,227,756,662
+    \\ 
+    entire data set & 5.00 & 48,721,995 & 2,121,474,237 & 2,743,130,683
+    \\
+      \hline  
+    \end{tabular}
+\caption{Benchmark soil metagenome data sets for k-mer counting performance, taken from
+\cite{Howe2012}.}
+\label{table:datasets}
+\end{table}
+
+
 Figure \ref{cmp_time} shows that the time usage of our khmer approach
 is comparable to Jellyfish and DSK, and, as expected, increases linearly
 with data set size. Tallymer is the slowest of the four tools in this testing.
@@ -330,13 +355,34 @@ real and simulated data sets to evaluate the counting performance in
 practice.
 
 Figure \ref{average_offset_vs_fpr} shows the relationship between
-average miscount and counting error rate for four different test data
+average miscount and counting error rate for five different test data
 sets with identical numbers of distinct k-mers: one metagenome data
 set; a simulated set of random k-mers; a simulated set of reads,
 chosen with 3x coverage and 1\% error; and a simulated set of reads (3x)
 with no error (Table \ref{random_data}).  Even when the counting error rate is as high as 0.9 ---
 where 90\% of k-mers have an incorrect count --- the average miscount is still
 below 4.
+
+\newcommand{\bigcell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+
+% @QP: could you please check these numbers?
+\begin{table}[ht]
+\begin{tabular}{ |c | c |c| c|c| }
+  \hline                        
+  & \bigcell{c}{Real metagenomics\\reads} & \bigcell{c}{Totally random 
+reads\\with randomly\\ generated k-mers} & \bigcell{c}{Simulated reads\\from 
+simulated\\genome with error} & \bigcell{c}{Simulated reads\\from 
+simulated\\genome without error}  \\
+  \hline
+Size of data set file      & 7.01M & 3.53M& 5.92M& 9.07M  \\
+Number of total k-mers     & 2917200 & 2250006& 3757479& 5714973\\
+Number of unique k-mers    & 1944996  & 1973430& 1982403& 1991148 \\
+  \hline  
+\label{random_data}
+\end{tabular}
+\caption{Data sets used for analyzing miscounts.}
+\end{table}
+
 % @CTB: QP, include ecoli genomic.
 
 We separately analyzed the average {\em percentage} miscount between
@@ -837,49 +883,9 @@ the script {\tt jelly-search.sh}.
 
 \bibliography{khmer-counting}
 
-% @CTB fix data set names/descr; caption; reference.
-\begin{table}[ht]
-    \begin{tabular}{ |c | c |c| c|c| }
-      \hline                        
-       & size of file (GB) & number of reads & number of distinct
-      k-mers & total number of k-mers \\
-      \hline
-    subset 1 & 1.90 & 9,744,399 & 561,178,082 & 630,207,985
-    \\
-    subset 2 & 2.17 & 19,488,798 & 1,060,354,144 & 1,259,079,821
-    \\ 
-    subset 3 & 3.14 & 29,233,197 & 1,445,923,389 & 1,771,614,378
-    \\ 
-    subset 4 & 4.05 & 38,977,596 & 1,770,589,216 & 2,227,756,662
-    \\ 
-    entire data set & 5.00 & 48,721,995 & 2,121,474,237 & 2,743,130,683
-    \\
-      \hline  
-    \end{tabular}
-\caption{Benchmark soil metagenome data sets for k-mer counting performance, taken from
-\cite{Howe2012}.}
-\label{table:datasets}
-\end{table}
 
-\newcommand{\bigcell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
 
-% @QP: could you please check these numbers?
-\begin{table}[ht]
-\begin{tabular}{ |c | c |c| c|c| }
-  \hline                        
-  & \bigcell{c}{Real metagenomics\\reads} & \bigcell{c}{Totally random 
-reads\\with randomly\\ generated k-mers} & \bigcell{c}{Simulated reads\\from 
-simulated\\genome with error} & \bigcell{c}{Simulated reads\\from 
-simulated\\genome without error}  \\
-  \hline
-Size of data set file      & 7.01M & 3.53M& 5.92M& 9.07M  \\
-Number of total k-mers     & 2917200 & 2250006& 3757479& \\
-Number of unique k-mers    & 1944996  & 1973430& 1982403& 1991148 \\
-  \hline  
-\label{random_data}
-\end{tabular}
-\caption{Data sets used for analyzing miscounts.}
-\end{table}
+
 
 %\graphicspath{./figure/}
 
