@@ -111,7 +111,7 @@ novo assembly, repeat detection, and sequencing coverage estimation
 % (MRC) Shouldn't that last item have more citations?
 
 Short-read shotgun sequencing data is both relatively sparse in
-k-mers and contain many erroneous k-mers.  For typical values of k such as 32 the data sets are sparse as only a small fraction of
+k-mers and contains many erroneous k-mers.  For typical values of k such as 32 the data sets are sparse as only a small fraction of
 the total possible number of k-mers ($4^{32}$) are actually present in
 any genome or read data sets derived from the genome [@CTB CITE].  The high error rate (e.g. Illumina has a ~0.1-1\%
 per-base error rate \cite{pubmed19997069}) generates many unique k-mers and as the total number of generated reads increases the
@@ -135,7 +135,7 @@ in memory and on disk.  Jellyfish stores k-mer counts in in-memory
 hash tables, and makes use of disk storage to scale to larger
 data sets.  BF-Counter uses a Bloom filter as a pre-filter to avoid
 counting unique k-mers, and is the first published probabilistic approach
-to k-mer counting.  DSK adopts a streaming approach to k-mers that
+to k-mer counting.  DSK adopts a streaming approach to k-mer counting that
 enables time- and memory-efficient k-mer counting with an explicit
 trade-off between disk and memory usage.  KMC relies primarily
 on fast and inexpensive disk access to count k-mers in low
@@ -262,14 +262,10 @@ metagenome data set \cite{Howe2012}.
 
 Figure \ref{cmp_time} shows that the time usage of our khmer approach
 is comparable to Jellyfish and DSK, and, as expected, increases linearly
-with data set size.
+with data set size. Tallymer is the slowest of the four tools in this testing.
 
 From Figure \ref{cmp_memory}, we see that the memory usage of both
-Jellyfish and Tallymer increases linearly with data set size, although
-Jellyfish is more efficient than Tallymer in memory usage for smaller
-k size. For a 5 GB data set with 2.7
-billion total k-mers, Jellyfish uses 5 GB memory; Tallymer exceeds 24
-GB of memory usage for a smaller 4 GB data set.  DSK uses less memory
+Jellyfish and Tallymer increases linearly with data set size. Tallymer uses more memory than Jellyfish generally.  DSK uses less memory
 than all of the other programs for large data sets, but at the cost
 of more limited functionality (discussed below).
 
@@ -279,10 +275,11 @@ the memory usage of khmer varies substantially with the desired error
 rate: we can decrease the memory usage by increasing the
 error rate, as shown in Figure \ref{cmp_memory}.  We also
 see that with a low error rate of 1\%, the
-memory usage is competitive with other programs; with a higher 5\%
+memory usage is competitive with Tallymer and Jellyfish; with a higher 5\%
 error rate, the memory usage is lower than all but the
-disk-based DSK.
-% @CTB show for 20% or higher
+disk-based DSK; with an error rate as 20\%, the memory usage is further lower,
+close to DSK.
+
 The memory usage of Jellyfish is dependent on the k-mer
 size, because it uses hash tables to store k-mer counts and must store
 the exact k-mer to track collisions; however, khmer's memory
@@ -381,7 +378,7 @@ close to the 3' end of reads is due to the increased error rate at the
 One approach to error reduction in short-read data sets is to trim
 reads at low-abundance k-mers, which in high-coverage genome
 sequencing data sets are largely due to sequencing errors \cite{Kelley2010}.
-Here errors from khmer result in a one-sided trimming
+Here counting errors from khmer result in a one-sided trimming
 error such that some low-abundance k-mers are retained, but no
 high-abundance k-mers are erroneously trimmed; low-abundance k-mer
 trimming can easily be applied iteratively, with increasing accuracy
@@ -468,8 +465,8 @@ To evaluate the effect on actual genome assembly, we next performed
 error trimming and normalization to a coverage of 5 (the
 ``three-pass'' protocol from \cite{Brown2012} recommended for
 genome assembly), staying within the specified memory bounds.  We then
-assembled this data with Velvet and compared the resulting assemblies to the known
-{\em E. coli} MG1655 genome (Table \ref{table:assembly} \cite{Zerbino2008}.  In terms of overall size
+assembled this data with Velvet \cite{Zerbino2008} and compared the resulting assemblies to the known
+{\em E. coli} MG1655 genome (Table \ref{table:assembly} .  In terms of overall size
 and genome content, all three assemblies were nearly identical (table
 \ref{table:assembly}, column 4).  Thus digital normalization is surprisingly refractory to high
 error rates even for practical assembly outcomes.  (Note that
@@ -556,11 +553,11 @@ performance tradeoffs for disk I/O, time and memory.  From the
 performance comparison between khmer and other k-mer counting packages
 in calculating k-mer abundance distributions, khmer is comparable with
 existing packages.  In time, khmer performs competitively with DSK and
-Jellyfish (Figure \cite{cmp_time}); khmer also provides a way to systematically trade memory
-for miscounts across a wide range of parameters (Figure \cite{cmp_memory}).  khmer's
+Jellyfish (Figure \ref{cmp_time}); khmer also provides a way to systematically trade memory
+for miscounts across a wide range of parameters (Figure \ref{cmp_memory}).  khmer's
 uncompressed disk storage is competitive with Jellyfish, and, in
 situations where disk space is at a premium, khmer can take advantage
-of gzip compression to provide storage similar to that of DSK (Figure \cite{cmp_disk}, dashed blue line).
+of gzip compression to provide storage similar to that of DSK (Figure \ref{cmp_disk}, dashed blue line).
 
 Interestingly, DSK performs especially well in memory usage
 for calculating the abundance distribution of k-mers. However, in
@@ -659,11 +656,11 @@ rates of up to 80\% can still be used for both read trimming and
 digital normalization in memory-limited circumstances, although
 multiple passes across the data may be needed.
 
-For many applications, the fact that khmer not break an imposed
+For many applications, the fact that khmer does not break an imposed
 memory bound is extremely useful, since for many data sets ---
 especially metagenomic data sets --- high memory demands constrain analysis \cite{Howe2012,GAGE}.  Moreover, because the error
-rate is straightforward to measure, the user can be warned or the
-results invalidated when too little memory is used.  When combined
+rate is straightforward to measure, the user can be warned that the
+results should be invalidated when too little memory is used.  When combined
 with the graceful degradation of performance for both error trimming
 and digital normalization, khmer readily enables analysis of extremely
 large and diverse data sets \cite{adina2013}.
@@ -694,7 +691,7 @@ situations this may be an acceptable tradeoff.
 
 Applying khmer to extremely large data sets with many unique k-mers
 requires a large amount of memory: approximately 446 GB of memory is
-required to achieve a error rate of 1\% for
+required to achieve an error rate of 1\% for
 $50x10^9$ k-mers. It is possible to reduce the required memory by dividing
 k-mer space into multiple partitions and counting k-mers separately
 for each partition. Partitioning k-mer space into $M$ partitions
@@ -736,7 +733,7 @@ at https://github.com/ged-lab/2013-khmer-counting.  (Tutorials etc. @CTB.)
 \subsection{Sequence Data}
 
 One human gut metagenome reads data set (MH0001) from the 
-MetaHIT (Metagenomics of the Human Intestinal Tract) project\cite{Qin2010} were used. 
+MetaHIT (Metagenomics of the Human Intestinal Tract) project\cite{Qin2010} was used. 
 It contains approximately 59 million reads, each 44bp long and it was trimmed to remove low quality sequences. 
 
 Five soil metagenomics reads data sets with different size were taken
@@ -799,7 +796,7 @@ We fixed k at 22 unless otherwise noted.
 
 \paragraph{khmer:}
 For khmer, we set hash table sizes to fix the error rate at
-either 1\% or 5\%, and used 8 threads in loading the data.
+either 1\%, 5\% or 20\%, and used 8 threads in loading the data.
 
 We did the khmer random-access k-mer counting benchmark with a
 custom-written Python script {\tt khmer-count-kmers} which loaded the
@@ -889,19 +886,19 @@ Number of unique k-mers    & 1944996  & 1973430& 1982403& 1991148 \\
 % @CTB explain why different runs
 \begin{figure}
 \center{\includegraphics[width=5in]{./figure/time_benchmark}}
-\caption{Time usage of four different k-mer counting tools (y axis, in seconds) against data set size (in reads, x axis).}
+\caption{Time usage of four different k-mer counting tools to calculate k-mer abundance histograms(y axis, in seconds) against data set size (in reads number, x axis).}
 \label{cmp_time}
 \end{figure}
 
 \begin{figure}
 \center{\includegraphics[width=5in]{./figure/memory_benchmark}}
-\caption{Memory usage of different k-mer counting tools (y axis, maximum resident program size, GB) plotted against the total number of distinct k-mers in the data set, for typical program settings. DSK uses the disk to store k-mers and is therefore constant in memory use. By increasing the error rate in khmer, memory usage can be substantially decreased (compare solid blue line with dashed blue line).}
+\caption{Memory usage of different k-mer counting tools to calculate k-mer abundance histograms(y axis, maximum resident program size, GB) plotted against the total number of distinct k-mers in the data set, for typical program settings. DSK uses the disk to store k-mers and is therefore constant in memory use. By increasing the error rate in khmer, memory usage can be substantially decreased (compare solid blue line with dashed and dotted blue line). K-mer size is 22 except otherwise mentioned.}
 \label{cmp_memory}
 \end{figure}
 
 \begin{figure}
 \center{\includegraphics[width=5in]{./figure/disk_benchmark}}
-\caption{Disk storage usage of different k-mer counting tools in GB (y axis),
+\caption{Disk storage usage of different k-mer counting tools to calculate k-mer abundance histograms in GB (y axis),
 plotted against the number of distinct k-mers in the data set (x axis).  ($^*$) Note that khmer does not use the disk during counting or retrieval, although its hash tables can be saved for reuse.}
 \label{cmp_disk}
 \end{figure}

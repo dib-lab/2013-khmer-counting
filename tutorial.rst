@@ -43,7 +43,7 @@ sets::
 
  git clone https://github.com/ngs-docs/ngs-scripts
 
- git clone git://github.com/ged-lab/2013-khmer-counting.git
+ git clone https://github.com/ged-lab/2013-khmer-counting.git
  cd 2013-khmer-counting
 
  curl -O http://public.ged.msu.edu.s3.amazonaws.com/2013-khmer-counting/2013-khmer-counting-data.tar.gz
