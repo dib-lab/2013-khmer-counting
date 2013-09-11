@@ -359,6 +359,7 @@ random_kmers_1M_3c.fa:
 	python get_random_kmers_1M_C3.py >random_kmers_1M_3c.fa
 
 	# get random reads with the same number of unique k-mers 
+	# length of reads = 44  , to be the same as that of MH0001.trimmed.fa
 random_reads_1.67M_3c_0.03e.fa:
 	python simulate_random_reads.py 1670000 3 0.03 44 random_reads_1.67M_3c_0.03e.fa random_genome_1M.fa
 
@@ -369,9 +370,10 @@ MH0001.trimmed.head176800.fa:
 	head -176800 MH0001.trimmed.fa >MH0001.trimmed.head176800.fa
 	
 ecoli_ref_head200000.fasta:
-	python get_ecoli_reads.py ecoli_ref.fastq ecoli_ref_head200000.fasta
+	# length of reads  = 100bp
+	python get_ecoli_reads.py ecoli_ref.fastq ecoli_ref_head45000.fasta
 	
-fp_assessment.out: random_kmers_1M_3c.fa random_reads_1.67M_3c_0.03e.fa random_reads_2.54M_3c_0.00e.fa MH0001.trimmed.head176800.fa ecoli_ref_head200000.fasta
+fp_assessment.out: random_kmers_1M_3c.fa random_reads_1.67M_3c_0.03e.fa random_reads_2.54M_3c_0.00e.fa MH0001.trimmed.head176800.fa ecoli_ref_head45000.fasta
 	python fp_assessment.py fp_assessment.out
 
 check_error: ecoli_ref.fastq.pos17.abund1 ecoli_ref.fastq.pos32.abund1

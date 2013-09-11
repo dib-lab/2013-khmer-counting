@@ -356,40 +356,62 @@ practice.
 
 Figure \ref{average_offset_vs_fpr} shows the relationship between
 average miscount and counting error rate for five different test data
-sets with identical numbers of distinct k-mers: one metagenome data
+sets with similar numbers of distinct k-mers: one metagenome data
 set; a simulated set of random k-mers; a simulated set of reads,
-chosen with 3x coverage and 1\% error; and a simulated set of reads (3x)
-with no error (Table \ref{random_data}).  Even when the counting error rate is as high as 0.9 ---
+chosen with 3x coverage and 1\% error; a simulated set of reads (3x)
+with no error and a set of E. Coli reads.(Table \ref{random_data})  
+Even when the counting error rate is as high as 0.9 ---
 where 90\% of k-mers have an incorrect count --- the average miscount is still
 below 4.
 
-\newcommand{\bigcell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
 
-% @QP: could you please check these numbers?
+% These numbers are got by running these commands: (to be integrated in Makefile)
+
+% to get number of unique k-mers:
+% python bloom_count.py ecoli_ref_head45000.fasta 12 100000000 4
+% python bloom_count.py random_kmers_1M_3c.fa 12 100000000 4
+% python bloom_count.py random_reads_1.67M_3c_0.03e.fa 12 100000000 4
+% python bloom_count.py random_reads_2.54M_3c_0.00e.fa 12 100000000 4
+% python bloom_count.py MH0001.trimmed.head176800.fa 12 100000000 4
+% 
+% to get number of total k-mers:
+% number of reads x reads_length -12 + 1
+% reads length = 44bp, except ecoli reads = 100 bp
+
+
 \begin{table}[ht]
-\begin{tabular}{ |c | c |c| c|c| }
-  \hline                        
-  & \bigcell{c}{Real metagenomics\\reads} & \bigcell{c}{Totally random 
-reads\\with randomly\\ generated k-mers} & \bigcell{c}{Simulated reads\\from 
-simulated\\genome with error} & \bigcell{c}{Simulated reads\\from 
-simulated\\genome without error}  \\
-  \hline
-Size of data set file      & 7.01M & 3.53M& 5.92M& 9.07M  \\
-Number of total k-mers     & 2917200 & 2250006& 3757479& 5714973\\
-Number of unique k-mers    & 1944996  & 1973430& 1982403& 1991148 \\
-  \hline  
-\label{random_data}
-\end{tabular}
+\center{
+    \begin{tabular}{ | p{6cm} | c | c | c |}
+    
+      \hline                        
+      & Size of data set file & Number of total k-mers & Number of unique k-mers \\
+      \hline
+      Real metagenomics reads                                  & 7.01M  & 2917200  & 1944996 \\
+      \hline
+      Totally random reads with randomly generated k-mers      & 3.53M  & 2250006  & 1973059 \\
+      \hline
+      Simulated reads from simulated genome with error         & 5.92M  & 3757479  & 2133592 \\
+      \hline
+      Simulated reads from simulated genome without error      & 9.07M  & 5714973  & 1989644 \\
+      \hline
+      Real E.Coli reads                                        & 4.85M  & 4004911  & 2079302 \\
+      \hline
+    
+    \end{tabular}
+}
 \caption{Data sets used for analyzing miscounts.}
+\label{random_data}
 \end{table}
 
-% @CTB: QP, include ecoli genomic.
+
 
 We separately analyzed the average {\em percentage} miscount between
 true and false k-mers; e.g. an offset of 4 for a k-mer whose true
 count is 1 would be 400\%.  Figure \ref{percent_offset_vs_fpr} shows the relationship between average 
-miscount and counting error rate for the same four data sets as in Figure \ref{average_offset_vs_fpr}.  For an error rate of 0.1 (10\% of k-mer counts are incorrect), the average percentage miscount is less than 10\% for all four data sets; this will of course generally be true, because the average miscount is bounded by the product of the error rate times k-mer abundance.
-% @CTB recheck these numbers when QP fixes the script :).  I'm not sure I believe the figure entirely.
+miscount and counting error rate for the same five data sets as in Figure \ref{average_offset_vs_fpr}.  
+For an error rate of 0.1 (10\% of k-mer counts are incorrect), the average percentage miscount 
+is less than 10\% for all five data sets; this will of course generally be true, 
+because the average miscount is bounded by the product of the error rate times k-mer abundance.
 
 We see here that for a fixed counting error rate, the simulated reads
 without error have the highest average miscount, and the simulated
@@ -397,6 +419,7 @@ k-mers have the lowest average miscount.  This is because these two
 abundance distributions have the least and most left-skew,
 respectively: the simulated reads without error have no abundance-1
 k-mers, while the randomly chosen k-mers are entirely low abundance.
+% E.Coli reads dataset has lower "coverage" than simulated reads without error.
 
 \subsection{Sequencing error profiles can be measured with k-mer abundance
 profiles}
@@ -704,7 +727,7 @@ multiple passes across the data may be needed.
 
 For many applications, the fact that khmer does not break an imposed
 memory bound is extremely useful, since for many data sets ---
-especially metagenomic data sets --- high memory demands constrain analysis \cite{Howe2012,GAGE}.  Moreover, because the error
+especially metagenomic data sets --- high memory demands constrain analysis \cite{Howe2012,Luo2009}.  Moreover, because the error
 rate is straightforward to measure, the user can be warned that the
 results should be invalidated when too little memory is used.  When combined
 with the graceful degradation of performance for both error trimming
@@ -775,6 +798,8 @@ The version of khmer used to generate the results below is available
 at http://github.com/ged-lab/khmer.git, tag '2013-khmer-counting'.
 Scripts specific to this paper are available in the paper repository
 at https://github.com/ged-lab/2013-khmer-counting.
+The iPython\cite{4160251} notebook file and data analysis to generate the figures are also
+available in that github repository. 
 
 \subsection{Sequence Data}
 
@@ -783,9 +808,10 @@ MetaHIT (Metagenomics of the Human Intestinal Tract) project\cite{Qin2010} was u
 It contains approximately 59 million reads, each 44bp long and it was trimmed to remove low quality sequences. 
 
 Five soil metagenomics reads data sets with different size were taken
-from GPGC project for benchmark purpose.
-(Table \ref{table:datasets})
-% @CTB we will need accession numbers.  Adina has them.
+from GPGC project for benchmark purpose.(Table \ref{table:datasets})These reads are from soil sample in Iowa Prairie region and they are 
+filtered to make sure there are less than 30\% Ns in the read and the remaining reads are longer than 30 basepairs.
+The instruction to acquire these data sets is available in the paper repository on github.com.
+
 
 We also generated four short-read data sets to assess the error
 rate and miscount distribution. One is a subset of a real
@@ -796,8 +822,6 @@ substitution error rate of 3\%, and the fourth contains no errors. The
 four data sets were chosen to contain identical numbers of unique
 22-mers.  The scripts necessary to regenerate these data are available
 in the paper repository on github.com.
-
-% @CTB remember to cite IPython Notebook
 
 \subsection{CountMin Sketch implementation}
 
@@ -935,7 +959,6 @@ the count for k-mers is incorrect relative to its true count --- on the y axis, 
 error rate (x axis), for four data sets.  The four data
 sets are the same as in Figure \ref{average_offset_vs_fpr}.}
 \label{percent_offset_vs_fpr}
-% @CTB NOTE the negative numbers!! FIXME Qingpeng
 \end{figure}
 
 \begin{figure}
