@@ -10,7 +10,7 @@
 
 % figures: khmer blue; tallymer green; jellyfish red; dsk yellow
 
-% @CTB acknowledgements: USDA; NSF; BEACON; include MBL.  Eric McDonald.
+
 
 % @CTB mention altmetrics/popularity; top X packages?
 
@@ -50,21 +50,9 @@ $\ast$ E-mail: ctb@msu.edu
 
 \section{Abstract}
 
-\paragraph{Introduction:}
-
 K-mer abundance analysis is widely used for many purposes in sequence
 analysis, including data preprocessing for de novo assembly, repeat
-detection, and sequencing coverage estimation.  Several new k-mer
-counting libraries have recently emerged to handle the increasing
-amount of data available from sequencing platforms; these libraries
-offer various trade-offs between memory and disk usage.  One common
-trade-off is to collect k-mer counts on disk and merge the counts as
-an offline task; the disadvantage of this approach is that the k-mer
-counts across the entire data set are not available until the data set
-is completely loaded.
-
-\paragraph{Results:}
-
+detection, and sequencing coverage estimation.
 We present the khmer software package for fast and memory efficient
 {\em online} counting of k-mers in sequencing
 data sets. Unlike previous methods based on data structures such as
@@ -80,22 +68,10 @@ Here we analyze the speed, the memory usage, and the miscount rate of khmer
 for generating k-mer frequency distributions and retrieving k-mer
 counts for individual k-mers.  We also compare the performance of
 khmer to several other k-mer counting packages, including Tallymer,
-Jellyfish, and DSK.  Finally, we examine the effectiveness of profiling sequencing error, k-mer abundance trimming, and
+Jellyfish, and DSK.  Finally, we examine the effectiveness of profiling sequencing error, 
+k-mer abundance trimming, and
 digital normalization of reads in the context of high khmer error
-rates.
-
-% (MRC) It is assumed that the reader shares the author's meaning for the word 'online' in this context. That is an oversight that should be corrected later in the paper.
-
-% (MRC) some comma abuse. If the phrase is essential don't separate with a comma. http://owl.english.purdue.edu/owl/resource/607/02/
-
-% (MRC) we've talked about spinning the last item off into a blog post or as part of another paper
-
-\paragraph{Conclusion:}
-
-khmer is an effective and
-efficient tool for online k-mer counting in DNA.  In
-particular, the miscount behavior of the CountMin Sketch data structure performs well
-on error-prone short-read sequencing data.  khmer is implemented in C++ wrapped with a Python
+rates. Khmer is implemented in C++ wrapped with a Python
 interface, offers a tested and robust API, and is freely available
 under the BSD license at github.com/ged-lab/khmer.
 
@@ -905,11 +881,16 @@ the script {\tt jelly-search.sh}.
 
 \paragraph{DSK:} We ran DSK with default parameters.
 
+% @CTB acknowledgements: USDA; NSF; BEACON; include MBL.  Eric McDonald.
+%\section{Acknowledgments}
+
+%We thank Eric McDonald, XXXX, and XXXX for their insight and helpful technical
+%commentary.
+%This work was supported in part by the USDA (XXXX-XXXX), NSF (), BEACON, MBL
+%
+
+
 \bibliography{khmer-counting}
-
-
-
-
 
 %\graphicspath{./figure/}
 
