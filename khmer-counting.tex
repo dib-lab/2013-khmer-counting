@@ -1,12 +1,93 @@
-\documentclass{article}
-\usepackage{simplemargins}
+% Template for PLoS
+% Version 1.0 January 2009
+%
+% To compile to pdf, run:
+% latex plos.template
+% bibtex plos.template
+% latex plos.template
+% latex plos.template
+% dvipdf plos.template
 
-%\usepackage{multirow}
-\usepackage[pdftex]{graphicx}
-\graphicspath{{figures/}}
-\bibliographystyle{plain}
-\setlength{\parindent}{0pt} \setlength{\parskip}{1.6ex}
-\setallmargins{1in} \linespread{1.6}
+\documentclass[10pt]{article}
+
+% amsmath package, useful for mathematical formulas
+\usepackage{amsmath}
+% amssymb package, useful for mathematical symbols
+\usepackage{amssymb}
+
+% graphicx package, useful for including eps and pdf graphics
+% include graphics with the command \includegraphics
+\usepackage{graphicx}
+
+% cite package, to clean up citations in the main text. Do not remove.
+\usepackage{cite}
+
+\usepackage{color} 
+
+% Use doublespacing - comment out for single spacing
+%\usepackage{setspace} 
+%\doublespacing
+
+
+% Text layout
+\topmargin 0.0cm
+\oddsidemargin 0.5cm
+\evensidemargin 0.5cm
+\textwidth 16cm 
+\textheight 21cm
+
+% Bold the 'Figure #' in the caption and separate it with a period
+% Captions will be left justified
+\usepackage[labelfont=bf,labelsep=period,justification=raggedright]{caption}
+
+% Use the PLoS provided bibtex style
+\bibliographystyle{plos2009}
+
+% Remove brackets from numbering in List of References
+\makeatletter
+\renewcommand{\@biblabel}[1]{\quad#1.}
+\makeatother
+
+
+% Leave date blank
+\date{}
+
+\pagestyle{myheadings}
+%% ** EDIT HERE **
+
+
+%% ** EDIT HERE **
+%% PLEASE INCLUDE ALL MACROS BELOW
+
+%% END MACROS SECTION
+
+\begin{document}
+
+% Title must be 150 characters or less
+\begin{flushleft}
+{\Large
+\textbf{These are not the k-mers you are looking for: efficient
+online k-mer counting using a probabilistic data structure}
+}
+% Insert Author names, affiliations and corresponding author email.
+\\
+Qingpeng Zhang$^{1}$, 
+Jason Pell$^{1}$,
+Rosangela Canino-Koning$^{1}$,
+Adina Chuang Howe$^{2,3}$,
+C. Titus Brown$^{1,2\ast}$
+\\
+\bf{1} Computer Science and Engineering, Michigan State University,
+East Lansing, MI, USA
+\\
+\bf{2} Microbiology and Molecular Genetics, Michigan State University,
+East Lansing, MI, USA
+\\
+\bf{3} Plant, Soil, and Microbial Sciences, Michigan State University, 
+East Lansing, MI, USA
+\\
+$\ast$ E-mail: ctb@msu.edu
+\end{flushleft}
 
 % figures: khmer blue; tallymer green; jellyfish red; dsk yellow
 
@@ -23,32 +104,8 @@
 % @CTB   put in github tag references
 % @CTB   make sure we discuss abundance dist approach
 
-\begin{document}
-
-
-
-% Title must be 150 characters or less
-\begin{flushleft}
-{\Large \textbf{These are not the k-mers you are looking for: efficient
-online k-mer counting using a probabilistic data structure}}
-% Insert Author names, affiliations and corresponding author email.
-\\
-Qingpeng Zhang$^{1}$, 
-Jason Pell$^{1}$,
-Rosangela Canino-Koning$^{1}$,
-Adina Chuang Howe$^{2,3}$,and 
-C. Titus Brown$^{1,2\ast}$
-\\
-\bf{1} Computer Science and Engineering, Michigan State University, East Lansing, MI, USA
-\\
-\bf{2} Microbiology and Molecular Genetics, Michigan State University, East Lansing, MI, USA
-\\
-\bf{3} Plant, Soil, and Microbial Sciences, Michigan State University, East Lansing, MI, USA
-\\
-$\ast$ E-mail: ctb@msu.edu
-\end{flushleft}
-
-\section{Abstract}
+% Please keep the abstract between 250 and 300 words
+\section*{Abstract}
 
 K-mer abundance analysis is widely used for many purposes in sequence
 analysis, including data preprocessing for de novo assembly, repeat
@@ -68,14 +125,19 @@ Here we analyze the speed, the memory usage, and the miscount rate of khmer
 for generating k-mer frequency distributions and retrieving k-mer
 counts for individual k-mers.  We also compare the performance of
 khmer to several other k-mer counting packages, including Tallymer,
-Jellyfish, and DSK.  Finally, we examine the effectiveness of profiling sequencing error, 
-k-mer abundance trimming, and
+Jellyfish, and DSK.  Finally, we examine the effectiveness of profiling 
+sequencing error, k-mer abundance trimming, and
 digital normalization of reads in the context of high khmer error
 rates. Khmer is implemented in C++ wrapped with a Python
 interface, offers a tested and robust API, and is freely available
 under the BSD license at github.com/ged-lab/khmer.
 
-\section{Introduction}
+% Please keep the Author Summary between 150 and 200 words
+% Use first person. PLoS ONE authors please skip this step. 
+% Author Summary not valid for PLoS ONE submissions.   
+\section*{Author Summary}
+
+\section*{Introduction}
 
 The goal of k-mer counting is to determine the number of occurrences
 for each fixed-length word of length k in a DNA data set
@@ -87,10 +149,13 @@ novo assembly, repeat detection, and sequencing coverage estimation
 % (MRC) Shouldn't that last item have more citations?
 
 Short-read shotgun sequencing data is both relatively sparse in
-k-mers and contains many erroneous k-mers.  For typical values of k such as 32 the data sets are sparse as only a small fraction of
+k-mers and contains many erroneous k-mers.  For typical values of k such 
+as 32 the data sets are sparse as only a small fraction of
 the total possible number of k-mers ($4^{32}$) are actually present in
-any genome or read data sets derived from the genome [@CTB CITE].  The high error rate (e.g. Illumina has a ~0.1-1\%
-per-base error rate \cite{pubmed19997069}) generates many unique k-mers and as the total number of generated reads increases the
+any genome or read data sets derived from the genome [@CTB CITE].  The 
+high error rate (e.g. Illumina has a ~0.1-1\%
+per-base error rate \cite{pubmed19997069}) generates many unique k-mers 
+and as the total number of generated reads increases the
 total number of errors grows with it linearly. This leads to data sets where the
 erroneous k-mers vastly outnumber the true k-mers \cite{Conway2011}.
 Tracking and counting the resulting large number of k-mers, most of
@@ -100,7 +165,8 @@ in sequence analysis
 
 A variety of k-mer counting approaches, and standalone software
 packages implementing them, have emerged in recent years; this
-includes Tallymer, Jellyfish, BF-Counter, DSK, KMC, and Turtle \cite{Kurtz2008,Marcais2011, Melsted2011, Rizk2013, Deorowicz2013, Roy2013}.
+includes Tallymer, Jellyfish, BF-Counter, DSK, KMC, and Turtle \cite{Kurtz2008,
+Marcais2011, Melsted2011, Rizk2013, Deorowicz2013, Roy2013}.
 % @CTB see http://arxiv.org/abs/1305.1861)
 % @CTB include more discussion of BFcounter & turtle? What about KMC?
 These
@@ -157,7 +223,8 @@ in turn supports streaming applications such as digital normalization
 
 % @CTB cloud in discusson at end
 We use the Amazon cloud to compare time, memory, and disk usage of our k-mer counting
-implementation with that of Tallymer, Jellyfish, and DSK, for two problems. First, we generate a k-mer abundance distribution for large
+implementation with that of Tallymer, Jellyfish, and DSK, for two problems. First, we 
+generate a k-mer abundance distribution for large
 data sets; and second, we query many individual k-mer counts at random from
 a previously constructed k-mer count database.  We show that khmer
 is competitive in speed, memory, and disk usage for these
@@ -181,9 +248,10 @@ memory-efficient de Bruijn graph partitioning \cite{Pell2012} and
 lossy compression of short-read data sets for assembly
 \cite{Brown2012}.
 
-\section{Results}
+% Results and Discussion can be combined.
+\section*{Results}
 
-\subsection{Implementing a CountMin Sketch for k-mers}
+\subsection*{Implementing a CountMin Sketch for k-mers}
 
 The two basic operations supported by khmer are {\tt c =
   increment\_count(kmer) } and {\tt c = get\_count(kmer). }
@@ -225,48 +293,24 @@ differs from the true count --- depends on the k-mer frequency
 distribution, which must be determined empirically.  We analyze the
 effects of this below.
 
-\subsection{khmer efficiently calculates k-mer abundance histograms}
+\subsection*{khmer efficiently calculates k-mer abundance histograms}
 
 We measured time and memory required to calculate k-mer abundance
 histograms in five soil metagenomic read data sets using khmer,
-Tallymer, Jellyfish, and DSK (Table \ref{table:datasets}; Figures \ref{cmp_time} and
-\ref{cmp_memory}).  We chose to benchmark abundance histograms because
+Tallymer, Jellyfish, and DSK (Table \ref{table:datasets}; Figures \ref{fig:cmp_time} and
+\ref{fig:cmp_memory}).  We chose to benchmark abundance histograms because
 this functionality is common to all four software packages, and is a
 common analysis approach for determing assembly parameters \cite{Chikhi2013}.
 We applied each package to increasingly large subsets of a 50m read soil
 metagenome data set \cite{Howe2012}.
 
-% @CTB fix data set names/descr; caption; reference.
-\begin{table}[ht]
-    \begin{tabular}{ |c | c |c| c|c| }
-      \hline                        
-       & size of file (GB) & number of reads & number of distinct
-      k-mers & total number of k-mers \\
-      \hline
-    subset 1 & 1.90 & 9,744,399 & 561,178,082 & 630,207,985
-    \\
-    subset 2 & 2.17 & 19,488,798 & 1,060,354,144 & 1,259,079,821
-    \\ 
-    subset 3 & 3.14 & 29,233,197 & 1,445,923,389 & 1,771,614,378
-    \\ 
-    subset 4 & 4.05 & 38,977,596 & 1,770,589,216 & 2,227,756,662
-    \\ 
-    entire data set & 5.00 & 48,721,995 & 2,121,474,237 & 2,743,130,683
-    \\
-      \hline  
-    \end{tabular}
-\caption{Benchmark soil metagenome data sets for k-mer counting performance, taken from
-\cite{Howe2012}.}
-\label{table:datasets}
-\end{table}
-
-
-Figure \ref{cmp_time} shows that the time usage of our khmer approach
+Figure \ref{fig:cmp_time} shows that the time usage of our khmer approach
 is comparable to Jellyfish and DSK, and, as expected, increases linearly
 with data set size. Tallymer is the slowest of the four tools in this testing.
 
-From Figure \ref{cmp_memory}, we see that the memory usage of both
-Jellyfish and Tallymer increases linearly with data set size. Tallymer uses more memory than Jellyfish generally.  DSK uses less memory
+From Figure \ref{fig:cmp_memory}, we see that the memory usage of both
+Jellyfish and Tallymer increases linearly with data set size. Tallymer uses more 
+memory than Jellyfish generally.  DSK uses less memory
 than all of the other programs for large data sets, but at the cost
 of more limited functionality (discussed below).
 
@@ -274,7 +318,7 @@ In addition, the memory usage of khmer also increases linearly with
 data set size as long as we hold the error rate constant.  However,
 the memory usage of khmer varies substantially with the desired error
 rate: we can decrease the memory usage by increasing the
-error rate, as shown in Figure \ref{cmp_memory}.  We also
+error rate, as shown in Figure \ref{fig:cmp_memory}.  We also
 see that with a low error rate of 1\%, the
 memory usage is competitive with Tallymer and Jellyfish; with a higher 5\%
 error rate, the memory usage is lower than all but the
@@ -287,7 +331,7 @@ the exact k-mer to track collisions; however, khmer's memory
 usage is independent of k, because it does not track collisions.
 
 We also measured disk usage during counting.
-Figure \ref{cmp_disk} shows that
+Figure \ref{fig:cmp_disk} shows that
 the disk usage also increases linearly with the number of k-mers in the
 data set.
 For a high-diversity metagenomics
@@ -295,16 +339,16 @@ data set of 5 GB, the disk usage of both Jellyfish and Tallymer is
 around 30 GB.  khmer counts k-mers entirely in working memory and does
 not rely on any on-disk storage to store or retrieve k-mer counts,
 although for practicality the hash tables can be saved for later
-reuse; the uncompressed disk usage for khmer in Figure \ref{cmp_disk}
+reuse; the uncompressed disk usage for khmer in Figure \ref{fig:cmp_disk}
 is the same as its memory.  At the expense of more time, khmer
 supports saving and loading gzip-compressed hash tables, which are
 competitive in size to DSK's on-disk database (Figure 3, dashed line).
 
-\subsection{khmer counts k-mers efficiently}
+\subsection*{khmer counts k-mers efficiently}
 
 We measured the time it took to access 9.7m 22-mers across five
 different data sets after the initial databases had been built (Figure
-\ref{cmp_count}).  Note that Tallymer, Jellyfish, and khmer all
+\ref{fig:cmp_count}).  Note that Tallymer, Jellyfish, and khmer all
 support random access to k-mer counts, while DSK does not. Here,
 khmer and Tallymer performed well, dramatically outperforming
 Jellyfish.  In all three cases, system time dominated the overall time
@@ -314,7 +358,7 @@ the database on the disk (data not shown).  In particular, khmer is
 constant in retrieval time once the hash tables are loaded into
 memory.
 
-\subsection{The measured counting error rate is low on short-read data}
+\subsection*{The measured counting error rate is low on short-read data}
 
 Due to the use of CountMin Sketch and its lack of collision tracking,
 khmer will report some incorrect counts for k-mers; these counts are
@@ -330,64 +374,26 @@ that would yield low miscounts \cite{Melsted2011}.  Here we use both
 real and simulated data sets to evaluate the counting performance in
 practice.
 
-Figure \ref{average_offset_vs_fpr} shows the relationship between
+Figure \ref{fig:average_offset_vs_fpr} shows the relationship between
 average miscount and counting error rate for five different test data
 sets with similar numbers of distinct k-mers: one metagenome data
 set; a simulated set of random k-mers; a simulated set of reads,
 chosen with 3x coverage and 1\% error; a simulated set of reads (3x)
-with no error and a set of {\em E. coli} reads.(Table \ref{random_data})  
+with no error and a set of {\em E. Coli} reads.(Table \ref{table:random_data})  
 Even when the counting error rate is as high as 0.9 ---
 where 90\% of k-mers have an incorrect count --- the average miscount is still
 below 4.
 
-
-% These numbers are got by running these commands: (to be integrated in Makefile)
-
-% to get number of unique k-mers:
-% python bloom_count.py ecoli_ref_head45000.fasta 12 100000000 4
-% python bloom_count.py random_kmers_1M_3c.fa 12 100000000 4
-% python bloom_count.py random_reads_1.67M_3c_0.03e.fa 12 100000000 4
-% python bloom_count.py random_reads_2.54M_3c_0.00e.fa 12 100000000 4
-% python bloom_count.py MH0001.trimmed.head176800.fa 12 100000000 4
-% 
-% to get number of total k-mers:
-% number of reads x reads_length -12 + 1
-% reads length = 44bp, except ecoli reads = 100 bp
-
-
-\begin{table}[ht]
-\center{
-    \begin{tabular}{ | p{6cm} | c | c | c |}
-    
-      \hline                        
-      & Size of data set file & Number of total k-mers & Number of unique k-mers \\
-      \hline
-      Real metagenomics reads                                  & 7.01M  & 2917200  & 1944996 \\
-      \hline
-      Totally random reads with randomly generated k-mers      & 3.53M  & 2250006  & 1973059 \\
-      \hline
-      Simulated reads from simulated genome with error         & 5.92M  & 3757479  & 2133592 \\
-      \hline
-      Simulated reads from simulated genome without error      & 9.07M  & 5714973  & 1989644 \\
-      \hline
-      Real {\em E. coli} reads                                        & 4.85M  & 4004911  & 2079302 \\
-      \hline
-    
-    \end{tabular}
-}
-\caption{Data sets used for analyzing miscounts.}
-\label{random_data}
-\end{table}
-
-
-
 We separately analyzed the average {\em percentage} miscount between
 true and false k-mers; e.g. an offset of 4 for a k-mer whose true
-count is 1 would be 400\%.  Figure \ref{percent_offset_vs_fpr} shows the relationship between average 
-miscount and counting error rate for the same five data sets as in Figure \ref{average_offset_vs_fpr}.  
-For an error rate of 0.1 (10\% of k-mer counts are incorrect), the average percentage miscount 
-is less than 10\% for all five data sets; this will of course generally be true, 
-because the average miscount is bounded by the product of the error rate times k-mer abundance.
+count is 1 would be 400\%.  Figure \ref{fig:percent_offset_vs_fpr} shows 
+the relationship between average miscount and counting error rate for 
+the same five data sets as in Figure \ref{fig:average_offset_vs_fpr}.  
+For an error rate of 0.1 (10\% of k-mer counts are incorrect), 
+the average percentage miscount is less than 10\% for all five data 
+sets; this will of course generally be true, 
+because the average miscount is bounded by the product of the error 
+rate times k-mer abundance.
 
 We see here that for a fixed counting error rate, the simulated reads
 without error have the highest average miscount, and the simulated
@@ -397,7 +403,7 @@ respectively: the simulated reads without error have no abundance-1
 k-mers, while the randomly chosen k-mers are entirely low abundance.
 % E.Coli reads dataset has lower "coverage" than simulated reads without error.
 
-\subsection{Sequencing error profiles can be measured with k-mer abundance
+\subsection*{Sequencing error profiles can be measured with k-mer abundance
 profiles}
 
 One specific use for khmer is detecting random sequencing errors by
@@ -408,17 +414,18 @@ error correcting tools use k-mer counting to reduce the error content
 of the read data set, independent of quality scores or reference
 genomes \cite{Kelley2010}.  This is an application where the counting
 error of the CountMin Sketch approach used by khmer may be
-particularly tolerable: it will never falsely call a high-abundance k-mer as low-abundance because khmer never underestimates counts.
+particularly tolerable: it will never falsely call a high-abundance k-mer 
+as low-abundance because khmer never underestimates counts.
 
 
-In Figure \ref{perc_unique_pos}, we use khmer to examine the
+In Figure \ref{fig:perc_unique_pos}, we use khmer to examine the
 sequencing error pattern of a 5m-read subset of an Illumina reads
 data set from single-colony sequencing of {\em E. coli}
 \cite{pubmed21926975}.  The high rate of occurrence of unique k-mers
 close to the 3' end of reads is due to the increased error rate at the
 3' end of reads.
 
-\subsection{khmer can be applied iteratively to read trimming}
+\subsection*{khmer can be applied iteratively to read trimming}
 
 One approach to error reduction in short-read data sets is to trim
 reads at low-abundance k-mers, which in high-coverage genome
@@ -442,54 +449,30 @@ reads at low-abundance k-mers; the second iteration had an error
 rate of 10\%, and removed only 2.9\% additional data; and by
 the fourth iteration the error rate was down to 3.1\% with 0.0\% of the data removed.
 
-% data in pipeline/ecoli_ref.fastq.ka.r?.fq.out
-\begin{table}[ht]
-\center{
-   \begin{tabular}{ | c | c | c | c | c | c |}
-     \hline
-      iteration & FP rate & bases trimmed & total k-mers & unique k-mers & unique k-mers at 3' end \\
-     \hline
-      untrimmed & - & - & 28.1m & 22.4m & 43\% \\
-      1 & 78.1\% & 22.9\% & 8.2m & 2.8m & 41\% \\
-      2 & 10\% & 2.9\% & 5.4m & 95k & 4\% \\
-      3 & 3.1\% & 0.2\% & 5.3m & 3.8k & 0\% \\
-      4 & 3.1\% & 0.0\% & 5.3m & 230 & 0\% \\
-     \hline
-   \end{tabular}
-}
-\caption{Iterative low-memory k-mer trimming.  The results of trimming
-  reads at unique (erroneous) k-mers from a 165 Mbp short-read data
-  set in under 40 MB of RAM.  After each iteration, we measured the
-  total number of distinct k-mers in the data set, the total number
-  of unique (and likely erroneous) k-mers remaining, and the
-  number of unique k-mers present at the 3' end of reads.}
-
-\label{table:loop_trim}
-
-\end{table}
-
 The elimination of so many unique k-mers (column 5) in the first pass
 was unexpected: the high error rate should have resulted in
 fewer unique k-mers being identified as unique, were the erroneous
 k-mers independent of each other. Upon examination, we realized that
 in Illumina data erroneous k-mers typically come from substitution
-errors that yield runs of up to k erroneous k-mers in a row \cite{Kelley2010}.  When trimming reads with high error rates,
+errors that yield runs of up to k erroneous k-mers in a row \cite{Kelley2010}.  
+When trimming reads with high error rates,
 these runs are typically trimmed after the first few unique k-mers,
 leaving unique k-mers at the 3' end.
 Because of this we hypothesized that high-FP rate trimming would
 result in the retention of many unique k-mers at the 3' end of the
-read, and this was confirmed upon measurement (Table \ref{table:loop_trim}, column 6, pass 1 vs
-pass 2).
+read, and this was confirmed upon measurement (Table \ref{table:loop_trim}, column 6, 
+pass 1 vs pass 2).
 
-\subsection{Using khmer for digital normalization, a streaming algorithm}
+\subsection*{Using khmer for digital normalization, a streaming algorithm}
 
 Digital normalization is a lossy compression algorithm that discards
 short reads based on saturating coverage of a de Bruijn graph
 \cite{Brown2012}.  While several non-streaming implementations exist, including
-Trinity's {\em in silico} normalization \cite{Haas2013,Brown2012blog}, digital normalization can be efficiently implemented as a {\em
+Trinity's {\em in silico} normalization \cite{Haas2013,Brown2012blog}, digital 
+normalization can be efficiently implemented as a {\em
   streaming} algorithm in which the majority of k-mers in a data set
-are never loaded into the counting structure.  This has the advantage of enabling low-memory
-preprocessing of both high-coverage genomic data sets and mRNAseq or
+are never loaded into the counting structure.  This has the advantage of enabling 
+low-memory preprocessing of both high-coverage genomic data sets and mRNAseq or
 metagenomic data sets with high-coverage components \cite{Brown2012,
   Howe2012}.  While digital normalization is already
 implemented inside khmer, previous work did not explore the lower bound
@@ -503,86 +486,34 @@ error rates: 40 MB RAM (82.9\%), 80 MB RAM (39.3\%), and 800 MB RAM
 resulting data were evaluated for retention of true and erroneous
 k-mers, as in \cite{Brown2012} (Table \ref{table:loop_norm}).  The results show that
 digital normalization retains the same set of underlying
-k-mers even at the highest error rate (Table \ref{table:loop_norm}, column 3), while discarding only
-about 2\% additional reads (Table \ref{table:loop_norm}, column 4).
+k-mers even at the highest error rate (Table \ref{table:loop_norm}, column 3), 
+while discarding only about 2\% additional reads (Table \ref{table:loop_norm}, column 4).
 
 To evaluate the effect on actual genome assembly, we next performed
 error trimming and normalization to a coverage of 5 (the
 ``three-pass'' protocol from \cite{Brown2012} recommended for
 genome assembly), staying within the specified memory bounds.  We then
-assembled this data with Velvet \cite{Zerbino2008} and compared the resulting assemblies to the known
-{\em E. coli} MG1655 genome (Table \ref{table:assembly} .  In terms of overall size
-and genome content, all three assemblies were nearly identical (table
-\ref{table:assembly}, column 4).  Thus digital normalization is surprisingly refractory to high
-error rates even for practical assembly outcomes.  (Note that
+assembled this data with Velvet \cite{Zerbino2008} and compared the resulting 
+assemblies to the known {\em E. coli} MG1655 genome (Table \ref{table:assembly}. 
+In terms of overall size and genome content, all three assemblies were nearly identical 
+(table \ref{table:assembly}, column 4).  Thus digital normalization is surprisingly 
+refractory to high error rates even for practical assembly outcomes.  (Note that
 the Velvet assembler itself used considerably more memory than digital
 normalization.)
 
-% data in pipeline/keep*.x.mg*.hist (true k-mers)
-% data in pipeline/mg*.x.keep*.hist (total k-mers)
-% data in pipeline/keep*.x.mg*.hist (true k-mers)
-% @CTB address -2 issue
-\begin{table}[ht]
-\center{
-   \begin{tabular}{ | c | c | c | c | c | c |}
-     \hline
-     memory/FP rate & retained reads & true k-mers & erroneous k-mers \\
-     \hline
-      800 MB/0.0\% & 1,657,065 & -2 & 28m  \\
-      80 MB/39.3\% & 1,635,326 & -2 & 27.8m \\
-      40 MB/82.9\% & 1,592,719 & -2 & 27.4m \\
-     \hline
-   \end{tabular}
-}
-\caption{Low-memory digital normalization. The results of digitally
-  normalizing a 5m read {\em E. coli} data set to C=20 with k=20 under
-  several memory usage/error rates.  The error rate
-  (column 1) is empirically determined.  We measured reads remaining,
-  number of ``true'' k-mers that were removed during the normalization
-  process, and the number of total k-mers remaining.  Note: at high
-  error rates, reads are erroneously removed due to inflation
-  of k-mer counts.}
-
-\label{table:loop_norm}
-
-\end{table}
-
-% data in *.cover
-\begin{table}[ht]
-\center{
-   \begin{tabular}{ | c | c | c | c | c | c |}
-     \hline
-     memory/FP rate & N contigs & total sequence & \% of true genome covered \\
-     \hline
-      800 MB/0.0\% & 617 & 4571174 & 99.75\% \\
-      80 MB/39.3\% & 613 & 4570562 & 99.75\% \\
-      40 MB/82.9\% & 612 & 4570924 & 99.73\% \\
-     \hline
-   \end{tabular}
-}
-\caption{{\em E. coli} genome assembly after low-memory digital normalization.
-  A comparison of assembling reads digitally normalized with low memory/high
-  error rates.  We assembled digitally normalized reads using
-  3-pass digital normalization (normalization to C=20, followed by
-  low-abundance k-mer trimming, followed by normalization to C=5; see
-  \cite{Brown2012} for more information) and measured total sequence recovered,
-  as well as percent of true MG1655 genome covered by the assembly.}
-
-\label{table:assembly}
-
-\end{table}
 
 
-% @CTB be sure to explain the tables well!
-% @CTB do we talk about how efficiently fp rate drops with incr memory?
-% @CTB make point that diginorm/first step is hard.
-% @CTB KMC
 
-\section{Discussion}
 
-\subsection{khmer enables fast, memory-efficient online counting}
 
-khmer enables memory- and time-efficient online counting (Figures \ref{cmp_time}, \ref{cmp_memory}, and \ref{cmp_count}).  This is
+
+\section*{Discussion}
+
+
+\subsection*{khmer enables fast, memory-efficient online counting}
+
+khmer enables memory- and time-efficient online counting (Figures \ref{fig:cmp_time}, 
+\ref{fig:cmp_memory}, and \ref{fig:cmp_count}).  This is
 particularly important for the streaming approaches to data analysis
 needed as data set sizes increase.  Because query and updating of
 k-mer counts can be done directly as data is being loaded, with no
@@ -591,18 +522,19 @@ well in situations with poor disk I/O performance.  (Note that BF-Counter
 also supports online k-mer counting, but is not currently competitive
 in speed \cite{Deorowicz2013}.)
 
-\subsection{khmer is a generally useful k-mer counting approach}
+\subsection*{khmer is a generally useful k-mer counting approach}
 
 In addition to online counting, khmer offers a general range of useful
 performance tradeoffs for disk I/O, time and memory.  From the
 performance comparison between khmer and other k-mer counting packages
 in calculating k-mer abundance distributions, khmer is comparable with
 existing packages.  In time, khmer performs competitively with DSK and
-Jellyfish (Figure \ref{cmp_time}); khmer also provides a way to systematically trade memory
-for miscounts across a wide range of parameters (Figure \ref{cmp_memory}).  khmer's
+Jellyfish (Figure \ref{fig:cmp_time}); khmer also provides a way to systematically trade 
+memory for miscounts across a wide range of parameters (Figure \ref{fig:cmp_memory}).  khmer's
 uncompressed disk storage is competitive with Jellyfish, and, in
 situations where disk space is at a premium, khmer can take advantage
-of gzip compression to provide storage similar to that of DSK (Figure \ref{cmp_disk}, dashed blue line).
+of gzip compression to provide storage similar to that of DSK (Figure \ref{fig:cmp_disk}, 
+dashed blue line).
 
 Interestingly, DSK performs especially well in memory usage
 for calculating the abundance distribution of k-mers. However, in
@@ -616,7 +548,7 @@ Tallymer and Jellyfish.  This is not surprising, since this was a
 primary motivation for the development of khmer.
 % @CTB check this ``significantly faster'' after running in cloud.
 
-\subsection{khmer memory usage is fixed and low}
+\subsection*{khmer memory usage is fixed and low}
 
 The memory usage of the basic CountMin Sketch approach is fixed, which
 means that khmer will never crash due to memory limitations, and all
@@ -628,7 +560,7 @@ application.
 For any given data set, the size and number of hash tables will
 determine the accuracy of k-mer counting with khmer.  Thus, the user
 can control the memory usage based on the desired level of
-accuracy (Figure \ref{cmp_memory}). The time usage for the first step of k-mer counting,
+accuracy (Figure \ref{fig:cmp_memory}). The time usage for the first step of k-mer counting,
 consuming the reads, depends on the
 total amount of data, since we must traverse every k-mer in every read.
 The second step, k-mer retrieval, is algorithmically constant for
@@ -654,7 +586,7 @@ future, we may extend khmer to counters of arbitrary bit sizes.
 
 % @CTB discuss flexible container paper
 
-\subsection{Error rates in k-mer counting are low and predictable}
+\subsection*{Error rates in k-mer counting are low and predictable}
 
 The CountMin Sketch is a probabilistic data structure with a
 one-sided error that results in random overestimates of k-mer
@@ -675,7 +607,7 @@ from next generation sequencing data sets: the miscounts are
 low because of the
 highly left-skewed abundance distribution of k-mers in these data sets.
 
-Figures \ref{average_offset_vs_fpr} and \ref{percent_offset_vs_fpr}
+Figures \ref{fig:average_offset_vs_fpr} and \ref{fig:percent_offset_vs_fpr}
 demonstrate these properties well.  We see more correct
 counting for error-prone reads from a genome than for error-free
 reads from a genome, with a normal
@@ -684,7 +616,7 @@ especially suitable for high diversity data sets, such as metagenomic
 data, in which a larger proportion of k-mers are low abundance or
 unique due to sequencing errors.
 
-\subsection{Real-world applications for khmer}
+\subsection*{Real-world applications for khmer}
 
 For many applications, an approximate k-mer count is sufficient.  For
 example, when eliminating reads with low abundance k-mers, we
@@ -703,14 +635,15 @@ multiple passes across the data may be needed.
 
 For many applications, the fact that khmer does not break an imposed
 memory bound is extremely useful, since for many data sets ---
-especially metagenomic data sets --- high memory demands constrain analysis \cite{Howe2012,Luo2009}.  Moreover, because the error
+especially metagenomic data sets --- high memory demands constrain analysis 
+\cite{Howe2012,Luo2009}.  Moreover, because the error
 rate is straightforward to measure, the user can be warned that the
 results should be invalidated when too little memory is used.  When combined
 with the graceful degradation of performance for both error trimming
 and digital normalization, khmer readily enables analysis of extremely
 large and diverse data sets \cite{adina2013}.
 
-\subsection{Conclusion}
+\subsection*{Conclusion}
 
 K-mer counting is widely used in bioinformatics, and as sequencing data set sizes
 increase, graceful degradation of data structures in the face of large
@@ -732,7 +665,7 @@ for this memory guarantee, counting becomes increasingly incorrect as
 less memory is used or as the data set size grows large; in many
 situations this may be an acceptable tradeoff.
 
-\subsection{Future considerations}
+\subsection*{Future considerations}
 
 Applying khmer to extremely large data sets with many unique k-mers
 requires a large amount of memory: approximately 446 GB of memory is
@@ -762,11 +695,13 @@ counting is that taken by Turtle \cite{Roy2013}, in which several
 data structures are provided, each with different tradeoffs, but with
 a common API.  We hope to pursue this direction in the future by
 integrating such approaches into khmer.
-% see: http://delivery.acm.org.proxy1.cl.msu.edu/10.1145/2490000/2487357/p123-huang.pdf?ip=35.8.11.2&acc=ACTIVE%20SERVICE&key=C2716FEBFA981EF16B5540ABA7506E55713C06D93B9F76B9&CFID=344104418&CFTOKEN=64899208&__acm__=1372542398_54d84e5dea52f6a71c5b8e462040a819
+% see: http://delivery.acm.org.proxy1.cl.msu.edu/10.1145/2490000/2487357/p123-huang.pdf?
+% ip=35.8.11.2&acc=ACTIVE%20SERVICE&key=C2716FEBFA981EF16B5540ABA7506E55713C06D93B9F76B9
+% &CFID=344104418&CFTOKEN=64899208&__acm__=1372542398_54d84e5dea52f6a71c5b8e462040a819
 
-\section{Methods}
+\section*{Methods}
 
-\subsection{Code and data set availability}
+\subsection*{Code and data set availability}
 
 % @CTB update
 
@@ -777,16 +712,19 @@ at https://github.com/ged-lab/2013-khmer-counting.
 The iPython\cite{4160251} notebook file and data analysis to generate the figures are also
 available in that github repository. 
 
-\subsection{Sequence Data}
+\subsection*{Sequence Data}
 
 One human gut metagenome reads data set (MH0001) from the 
 MetaHIT (Metagenomics of the Human Intestinal Tract) project\cite{Qin2010} was used. 
-It contains approximately 59 million reads, each 44bp long and it was trimmed to remove low quality sequences. 
+It contains approximately 59 million reads, each 44bp long and it was trimmed to remove 
+low quality sequences. 
 
 Five soil metagenomics reads data sets with different size were taken
-from GPGC project for benchmark purpose.(Table \ref{table:datasets})These reads are from soil sample in Iowa Prairie region and they are 
-filtered to make sure there are less than 30\% Ns in the read and the remaining reads are longer than 30 basepairs.
-The instruction to acquire these data sets is available in the paper repository on github.com.
+from GPGC project for benchmark purpose.(Table \ref{table:datasets})These reads are from 
+soil sample in Iowa Prairie region and they are filtered to make sure there are less 
+than 30\% Ns in the read and the remaining reads are longer than 30 basepairs.
+The instruction to acquire these data sets is available in the paper repository on 
+github.com.
 
 
 We also generated four short-read data sets to assess the error
@@ -799,7 +737,7 @@ four data sets were chosen to contain identical numbers of unique
 22-mers.  The scripts necessary to regenerate these data are available
 in the paper repository on github.com.
 
-\subsection{CountMin Sketch implementation}
+\subsection*{CountMin Sketch implementation}
 
 We implemented the CountMin Sketch data structure, a simple
 probabilistic data structure for counting distinct elements
@@ -821,7 +759,7 @@ falsely {\em increment} counts, however, the retrieved count for any
 given k-mer is guaranteed to be no less than the correct count.  Thus
 the counting error is one-sided.
 
-\subsection{Hash function and khmer implementation}
+\subsection*{Hash function and khmer implementation}
 
 The current khmer hash function works only for $k <= 32$ and converts
 DNA strings exactly into 64-bit numbers.  However, any hash function
@@ -834,7 +772,7 @@ disregarded by having the hash function choose the lower numerical
 value for the exact hash of both a k-mer and its reverse complement.
 This behavior is configurable via a compile-time option.
 
-\subsection{Comparing with other k-mer counting programs}
+\subsection*{Comparing with other k-mer counting programs}
 
 We generated k-mer abundance histograms from five soil metagenomic reads
 data sets of different sizes using khmer, Tallymer, Jellyfish, and DSK.
@@ -850,7 +788,8 @@ database file and then used the Python API to query each k-mer
 individually.
 
 \paragraph{Tallymer:}
-Tallymer is from the genometools package version 1.3.4. For the suffixerator subroutine we used:
+Tallymer is from the genometools package version 1.3.4. For the suffixerator subroutine 
+we used:
 {\tt -dna -pl -tis -suf -lcp -parts 4}.
 
 For the mkindex subroutine, we used: {\tt -mersize 31} and {\tt -mersize 22}.
@@ -881,48 +820,78 @@ the script {\tt jelly-search.sh}.
 
 \paragraph{DSK:} We ran DSK with default parameters.
 
-% @CTB acknowledgements: USDA; NSF; BEACON; include MBL.  Eric McDonald.
-%\section{Acknowledgments}
+
+% Do NOT remove this, even if you are not including acknowledgments
+\section*{Acknowledgments}
 
 %We thank Eric McDonald, XXXX, and XXXX for their insight and helpful technical
 %commentary.
+
 %This work was supported in part by the USDA (XXXX-XXXX), NSF (), BEACON, MBL
 %
 
 
+%\section*{References}
+% The bibtex filename
 \bibliography{khmer-counting}
+
+\section*{Figure Legends}
+
+%\begin{figure}[!ht]
+%\begin{center}
+%%\includegraphics[width=4in]{figure_name.2.eps}
+%\end{center}
+%\caption{
+%{\bf Bold the first sentence.}  Rest of figure 2  caption.  Caption 
+%should be left justified, as specified by the options to the caption 
+%package.
+%}
+%\label{Figure_label}
+%\end{figure}
+
 
 %\graphicspath{./figure/}
 
 % @CTB explain why different runs
-\begin{figure}
-\center{\includegraphics[width=5in]{./figure/time_benchmark}}
-\caption{Time usage of four different k-mer counting tools to calculate k-mer abundance histograms(y axis, in seconds) against data set size (in reads number, x axis).}
-\label{cmp_time}
+\begin{figure}[!ht]
+\centerline{\includegraphics[width=5in]{./figure/time_benchmark}}
+\caption{\bf Time usage of four different k-mer counting tools to calculate k-mer 
+abundance histograms(y axis, in seconds) against data set size (in reads number, x axis).}
+\label{fig:cmp_time}
 \end{figure}
 
-\begin{figure}
-\center{\includegraphics[width=5in]{./figure/memory_benchmark}}
-\caption{Memory usage of different k-mer counting tools to calculate k-mer abundance histograms(y axis, maximum resident program size, GB) plotted against the total number of distinct k-mers in the data set, for typical program settings. DSK uses the disk to store k-mers and is therefore constant in memory use. By increasing the error rate in khmer, memory usage can be substantially decreased (compare solid blue line with dashed and dotted blue line). K-mer size is 22 except otherwise mentioned.}
-\label{cmp_memory}
+\begin{figure}[!ht]
+\centerline{\includegraphics[width=5in]{./figure/memory_benchmark}}
+\caption{\bf Memory usage of different k-mer counting tools to calculate k-mer abundance 
+histograms(y axis, maximum resident program size, GB) plotted against the total number 
+of distinct k-mers in the data set, for typical program settings. DSK uses the disk to 
+store k-mers and is therefore constant in memory use. By increasing the error rate in 
+khmer, memory usage can be substantially decreased (compare solid blue line with dashed 
+and dotted blue line). K-mer size is 22 except otherwise mentioned.}
+\label{fig:cmp_memory}
 \end{figure}
 
-\begin{figure}
-\center{\includegraphics[width=5in]{./figure/disk_benchmark}}
-\caption{Disk storage usage of different k-mer counting tools to calculate k-mer abundance histograms in GB (y axis),
-plotted against the number of distinct k-mers in the data set (x axis).  ($^*$) Note that khmer does not use the disk during counting or retrieval, although its hash tables can be saved for reuse.}
-\label{cmp_disk}
+\begin{figure}[!ht]
+\centerline{\includegraphics[width=5in]{./figure/disk_benchmark}}
+\caption{\bf Disk storage usage of different k-mer counting tools to calculate k-mer 
+abundance histograms in GB (y axis),
+plotted against the number of distinct k-mers in the data set (x axis).  ($^*$) Note 
+that khmer does not use the disk during counting or retrieval, although its hash 
+tables can be saved for reuse.}
+\label{fig:cmp_disk}
 \end{figure}
 
-\begin{figure}
-\center{\includegraphics[width=5in]{./figure/count_benchmark}}
-\caption{Time for several k-mer counting tools to retrieve the counts of 9.7m randomly chosen k-mers (y axis), plotted against the number of unique k-mers in the data set being queried (x axis).  DSK does not support this functionality.}
-\label{cmp_count}
+\begin{figure}[!ht]
+\centerline{\includegraphics[width=5in]{./figure/count_benchmark}}
+\caption{\bf Time for several k-mer counting tools to retrieve the counts of 9.7m randomly 
+chosen k-mers (y axis), plotted against the number of unique k-mers in the data set 
+being queried (x axis).  DSK does not support this functionality.}
+\label{fig:cmp_count}
 \end{figure}
 
-\begin{figure}
-\center{\includegraphics[width=5in]{./figure/average_offset_vs_fpr}}
-\caption{Relation between average miscount --- amount by which
+\begin{figure}[!ht]
+\centerline{\includegraphics[width=5in]{./figure/average_offset_vs_fpr}}
+\caption{\bf Relation between average miscount --- amount by which
 the average count for k-mers is incorrect --- on the y axis, plotted against
 error rate (x axis), for four data sets.  The four data
 sets were chosen to have the same total number of k-mers: one
@@ -930,22 +899,184 @@ metagenome data set; a set of randomly generated k-mers; a set
 of reads, chosen with 3x coverage and 1\% error, from a randomly generated
 genome; and a simulated set of error-free reads (3x) chosen from a randomly
 generated genome.}
-\label{average_offset_vs_fpr}
+\label{fig:average_offset_vs_fpr}
 \end{figure}
 
-\begin{figure}
-\center{\includegraphics[width=5in]{./figure/percent_offset_vs_fpr}}
-\caption{Relation between percent miscount --- amount by which
-the count for k-mers is incorrect relative to its true count --- on the y axis, plotted against
+\begin{figure}[!ht]
+\centerline{\includegraphics[width=5in]{./figure/percent_offset_vs_fpr}}
+\caption{\bf Relation between percent miscount --- amount by which
+the count for k-mers is incorrect relative to its true count --- on the y axis, plotted 
+against
 error rate (x axis), for four data sets.  The four data
-sets are the same as in Figure \ref{average_offset_vs_fpr}.}
-\label{percent_offset_vs_fpr}
+sets are the same as in Figure \ref{fig:average_offset_vs_fpr}.}
+\label{fig:percent_offset_vs_fpr}
 \end{figure}
 
-\begin{figure}
-\center{\includegraphics[width=5in]{./figure/perc_unique_pos}}
-\caption{Number of unique k-mers (y axis) by starting position within read (x axis) in an untrimmed {\em E. coli} 100-bp Illumina shotgun data set, for k=17 and k=32.  The increasing numbers of unique k-mers are a sign of the increasing sequencing error towards the 3' end of reads.  Note that there are only 69 starting positions for 32-mers in a 100 base read.}
-\label{perc_unique_pos}
+\begin{figure}[!ht]
+\centerline{\includegraphics[width=5in]{./figure/perc_unique_pos}}
+\caption{\bf Number of unique k-mers (y axis) by starting position within read (x axis) in 
+an untrimmed {\em E. coli} 100-bp Illumina shotgun data set, for k=17 and k=32.  The 
+increasing numbers of unique k-mers are a sign of the increasing sequencing error 
+towards the 3' end of reads.  Note that there are only 69 starting positions for 32-mers 
+in a 100 base read.}
+\label{fig:perc_unique_pos}
 \end{figure}
+
+\section*{Tables}
+%\begin{table}[!ht]
+%\caption{
+%\bf{Table title}}
+%\begin{tabular}{|c|c|c|}
+%table information
+%\end{tabular}
+%\begin{flushleft}Table caption
+%\end{flushleft}
+%\label{tab:label}
+% \end{table}
+
+% @CTB fix data set names/descr; caption; reference.
+\begin{table}[!ht]
+\caption{
+\bf{Benchmark soil metagenome data sets for k-mer counting performance, taken from
+\cite{Howe2012}.}}
+\begin{tabular}{ |c | c |c| c|c| }
+Data set & size of file (GB) & number of reads & number of distinct
+k-mers & total number of k-mers \\
+\hline \\
+subset 1        & 1.90 &  9,744,399 &   561,178,082 &   630,207,985 \\
+subset 2        & 2.17 & 19,488,798 & 1,060,354,144 & 1,259,079,821 \\
+subset 3        & 3.14 & 29,233,197 & 1,445,923,389 & 1,771,614,378 \\
+subset 4        & 4.05 & 38,977,596 & 1,770,589,216 & 2,227,756,662 \\
+entire data set & 5.00 & 48,721,995 & 2,121,474,237 & 2,743,130,683 \\
+\end{tabular}
+\begin{flushleft}
+\end{flushleft}
+\label{table:datasets}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% These numbers are got by running these commands: (to be integrated in Makefile)
+
+% to get number of unique k-mers:
+% python bloom_count.py ecoli_ref_head45000.fasta 12 100000000 4
+% python bloom_count.py random_kmers_1M_3c.fa 12 100000000 4
+% python bloom_count.py random_reads_1.67M_3c_0.03e.fa 12 100000000 4
+% python bloom_count.py random_reads_2.54M_3c_0.00e.fa 12 100000000 4
+% python bloom_count.py MH0001.trimmed.head176800.fa 12 100000000 4
+% 
+% to get number of total k-mers:
+% number of reads x reads_length -12 + 1
+% reads length = 44bp, except ecoli reads = 100 bp
+
+
+\begin{table}[!ht]
+\caption{
+\bf{Data sets used for analyzing miscounts.}}
+\begin{tabular}{ | p{5cm} | c | c | c |}
+Data set & Size of data set file & Number of total k-mers & Number of unique k-mers \\
+\hline \\
+Real metagenomics reads                                  & 7.01M  & 2,917,200  & 1,944,996 \\
+\hline
+Totally random reads with randomly generated k-mers      & 3.53M  & 2,250,006  & 1,973,059 \\
+\hline
+Simulated reads from simulated genome with error         & 5.92M  & 3,757,479  & 2,133,592 \\
+\hline
+Simulated reads from simulated genome without error      & 9.07M  & 5,714,973  & 1,989,644 \\
+\hline
+Real {\em E. Coli} reads                                        & 4.85M  & 4,004,911  & 2,079,302 \\
+\end{tabular}
+\begin{flushleft}
+\end{flushleft}
+\label{table:random_data}
+\end{table}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% data in pipeline/ecoli_ref.fastq.ka.r?.fq.out
+\begin{table}[!ht]
+\caption{
+\bf{Iterative low-memory k-mer trimming.  The results of trimming
+  reads at unique (erroneous) k-mers from a 165 Mbp short-read data
+  set in under 40 MB of RAM.  After each iteration, we measured the
+  total number of distinct k-mers in the data set, the total number
+  of unique (and likely erroneous) k-mers remaining, and the
+  number of unique k-mers present at the 3' end of reads.}}
+\begin{tabular}{ | c | c | c | c | c | c |}
+iteration & FP rate & bases trimmed & total k-mers & unique k-mers & 
+unique k-mers at 3' end \\
+\hline \\
+untrimmed  &      -  &      - & 28.1m & 22.4m & 43\% \\
+1          & 78.1\%  & 22.9\% &  8.2m &  2.8m & 41\% \\
+2          &   10\%  &  2.9\% &  5.4m &   95k &  4\% \\
+3          &  3.1\%  &  0.2\% &  5.3m &  3.8k &  0\% \\
+4          &  3.1\%  &  0.0\% &  5.3m &   230 &  0\% \\
+\end{tabular}
+\begin{flushleft}
+\end{flushleft}
+\label{table:loop_trim}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%
+
+% data in pipeline/keep*.x.mg*.hist (true k-mers)
+% data in pipeline/mg*.x.keep*.hist (total k-mers)
+% data in pipeline/keep*.x.mg*.hist (true k-mers)
+% @CTB address -2 issue
+\begin{table}[!ht]
+\caption{
+\bf{Low-memory digital normalization. The results of digitally
+  normalizing a 5m read {\em E. coli} data set to C=20 with k=20 under
+  several memory usage/error rates.  The error rate
+  (column 1) is empirically determined.  We measured reads remaining,
+  number of ``true'' k-mers that were removed during the normalization
+  process, and the number of total k-mers remaining.  Note: at high
+  error rates, reads are erroneously removed due to inflation
+  of k-mer counts.}}
+\begin{tabular}{ | c | c | c | c | c | c |}
+memory/FP rate & retained reads & true k-mers & erroneous k-mers \\
+\hline \\
+ 800 MB/0.0\% & 1,657,065 & -2 &   28m \\
+ 80 MB/39.3\% & 1,635,326 & -2 & 27.8m \\
+ 40 MB/82.9\% & 1,592,719 & -2 & 27.4m \\
+\end{tabular}
+\begin{flushleft}
+\end{flushleft}
+\label{table:loop_norm}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% data in *.cover
+\begin{table}[!ht]
+\caption{
+\bf{{\em E. coli} genome assembly after low-memory digital normalization.
+  A comparison of assembling reads digitally normalized with low memory/high
+  error rates.  We assembled digitally normalized reads using
+  3-pass digital normalization (normalization to C=20, followed by
+  low-abundance k-mer trimming, followed by normalization to C=5; see
+  \cite{Brown2012} for more information) and measured total sequence recovered,
+  as well as percent of true MG1655 genome covered by the assembly.}}
+\begin{tabular}{ | c | c | c | c | c | c |}
+memory/FP rate & N contigs & total sequence & \% of true genome covered \\
+\hline \\
+      800 MB/0.0\% & 617 & 4571174 & 99.75\% \\
+      80 MB/39.3\% & 613 & 4570562 & 99.75\% \\
+      40 MB/82.9\% & 612 & 4570924 & 99.73\% \\
+\end{tabular}
+\begin{flushleft}
+\end{flushleft}
+\label{table:assembly}
+\end{table}
+
+% @CTB be sure to explain the tables well!
+% @CTB do we talk about how efficiently fp rate drops with incr memory?
+% @CTB make point that diginorm/first step is hard.
+% @CTB KMC
+
 
 \end{document}
+

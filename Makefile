@@ -1,7 +1,6 @@
 all: khmer-counting.pdf tutorial.html
 
-khmer-counting.pdf: khmer-counting.tex
-	pdflatex khmer-counting.tex
+khmer-counting.pdf: khmer-counting.tex khmer-counting.bib
 	pdflatex khmer-counting.tex
 	bibtex khmer-counting
 	pdflatex khmer-counting.tex
