@@ -8,6 +8,9 @@
 % latex plos.template
 % dvipdf plos.template
 
+% cloud in discuss at end
+% point at github foo
+
 \documentclass[10pt]{article}
 
 % amsmath package, useful for mathematical formulas
@@ -152,7 +155,7 @@ Short-read shotgun sequencing data is both relatively sparse in
 k-mers and contains many erroneous k-mers.  For typical values of k such 
 as 32 the data sets are sparse as only a small fraction of
 the total possible number of k-mers ($4^{32}$) are actually present in
-any genome or read data sets derived from the genome [@CTB CITE].  The 
+any genome or read data sets derived from the genome.  The 
 high error rate (e.g. Illumina has a ~0.1-1\%
 per-base error rate \cite{pubmed19997069}) generates many unique k-mers 
 and as the total number of generated reads increases the
@@ -213,8 +216,7 @@ certain problems, with memory usage significantly lower than any exact
 data structure \cite{Pell2012}.  However, their use introduces set
 membership or counting false positives, which have effects that must
 be analyzed in the context of specific problems.  Moreover, unlike
-existing techniques, the CountMin Sketch does not store k-mers directly;
-instead,
+existing techniques, the CountMin Sketch stores only counts;
 k-mers must be retrieved from the original data set.  In exchange,
 the low memory footprint enabled by this probabilistic approach enables
 online updating and retrieval of k-mer counts entirely in memory, which
@@ -300,7 +302,7 @@ histograms in five soil metagenomic read data sets using khmer,
 Tallymer, Jellyfish, and DSK (Table \ref{table:datasets}; Figures \ref{fig:cmp_time} and
 \ref{fig:cmp_memory}).  We chose to benchmark abundance histograms because
 this functionality is common to all four software packages, and is a
-common analysis approach for determing assembly parameters \cite{Chikhi2013}.
+common analysis approach for determining assembly parameters \cite{Chikhi2013}.
 We applied each package to increasingly large subsets of a 50m read soil
 metagenome data set \cite{Howe2012}.
 
@@ -368,7 +370,7 @@ load.  However, the expected {\em miscount} --- the difference
 between the true k-mer frequency and the reported k-mer frequency --- cannot be
 calculated without knowing the distribution of k-mer abundances; in
 general, the average miscount will be small if the data is
-left-skewed.  As noted in Melsted et al., a large number of k-mers in
+left-skewed.  As noted by Melsted et al., a large number of k-mers in
 short-read data are low-abundance, leading to precisely the skew
 that would yield low miscounts \cite{Melsted2011}.  Here we use both
 real and simulated data sets to evaluate the counting performance in
@@ -379,7 +381,7 @@ average miscount and counting error rate for five different test data
 sets with similar numbers of distinct k-mers: one metagenome data
 set; a simulated set of random k-mers; a simulated set of reads,
 chosen with 3x coverage and 1\% error; a simulated set of reads (3x)
-with no error and a set of {\em E. Coli} reads.(Table \ref{table:random_data})  
+with no error and a set of {\em E. coli} reads.(Table \ref{table:random_data})  
 Even when the counting error rate is as high as 0.9 ---
 where 90\% of k-mers have an incorrect count --- the average miscount is still
 below 4.
@@ -401,7 +403,7 @@ k-mers have the lowest average miscount.  This is because these two
 abundance distributions have the least and most left-skew,
 respectively: the simulated reads without error have no abundance-1
 k-mers, while the randomly chosen k-mers are entirely low abundance.
-% E.Coli reads dataset has lower "coverage" than simulated reads without error.
+% E.coli reads dataset has lower "coverage" than simulated reads without error.
 
 \subsection*{Sequencing error profiles can be measured with k-mer abundance
 profiles}
@@ -709,23 +711,25 @@ The version of khmer used to generate the results below is available
 at http://github.com/ged-lab/khmer.git, tag '2013-khmer-counting'.
 Scripts specific to this paper are available in the paper repository
 at https://github.com/ged-lab/2013-khmer-counting.
-The iPython\cite{4160251} notebook file and data analysis to generate the figures are also
-available in that github repository. 
+The IPython\cite{4160251} notebook file and data analysis to generate the figures are also
+available in that github repository.  Complete instructions to reproduce
+all of the results in this paper are available in the khmer-counting
+repository; see tutorial.rst.
 
 \subsection*{Sequence Data}
 
 One human gut metagenome reads data set (MH0001) from the 
 MetaHIT (Metagenomics of the Human Intestinal Tract) project\cite{Qin2010} was used. 
-It contains approximately 59 million reads, each 44bp long and it was trimmed to remove 
+It contains approximately 59 million reads, each 44bp long; it was trimmed to remove 
 low quality sequences. 
 
 Five soil metagenomics reads data sets with different size were taken
-from GPGC project for benchmark purpose.(Table \ref{table:datasets})These reads are from 
-soil sample in Iowa Prairie region and they are filtered to make sure there are less 
-than 30\% Ns in the read and the remaining reads are longer than 30 basepairs.
-The instruction to acquire these data sets is available in the paper repository on 
-github.com.
-
+from the GPGC project for benchmark purpose.(Table
+\ref{table:datasets})These reads are from soil in Iowa region and they
+are filtered to make sure there are less than 30\% Ns in the read and
+each read is longer than 30 bp.  The exact data sets used for the
+paper are available on Amazon S3 and the instructions to acquire these
+data sets are available in the paper repository on github.com.
 
 We also generated four short-read data sets to assess the error
 rate and miscount distribution. One is a subset of a real
@@ -984,7 +988,7 @@ Simulated reads from simulated genome with error         & 5.92M  & 3,757,479  &
 \hline
 Simulated reads from simulated genome without error      & 9.07M  & 5,714,973  & 1,989,644 \\
 \hline
-Real {\em E. Coli} reads                                        & 4.85M  & 4,004,911  & 2,079,302 \\
+Real {\em E. coli} reads                                        & 4.85M  & 4,004,911  & 2,079,302 \\
 \end{tabular}
 \begin{flushleft}
 \end{flushleft}
