@@ -364,8 +364,9 @@ memory.
 
 Due to the use of CountMin Sketch and its lack of collision tracking,
 khmer will report some incorrect counts for k-mers; these counts are
-always higher than the true counts.  The frequency with which
-incorrect counts are reported can be estimated from the hash table
+always higher than the true counts if within bound of 255 which is limited by 
+the 8-bit counters we used. The frequency with which 
+ incorrect counts are reported can be estimated from the hash table
 load.  However, the expected {\em miscount} --- the difference
 between the true k-mer frequency and the reported k-mer frequency --- cannot be
 calculated without knowing the distribution of k-mer abundances; in
@@ -381,7 +382,7 @@ average miscount and counting error rate for five different test data
 sets with similar numbers of distinct k-mers: one metagenome data
 set; a simulated set of random k-mers; a simulated set of reads,
 chosen with 3x coverage and 1\% error; a simulated set of reads (3x)
-with no error and a set of {\em E. coli} reads.(Table \ref{table:random_data})  
+with no error and a set of {\em E. coli} reads (Table \ref{table:random_data}).  
 Even when the counting error rate is as high as 0.9 ---
 where 90\% of k-mers have an incorrect count --- the average miscount is still
 below 4.
@@ -603,7 +604,7 @@ Sketch, the offset between the incorrect count and
 actual count is related to the total number of k-mers in a data set and
 the size of each hash table \cite{Cormode2005}. Further study has shown that the behavior
 of CountMin Sketch depends on specific characteristics of the data
-set under consideration, especially left-skewness\cite{Rusu2008,
+set under consideration, especially left-skewness \cite{Rusu2008,
   CormodeM05}.  These probabilistic properties suit short reads
 from next generation sequencing data sets: the miscounts are
 low because of the
@@ -672,7 +673,7 @@ situations this may be an acceptable tradeoff.
 Applying khmer to extremely large data sets with many unique k-mers
 requires a large amount of memory: approximately 446 GB of memory is
 required to achieve an error rate of 1\% for
-$50x10^9$ k-mers. It is possible to reduce the required memory by dividing
+$50\times 10^9$ k-mers. It is possible to reduce the required memory by dividing
 k-mer space into multiple partitions and counting k-mers separately
 for each partition. Partitioning k-mer space into $M$ partitions
 results in a linear decrease in the number of k-mers under
@@ -719,13 +720,13 @@ repository; see tutorial.rst.
 \subsection*{Sequence Data}
 
 One human gut metagenome reads data set (MH0001) from the 
-MetaHIT (Metagenomics of the Human Intestinal Tract) project\cite{Qin2010} was used. 
+MetaHIT (Metagenomics of the Human Intestinal Tract) project \cite{Qin2010} was used. 
 It contains approximately 59 million reads, each 44bp long; it was trimmed to remove 
 low quality sequences. 
 
 Five soil metagenomics reads data sets with different size were taken
-from the GPGC project for benchmark purpose.(Table
-\ref{table:datasets})These reads are from soil in Iowa region and they
+from the GPGC project for benchmark purpose (see Table
+\ref{table:datasets}).  These reads are from soil in Iowa region and they
 are filtered to make sure there are less than 30\% Ns in the read and
 each read is longer than 30 bp.  The exact data sets used for the
 paper are available on Amazon S3 and the instructions to acquire these
@@ -748,7 +749,7 @@ probabilistic data structure for counting distinct elements
 \cite{Cormode2005}.  Our implementation uses $Z$ independent hash
 tables, each containing a prime number of counters $H_i$.  The hashing
 function for each hash table is fixed, and reversibly converts each
-DNA k-mer (for k $<=$ 32) into a 64-bit number to which the modulus of
+DNA k-mer (for $k \le 32$) into a 64-bit number to which the modulus of
 the hash table size is applied.  This provides $Z$ distinct hash
 functions (see also \cite{adina2013}).
 
@@ -765,7 +766,7 @@ the counting error is one-sided.
 
 \subsection*{Hash function and khmer implementation}
 
-The current khmer hash function works only for $k <= 32$ and converts
+The current khmer hash function works only for $k \le 32$ and converts
 DNA strings exactly into 64-bit numbers.  However, any hash function
 would work. For example, a cyclic hash would enable khmer to count
 k-mers larger in size than 32; this would not change the scaling
@@ -838,6 +839,7 @@ the script {\tt jelly-search.sh}.
 %\section*{References}
 % The bibtex filename
 \bibliography{khmer-counting}
+\clearpage
 
 \section*{Figure Legends}
 
@@ -926,6 +928,7 @@ in a 100 base read.}
 \label{fig:perc_unique_pos}
 \end{figure}
 
+\clearpage
 \section*{Tables}
 %\begin{table}[!ht]
 %\caption{
@@ -1037,15 +1040,15 @@ untrimmed  &      -  &      - & 28.1m & 22.4m & 43\% \\
   several memory usage/error rates.  The error rate
   (column 1) is empirically determined.  We measured reads remaining,
   number of ``true'' k-mers that were removed during the normalization
-  process, and the number of total k-mers remaining.  Note: at high
+  process, and the number of erroneous k-mers remaining.  Note: at high
   error rates, reads are erroneously removed due to inflation
   of k-mer counts.}}
 \begin{tabular}{ | c | c | c | c | c | c |}
-memory/FP rate & retained reads & true k-mers & erroneous k-mers \\
+memory/FP rate & retained reads & true k-mers removed & retained erroneous k-mers \\
 \hline \\
- 800 MB/0.0\% & 1,657,065 & -2 &   28m \\
- 80 MB/39.3\% & 1,635,326 & -2 & 27.8m \\
- 40 MB/82.9\% & 1,592,719 & -2 & 27.4m \\
+ 800 MB/0.0\% & 1,657,065 & 2 &   28m \\
+ 80 MB/39.3\% & 1,635,326 & 2 & 27.8m \\
+ 40 MB/82.9\% & 1,592,719 & 2 & 27.4m \\
 \end{tabular}
 \begin{flushleft}
 \end{flushleft}
@@ -1067,9 +1070,9 @@ memory/FP rate & retained reads & true k-mers & erroneous k-mers \\
 \begin{tabular}{ | c | c | c | c | c | c |}
 memory/FP rate & N contigs & total sequence & \% of true genome covered \\
 \hline \\
-      800 MB/0.0\% & 617 & 4571174 & 99.75\% \\
-      80 MB/39.3\% & 613 & 4570562 & 99.75\% \\
-      40 MB/82.9\% & 612 & 4570924 & 99.73\% \\
+      800 MB/0.0\% & 617 & 4,571,174 & 99.75\% \\
+      80 MB/39.3\% & 613 & 4,570,562 & 99.75\% \\
+      40 MB/82.9\% & 612 & 4,570,924 & 99.73\% \\
 \end{tabular}
 \begin{flushleft}
 \end{flushleft}
