@@ -428,7 +428,7 @@ BF_count_1.time:
 	time -o BF_count_1.time BFCounter count -k 22 -n 600000000 -t 8 -c 100000 -o iowa.1 iowa_prairie_0920.fa.1
 
 BF_dump_1.time:
-time -o BF_dump_1.time BFCounter dump -k 22 -i iowa.1 -o iowa.1.txt
+	time -o BF_dump_1.time BFCounter dump -k 22 -i iowa.1 -o iowa.1.txt
 
 BF_count_2.time:
 	time -o BF_count_2.time BFCounter count -k 22 -n 1200000000 -t 8 -c 100000 -o iowa.2 iowa_prairie_0920.fa.2
