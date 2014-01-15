@@ -10,7 +10,9 @@ KHMER=/usr/local/src/khmer
 #	MH0001.trimmed.fa
 #	ecoli_ref.fastq
 
-all: benchmark jellyfish tallymer dsk check_fp_rate check_error abundance_filtering counts loop_filter loop_norm
+all: benchmark jellyfish tallymer dsk kmc kmc_dump turtle check_fp_rate check_error abundance_filtering counts loop_filter loop_norm
+
+modify_0108: kmc kmc_dump turtle
 
 copydata:
 	rm -fr ../data/
@@ -351,6 +353,77 @@ dsk_5_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o dsk_5_22.time dsk iowa_prairie_0920.fa.5 22 -histo
 
+kmc: kmc_1_22.time kmc_2_22.time kmc_3_22.time kmc_4_22.time kmc_5_22.time
+	# kmc benchmark k=22
+kmc_1_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o kmc_1_22.time kmc -fa iowa_prairie_0920.fa.1 kmc_1_22.out ./
+
+kmc_2_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o kmc_2_22.time kmc -fa iowa_prairie_0920.fa.1 kmc_2_22.out ./
+
+kmc_3_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o kmc_3_22.time kmc -fa iowa_prairie_0920.fa.1 kmc_3_22.out ./
+
+kmc_4_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o kmc_4_22.time kmc -fa iowa_prairie_0920.fa.1 kmc_4_22.out ./
+
+kmc_5_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o kmc_5_22.time kmc -fa iowa_prairie_0920.fa.1 kmc_5_22.out ./
+
+kmc_dump: kmc_dump_1_22.time kmc_dump_2_22.time kmc_dump_3_22.time kmc_dump_4_22.time kmc_dump_5_22.time
+	# kmc_dump benchmark k=22
+kmc_dump_1_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o kmc_dump_1_22.time kmc_dump kmc_1_22.out kmc_dump_1_22.out
+
+kmc_dump_2_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o kmc_dump_2_22.time kmc_dump kmc_2_22.out kmc_dump_2_22.out
+	
+kmc_dump_3_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o kmc_dump_3_22.time kmc_dump kmc_3_22.out kmc_dump_3_22.out
+	
+kmc_dump_4_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o kmc_dump_4_22.time kmc_dump kmc_4_22.out kmc_dump_4_22.out
+	
+kmc_dump_5_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o kmc_dump_5_22.time kmc_dump kmc_5_22.out kmc_dump_5_22.out
+	
+turtle: turtle_1_22.time turtle_2_22.time turtle_3_22.time turtle_4_22.time turtle_5_22.time
+turtle_1_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+#	time -o turtle_1_22.time aTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -n 700000000 
+	time -o turtle_1_22.time aTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -s 34
+turtle_2_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+#	time -o turtle_2_22.time aTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -n 1400000000 
+	time -o turtle_2_22.time aTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -s 34
+	
+turtle_3_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+#	time -o turtle_3_22.time aTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -n 2100000000 
+	time -o turtle_3_22.time aTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -s 34
+	
+turtle_4_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+#	time -o turtle_4_22.time aTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -n 2800000000 
+	time -o turtle_4_22.time aTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -s 34
+	
+turtle_5_22.time:
+	-echo 3 > /proc/sys/vm/drop_caches
+#	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -n 3500000000 
+	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -s 34
+	
+	
+	
 
 check_fp_rate: fp_assessment.out
 	# Assessment of false positive rate and miscount distribution
