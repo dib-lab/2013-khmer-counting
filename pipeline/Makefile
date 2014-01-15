@@ -12,7 +12,7 @@ KHMER=/usr/local/src/khmer
 
 all: benchmark jellyfish tallymer dsk kmc kmc_dump turtle check_fp_rate check_error abundance_filtering counts loop_filter loop_norm
 
-modify_0108: kmc kmc_dump turtle
+modify_0108: kmc kmc_dump turtle BFCount
 
 copydata:
 	rm -fr ../data/
@@ -401,29 +401,59 @@ turtle: turtle_1_22.time turtle_2_22.time turtle_3_22.time turtle_4_22.time turt
 turtle_1_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 #	time -o turtle_1_22.time aTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -n 700000000 
-	time -o turtle_1_22.time aTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -s 34
+	time -o turtle_1_22.time aTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -s 32
 turtle_2_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 #	time -o turtle_2_22.time aTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -n 1400000000 
-	time -o turtle_2_22.time aTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -s 34
+	time -o turtle_2_22.time aTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -s 32
 	
 turtle_3_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 #	time -o turtle_3_22.time aTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -n 2100000000 
-	time -o turtle_3_22.time aTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -s 34
+	time -o turtle_3_22.time aTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -s 32
 	
 turtle_4_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 #	time -o turtle_4_22.time aTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -n 2800000000 
-	time -o turtle_4_22.time aTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -s 34
+	time -o turtle_4_22.time aTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -s 32
 	
 turtle_5_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 #	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -n 3500000000 
-	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -s 34
+	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -s 32
 	
+BFCount: BF_count_1.time BF_count_2.time BF_count_3.time BF_count_4.time BF_count_5.time BF_dump_1.time BF_dump_2.time BF_dump_3.time BF_dump_4.time BF_dump_5.time
 	
-	
+BF_count_1.time:
+	time -o BF_count_1.time BFCounter count -k 22 -n 600000000 -t 8 -c 100000 -o iowa.1 iowa_prairie_0920.fa.1
+
+BF_dump_1.time:
+time -o BF_dump_1.time BFCounter dump -k 22 -i iowa.1 -o iowa.1.txt
+
+BF_count_2.time:
+	time -o BF_count_2.time BFCounter count -k 22 -n 1200000000 -t 8 -c 100000 -o iowa.2 iowa_prairie_0920.fa.2
+
+BF_dump_2.time:
+	time -o BF_dump_2.time BFCounter dump -k 22 -i iowa.2 -o iowa.2.txt
+
+BF_count_3.time:
+	time -o BF_count_3.time BFCounter count -k 22 -n 1500000000 -t 8 -c 100000 -o iowa.3 iowa_prairie_0920.fa.3
+
+BF_dump_3.time:
+	time -o BF_dump_3.time BFCounter dump -k 22 -i iowa.3 -o iowa.3.txt
+
+BF_count_4.time:
+	time -o BF_count_4.time BFCounter count -k 22 -n 1800000000 -t 8 -c 100000 -o iowa.4 iowa_prairie_0920.fa.4
+
+BF_dump_4.time:
+	time -o BF_dump_4.time BFCounter dump -k 22 -i iowa.4 -o iowa.4.txt
+
+BF_count_5.time:
+	time -o BF_count_5.time BFCounter count -k 22 -n 2200000000 -t 8 -c 100000 -o iowa.5 iowa_prairie_0920.fa.5
+
+BF_dump_5.time:
+	time -o BF_dump_5.time BFCounter dump -k 22 -i iowa.5 -o iowa.5.txt
+
 
 check_fp_rate: fp_assessment.out
 	# Assessment of false positive rate and miscount distribution
