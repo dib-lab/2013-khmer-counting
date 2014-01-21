@@ -12,7 +12,7 @@ KHMER=/usr/local/src/khmer
 
 all: benchmark jellyfish tallymer dsk kmc kmc_dump turtle check_fp_rate check_error abundance_filtering counts loop_filter loop_norm
 
-modify_0108: kmc kmc_dump turtle BFCount
+modify_0108: kmc kmc_dump BFCount turtle
 
 copydata:
 	rm -fr ../data/
