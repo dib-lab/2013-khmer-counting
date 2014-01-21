@@ -119,7 +119,7 @@ data sets. Unlike previous methods based on data structures such as
 hash tables, suffix arrays, and trie structures, khmer relies entirely
 on a simple probabilistic data structure, a CountMin Sketch.  The
 CountMin Sketch permits online updating and retrieval of k-mer counts
-in memory which is necessary to support streaming k-mer analysis algorithms.
+in memory which is necessary to support online k-mer analysis algorithms.
 On sparse data sets this data structure is considerably more memory
 efficient than any exact data structure.  In exchange, the use of a
 CountMin Sketch introduces a systematic overcount for k-mers;
@@ -157,8 +157,8 @@ as 32 the data sets are sparse as only a small fraction of
 the total possible number of k-mers ($4^{32}$) are actually present in
 any genome or read data sets derived from the genome.  The 
 high error rate (e.g. Illumina has a ~0.1-1\%
-per-base error rate \cite{pubmed19997069}) generates many unique k-mers 
-and as the total number of generated reads increases the
+per-base error rate \cite{pubmed19997069}) generates many unique k-mers. 
+As the total number of generated reads increases, the
 total number of errors grows with it linearly. This leads to data sets where the
 erroneous k-mers vastly outnumber the true k-mers \cite{Conway2011}.
 Tracking and counting the resulting large number of k-mers, most of
@@ -168,7 +168,7 @@ in sequence analysis
 
 A variety of k-mer counting approaches, and standalone software
 packages implementing them, have emerged in recent years; this
-includes Tallymer, Jellyfish, BF-Counter, DSK, KMC, and Turtle \cite{Kurtz2008,
+includes Tallymer, Jellyfish, BFCounter, DSK, KMC, and Turtle \cite{Kurtz2008,
 Marcais2011, Melsted2011, Rizk2013, Deorowicz2013, Roy2013}.
 % @CTB see http://arxiv.org/abs/1305.1861)
 % @CTB include more discussion of BFcounter & turtle? What about KMC?
@@ -178,13 +178,13 @@ trade-offs and enable a non-overlapping set
 of functionality.  Tallymer uses a suffix tree to store k-mer counts
 in memory and on disk.  Jellyfish stores k-mer counts in in-memory
 hash tables, and makes use of disk storage to scale to larger
-data sets.  BF-Counter uses a Bloom filter as a pre-filter to avoid
+data sets.  BFCounter uses a Bloom filter as a pre-filter to avoid
 counting unique k-mers, and is the first published probabilistic approach
 to k-mer counting.  DSK adopts a streaming approach to k-mer counting that
 enables time- and memory-efficient k-mer counting with an explicit
 trade-off between disk and memory usage.  KMC relies primarily
 on fast and inexpensive disk access to count k-mers in low
-memory.  And Turtle provides several different containers that offer
+memory.  Turtle provides several different containers that offer
 different false positive and false negative tradeoffs when counting k-mers.
 
 Our motivation for exploring efficient k-mer counting comes from our
@@ -209,7 +209,7 @@ storing the frequency distributions of distinct elements
 \cite{Cormode2005}.  Our implementation extends an earlier
 implementation of a Bloom filter, which has been previously used for
 both k-mer counting and de Bruijn graph storage and traversal
-\cite{Bloom70,BroderM03,Melsted2011,Pell2012,Rizk2013,Jones2012}
+\cite{Bloom70,BroderM03,Melsted2011,Pell2012,Rizk2013,Jones:2012aa}
 
 Probabilistic approaches can be particularly memory efficient for
 certain problems, with memory usage significantly lower than any exact
@@ -264,12 +264,17 @@ access.
 The implementation details are similar to those of the Bloom filter in
 \cite{Pell2012}, but with the use of 8 bit counters instead of 1 bit
 counters.  Briefly, Z hash tables are allocated, each with a different
-size of approximately H bytes; the sum of these hash table sizes must
+size of approximately H bytes (H\_1, H\_2, ..., H\_Z); the sum of these hash table sizes must
 fit within available main memory.  To increment the count for a
 particular k-mer, a single hash is computed for the k-mer, and the
 modulus of that hash with each hash table's size H gives the location
 for each hash table; the associated count in each hash table is then
-incremented by 1.  To retrieve the count for a k-mer, the same hash is
+incremented by 1.  We use different size for each hash table so 
+the locations in different hash tables for that particular k-mer will be different. 
+If two k-mers have a collision in one hash table which means the locations given by the modulus calculation
+are the same, chances are that the two k-mers will not have collision in another hash 
+table with different size.
+To retrieve the count for a k-mer, the same hash is
 computed and the minimum count across all hash tables is computed.
 While different in implementation detail from the standard CountMin Sketch,
 which uses a single hash table with many hash
@@ -302,7 +307,7 @@ histograms in five soil metagenomic read data sets using khmer,
 Tallymer, Jellyfish, and DSK (Table \ref{table:datasets}; Figures \ref{fig:cmp_time} and
 \ref{fig:cmp_memory}).  We chose to benchmark abundance histograms because
 this functionality is common to all four software packages, and is a
-common analysis approach for determining assembly parameters \cite{Chikhi2013}.
+common analysis approach for determining assembly parameters \cite{Chikhi:2014aa}.
 We applied each package to increasingly large subsets of a 50m read soil
 metagenome data set \cite{Howe2012}.
 
@@ -346,7 +351,7 @@ is the same as its memory.  At the expense of more time, khmer
 supports saving and loading gzip-compressed hash tables, which are
 competitive in size to DSK's on-disk database (Figure 3, dashed line).
 
-\subsection*{khmer counts k-mers efficiently}
+\subsection*{khmer accesses k-mer counts efficiently}
 
 We measured the time it took to access 9.7m 22-mers across five
 different data sets after the initial databases had been built (Figure
@@ -357,7 +362,7 @@ Jellyfish.  In all three cases, system time dominated the overall time
 required to retrieve k-mers, suggesting that the primary reason for
 the linear increase in retrieval time was due to the increased size of
 the database on the disk (data not shown).  In particular, khmer is
-constant in retrieval time once the hash tables are loaded into
+ independent of the size of the database in retrieval time once the hash tables are loaded into
 memory.
 
 \subsection*{The measured counting error rate is low on short-read data}
@@ -371,7 +376,7 @@ load.  However, the expected {\em miscount} --- the difference
 between the true k-mer frequency and the reported k-mer frequency --- cannot be
 calculated without knowing the distribution of k-mer abundances; in
 general, the average miscount will be small if the data is
-left-skewed.  As noted by Melsted et al., a large number of k-mers in
+left-skewed.  As noted by Melsted and Pritchard, a large number of k-mers in
 short-read data are low-abundance, leading to precisely the skew
 that would yield low miscounts \cite{Melsted2011}.  Here we use both
 real and simulated data sets to evaluate the counting performance in
@@ -388,7 +393,7 @@ where 90\% of k-mers have an incorrect count --- the average miscount is still
 below 4.
 
 We separately analyzed the average {\em percentage} miscount between
-true and false k-mers; e.g. an offset of 4 for a k-mer whose true
+true and false k-mers; e.g. an miscount of 4 for a k-mer whose true
 count is 1 would be 400\%.  Figure \ref{fig:percent_offset_vs_fpr} shows 
 the relationship between average miscount and counting error rate for 
 the same five data sets as in Figure \ref{fig:average_offset_vs_fpr}.  
@@ -399,11 +404,11 @@ because the average miscount is bounded by the product of the error
 rate times k-mer abundance.
 
 We see here that for a fixed counting error rate, the simulated reads
-without error have the highest average miscount, and the simulated
+without error have the highest average miscount, and the randomly generated
 k-mers have the lowest average miscount.  This is because these two
 abundance distributions have the least and most left-skew,
 respectively: the simulated reads without error have no abundance-1
-k-mers, while the randomly chosen k-mers are entirely low abundance.
+k-mers, while the randomly generated k-mers are entirely low abundance.
 % E.coli reads dataset has lower "coverage" than simulated reads without error.
 
 \subsection*{Sequencing error profiles can be measured with k-mer abundance
@@ -473,8 +478,12 @@ short reads based on saturating coverage of a de Bruijn graph
 \cite{Brown2012}.  While several non-streaming implementations exist, including
 Trinity's {\em in silico} normalization \cite{Haas2013,Brown2012blog}, digital 
 normalization can be efficiently implemented as a {\em
-  streaming} algorithm in which the majority of k-mers in a data set
-are never loaded into the counting structure.  This has the advantage of enabling 
+  streaming} algorithm. The first pass of the three-pass procedure
+of digital normalization involves reading in all of the reads, so it is by far the most
+computationally intensive. If a read is determined to be discarded,
+it will not be loaded into the CountMin Sketch structure. So the majority of k-mers in a data set
+are never loaded into the counting structure and the next two passes will be
+much more efficient. This has the advantage of enabling 
 low-memory preprocessing of both high-coverage genomic data sets and mRNAseq or
 metagenomic data sets with high-coverage components \cite{Brown2012,
   Howe2012}.  While digital normalization is already
@@ -521,7 +530,7 @@ particularly important for the streaming approaches to data analysis
 needed as data set sizes increase.  Because query and updating of
 k-mer counts can be done directly as data is being loaded, with no
 need for disk access or an indexing step, khmer can also perform
-well in situations with poor disk I/O performance.  (Note that BF-Counter
+well in situations with poor disk I/O performance.  (Note that BFCounter
 also supports online k-mer counting, but is not currently competitive
 in speed \cite{Deorowicz2013}.)
 
@@ -600,7 +609,7 @@ on the hash table load, the miscount size is dependent on details of
 the frequency distribution of k-mers \cite{Cormode2005}.
 
 More specifically, in the analysis of the CountMin
-Sketch, the offset between the incorrect count and
+Sketch, the miscount between the incorrect count and
 actual count is related to the total number of k-mers in a data set and
 the size of each hash table \cite{Cormode2005}. Further study has shown that the behavior
 of CountMin Sketch depends on specific characteristics of the data
@@ -644,7 +653,12 @@ rate is straightforward to measure, the user can be warned that the
 results should be invalidated when too little memory is used.  When combined
 with the graceful degradation of performance for both error trimming
 and digital normalization, khmer readily enables analysis of extremely
-large and diverse data sets \cite{adina2013}.
+large and diverse data sets \cite{adina2013} In an experiment to assemble 
+the reads of a soil metagenomic sample collected from Iowa prairie, the number 
+of reads to assemble drops from 3.3 million to 2.2 million and the size of data set
+drops from 245GB to 145GB accordingly after digital normalization  \cite{Howe2012}. 
+240GB memory was used in the process.This also shows khmer works well to 
+analyze real-world large metagenomic data sets.
 
 \subsection*{Conclusion}
 
@@ -838,7 +852,7 @@ We thank Eric McDonald for technical assistance with optimizing the khmer codeba
 
 %\section*{References}
 % The bibtex filename
-\bibliography{khmer-counting}
+\bibliography{khmer-counting-revision}
 \clearpage
 
 \section*{Figure Legends}
@@ -1062,10 +1076,10 @@ memory/FP rate & retained reads & true k-mers removed & retained total k-mers \\
 \caption{
 \bf{{\em E. coli} genome assembly after low-memory digital normalization.
   A comparison of assembling reads digitally normalized with low memory/high
-  error rates.  We assembled digitally normalized reads using
-  3-pass digital normalization (normalization to C=20, followed by
+  error rates.  The reads were digitally normalized using 3-pass methods  (normalization to C=20, followed by
   low-abundance k-mer trimming, followed by normalization to C=5; see
-  \cite{Brown2012} for more information) and measured total sequence recovered,
+  \cite{Brown2012} for more information) and were assembled using Velvet.
+  We measured total sequence recovered,
   as well as percent of true MG1655 genome covered by the assembly.}}
 \begin{tabular}{ | c | c | c | c | c | c |}
 memory/FP rate & N contigs & total sequence & \% of true genome covered \\
