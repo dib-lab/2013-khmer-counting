@@ -2,12 +2,53 @@
 %% http://bibdesk.sourceforge.net/
 
 
-%% Created for Qingpeng Zhang at 2013-09-23 18:03:56 -0400 
+%% Created for Qingpeng Zhang at 2014-01-21 11:13:44 -0500 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@article{Chikhi:2014aa,
+	Abstract = {MOTIVATION: Genome assembly tools based on the de Bruijn graph framework rely on a parameter k, which represents a trade-off between several competing effects that are difficult to quantify. There is currently a lack of tools that would automatically estimate the best k to use and/or quickly generate histograms of k-mer abundances that would allow the user to make an informed decision.
+RESULTS: We develop a fast and accurate sampling method that constructs approximate abundance histograms with several orders of magnitude performance improvement over traditional methods. We then present a fast heuristic that uses the generated abundance histograms for putative k values to estimate the best possible value of k. We test the effectiveness of our tool using diverse sequencing datasets and find that its choice of k leads to some of the best assemblies.
+AVAILABILITY: Our tool KmerGenie is freely available at: http://kmergenie.bx.psu.edu/.
+CONTACT: pashadag@cse.psu.edu.},
+	Author = {Chikhi, Rayan and Medvedev, Paul},
+	Date-Added = {2014-01-21 16:11:48 +0000},
+	Date-Modified = {2014-01-21 16:11:48 +0000},
+	Doi = {10.1093/bioinformatics/btt310},
+	Journal = {Bioinformatics},
+	Journal-Full = {Bioinformatics (Oxford, England)},
+	Month = {Jan},
+	Number = {1},
+	Pages = {31-7},
+	Pmid = {23732276},
+	Pst = {ppublish},
+	Title = {Informed and automated k-mer size selection for genome assembly},
+	Volume = {30},
+	Year = {2014},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1093/bioinformatics/btt310}}
+
+@article{Jones:2012aa,
+	Abstract = {We present Quip, a lossless compression algorithm for next-generation sequencing data in the FASTQ and SAM/BAM formats. In addition to implementing reference-based compression, we have developed, to our knowledge, the first assembly-based compressor, using a novel de novo assembly algorithm. A probabilistic data structure is used to dramatically reduce the memory required by traditional de Bruijn graph assemblers, allowing millions of reads to be assembled very efficiently. Read sequences are then stored as positions within the assembled contigs. This is combined with statistical compression of read identifiers, quality scores, alignment information and sequences, effectively collapsing very large data sets to <15% of their original size with no loss of information. Availability: Quip is freely available under the 3-clause BSD license from http://cs.washington.edu/homes/dcjones/quip.},
+	Author = {Jones, Daniel C and Ruzzo, Walter L and Peng, Xinxia and Katze, Michael G},
+	Date-Added = {2014-01-21 16:11:26 +0000},
+	Date-Modified = {2014-01-21 16:11:26 +0000},
+	Doi = {10.1093/nar/gks754},
+	Journal = {Nucleic Acids Res},
+	Journal-Full = {Nucleic acids research},
+	Mesh = {Algorithms; Data Compression; High-Throughput Nucleotide Sequencing; Probability; Software},
+	Month = {Dec},
+	Number = {22},
+	Pages = {e171},
+	Pmc = {PMC3526293},
+	Pmid = {22904078},
+	Pst = {ppublish},
+	Title = {Compression of next-generation sequencing reads aided by highly efficient de novo assembly},
+	Volume = {40},
+	Year = {2012},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1093/nar/gks754}}
 
 @incollection{CormodeM05,
 	Author = {Cormode, Graham},
@@ -45,8 +86,6 @@
 	Title = {What does Trinity's In Silico normalization do?},
 	Year = {2012}}
 
-@article{cite-key}
-
 @article{Haas2013,
 	Author = {Haas, Brian J and Papanicolaou, Alexie and Yassour, Moran and Grabherr, Manfred and Blood, Philip D and Bowden, Joshua and Couger, Matthew Brian and Eccles, David and Li, Bo and Lieber, Matthias and Macmanes, Matthew D and Ott, Michael and Orvis, Joshua and Pochet, Nathalie and Strozzi, Francesco and Weeks, Nathan and Westerman, Rick and William, Thomas and Dewey, Colin N and Henschel, Robert and Leduc, Richard D and Friedman, Nir and Regev, Aviv},
 	Journal = {Nat Protoc},
@@ -56,13 +95,6 @@
 	Title = {De novo transcript sequence reconstruction from RNA-seq using the Trinity platform for reference generation and analysis},
 	Volume = {8},
 	Year = {2013}}
-
-@article{Jones2012,
-	Author = {Daniel C. Jones and Walter L. Ruzzo and Xinxia Peng and Michael G. Katze},
-	Journal = {arXiv preprint},
-	Month = {07},
-	Title = {Compression of next-generation sequencing reads aided by highly efficient de novo assembly},
-	Year = {2012}}
 
 @article{pubmed19997069,
 	Author = {ML Metzker},
@@ -123,13 +155,6 @@
 	Journal = {Arxiv preprint},
 	Month = {05},
 	Title = {Turtle: Identifying frequent k-mers with cache-efficient algorithms},
-	Year = {2013}}
-
-@article{Chikhi2013,
-	Author = {Rayan Chikhi and Paul Medvedev},
-	Journal = {arXiv preprint},
-	Month = {04},
-	Title = {Informed and Automated k-Mer Size Selection for Genome Assembly},
 	Year = {2013}}
 
 @article{Brown2012,
