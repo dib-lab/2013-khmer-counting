@@ -269,8 +269,8 @@ fit within available main memory.  To increment the count for a
 particular k-mer, a single hash is computed for the k-mer, and the
 modulus of that hash with each hash table's size H gives the location
 for each hash table; the associated count in each hash table is then
-incremented by 1.  We use different size for each hash table so 
-the locations in different hash tables for that particular k-mer will be different. 
+incremented by 1.  We use different sizes for each hash table so as
+to vary the hash function.
 If two k-mers have a collision in one hash table which means the locations given by the modulus calculation
 are the same, chances are that the two k-mers will not have collision in another hash 
 table with different size.
@@ -289,10 +289,10 @@ with which a given k-mer count will be incorrect when retrieved --- we
 can look at the hash table load. Suppose N unique k-mers have been
 counted using Z hash tables, each with size H.  The probability that
 no collisions happened in a specific entry in one hash table is
-$(1-1/H)^{N}$, which can be approximated as $e^{-N/H}$. The individual
-collision rate in one hash table is $1-e^{-N/H}$. The total collision
+$(1-1/H)^{N}$, or approximately $e^{-N/H}$. The individual
+collision rate in one hash table is then $\approx 1-e^{-N/H}$. The total collision
 rate, which is the probability that a collision occurred in each entry
-where a k-mer maps to in all Z hash tables, is $(1-e^{-N/H})^{Z}$.
+where a k-mer maps to in all Z hash tables, is $\approx (1-e^{-N/H})^{Z}$.
 
 While the error rate can easily be calculated from the hash
 table load, the average {\em miscount} --- the degree to which the measured count
@@ -335,7 +335,8 @@ close to DSK.
 The memory usage of Jellyfish is dependent on the k-mer
 size, because it uses hash tables to store k-mer counts and must store
 the exact k-mer to track collisions; however, khmer's memory
-usage is independent of k, because it does not track collisions.
+usage is independent of k, because k-mers are stored implicitly in
+the data structure and khmer does not track collisions.
 
 We also measured disk usage during counting.
 Figure \ref{fig:cmp_disk} shows that
@@ -475,20 +476,32 @@ pass 1 vs pass 2).
 
 Digital normalization is a lossy compression algorithm that discards
 short reads based on saturating coverage of a de Bruijn graph
-\cite{Brown2012}.  While several non-streaming implementations exist, including
-Trinity's {\em in silico} normalization \cite{Haas2013,Brown2012blog}, digital 
-normalization can be efficiently implemented as a {\em
-  streaming} algorithm. The first pass of the three-pass procedure
-of digital normalization involves reading in all of the reads, so it is by far the most
-computationally intensive. If a read is determined to be discarded,
-it will not be loaded into the CountMin Sketch structure. So the majority of k-mers in a data set
-are never loaded into the counting structure and the next two passes will be
-much more efficient. This has the advantage of enabling 
-low-memory preprocessing of both high-coverage genomic data sets and mRNAseq or
-metagenomic data sets with high-coverage components \cite{Brown2012,
-  Howe2012}.  While digital normalization is already
-implemented inside khmer, previous work did not explore the lower bound
-on memory usage for effective digital normalization.
+\cite{Brown2012}.  While several non-streaming implementations exist,
+including Trinity's {\em in silico} normalization
+\cite{Haas2013,Brown2012blog}, digital normalization can be
+efficiently implemented as a {\em streaming} algorithm.In the
+streaming implementation, if a read is not kept, it is not loaded into
+the CountMin Sketch structure, and the false positive rate does not
+increase; this is particularly important for an initial pass across a
+large data set.
+
+For high-coverage data, we recommend a three step protocol that
+first applies digital normalization to a coverage of 20, then trims
+low-abundance k-mers in a second pass across the normalized data set,
+and finally runs a normalization to a coverage of 5. The
+first pass typically eliminates the majority of the data (80\% or more
+for a 100x-coverage genome), and so in effect this is ``few pass''
+algorithm for genome assembly.
+
+So the majority of k-mers in a data set are never
+loaded into the counting structure and the remaining two passes are
+typically much more efficient if the data set is high coverage. This
+has the advantage of enabling low-memory preprocessing of both
+high-coverage genomic data sets and mRNAseq or metagenomic data sets
+with high-coverage components \cite{Brown2012, Howe2012}.  While
+digital normalization is already implemented inside khmer, previous
+work did not explore the lower bound on memory usage for effective
+digital normalization.
 
 % @CTB how do we calculate MOST EFFICIENT arrange of -N and -x?
 We applied digital normalization to the {\em E. coli} data set used
@@ -562,12 +575,16 @@ primary motivation for the development of khmer.
 
 \subsection*{khmer memory usage is fixed and low}
 
-The memory usage of the basic CountMin Sketch approach is fixed, which
+The memory usage of the basic CountMin Sketch approach is fixed:
+khmer's memory usage does not increase as data is loaded. While this
 means that khmer will never crash due to memory limitations, and all
 operations can be performed in main memory without recourse to disk
-storage.  However, the memory size must be chosen in light
-of the error rate and miscount acceptable for a given
-application.
+storage, the error rate may grow to be too high.  Therefore the memory
+size must be chosen in light of the error rate and miscount acceptable
+for a given application.  In practice, we recommend choosing the
+maximum available memory, because the false positive rate decreases
+with increasing memory and there are no negative effects to minimizing
+the false positive rate.
 
 For any given data set, the size and number of hash tables will
 determine the accuracy of k-mer counting with khmer.  Thus, the user
