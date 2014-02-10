@@ -361,19 +361,19 @@ kmc_1_22.time:
 
 kmc_2_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o kmc_2_22.time kmc -fa iowa_prairie_0920.fa.1 kmc_2_22.out ./
+	time -o kmc_2_22.time kmc -fa iowa_prairie_0920.fa.2 kmc_2_22.out ./
 
 kmc_3_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o kmc_3_22.time kmc -fa iowa_prairie_0920.fa.1 kmc_3_22.out ./
+	time -o kmc_3_22.time kmc -fa iowa_prairie_0920.fa.3 kmc_3_22.out ./
 
 kmc_4_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o kmc_4_22.time kmc -fa iowa_prairie_0920.fa.1 kmc_4_22.out ./
+	time -o kmc_4_22.time kmc -fa iowa_prairie_0920.fa.4 kmc_4_22.out ./
 
 kmc_5_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o kmc_5_22.time kmc -fa iowa_prairie_0920.fa.1 kmc_5_22.out ./
+	time -o kmc_5_22.time kmc -fa iowa_prairie_0920.fa.5 kmc_5_22.out ./
 
 kmc_dump: kmc_dump_1_22.time kmc_dump_2_22.time kmc_dump_3_22.time kmc_dump_4_22.time kmc_dump_5_22.time
 	# kmc_dump benchmark k=22
