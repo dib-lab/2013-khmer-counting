@@ -180,7 +180,7 @@ in memory and on disk.  Jellyfish stores k-mer counts in in-memory
 hash tables, and makes use of disk storage to scale to larger
 data sets.  BFCounter uses a Bloom filter as a pre-filter to avoid
 counting unique k-mers, and is the first published probabilistic approach
-to k-mer counting.  DSK adopts a streaming approach to k-mer counting that
+to k-mer counting.  DSK adopts an online approach to k-mer counting that
 enables time- and memory-efficient k-mer counting with an explicit
 trade-off between disk and memory usage.  KMC relies primarily
 on fast and inexpensive disk access to count k-mers in low
@@ -280,9 +280,15 @@ While different in implementation detail from the standard CountMin Sketch,
 which uses a single hash table with many hash
 functions, the performance details are identical \cite{Pell2012}.
 
+One particularly important feature of the CountMin Sketch is that the
+counting error is {\em one-sided} @cite.  Because counts are only
+incremented, collisions result in inflated miscounts; if there is
+no collision for a particular k-mer, the count is correct.
+
 An additional benefit of the CountMin Sketch is that it is extremely
 easy to implement correctly, needing only about 3 dozen lines of C++
-code for a simple threadsafe implementation.
+code for a simple threadsafe implementation.  (Note that we have
+described how khmer scales with multiple threads in \cite{McDonald2013}.)
 
 To determine the expected error rate --- the average frequency
 with which a given k-mer count will be incorrect when retrieved --- we
@@ -416,61 +422,64 @@ k-mers, while the randomly generated k-mers are entirely low abundance.
 profiles}
 
 One specific use for khmer is detecting random sequencing errors by
-looking at the k-mer abundance distribution within reads \cite{Medvedev2011}.
-Low-abundance k-mers contained in a high-coverage data set typically
-represent random sequencing errors, and a variety of read trimming and
-error correcting tools use k-mer counting to reduce the error content
-of the read data set, independent of quality scores or reference
-genomes \cite{Kelley2010}.  This is an application where the counting
-error of the CountMin Sketch approach used by khmer may be
-particularly tolerable: it will never falsely call a high-abundance k-mer 
-as low-abundance because khmer never underestimates counts.
+looking at the k-mer abundance distribution within reads
+\cite{Medvedev2011}.  This approach, known also as ``k-mer spectral
+analysis'', was first proposed in by \cite{pubmed11504945} and further
+developed in \cite{pubmed12902383}.  The essential idea is that
+low-abundance k-mers contained in a high-coverage data set typically
+represent random sequencing errors.
 
+A variety of read trimming and error correcting tools use k-mer
+counting to reduce the error content of the read data set, independent
+of quality scores or reference genomes \cite{Kelley2010}.  This is an
+application where the counting error of the CountMin Sketch approach
+used by khmer may be particularly tolerable: it will never falsely
+call a high-abundance k-mer as low-abundance because khmer never
+underestimates counts.
 
 In Figure \ref{fig:perc_unique_pos}, we use khmer to examine the
 sequencing error pattern of a 5m-read subset of an Illumina reads
 data set from single-colony sequencing of {\em E. coli}
 \cite{pubmed21926975}.  The high rate of occurrence of unique k-mers
 close to the 3' end of reads is due to the increased error rate at the
-3' end of reads.
+3' end of reads. @CTB
 
 \subsection*{khmer can be applied iteratively to read trimming}
 
-One approach to error reduction in short-read data sets is to trim
-reads at low-abundance k-mers, which in high-coverage genome
-sequencing data sets are largely due to sequencing errors \cite{Kelley2010}.
-Here counting errors from khmer result in a one-sided trimming
-error such that some low-abundance k-mers are retained, but no
-high-abundance k-mers are erroneously trimmed; low-abundance k-mer
-trimming can easily be applied iteratively, with increasing accuracy
-at each iteration.
+We next evaluated the effect of false-positive induced miscounts on
+read trimming, in which reads are truncated at the first low-abundance
+k-mer.  Because the CountMin Sketch never undercounts k-mers, reads
+will never be erroneously trimmed at truly high-abundance k-mers;
+however, reads may not be trimmed correctly when miscounts inflate the
+count of low-abundance k-mers.  In cases where many errors remain,
+read trimming can potentially be applied multiple times, with each
+round reducing the total number of k-mers and hence resulting in
+lower false positive rates for the same memory usage.
 
 % @CTB discuss application to larger genomes in discussion
 We performed four iterations of unique k-mer trimming on 5 million
 Illumina reads from sequencing of {\em E. coli}, with a maximum memory
 usage of 40 MB.  For each iteration we measured empirical error rate
 compared with number of bases trimmed as well as the total number of
-k-mers
-(Table \ref{table:loop_trim}).
-In the first round, the estimated error
-rate was 78.1\%, and 22\% of the total bases were removed by trimming
-reads at low-abundance k-mers; the second iteration had an error
-rate of 10\%, and removed only 2.9\% additional data; and by
-the fourth iteration the error rate was down to 3.1\% with 0.0\% of the data removed.
+k-mers (Table \ref{table:loop_trim}).  In the first round, the
+estimated error rate was 78.1\%, and 22\% of the total bases were
+removed by trimming reads at low-abundance k-mers; the second
+iteration had an error rate of 10\%, and removed only 2.9\% additional
+data; and by the fourth iteration the error rate was down to 3.1\%
+with 0.0\% of the data removed.
 
 The elimination of so many unique k-mers (column 5) in the first pass
-was unexpected: the high error rate should have resulted in
-fewer unique k-mers being identified as unique, were the erroneous
-k-mers independent of each other. Upon examination, we realized that
-in Illumina data erroneous k-mers typically come from substitution
-errors that yield runs of up to k erroneous k-mers in a row \cite{Kelley2010}.  
-When trimming reads with high error rates,
-these runs are typically trimmed after the first few unique k-mers,
-leaving unique k-mers at the 3' end.
-Because of this we hypothesized that high-FP rate trimming would
-result in the retention of many unique k-mers at the 3' end of the
-read, and this was confirmed upon measurement (Table \ref{table:loop_trim}, column 6, 
-pass 1 vs pass 2).
+was unexpected: the high error rate should have resulted in fewer
+unique k-mers being identified as unique, were the erroneous k-mers
+independent of each other. Upon examination, we realized that in
+Illumina data erroneous k-mers typically come from substitution errors
+that yield runs of up to k erroneous k-mers in a row
+\cite{Kelley2010}.  When trimming reads with high error rates, these
+runs are typically trimmed after the first few unique k-mers, leaving
+unique k-mers at the 3' end.  Because of this we hypothesized that
+high-FP rate trimming would result in the retention of many unique
+k-mers at the 3' end of the read, and this was confirmed upon
+measurement (Table \ref{table:loop_trim}, column 6, pass 1 vs pass 2).
 
 \subsection*{Using khmer for digital normalization, a streaming algorithm}
 
@@ -545,7 +554,7 @@ k-mer counts can be done directly as data is being loaded, with no
 need for disk access or an indexing step, khmer can also perform
 well in situations with poor disk I/O performance.  (Note that BFCounter
 also supports online k-mer counting, but is not currently competitive
-in speed \cite{Deorowicz2013}.)
+in speed \cite{Deorowicz2013}. @CTB)
 
 \subsection*{khmer is a generally useful k-mer counting approach}
 
@@ -619,11 +628,15 @@ future, we may extend khmer to counters of arbitrary bit sizes.
 
 The CountMin Sketch is a probabilistic data structure with a
 one-sided error that results in random overestimates of k-mer
-frequency, but does not generate underestimates. The chosen parameters
-of the data structure will influence the accuracy of the count.  While
-the probability of an inaccurate count can easily be estimated based
-on the hash table load, the miscount size is dependent on details of
-the frequency distribution of k-mers \cite{Cormode2005}.
+frequency, but does not generate underestimates.
+
+The CountMin Sketch is a probabilistic data structure in which the
+total memory usage is fixed; the memory usage, the hash functions, and
+the total number of distinct objects counted all influence the
+accuracy of the count.  While the probability of an inaccurate count
+can easily be estimated based on the hash table load, the miscount
+size is dependent on details of the frequency distribution of k-mers
+\cite{Cormode2005}.
 
 More specifically, in the analysis of the CountMin
 Sketch, the miscount between the incorrect count and
