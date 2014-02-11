@@ -12,7 +12,7 @@ KHMER=/usr/local/src/khmer
 
 all: benchmark jellyfish tallymer dsk kmc kmc_dump turtle check_fp_rate check_error abundance_filtering counts loop_filter loop_norm
 
-modify_0108: kmc kmc_dump BFCount turtle
+modify_0210: kmc kmc_dump  turtle dsk jellyfish
 
 copydata:
 	rm -fr ../data/
@@ -401,26 +401,26 @@ turtle: turtle_1_22.time turtle_2_22.time turtle_3_22.time turtle_4_22.time turt
 turtle_1_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 #	time -o turtle_1_22.time aTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -n 700000000 
-	time -o turtle_1_22.time aTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -s 32
+	time -o turtle_1_22.time scTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -s 32
 turtle_2_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 #	time -o turtle_2_22.time aTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -n 1400000000 
-	time -o turtle_2_22.time aTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -s 32
+	time -o turtle_2_22.time scTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -s 32
 	
 turtle_3_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 #	time -o turtle_3_22.time aTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -n 2100000000 
-	time -o turtle_3_22.time aTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -s 32
+	time -o turtle_3_22.time scTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -s 32
 	
 turtle_4_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 #	time -o turtle_4_22.time aTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -n 2800000000 
-	time -o turtle_4_22.time aTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -s 32
+	time -o turtle_4_22.time scTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -s 32
 	
 turtle_5_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 #	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -n 3500000000 
-	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -s 32
+	time -o turtle_5_22.time scTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -s 32
 	
 BFCount: BF_count_1.time BF_count_2.time BF_count_3.time BF_count_4.time BF_count_5.time BF_dump_1.time BF_dump_2.time BF_dump_3.time BF_dump_4.time BF_dump_5.time
 	
