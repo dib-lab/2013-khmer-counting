@@ -69,6 +69,12 @@ To do so, run::
 
 .. @CTB fix tags
 
+   @should add installation about Turtle, KMC, BFCount Quast and FASTX
+   
+
+   
+   
+   
 Next you'll need to install our packages 'screed' and 'khmer'.
 In this case we're going to use the versions tagged for the paper ::
 
