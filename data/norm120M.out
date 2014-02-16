@@ -1,0 +1,111 @@
+
+PARAMETERS:
+ - kmer size =    20 		(-k)
+ - n hashes =     4 		(-N)
+ - min hashsize = 3e+07 	(-x)
+ - paired =	      False 		(-p)
+
+Estimated memory usage is 1.2e+08 bytes (n_hashes x min_hashsize)
+--------
+making hashtable
+... kept 99907 of 100000 , or 99 %
+... in file ecoli_ref.fastq
+... kept 199444 of 200000 , or 99 %
+... in file ecoli_ref.fastq
+... kept 298183 of 300000 , or 99 %
+... in file ecoli_ref.fastq
+... kept 396630 of 400000 , or 99 %
+... in file ecoli_ref.fastq
+... kept 494791 of 500000 , or 98 %
+... in file ecoli_ref.fastq
+... kept 592769 of 600000 , or 98 %
+... in file ecoli_ref.fastq
+... kept 690262 of 700000 , or 98 %
+... in file ecoli_ref.fastq
+... kept 786581 of 800000 , or 98 %
+... in file ecoli_ref.fastq
+... kept 880215 of 900000 , or 97 %
+... in file ecoli_ref.fastq
+... kept 968321 of 1000000 , or 96 %
+... in file ecoli_ref.fastq
+... kept 1048274 of 1100000 , or 95 %
+... in file ecoli_ref.fastq
+... kept 1119510 of 1200000 , or 93 %
+... in file ecoli_ref.fastq
+... kept 1179587 of 1300000 , or 90 %
+... in file ecoli_ref.fastq
+... kept 1228521 of 1400000 , or 87 %
+... in file ecoli_ref.fastq
+... kept 1271007 of 1500000 , or 84 %
+... in file ecoli_ref.fastq
+... kept 1304010 of 1600000 , or 81 %
+... in file ecoli_ref.fastq
+... kept 1329421 of 1700000 , or 78 %
+... in file ecoli_ref.fastq
+... kept 1354257 of 1800000 , or 75 %
+... in file ecoli_ref.fastq
+... kept 1373076 of 1900000 , or 72 %
+... in file ecoli_ref.fastq
+... kept 1387617 of 2000000 , or 69 %
+... in file ecoli_ref.fastq
+... kept 1404344 of 2100000 , or 66 %
+... in file ecoli_ref.fastq
+... kept 1416978 of 2200000 , or 64 %
+... in file ecoli_ref.fastq
+... kept 1427506 of 2300000 , or 62 %
+... in file ecoli_ref.fastq
+... kept 1440828 of 2400000 , or 60 %
+... in file ecoli_ref.fastq
+... kept 1450945 of 2500000 , or 58 %
+... in file ecoli_ref.fastq
+... kept 1459399 of 2600000 , or 56 %
+... in file ecoli_ref.fastq
+... kept 1471294 of 2700000 , or 54 %
+... in file ecoli_ref.fastq
+... kept 1480117 of 2800000 , or 52 %
+... in file ecoli_ref.fastq
+... kept 1487550 of 2900000 , or 51 %
+... in file ecoli_ref.fastq
+... kept 1498257 of 3000000 , or 49 %
+... in file ecoli_ref.fastq
+... kept 1506527 of 3100000 , or 48 %
+... in file ecoli_ref.fastq
+... kept 1513515 of 3200000 , or 47 %
+... in file ecoli_ref.fastq
+... kept 1523807 of 3300000 , or 46 %
+... in file ecoli_ref.fastq
+... kept 1531499 of 3400000 , or 45 %
+... in file ecoli_ref.fastq
+... kept 1538102 of 3500000 , or 43 %
+... in file ecoli_ref.fastq
+... kept 1547867 of 3600000 , or 42 %
+... in file ecoli_ref.fastq
+... kept 1555348 of 3700000 , or 42 %
+... in file ecoli_ref.fastq
+... kept 1561932 of 3800000 , or 41 %
+... in file ecoli_ref.fastq
+... kept 1571222 of 3900000 , or 40 %
+... in file ecoli_ref.fastq
+... kept 1578341 of 4000000 , or 39 %
+... in file ecoli_ref.fastq
+... kept 1584422 of 4100000 , or 38 %
+... in file ecoli_ref.fastq
+... kept 1593602 of 4200000 , or 37 %
+... in file ecoli_ref.fastq
+... kept 1600681 of 4300000 , or 37 %
+... in file ecoli_ref.fastq
+... kept 1606829 of 4400000 , or 36 %
+... in file ecoli_ref.fastq
+... kept 1615831 of 4500000 , or 35 %
+... in file ecoli_ref.fastq
+... kept 1623343 of 4600000 , or 35 %
+... in file ecoli_ref.fastq
+... kept 1629720 of 4700000 , or 34 %
+... in file ecoli_ref.fastq
+... kept 1638655 of 4800000 , or 34 %
+... in file ecoli_ref.fastq
+... kept 1645833 of 4900000 , or 33 %
+... in file ecoli_ref.fastq
+DONE with ecoli_ref.fastq ; kept 1652273 of 5000000 or 33 %
+output in ecoli_ref.fastq.keep
+fp rate estimated to be 0.180

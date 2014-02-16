@@ -1,0 +1,282 @@
+/usr/local/src/quast-2.3/quast.py velvet.10M/contigs.fa velvet.20M/contigs.fa velvet.40M/contigs.fa velvet.60M/contigs.fa velvet.120M/contigs.fa velvet.240M/contigs.fa velvet.2400M/contigs.fa -R e.coli_reference.fa.gz -G e.coli_genes.gff -O e.coli_operons.gff
+
+Version 2.3, build 29.01.2014 17:57
+
+System information:
+  OS: Linux-3.0.0-14-virtual-x86_64-with-Ubuntu-11.10-oneiric (linux_64)
+  Python version: 2.7.2
+  CPUs number: 4
+
+Started: 2014-02-13 22:27:01
+
+Logging to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/quast.log
+
+NOTICE: Maximum number of threads is set to 4 (use --threads option to set it manually)
+
+Reference:
+  e.coli_reference.fa.gz ==> e.coli_reference
+
+Contigs:
+  velvet.10M/contigs.fa ==> velvet.10M_contigs
+  velvet.20M/contigs.fa ==> velvet.20M_contigs
+  velvet.40M/contigs.fa ==> velvet.40M_contigs
+  velvet.60M/contigs.fa ==> velvet.60M_contigs
+  velvet.120M/contigs.fa ==> velvet.120M_contigs
+  velvet.240M/contigs.fa ==> velvet.240M_contigs
+  velvet.2400M/contigs.fa ==> velvet.2400M_contigs
+
+2014-02-13 22:27:04
+Running Basic statistics processor...
+  Reference genome:
+    e.coli_reference.fa, Reference length = 4639675, Reference GC % = 50.79
+  Contig files: 
+    1  velvet.10M_contigs
+    2  velvet.20M_contigs
+    3  velvet.40M_contigs
+    4  velvet.60M_contigs
+    5  velvet.120M_contigs
+    6  velvet.240M_contigs
+    7  velvet.2400M_contigs
+  Calculating N50 and L50...
+    1  velvet.10M_contigs, N50 = 118079, L50 = 13, Total length = 4545871, GC % = 50.74, # N's per 100 kbp =  104.34
+    2  velvet.20M_contigs, N50 = 123869, L50 = 12, Total length = 4550014, GC % = 50.74, # N's per 100 kbp =  90.13
+    3  velvet.40M_contigs, N50 = 111212, L50 = 13, Total length = 4550599, GC % = 50.74, # N's per 100 kbp =  74.96
+    4  velvet.60M_contigs, N50 = 105592, L50 = 14, Total length = 4548619, GC % = 50.74, # N's per 100 kbp =  64.28
+    5  velvet.120M_contigs, N50 = 112457, L50 = 13, Total length = 4549335, GC % = 50.74, # N's per 100 kbp =  68.67
+    6  velvet.240M_contigs, N50 = 115595, L50 = 13, Total length = 4549253, GC % = 50.74, # N's per 100 kbp =  64.63
+    7  velvet.2400M_contigs, N50 = 112457, L50 = 13, Total length = 4549235, GC % = 50.74, # N's per 100 kbp =  64.58
+  Drawing cumulative plot...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/basic_stats/cumulative_plot.pdf
+  Drawing GC content plot...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/basic_stats/GC_content_plot.pdf
+  Drawing Nx plot...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/basic_stats/Nx_plot.pdf
+  Drawing NGx plot...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/basic_stats/NGx_plot.pdf
+Done.
+
+2014-02-13 22:27:07
+Running Contig analyzer...
+  1  velvet.10M_contigs
+  2  velvet.20M_contigs
+  1  Logging to files /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.10M_contigs.stdout and contigs_report_velvet.10M_contigs.stderr...
+  3  velvet.40M_contigs
+  2  Logging to files /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.20M_contigs.stdout and contigs_report_velvet.20M_contigs.stderr...
+  3  Logging to files /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.40M_contigs.stdout and contigs_report_velvet.40M_contigs.stderr...
+  2  Running Nucmer
+  4  velvet.60M_contigs
+  1  Running Nucmer
+  3  Running Nucmer
+  4  Logging to files /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.60M_contigs.stdout and contigs_report_velvet.60M_contigs.stderr...
+  2  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/nucmer -c 65 -l 65 --maxmatch \
+     -p quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.20M_contigs \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/e.coli_reference.fa \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/velvet.20M_contigs.fa \
+     >> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.20M_contigs.stdout \
+     2>> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.20M_contigs.stderr
+  4  Running Nucmer
+  3  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/nucmer -c 65 -l 65 --maxmatch \
+     -p quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.40M_contigs \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/e.coli_reference.fa \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/velvet.40M_contigs.fa \
+     >> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.40M_contigs.stdout \
+     2>> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.40M_contigs.stderr
+  1  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/nucmer -c 65 -l 65 --maxmatch \
+     -p quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.10M_contigs \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/e.coli_reference.fa \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/velvet.10M_contigs.fa \
+     >> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.10M_contigs.stdout \
+     2>> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.10M_contigs.stderr
+  4  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/nucmer -c 65 -l 65 --maxmatch \
+     -p quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.60M_contigs \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/e.coli_reference.fa \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/velvet.60M_contigs.fa \
+     >> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.60M_contigs.stdout \
+     2>> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.60M_contigs.stderr
+  1  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/delta-filter -i 95 quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.10M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.10M_contigs.fdelta \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.10M_contigs.stderr
+  1  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-coords quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.10M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.10M_contigs.coords_tmp \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.10M_contigs.stderr
+  1  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-snps -S -T -H quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.10M_contigs.delta \
+     < quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.10M_contigs.coords.headless \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.10M_contigs.all_snps \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.10M_contigs.stderr
+  2  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/delta-filter -i 95 quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.20M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.20M_contigs.fdelta \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.20M_contigs.stderr
+  2  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-coords quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.20M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.20M_contigs.coords_tmp \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.20M_contigs.stderr
+  2  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-snps -S -T -H quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.20M_contigs.delta \
+     < quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.20M_contigs.coords.headless \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.20M_contigs.all_snps \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.20M_contigs.stderr
+  3  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/delta-filter -i 95 quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.40M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.40M_contigs.fdelta \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.40M_contigs.stderr
+  4  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/delta-filter -i 95 quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.60M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.60M_contigs.fdelta \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.60M_contigs.stderr
+  3  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-coords quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.40M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.40M_contigs.coords_tmp \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.40M_contigs.stderr
+  4  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-snps -S -T -H quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.60M_contigs.delta \
+     < quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.60M_contigs.coords.headless \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.60M_contigs.all_snps \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.60M_contigs.stderr
+  1  Alignments: quast_results/results_2014_02_13_22_27_01/contigs_reports/alignments_velvet.10M_contigs.tsv
+  1  Analysis is finished.
+
+  5  velvet.120M_contigs
+  5  Logging to files /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.120M_contigs.stdout and contigs_report_velvet.120M_contigs.stderr...
+  5  Running Nucmer
+  5  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/nucmer -c 65 -l 65 --maxmatch \
+     -p quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.120M_contigs \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/e.coli_reference.fa \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/velvet.120M_contigs.fa \
+     >> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.120M_contigs.stdout \
+     2>> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.120M_contigs.stderr
+  2  Alignments: quast_results/results_2014_02_13_22_27_01/contigs_reports/alignments_velvet.20M_contigs.tsv
+  2  Analysis is finished.
+
+  6  velvet.240M_contigs
+  6  Logging to files /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.240M_contigs.stdout and contigs_report_velvet.240M_contigs.stderr...
+  6  Running Nucmer
+  6  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/nucmer -c 65 -l 65 --maxmatch \
+     -p quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.240M_contigs \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/e.coli_reference.fa \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/velvet.240M_contigs.fa \
+     >> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.240M_contigs.stdout \
+     2>> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.240M_contigs.stderr
+  3  Alignments: quast_results/results_2014_02_13_22_27_01/contigs_reports/alignments_velvet.40M_contigs.tsv
+  3  Analysis is finished.
+
+  7  velvet.2400M_contigs
+  7  Logging to files /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.2400M_contigs.stdout and contigs_report_velvet.2400M_contigs.stderr...
+  7  Running Nucmer
+  7  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/nucmer -c 65 -l 65 --maxmatch \
+     -p quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.2400M_contigs \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/e.coli_reference.fa \
+     quast_results/results_2014_02_13_22_27_01/quast_corrected_input/velvet.2400M_contigs.fa \
+     >> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.2400M_contigs.stdout \
+     2>> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.2400M_contigs.stderr
+  4  Alignments: quast_results/results_2014_02_13_22_27_01/contigs_reports/alignments_velvet.60M_contigs.tsv
+  4  Analysis is finished.
+
+  5  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/delta-filter -i 95 quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.120M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.120M_contigs.fdelta \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.120M_contigs.stderr
+  5  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-coords quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.120M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.120M_contigs.coords_tmp \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.120M_contigs.stderr
+  5  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-snps -S -T -H quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.120M_contigs.delta \
+     < quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.120M_contigs.coords.headless \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.120M_contigs.all_snps \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.120M_contigs.stderr
+  6  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/delta-filter -i 95 quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.240M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.240M_contigs.fdelta \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.240M_contigs.stderr
+  6  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-coords quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.240M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.240M_contigs.coords_tmp \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.240M_contigs.stderr
+  6  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-snps -S -T -H quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.240M_contigs.delta \
+     < quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.240M_contigs.coords.headless \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.240M_contigs.all_snps \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.240M_contigs.stderr
+  7  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/delta-filter -i 95 quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.2400M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.2400M_contigs.fdelta \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.2400M_contigs.stderr
+  7  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-coords quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.2400M_contigs.delta \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.2400M_contigs.coords_tmp \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.2400M_contigs.stderr
+  7  /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/show-snps -S -T -H quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.2400M_contigs.delta \
+     < quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.2400M_contigs.coords.headless \
+     > quast_results/results_2014_02_13_22_27_01/contigs_reports/nucmer_output/velvet.2400M_contigs.all_snps \
+     2> quast_results/results_2014_02_13_22_27_01/contigs_reports/contigs_report_velvet.2400M_contigs.stderr
+  5  Alignments: quast_results/results_2014_02_13_22_27_01/contigs_reports/alignments_velvet.120M_contigs.tsv
+  5  Analysis is finished.
+
+  6  Alignments: quast_results/results_2014_02_13_22_27_01/contigs_reports/alignments_velvet.240M_contigs.tsv
+  6  Analysis is finished.
+
+  7  Alignments: quast_results/results_2014_02_13_22_27_01/contigs_reports/alignments_velvet.2400M_contigs.tsv
+  7  Analysis is finished.
+
+  Creating total report...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/contigs_reports/misassemblies_report.txt, misassemblies_report.tsv, and misassemblies_report.tex
+  Creating total report...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/contigs_reports/unaligned_report.txt, unaligned_report.tsv, and unaligned_report.tex
+Done.
+
+2014-02-13 22:27:35
+Running NA-NGA calculation...
+  1  velvet.10M_contigs, Largest alignment = 221439, NA50 = 105725, NGA50 = 105725, LA50 = 15, LGA50 = 15
+  2  velvet.20M_contigs, Largest alignment = 209250, NA50 = 95942, NGA50 = 95626, LA50 = 16, LGA50 = 17
+  3  velvet.40M_contigs, Largest alignment = 219191, NA50 = 94124, NGA50 = 94124, LA50 = 17, LGA50 = 17
+  4  velvet.60M_contigs, Largest alignment = 209212, NA50 = 94124, NGA50 = 83105, LA50 = 18, LGA50 = 19
+  5  velvet.120M_contigs, Largest alignment = 209210, NA50 = 95381, NGA50 = 94124, LA50 = 17, LGA50 = 18
+  6  velvet.240M_contigs, Largest alignment = 209262, NA50 = 95589, NGA50 = 95381, LA50 = 17, LGA50 = 18
+  7  velvet.2400M_contigs, Largest alignment = 209210, NA50 = 94124, NGA50 = 94124, LA50 = 18, LGA50 = 18
+  Drawing cumulative plot...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/aligned_stats/cumulative_plot.pdf
+  Drawing NAx plot...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/aligned_stats/NAx_plot.pdf
+  Drawing NGAx plot...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/aligned_stats/NGAx_plot.pdf
+Done.
+
+2014-02-13 22:27:37
+Running Genome analyzer...
+  Loaded 4324 genes
+  Loaded 884 operons
+  1  velvet.10M_contigs
+  2  velvet.20M_contigs
+  3  velvet.40M_contigs
+  4  velvet.60M_contigs
+  1  Analysis is finished.
+  2  Analysis is finished.
+  3  Analysis is finished.
+  5  velvet.120M_contigs
+  4  Analysis is finished.
+  6  velvet.240M_contigs
+  7  velvet.2400M_contigs
+  5  Analysis is finished.
+  6  Analysis is finished.
+  7  Analysis is finished.
+  Drawing genes cumulative plot...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/genome_stats/genes_cumulative_plot.pdf
+  Drawing # complete genes histogram...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/genome_stats/complete_genes_histogram.pdf
+  Drawing operons cumulative plot...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/genome_stats/operons_cumulative_plot.pdf
+  Drawing # complete operons histogram...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/genome_stats/complete_operons_histogram.pdf
+  Drawing Genome fraction, % histogram...
+    saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/genome_stats/genome_fraction_histogram.pdf
+Done.
+
+NOTICE: Genes are not predicted by default. Use --gene-finding option to enable it.
+
+2014-02-13 22:27:43
+Drawing large plots...
+This may take a while: press Ctrl-C to skip this step..
+  1 of 2: Creating contig alignment plot...
+  2 of 2: Creating PDF with all tables and plots...
+Done
+
+2014-02-13 22:27:48
+RESULTS:
+  Text versions of total report are saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/report.txt, report.tsv, and report.tex
+  Text versions of transposed total report are saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/transposed_report.txt, transposed_report.tsv, and transposed_report.tex
+  HTML version (interactive tables and plots) saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/report.html
+  PDF version (tables and plots) saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/report.pdf
+  Contig alignment plot: /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/alignment.svg
+  Log saved to /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_13_22_27_01/quast.log
+
+Finished: 2014-02-13 22:27:48
+Elapsed time: 0:00:47.238684
+NOTICEs: 2; WARNINGs: 0; non-fatal ERRORs: 0
+
+Thank you for using QUAST!

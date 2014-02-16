@@ -1,0 +1,15 @@
+1: PREPARING DATA
+2,3: RUNNING mummer AND CREATING CLUSTERS
+# reading input file "/data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_15_03_22_21/contigs_reports/nucmer_output/velvet.20M_contigs.ntref" of length 4639676
+# construct suffix tree for sequence of length 4639676
+# (maximum reference length is 536870908)
+# (maximum query length is 4294967295)
+# process 46396 characters per dot
+#....................................................................................................
+# CONSTRUCTIONTIME /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/mummer /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_15_03_22_21/contigs_reports/nucmer_output/velvet.20M_contigs.ntref 2.92
+# reading input file "/data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_15_03_22_21/quast_corrected_input/velvet.20M_contigs.fa" of length 4550098
+# matching query-file "/data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_15_03_22_21/quast_corrected_input/velvet.20M_contigs.fa"
+# against subject-file "/data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_15_03_22_21/contigs_reports/nucmer_output/velvet.20M_contigs.ntref"
+# COMPLETETIME /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/mummer /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_15_03_22_21/contigs_reports/nucmer_output/velvet.20M_contigs.ntref 8.58
+# SPACE /usr/local/src/quast-2.3/libs/MUMmer3.23-linux/mummer /data/2013-khmer-counting/pipeline/Ecoli/quast_results/results_2014_02_15_03_22_21/contigs_reports/nucmer_output/velvet.20M_contigs.ntref 8.91
+4: FINISHING DATA

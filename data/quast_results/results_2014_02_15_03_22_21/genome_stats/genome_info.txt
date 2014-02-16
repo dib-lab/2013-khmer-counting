@@ -1,0 +1,23 @@
+reference chromosomes:
+	gi|48994873|gb|U00096.2|_Escherichia_coli_str._K-12_substr._MG1655__complete_genome (4639675 bp)
+
+total genome size: 4639675
+
+gap min size: 50
+partial gene/operon min size: 100
+
+genes loaded: 4324
+operons loaded: 884
+
+
+assembly                 | genome    | duplication | gaps      | genes     | partial   | operons   | partial   |
+                         | fraction  | ratio       | number    |           | genes     |           | operons   |
+================================================================================================================
+velvet.10M_contigs       | 97.97300% | 1.00075     | 108       | 4188      | 34        | 831       | 24        |
+velvet.20M_contigs       | 98.03982% | 1.00078     | 102       | 4203      | 28        | 838       | 20        |
+velvet.40M_contigs       | 98.11209% | 1.00045     | 96        | 4200      | 32        | 836       | 25        |
+velvet.60M_contigs       | 98.03269% | 1.00024     | 94        | 4200      | 26        | 838       | 19        |
+velvet.120M_contigs      | 98.04305% | 1.00028     | 95        | 4198      | 26        | 836       | 21        |
+velvet.240M_contigs      | 98.03620% | 1.00033     | 94        | 4198      | 26        | 836       | 21        |
+velvet.2400M_contigs     | 98.04704% | 1.00022     | 94        | 4200      | 26        | 836       | 21        |
+velvet.all_contigs       | 97.84039% | 1.00173     | 113       | 4179      | 48        | 829       | 32        |

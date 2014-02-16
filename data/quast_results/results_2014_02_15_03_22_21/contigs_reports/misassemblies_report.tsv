@@ -1,0 +1,13 @@
+Assembly	velvet.10M_contigs	velvet.20M_contigs	velvet.40M_contigs	velvet.60M_contigs	velvet.120M_contigs	velvet.240M_contigs	velvet.2400M_contigs	velvet.all_contigs
+# misassemblies	20	29	24	21	22	21	23	9
+    # relocations	20	29	24	21	22	21	23	9
+    # translocations	0	0	0	0	0	0	0	0
+    # inversions	0	0	0	0	0	0	0	0
+# misassembled contigs	11	15	13	12	13	12	13	6
+Misassembled contigs length	1004766	1827350	1437617	1531863	1667273	1518740	1642690	638588
+# local misassemblies	31	28	25	21	25	22	23	30
+# mismatches	266	206	289	237	206	209	207	293
+# indels	98	80	77	72	62	61	62	149
+    # short indels	35	34	32	31	25	24	25	56
+    # long indels	63	46	45	41	37	37	37	93
+Indels length	1982	1451	1337	1096	1073	1038	1041	2865

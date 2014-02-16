@@ -1,0 +1,77 @@
+
+PARAMETERS:
+ - kmer size =    20 		(-k)
+ - n hashes =     4 		(-N)
+ - min hashsize = 3e+07 	(-x)
+
+Estimated memory usage is 1.2e+08 bytes (n_hashes x min_hashsize)
+--------
+starting threads
+starting writer
+loading...
+... filtering 0
+... filtering 100000
+... filtering 200000
+... filtering 300000
+... filtering 400000
+... filtering 500000
+... filtering 600000
+... filtering 700000
+... filtering 800000
+... filtering 900000
+... filtering 1000000
+... filtering 1100000
+... filtering 1200000
+... filtering 1300000
+... filtering 1400000
+... filtering 1500000
+... filtering 1600000
+... filtering 1700000
+... filtering 1800000
+... filtering 1900000
+... filtering 2000000
+... filtering 2100000
+... filtering 2200000
+... filtering 2300000
+... filtering 2400000
+... filtering 2500000
+processed 2500000 / wrote 2499999 / removed 1
+processed 229566315 bp / wrote 229566282 bp / removed 33 bp
+discarded 0.0%
+... filtering 2600000
+... filtering 2700000
+... filtering 2800000
+... filtering 2900000
+... filtering 3000000
+... filtering 3100000
+... filtering 3200000
+... filtering 3300000
+... filtering 3400000
+... filtering 3500000
+... filtering 3600000
+... filtering 3700000
+... filtering 3800000
+... filtering 3900000
+... filtering 4000000
+processed 4000000 / wrote 3999996 / removed 4
+processed 367385349 bp / wrote 367385064 bp / removed 285 bp
+discarded 0.0%
+... filtering 4100000
+... filtering 4200000
+... filtering 4300000
+... filtering 4400000
+... filtering 4500000
+processed 4500000 / wrote 4499996 / removed 4
+processed 413017914 bp / wrote 413017629 bp / removed 285 bp
+discarded 0.0%
+... filtering 4600000
+done loading in sequences
+DONE writing.
+processed 4615638 / wrote 4615634 / removed 4
+processed 423709912 bp / wrote 423709626 bp / removed 286 bp
+discarded 0.0%
+making hashtable
+consuming input, round 1 -- ecoli_ref.fastq.r4.fq
+fp rate estimated to be 0.002
+filtering ecoli_ref.fastq.r4.fq
+output in ecoli_ref.fastq.r4.fq.abundfilt

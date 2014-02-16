@@ -1,0 +1,39 @@
+
+PARAMETERS:
+ - kmer size =    20 		(-k)
+ - n hashes =     4 		(-N)
+ - min hashsize = 9.7e+06 	(-x)
+
+Estimated memory usage is 3.9e+07 bytes (n_hashes x min_hashsize)
+--------
+starting threads
+starting writer
+loading...
+... filtering 0
+... filtering 100000
+... filtering 200000
+... filtering 300000
+... filtering 400000
+... filtering 500000
+... filtering 600000
+... filtering 700000
+... filtering 800000
+... filtering 900000
+... filtering 1000000
+processed 1000000 / wrote 999912 / removed 88
+processed 91069037 bp / wrote 91065208 bp / removed 3829 bp
+discarded 0.0%
+... filtering 1100000
+... filtering 1200000
+... filtering 1300000
+... filtering 1400000
+done loading in sequences
+DONE writing.
+processed 1478009 / wrote 1477681 / removed 328
+processed 124591762 bp / wrote 124580533 bp / removed 11229 bp
+discarded 0.0%
+making hashtable
+consuming input, round 1 -- ecoli_ref.fastq.ka.r3.fq
+fp rate estimated to be 0.031
+filtering ecoli_ref.fastq.ka.r3.fq
+output in ecoli_ref.fastq.ka.r3.fq.abundfilt
