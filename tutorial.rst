@@ -58,6 +58,12 @@ Before we get started, we need to install all the necessary software, including:
  - Tallymer
  - Jellyfish
  - DSK
+ - KMC
+ - BFCount
+ - Turtle
+ - QUAST
+ - FASTX-toolkit
+ - seqtk
  - ipython
  - LaTex
  - Velvet
@@ -68,9 +74,6 @@ To do so, run::
  bash software_install.sh
 
 .. @CTB fix tags
-
-   @should add installation about Turtle, KMC, BFCount Quast and FASTX
-   
 
    
    
