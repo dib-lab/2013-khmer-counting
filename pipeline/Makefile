@@ -328,27 +328,27 @@ kmc_dump_5_22.time:
 turtle: turtle_1_22.time turtle_2_22.time turtle_3_22.time turtle_4_22.time turtle_5_22.time
 turtle_1_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o turtle_1_22.time aTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -s 32  
-#	time -o turtle_1_22.time scTurtle32 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -s 32 -t 8
+#	time -o turtle_1_22.time aTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -s 32  
+	time -o turtle_1_22.time scTurtle32 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -n 46552481 -t 8
 turtle_2_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o turtle_2_22.time aTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -s 32 
-#	time -o turtle_2_22.time scTurtle32 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -s 32 -t 8
+#	time -o turtle_2_22.time aTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -s 32 
+	time -o turtle_2_22.time scTurtle32 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -n 113795027 -t 8
 	
 turtle_3_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o turtle_3_22.time aTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -s 32 
-#	time -o turtle_3_22.time scTurtle32 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -s 32 -t 8
+#	time -o turtle_3_22.time aTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -s 32 
+	time -o turtle_3_22.time scTurtle32 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -n 170957894 -t 8
 	
 turtle_4_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o turtle_4_22.time aTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -s 32 
-#	time -o turtle_4_22.time scTurtle32 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -s 32 -t 8
+#	time -o turtle_4_22.time aTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -s 32 
+	time -o turtle_4_22.time scTurtle32 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -n 225433623 -t 8
 	
 turtle_5_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -s 32 
-#	time -o turtle_5_22.time scTurtle32 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -s 32 -t 8
+#	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -s 32 
+	time -o turtle_5_22.time scTurtle32 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -n 292338258 -t 8
 	
 BFCount: BF_count_1.time BF_count_2.time BF_count_3.time BF_count_4.time BF_count_5.time BF_dump_1.time BF_dump_2.time BF_dump_3.time BF_dump_4.time BF_dump_5.time
 	
