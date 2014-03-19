@@ -292,3 +292,8 @@ drwxr-xr-x  2 root root        4096 2014-03-04 23:59 OldTurtle
 drwxr-xr-x  2 root root        4096 2014-02-12 21:30 velvet.kak5
 drwxr-xr-x  2 root root        4096 2014-02-12 21:29 velvet.kak5.1e7
 drwxr-xr-x  2 root root        4096 2014-02-12 21:29 velvet.kak5.2e7
+-rw-r--r-- 1 root root 14611555334 2014-03-19 06:18 kanalyze_1.out
+-rw-r--r-- 1 root root 28006493339 2014-03-19 06:45 kanalyze_2.out
+-rw-r--r-- 1 root root 38427155048 2014-03-19 07:23 kanalyze_3.out
+-rw-r--r-- 1 root root 47278214840 2014-03-19 08:09 kanalyze_4.out
+-rw-r--r-- 1 root root 57005033241 2014-03-19 20:01 kanalyze_5.out
