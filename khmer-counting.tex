@@ -905,29 +905,47 @@ We thank Eric McDonald for technical assistance with optimizing the khmer codeba
 % @CTB explain why different runs
 \begin{figure}[!ht]
 \centerline{\includegraphics[width=5in]{./figure/time_benchmark}}
-\caption{\bf Time usage of four different k-mer counting tools to calculate k-mer 
-abundance histograms(y axis, in seconds) against data set size (in reads number, x axis).}
+
+\caption{\bf Comparison of the time it takes for k-mer counting tools
+  to calculatie k-mer abundance histograms, with time (y axis, in
+  seconds) against data set size (in number of reads, x axis).  The
+  top plot shows the faster programs, while the bottom plot shows the
+  slower programs, with scTurtle (brown) and khmer (red) shown on both
+  for scale.  All programs executed in time approximately linear with
+  the number of input reads.}
+
 \label{fig:cmp_time}
 \end{figure}
 
 \begin{figure}[!ht]
 \centerline{\includegraphics[width=5in]{./figure/memory_benchmark}}
-\caption{\bf Memory usage of different k-mer counting tools to calculate k-mer abundance 
-histograms(y axis, maximum resident program size, GB) plotted against the total number 
-of distinct k-mers in the data set, for typical program settings. DSK uses the disk to 
-store k-mers and is therefore constant in memory use. By increasing the error rate in 
-khmer, memory usage can be substantially decreased (compare solid blue line with dashed 
-and dotted blue line). K-mer size is 22 except otherwise mentioned.}
+
+\caption{\bf Memory usage of k-mer counting tools when calculating
+  k-mer abundance histograms, with maximum resident program size (y
+  axis, in GB) plotted against the total number of distinct k-mers in
+  the data set (x axis, billions of k-mers). The top plot shows the
+  DSK, KMC, and KAnalyze tools, which use disk space to store k-mers
+  and are constant in memory use, with generally lower memory use than
+  other programs.  The bottom plot shows memory use for the Jellyfish,
+  BFCounter, and scTurtle tools, which store k-mers in memory and
+  scale with total number of distinct k-mers.  khmer is included in
+  both plots for scale and comparison. Tallymer memory usage is
+  substantially larger than all other programs and cannot easily be
+  shown on the same axes, so we did not include it.  K-mer size is 22
+  unless otherwise noted.}
+
 \label{fig:cmp_memory}
 \end{figure}
 
 \begin{figure}[!ht]
 \centerline{\includegraphics[width=5in]{./figure/disk_benchmark}}
-\caption{\bf Disk storage usage of different k-mer counting tools to calculate k-mer 
-abundance histograms in GB (y axis),
-plotted against the number of distinct k-mers in the data set (x axis).  ($^*$) Note 
-that khmer does not use the disk during counting or retrieval, although its hash 
-tables can be saved for reuse.}
+
+\caption{\bf Disk storage usage of different k-mer counting tools to
+  calculate k-mer abundance histograms in GB (y axis), plotted against
+  the number of distinct k-mers in the data set (x axis).  ($^*$) Note
+  that khmer does not use the disk during counting or retrieval,
+  although its hash tables can be saved for reuse.}
+
 \label{fig:cmp_disk}
 \end{figure}
 
