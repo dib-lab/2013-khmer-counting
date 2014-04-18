@@ -536,7 +536,8 @@ ecoli_ref.fastq.trimmomatic-trimmed.fastq: ecoli_ref.fastq
 
 
 ############## diginorm + velvet assembling
-
+# also use Quast to evaluate contigs
+# 
 assembly: Quast get_missing_kmer get_hist
 
 HASH_120M = -x 3e7 -N 4 -k 20
@@ -623,7 +624,7 @@ velvet.2400M/contigs.fa: ecoli_ref.fastq.keep2400M.fq
 	velveth velvet.2400M 37 -fastq -shortPaired $<.pe -short $<.se
 	velvetg velvet.2400M -exp_cov auto
 
-
+# Quast result files are located in ./data/quast_results/ with .html report
 Quast:  e.coli_reference.fa.gz  e.coli_genes.gff  e.coli_operons.gff \
 	velvet.10M/contigs.fa \
 	velvet.20M/contigs.fa \
@@ -650,12 +651,14 @@ get_missing_kmer: ecoli_ref.fastq.keep10M.fq.kh.e_coli_ref_hist \
 %.kh: %
 	python ${KHMER}/scripts/load-into-counting.py -x 4e9 -N 4 -k 20 $@ $<
 
+# get the kmer abundance of ecoli genome in assembled contigs. the number of kmers with 
+# frequency is the number of missing kmers.
 %.e_coli_ref_hist: % e.coli_reference.fa.gz  
 	${KHMER}/scripts/abundance-dist.py $^ $@ 
 
 
 # for number of retained total k-mers
-
+# get the "retained total k-mers" in diginormalized reads data
 get_hist: ecoli_ref.fastq.keep10M.fq.hist \
 	ecoli_ref.fastq.keep20M.fq.hist \
 	ecoli_ref.fastq.keep40M.fq.hist \
