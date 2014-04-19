@@ -168,9 +168,9 @@ in sequence analysis
 
 A variety of k-mer counting approaches, and standalone software
 packages implementing them, have emerged in recent years; this
-includes Tallymer, Jellyfish, BFCounter, DSK, KMC, and Turtle \cite{Kurtz2008,
-Marcais2011, Melsted2011, Rizk2013, Deorowicz2013, Roy2013}.
-% @CTB see http://arxiv.org/abs/1305.1861)
+includes Tallymer, Jellyfish, BFCounter, DSK, KMC, Turtle and KAnalyze
+ \cite{Kurtz2008, Marcais2011, Melsted2011, Rizk2013, Deorowicz2013, Roy2014, Audano2014}.
+
 % @CTB include more discussion of BFcounter & turtle? What about KMC?
 These
 approaches and implementations each offer different algorithmic
@@ -203,7 +203,7 @@ techniques.
 % (MRC) Three dashes for setting of a section of text
 
 Below, we describe an implementation of a simple probabilistic data
-structure for k-mer counting.  This data structure is based on a
+structure for k-mer counting. This data structure is based on a
 CountMin Sketch, a generalized probabilistic data structure for
 storing the frequency distributions of distinct elements
 \cite{Cormode2005}.  Our implementation extends an earlier
@@ -238,7 +238,7 @@ low-abundance k-mer trimming of reads, and digital normalization.
 
 % (MRC) Is this a comparison paper or a khmer-is-capable-of-many-things paper?
 
-The khmer software is implemented in C++ with a Python wrapper,
+The khmer software \cite{khmer} is implemented in C++ with a Python wrapper,
 enabling flexible use and reuse by users with a wide range of
 computational
 expertise.  The software package is freely available for academic and
@@ -280,7 +280,7 @@ which uses a single hash table with many hash
 functions, the performance details are identical \cite{Pell2012}.
 
 One particularly important feature of the CountMin Sketch is that the
-counting error is {\em one-sided} @cite.  Because counts are only
+counting error is {\em one-sided} \cite{Cormode2005}.  Because counts are only
 incremented, collisions result in inflated miscounts; if there is
 no collision for a particular k-mer, the count is correct.
 
@@ -424,8 +424,8 @@ profiles}
 One specific use for khmer is detecting random sequencing errors by
 looking at the k-mer abundance distribution within reads
 \cite{Medvedev2011}.  This approach, known also as ``k-mer spectral
-analysis'', was first proposed in by \cite{pubmed11504945} and further
-developed in \cite{pubmed12902383}.  The essential idea is that
+analysis'', was first proposed in by \cite{Pevzner2001} and further
+developed in \cite{Li2003}.  The essential idea is that
 low-abundance k-mers contained in a high-coverage data set typically
 represent random sequencing errors.
 
@@ -695,7 +695,7 @@ K-mer counting is widely used in bioinformatics, and as sequencing data set size
 increase, graceful degradation of data structures in the face of large
 amounts of data has become important.  This is especially true when
 the theoretical and practical effects of the degradation can be
-predicted (see e.g. \cite{Melsted2011, Pell2012, Roy2013}).  This
+predicted (see e.g. \cite{Melsted2011, Pell2012, Roy2014}).  This
 is a key property of the CountMin Sketch
 approach, and its implementation in khmer.
 
@@ -737,7 +737,7 @@ Past a certain point k-mer counting is fundamentally I/O bound
 \cite{McDonald2013}.
 
 Perhaps the most interesting future direction for probabilistic k-mer
-counting is that taken by Turtle \cite{Roy2013}, in which several
+counting is that taken by Turtle \cite{Roy2014}, in which several
 data structures are provided, each with different tradeoffs, but with
 a common API.  We hope to pursue this direction in the future by
 integrating such approaches into khmer.

@@ -2,12 +2,119 @@
 %% http://bibdesk.sourceforge.net/
 
 
-%% Created for Qingpeng Zhang at 2014-01-21 11:13:44 -0500 
+%% Created for Qingpeng Zhang at 2014-04-18 19:35:27 -0400 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@misc{khmer,
+	Author = {Crusoe, Michael and Edvenson, Greg and Fish, Jordan and Howe, Adina and McDonald, Eric and Nahum, Joshua and Nanlohy, Kaben and Ortiz-Zuazaga, Humberto and Pell, Jason and Simpson, Jared and Scott, Camille and Srinivasan, Ramakrishnan and Zhang, Qingpeng and Brown, C. Titus },
+	Date-Added = {2014-04-18 23:29:55 +0000},
+	Date-Modified = {2014-04-18 23:34:16 +0000},
+	Title = {The khmer software package: enabling efficient sequence analysis},
+	Url = {http://dx.doi.org/10.6084/m9.figshare.979190},
+	Year = {2014},
+	Bdsk-Url-1 = {-%20http://figshare.com/articles/The_khmer_software_package_enabling_efficient_sequence_analysis/979190}}
+
+@article{Audano2014,
+	Abstract = {MOTIVATION: Converting nucleotide sequences into short overlapping fragments of uniform length, k-mers, is a common step in many bioinformatics applications. While existing software packages count k-mers, few are optimized for speed, offer an API (Application Programming Interface), a graphical interface, or contain features that make it extensible and maintainable. We designed KAnalyze to compete with the fastest k-mer counters, to produce reliable output, and to support future development efforts through well architected, documented, and testable code. Currently, KAnalyze can output k-mer counts in a sorted tab-delimited file or stream k-mers as they are read. KAnalyze can process large data sets with 2GB of memory. This project is implemented in Java 7, and the CLI (Command Line Interface) is designed to integrate into pipelines written in any language.
+RESULTS: As a k-mer counter, KAnalyze outperforms Jellyfish (Mar{\c c}ais and Kingsford, 2011), DSK (Rizk et al., 2013), and a pipeline built on a Perl and Linux utilities. Through extensive unit and system testing, we have verified that KAnalyze produces the correct k-mer counts over multiple data sets and k-mer sizes.
+AVAILABILITY: KAnalyze is available on SourceForge: https://sourceforge.net/projects/kanalyze/ SUPPLEMENTARY INFORMATION: Supplementary data are available at Bioinformatics online.
+CONTACT: fredrik.vannberg@biology.gatech.edu.},
+	Author = {Audano, Peter and Vannberg, Fredrik},
+	Date-Added = {2014-04-18 20:50:07 +0000},
+	Date-Modified = {2014-04-18 20:50:07 +0000},
+	Doi = {10.1093/bioinformatics/btu152},
+	Journal = {Bioinformatics},
+	Journal-Full = {Bioinformatics (Oxford, England)},
+	Month = {Mar},
+	Pmid = {24642064},
+	Pst = {aheadofprint},
+	Title = {KAnalyze: A Fast Versatile Pipelined K-mer Toolkit},
+	Year = {2014},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1093/bioinformatics/btu152}}
+
+@article{Roy2014,
+	Abstract = {MOTIVATION: Counting the frequencies of k-mers in read libraries is often a first step in the analysis of high-throughput sequencing data. Infrequent k-mers are assumed to be a result of sequencing errors. The frequent k-mers constitute a reduced but error-free representation of the experiment, which can inform read error correction or serve as the input to de novo assembly methods. Ideally, the memory requirement for counting should be linear in the number of frequent k-mers and not in the, typically much larger, total number of k-mers in the read library.
+RESULTS: We present a novel method that balances time, space and accuracy requirements to efficiently extract frequent k-mers even for high-coverage libraries and large genomes such as human. Our method is designed to minimize cache misses in a cache-efficient manner by using a pattern-blocked Bloom filter to remove infrequent k-mers from consideration in combination with a novel sort-and-compact scheme, instead of a hash, for the actual counting. Although this increases theoretical complexity, the savings in cache misses reduce the empirical running times. A variant of method can resort to a counting Bloom filter for even larger savings in memory at the expense of false-negative rates in addition to the false-positive rates common to all Bloom filter-based approaches. A comparison with the state-of-the-art shows reduced memory requirements and running times.
+AVAILABILITY AND IMPLEMENTATION: The tools are freely available for download at http://bioinformatics.rutgers.edu/Software/Turtle and http://figshare.com/articles/Turtle/791582.
+CONTACT: rajatroy@cs.rutgers.edu or schliep@cs.rutgers.edu SUPPLEMENTARY INFORMATION: Supplementary data are available at Bioinformatics online.},
+	Author = {Roy, Rajat Shuvro and Bhattacharya, Debashish and Schliep, Alexander},
+	Date-Added = {2014-04-18 20:48:21 +0000},
+	Date-Modified = {2014-04-18 20:48:21 +0000},
+	Doi = {10.1093/bioinformatics/btu132},
+	Journal = {Bioinformatics},
+	Journal-Full = {Bioinformatics (Oxford, England)},
+	Month = {Apr},
+	Pmid = {24618471},
+	Pst = {aheadofprint},
+	Title = {Turtle: Identifying frequent k-mers with cache-efficient algorithms},
+	Year = {2014},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1093/bioinformatics/btu132}}
+
+@inproceedings{CormodeM05,
+	Author = {Graham Cormode and S. Muthukrishnan},
+	Bibsource = {DBLP, http://dblp.uni-trier.de},
+	Booktitle = {SDM},
+	Crossref = {DBLP:conf/sdm/2005},
+	Date-Added = {2014-04-18 20:43:06 +0000},
+	Date-Modified = {2014-04-18 20:43:35 +0000},
+	Pages = {44-55},
+	Title = {Summarizing and Mining Skewed Data Streams},
+	Year = {2005},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1137/1.9781611972757.5}}
+
+@proceedings{DBLP:conf/sdm/2005,
+	Bibsource = {DBLP, http://dblp.uni-trier.de},
+	Booktitle = {SDM},
+	Date-Added = {2014-04-18 20:43:06 +0000},
+	Date-Modified = {2014-04-18 20:43:06 +0000},
+	Editor = {Hillol Kargupta and Jaideep Srivastava and Chandrika Kamath and Arnold Goodman},
+	Isbn = {978-0-89871-593-4, 978-1-61197-275-7},
+	Publisher = {SIAM},
+	Title = {Proceedings of the 2005 SIAM International Conference on Data Mining, SDM 2005, Newport Beach, CA, USA, April 21-23, 2005},
+	Year = {2005},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1137/1.9781611972757}}
+
+@article{Li2003,
+	Abstract = {In shotgun sequencing projects, the genome or BAC length is not always known. We approach estimating genome length by first estimating the repeat structure of the genome or BAC, sometimes of interest in its own right, on the basis of a set of random reads from a genome project. Moreover, we can find the consensus for repeat families before assembly. Our methods are based on the l-tuple content of the reads.},
+	Author = {Li, Xiaoman and Waterman, Michael S},
+	Date-Added = {2014-04-18 19:55:32 +0000},
+	Date-Modified = {2014-04-18 19:55:32 +0000},
+	Doi = {10.1101/gr.1251803},
+	Journal = {Genome Res},
+	Journal-Full = {Genome research},
+	Mesh = {Algorithms; Base Composition; Chromosome Mapping; Chromosomes, Artificial, Bacterial; Computational Biology; Computer Simulation; Consensus Sequence; DNA, Bacterial; Mathematical Computing; Poisson Distribution; Repetitive Sequences, Nucleic Acid; Software},
+	Month = {Aug},
+	Number = {8},
+	Pages = {1916-22},
+	Pmc = {PMC403783},
+	Pmid = {12902383},
+	Pst = {ppublish},
+	Title = {Estimating the repeat structure and length of DNA sequences using L-tuples},
+	Volume = {13},
+	Year = {2003},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1101/gr.1251803}}
+
+@article{Howe2012,
+	Abstract = {The large volumes of sequencing data required to sample deeply the microbial communities of complex environments pose new challenges to sequence analysis. De novo metagenomic assembly effectively reduces the total amount of data to be analyzed but requires substantial computational resources. We combine two preassembly filtering approaches-digital normalization and partitioning-to generate previously intractable large metagenome assemblies. Using a human-gut mock community dataset, we demonstrate that these methods result in assemblies nearly identical to assemblies from unprocessed data. We then assemble two large soil metagenomes totaling 398 billion bp (equivalent to 88,000 Escherichia coli genomes) from matched Iowa corn and native prairie soils. The resulting assembled contigs could be used to identify molecular interactions and reaction networks of known metabolic pathways using the Kyoto Encyclopedia of Genes and Genomes Orthology database. Nonetheless, more than 60% of predicted proteins in assemblies could not be annotated against known databases. Many of these unknown proteins were abundant in both corn and prairie soils, highlighting the benefits of assembly for the discovery and characterization of novelty in soil biodiversity. Moreover, 80% of the sequencing data could not be assembled because of low coverage, suggesting that considerably more sequencing data are needed to characterize the functional content of soil.},
+	Author = {Howe, Adina Chuang and Jansson, Janet K and Malfatti, Stephanie A and Tringe, Susannah G and Tiedje, James M and Brown, C Titus},
+	Date-Added = {2014-04-18 18:35:19 +0000},
+	Date-Modified = {2014-04-18 18:35:55 +0000},
+	Doi = {10.1073/pnas.1402564111},
+	Journal = {Proc Natl Acad Sci U S A},
+	Journal-Full = {Proceedings of the National Academy of Sciences of the United States of America},
+	Month = {Apr},
+	Number = {13},
+	Pages = {4904-9},
+	Pmid = {24632729},
+	Pst = {ppublish},
+	Title = {Tackling soil diversity with the assembly of large, complex metagenomes},
+	Volume = {111},
+	Year = {2014},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1073/pnas.1402564111}}
 
 @article{Chikhi:2014aa,
 	Abstract = {MOTIVATION: Genome assembly tools based on the de Bruijn graph framework rely on a parameter k, which represents a trade-off between several competing effects that are difficult to quantify. There is currently a lack of tools that would automatically estimate the best k to use and/or quickly generate histograms of k-mer abundances that would allow the user to make an informed decision.
@@ -50,13 +157,6 @@ CONTACT: pashadag@cse.psu.edu.},
 	Year = {2012},
 	Bdsk-Url-1 = {http://dx.doi.org/10.1093/nar/gks754}}
 
-@incollection{CormodeM05,
-	Author = {Cormode, Graham},
-	Booktitle = {Proc. of the 2005 SIAM International Conference on Data Mining},
-	Pages = {44--55},
-	Title = {Summarizing and mining skewed data streams},
-	Year = {2005}}
-
 @article{4160251,
 	Author = {P{\'e}rez, F. and Granger, B.E.},
 	Journal = {Computing in Science Engineering},
@@ -74,11 +174,15 @@ CONTACT: pashadag@cse.psu.edu.},
 	Volume = {10},
 	Year = {2009}}
 
-@article{McDonald2013,
+@incollection{McDonald2013,
 	Author = {Eric McDonald and C. Titus Brown},
-	Journal = {arXiv preprint},
-	Month = {03},
-	Title = {khmer: Working with Big Data in Bioinformatics},
+	Booktitle = {The Performance of Open Source Applications},
+	Chapter = {12},
+	Date-Modified = {2014-04-18 20:45:32 +0000},
+	Editor = {Tavish Armstrong},
+	Pages = {151},
+	Publisher = {lulu.com},
+	Title = {Working with Big Data in Bioinformatics},
 	Year = {2013}}
 
 @misc{Brown2012blog,
@@ -124,13 +228,6 @@ CONTACT: pashadag@cse.psu.edu.},
 	Volume = {480},
 	Year = {2011}}
 
-@article{Howe2012,
-	Author = {Adina Chuang Howe and Janet Jansson and Stephanie A. Malfatti and Susannah G. Tringe and James M. Tiedje and C. Titus Brown},
-	Journal = {arXiv preprint},
-	Month = {12},
-	Title = {Assembling large, complex environmental metagenomes},
-	Year = {2012}}
-
 @article{Kelley2010,
 	Author = {Kelley, David R and Schatz, Michael C and Salzberg, Steven L},
 	Journal = {Genome Biol},
@@ -149,13 +246,6 @@ CONTACT: pashadag@cse.psu.edu.},
 	Title = {Error correction of high-throughput sequencing datasets with non-uniform coverage},
 	Volume = {27},
 	Year = {2011}}
-
-@article{Roy2013,
-	Author = {Rajat Shuvro Roy and Debashish Bhattacharya and Alexander Schliep},
-	Journal = {Arxiv preprint},
-	Month = {05},
-	Title = {Turtle: Identifying frequent k-mers with cache-efficient algorithms},
-	Year = {2013}}
 
 @article{Brown2012,
 	Author = {C. Titus Brown and Adina Howe and Qingpeng Zhang and Alexis B. Pyrkosz and Timothy H. Brom},
