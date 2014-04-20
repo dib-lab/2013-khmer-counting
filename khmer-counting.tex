@@ -1158,11 +1158,17 @@ Real {\em E. coli} reads                                        & 4.85M  & 4,004
 iteration & FP rate & bases trimmed & total k-mers & unique k-mers & 
 unique k-mers at 3' end \\
 \hline \\
-untrimmed  &      -  &      - & 28.1m & 22.4m & 43\% \\
-1          & 78.1\%  & 22.9\% &  8.2m &  2.8m & 41\% \\
-2          &   10\%  &  2.9\% &  5.4m &   95k &  4\% \\
-3          &  3.1\%  &  0.2\% &  5.3m &  3.8k &  0\% \\
-4          &  3.1\%  &  0.0\% &  5.3m &   230 &  0\% \\
+untrimmed                           &      -  &      - & 41.6m & 34.1m & 30.4\%  \\
+khmer iteration 1                   & 31.6\%  & 14.9\% &  7.9m &  1.2m & 13.0\% \\
+khmer iteration 2                   &  0.3\%  &  0.5\% &  6.7m & 23.5k &  0.2\% \\
+khmer iteration 3                   &  0.2\%  &  0.0\% &  6.6m &  3.4k &  0.1\% \\
+khmer iteration 4                   &  0.2\%  &  0.0\% &  6.6m &  2.7k &  0.1\% \\
+khmer iteration 5                   &  0.2\%  &  0.0\% &  6.6m &  2.7k &  0.1\% \\
+khmer iteration 6                   &  0.2\%  &  0.0\% &  6.6m &  2.6k &  0.1\% \\
+filter by FASTX                     &      -  &  9.1\% & 26.6m & 20.3m & 26.3\% \\
+filter by seqtk(default)            &      -  &  8.9\% & 17.7m & 12.1m & 12.3\% \\
+filter by seqtk(-q 0.01)            &      -  & 15.4\% &  9.9m &  5.1m &  5.2\% \\
+filter by seqtk(-b 3 -e 5)          &      -  &  8.0\% & 34.5m & 27.7m & 25.3\% \\
 \end{tabular}
 \begin{flushleft}
 \end{flushleft}
@@ -1186,12 +1192,17 @@ untrimmed  &      -  &      - & 28.1m & 22.4m & 43\% \\
   process, and the number of total k-mers remaining.  Note: at high
   error rates, reads are erroneously removed due to inflation
   of k-mer counts.}}
-\begin{tabular}{ | c | c | c | c | c | c |}
-memory/FP rate & retained reads & true k-mers removed & retained total k-mers \\
+\begin{tabular}{ | c | c | c | c | c | c | c |}
+memory   & FP rate & retained reads & retained reads \% & true k-mers removed & retained total k-mers \\
 \hline \\
- 800 MB/0.0\% & 1,657,065 & 2 &   28m \\
- 80 MB/39.3\% & 1,635,326 & 2 & 27.8m \\
- 40 MB/82.9\% & 1,592,719 & 2 & 27.4m \\
+before diginorm   &  -      & 5,000,000   & 100.0\%    & 170  &  41.6m \\
+10 MB             & 100.0\% & 1,076,958   &  21.0\%    & 185  &  20.9m \\
+20 MB             &  98.8\% & 1,460,936   &  29.0\%    & 172  &  25.7m \\
+40 MB             &  83.2\% & 1,602,437   &  32.0\%    & 172  &  27.6m \\
+60 MB             &  59.1\% & 1,633,182   &  32.0\%    & 172  &  27.9m \\
+120 MB            &  18.0\% & 1,652,273   &  33.0\%    & 172  &  28.1m \\
+240 MB            &   2.8\% & 1,655,988   &  33.0\%    & 172  &  28.1m \\
+2400 MB           &   0.0\% & 1,656,518   &  33.0\%    & 172  &  28.1m \\
 \end{tabular}
 \begin{flushleft}
 \end{flushleft}
@@ -1222,6 +1233,31 @@ memory/FP rate & N contigs & total sequence & \% of true genome covered \\
 \label{table:assembly}
 \end{table}
 
+\begin{table}[!ht]
+\caption{
+\bf{{\em E. coli} genome assembly after low-memory digital normalization.
+  A comparison of assembling reads digitally normalized with low memory/high
+  error rates.  The reads were digitally normalized to 
+  C=20 (see
+  \cite{Brown2012} for more information) and were assembled using Velvet.
+  We measured total length of assembly,
+  as well as percent of true MG1655 genome covered by the assembly using QUAST.}}
+\begin{tabular}{ | c | c | c | c | c | c |}
+memory   & FP rate & N contigs & total length(bases) & \% of true genome covered \\
+\hline \\
+before diginorm  &-   & 106 & 4,546,051 & 97.84\% \\
+      10 MB  &100.0\% &  97 & 4,545,871 & 97.97\% \\
+      20 MB  & 98.8\% &  85 & 4,550,014 & 98.04\% \\
+      40 MB  & 83.2\% &  89 & 4,550,599 & 98.11\% \\
+      60 MB  & 59.1\% &  90 & 4,548,619 & 98.03\% \\
+     120 MB  & 18.0\% &  86 & 4,549,335 & 98.04\% \\
+     240 MB  &  2.8\% &  87 & 4,549,253 & 98.04\% \\
+    2400 MB  &  0.0\% & 617 & 4,549,235 & 98.05\% \\
+\end{tabular}
+\begin{flushleft}
+\end{flushleft}
+\label{table:assembly}
+\end{table}
 % @CTB be sure to explain the tables well!
 % @CTB do we talk about how efficiently fp rate drops with incr memory?
 % @CTB make point that diginorm/first step is hard.
