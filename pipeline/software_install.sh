@@ -14,7 +14,7 @@ apt-get -y update && apt-get -y install git make gcc g++ bc zlib1g-dev python-pi
 # Install Tallymer
 cd /usr/local/src
 wget http://genometools.org/pub/genometools-1.5.1.tar.gz
-tar zxvf genometools-1.5.1.tar.gz 
+tar zxvf genometools-1.5.1.tar.gz
 cd genometools-1.5.1/
 make 64bit=yes curses=no cairo=no
 make 64bit=yes curses=no cairo=no install
@@ -24,7 +24,7 @@ make 64bit=yes curses=no cairo=no install
 # Install Jellyfish
 cd /usr/local/src
 wget http://www.cbcb.umd.edu/software/jellyfish/jellyfish-1.1.10.tar.gz
-tar zxvf jellyfish-1.1.10.tar.gz 
+tar zxvf jellyfish-1.1.10.tar.gz
 cd jellyfish-1.1.10/
 ./configure
 make
@@ -43,7 +43,7 @@ cp dsk /usr/local/bin
 cd /usr/local/src
 wget http://sun.aei.polsl.pl/kmc/download/kmc
 wget http://sun.aei.polsl.pl/kmc/download/kmc_dump
-chmod u+x kmc kmc_dump 
+chmod u+x kmc kmc_dump
 mv kmc kmc_dump /usr/local/bin/
 
 
@@ -62,6 +62,10 @@ cd Turtle-0.3/
 make
 mv *Turtle32 *Turtle64 /usr/local/bin/
 
+# Install KAnalyze
+cd /usr/local/src
+wget http://downloads.sourceforge.net/project/kanalyze/v0.9.3/kanalyze-0.9.3-linux.tar.gz
+tar zxvf kanalyze-0.9.3-linux.tar.gz
 
 
 # Install QUAST
@@ -82,7 +86,7 @@ tar xjf fastx_toolkit-0.0.13.2.tar.bz2
 cd fastx_toolkit-0.0.13.2/
 ./configure && make && make install
 
-# Install Trimmomatic # 
+# Install Trimmomatic #
 cd /usr/local/src
 curl -O http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.30.zip
 unzip Trimmomatic-0.30.zip
@@ -107,7 +111,7 @@ python setup.py install
 # Upgrade pyzmq, which is required by ipython notebook
 pip install pyzmq --upgrade
 
-# Upgrade some other packages required by ipython notebook to draw figures 
+# Upgrade some other packages required by ipython notebook to draw figures
 
 # numpy
 cd /usr/local/src
@@ -131,7 +135,7 @@ apt-get -y install texlive-latex-recommended
 
 # Install Velvet
 curl -O http://www.ebi.ac.uk/~zerbino/velvet/velvet_1.2.10.tgz
-tar xvzf velvet_1.2.10.tgz 
+tar xvzf velvet_1.2.10.tgz
 cd velvet_1.2.10/
 make 'MAXKMERLENGTH=49'
 cp velveth /usr/bin
@@ -139,5 +143,3 @@ cp velvetg /usr/bin
 
 # Install Blast
 apt-get install blast2
-
-

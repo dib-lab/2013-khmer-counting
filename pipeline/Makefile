@@ -47,31 +47,31 @@ khmer_benchmark: bloom_1_1_22.hist bloom_2_1_22.hist bloom_3_1_22.hist bloom_4_1
 
 
 # error rate = 0.01
-bloom_1_1_22.hist bloom_1_1_22.kh: HASH =  --threads 8 -k 22 -N 6 -x 896487446 
-bloom_2_1_22.hist bloom_2_1_22.kh:: HASH =  --threads 8 -k 22 -N 6 -x 1693926061 
-bloom_3_1_22.hist bloom_3_1_22.kh:: HASH =  --threads 8 -k 22 -N 6 -x 2309876682 
-bloom_4_1_22.hist bloom_4_1_22.kh:: HASH =  --threads 8 -k 22 -N 6 -x 2828533499 
-bloom_5_1_22.hist bloom_5_1_22.kh:: HASH =  --threads 8 -k 22 -N 6 -x 3389075734 
+bloom_1_1_22.hist bloom_1_1_22.kh: HASH =  --threads 8 -k 22 -N 6 -x 896487446
+bloom_2_1_22.hist bloom_2_1_22.kh:: HASH =  --threads 8 -k 22 -N 6 -x 1693926061
+bloom_3_1_22.hist bloom_3_1_22.kh:: HASH =  --threads 8 -k 22 -N 6 -x 2309876682
+bloom_4_1_22.hist bloom_4_1_22.kh:: HASH =  --threads 8 -k 22 -N 6 -x 2828533499
+bloom_5_1_22.hist bloom_5_1_22.kh:: HASH =  --threads 8 -k 22 -N 6 -x 3389075734
 
 # error rate = 0.05
-bloom_1_5_22.hist: HASH =  --threads 8 -k 22 -N 4 -x 874767793 
-bloom_2_5_22.hist: HASH =  --threads 8 -k 22 -N 4 -x 1652886462 
-bloom_3_5_22.hist: HASH =  --threads 8 -k 22 -N 4 -x 2253914137 
-bloom_4_5_22.hist: HASH =  --threads 8 -k 22 -N 4 -x 2760005195 
-bloom_5_5_22.hist: HASH =  --threads 8 -k 22 -N 4 -x 3306966891 
+bloom_1_5_22.hist: HASH =  --threads 8 -k 22 -N 4 -x 874767793
+bloom_2_5_22.hist: HASH =  --threads 8 -k 22 -N 4 -x 1652886462
+bloom_3_5_22.hist: HASH =  --threads 8 -k 22 -N 4 -x 2253914137
+bloom_4_5_22.hist: HASH =  --threads 8 -k 22 -N 4 -x 2760005195
+bloom_5_5_22.hist: HASH =  --threads 8 -k 22 -N 4 -x 3306966891
 
 # error rate = 0.20
 
-bloom_1_20_22.hist: HASH =  --threads 8 -k 22 -N 2 -x 939926751 
-bloom_2_20_22.hist: HASH =  --threads 8 -k 22 -N 2 -x 1776005260 
-bloom_3_20_22.hist: HASH =  --threads 8 -k 22 -N 2 -x 2421801771 
-bloom_4_20_22.hist: HASH =  --threads 8 -k 22 -N 2 -x 2965590108 
-bloom_5_20_22.hist: HASH =  --threads 8 -k 22 -N 2 -x 3553293421 
+bloom_1_20_22.hist: HASH =  --threads 8 -k 22 -N 2 -x 939926751
+bloom_2_20_22.hist: HASH =  --threads 8 -k 22 -N 2 -x 1776005260
+bloom_3_20_22.hist: HASH =  --threads 8 -k 22 -N 2 -x 2421801771
+bloom_4_20_22.hist: HASH =  --threads 8 -k 22 -N 2 -x 2965590108
+bloom_5_20_22.hist: HASH =  --threads 8 -k 22 -N 2 -x 3553293421
 
 
 BLOOM_HIST = bloom_1_1_22.hist bloom_2_1_22.hist bloom_3_1_22.hist bloom_4_1_22.hist bloom_5_1_22.hist \
 	bloom_1_5_22.hist bloom_2_5_22.hist bloom_3_5_22.hist bloom_4_5_22.hist bloom_5_5_22.hist \
-	bloom_1_20_22.hist bloom_2_20_22.hist bloom_3_20_22.hist bloom_4_20_22.hist bloom_5_20_22.hist 
+	bloom_1_20_22.hist bloom_2_20_22.hist bloom_3_20_22.hist bloom_4_20_22.hist bloom_5_20_22.hist
 
 
 bloom_%_1_22.hist: iowa_prairie_0920.fa.%
@@ -91,10 +91,10 @@ bloom_%_20_22.hist: iowa_prairie_0920.fa.%
 
 BLOOM_COUNT = bloom_1_1_22.count.time bloom_2_1_22.count.time bloom_3_1_22.count.time bloom_4_1_22.count.time \
 	bloom_5_1_22.count.time
-	
+
 bloom_%_1_22.kh: iowa_prairie_0920.fa.%
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o $@.time ${KHMER}/scripts/load-into-counting.py  $(HASH) $@ $< 
+	time -o $@.time ${KHMER}/scripts/load-into-counting.py  $(HASH) $@ $<
 
 %.count.time: %.kh kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
@@ -335,46 +335,46 @@ kmc_dump_1_22.time:
 kmc_dump_2_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o kmc_dump_2_22.time kmc_dump kmc_2_22.out kmc_dump_2_22.out
-	
+
 kmc_dump_3_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o kmc_dump_3_22.time kmc_dump kmc_3_22.out kmc_dump_3_22.out
-	
+
 kmc_dump_4_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o kmc_dump_4_22.time kmc_dump kmc_4_22.out kmc_dump_4_22.out
-	
+
 kmc_dump_5_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o kmc_dump_5_22.time kmc_dump kmc_5_22.out kmc_dump_5_22.out
-	
+
 turtle: turtle_1_22.time turtle_2_22.time turtle_3_22.time turtle_4_22.time turtle_5_22.time
 turtle_1_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-#	time -o turtle_1_22.time aTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -s 32  
+#	time -o turtle_1_22.time aTurtle64 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -s 32
 	time -o turtle_1_22.time scTurtle32 -i iowa_prairie_0920.fa.1 -o turtle_1_22.out -k 22 -n 46552481 -t 8
 turtle_2_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-#	time -o turtle_2_22.time aTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -s 32 
+#	time -o turtle_2_22.time aTurtle64 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -s 32
 	time -o turtle_2_22.time scTurtle32 -i iowa_prairie_0920.fa.2 -o turtle_2_22.out -k 22 -n 113795027 -t 8
-	
+
 turtle_3_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-#	time -o turtle_3_22.time aTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -s 32 
+#	time -o turtle_3_22.time aTurtle64 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -s 32
 	time -o turtle_3_22.time scTurtle32 -i iowa_prairie_0920.fa.3 -o turtle_3_22.out -k 22 -n 170957894 -t 8
-	
+
 turtle_4_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-#	time -o turtle_4_22.time aTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -s 32 
+#	time -o turtle_4_22.time aTurtle64 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -s 32
 	time -o turtle_4_22.time scTurtle32 -i iowa_prairie_0920.fa.4 -o turtle_4_22.out -k 22 -n 225433623 -t 8
-	
+
 turtle_5_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-#	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -s 32 
+#	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -s 32
 	time -o turtle_5_22.time scTurtle32 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -n 292338258 -t 8
-	
+
 BFCount: BF_count_1.time BF_count_2.time BF_count_3.time BF_count_4.time BF_count_5.time BF_dump_1.time BF_dump_2.time BF_dump_3.time BF_dump_4.time BF_dump_5.time
-	
+
 BF_count_1.time:
 	time -o BF_count_1.time BFCounter count -k 22 -n 600000000 -t 8 -c 100000 -o iowa.1 iowa_prairie_0920.fa.1
 
@@ -412,7 +412,7 @@ check_fp_rate: fp_assessment.out
 random_kmers_1M_3c.fa:
 	python get_random_kmers_1M_C3.py >random_kmers_1M_3c.fa
 
-	# get random reads with the same number of unique k-mers 
+	# get random reads with the same number of unique k-mers
 	# length of reads = 44  , to be the same as that of MH0001.trimmed.fa
 random_reads_1.67M_3c_0.03e.fa:
 	python simulate_random_reads.py 1670000 3 0.03 44 random_reads_1.67M_3c_0.03e.fa random_genome_1M.fa
@@ -422,11 +422,11 @@ random_reads_2.54M_3c_0.00e.fa:
 
 MH0001.trimmed.head176800.fa:
 	head -176800 MH0001.trimmed.fa >MH0001.trimmed.head176800.fa
-	
+
 ecoli_ref_head200000.fasta:
 	# length of reads  = 100bp
 	python get_ecoli_reads.py ecoli_ref.fastq ecoli_ref_head45000.fasta
-	
+
 fp_assessment.out: random_kmers_1M_3c.fa random_reads_1.67M_3c_0.03e.fa random_reads_2.54M_3c_0.00e.fa MH0001.trimmed.head176800.fa ecoli_ref_head45000.fasta
 	python fp_assessment.py fp_assessment.out
 
@@ -473,9 +473,9 @@ trimming: ecoli_ref.fastq.hist ecoli_ref.fastq.endcount  \
 
 
 
-	
-HASH_FILTER = -x 3e7 -N 4 -k 20 
-HASH_HIST =  -x 3e9 -N 4 -k 20 
+
+HASH_FILTER = -x 3e7 -N 4 -k 20
+HASH_HIST =  -x 3e9 -N 4 -k 20
 
 # do filter abund for each round
 TARGET_FQ = ecoli_ref.fastq.r1.fq ecoli_ref.fastq.r2.fq ecoli_ref.fastq.r3.fq ecoli_ref.fastq.r4.fq \
@@ -504,7 +504,7 @@ $(TARGET_FQ):
 
 # get k-mer abundance distribution to get total number of k-mers
 %.hist: %
-	${KHMER}/scripts/abundance-dist-single.py $(HASH_HIST) $< $@ 
+	${KHMER}/scripts/abundance-dist-single.py $(HASH_HIST) $< $@
 
 # count the unique k-mer in 3'end of reads
 %.endcount: %
@@ -516,17 +516,17 @@ ecoli_ref-trim.fastq: ecoli_ref.fastq
 
 # using seqtk to trim reads
 
-ecoli_ref.fastq.seqtk-trimmed.fastq: ecoli_ref.fastq 
+ecoli_ref.fastq.seqtk-trimmed.fastq: ecoli_ref.fastq
 	seqtk trimfq $< > $@
 
-ecoli_ref.fastq.seqtk-trimmed-q001.fastq: ecoli_ref.fastq 
+ecoli_ref.fastq.seqtk-trimmed-q001.fastq: ecoli_ref.fastq
 	seqtk trimfq -q 0.01 $< > $@
 
-ecoli_ref.fastq.seqtk-trimmed-b3e5.fastq: ecoli_ref.fastq 
+ecoli_ref.fastq.seqtk-trimmed-b3e5.fastq: ecoli_ref.fastq
 	seqtk trimfq -b 3 -e 5  $< > $@
 
 # using trimmomatic to trim reads
-ecoli_ref.fastq.trimmomatic-trimmed.fastq: ecoli_ref.fastq 
+ecoli_ref.fastq.trimmomatic-trimmed.fastq: ecoli_ref.fastq
 	java -jar /usr/local/bin/trimmomatic-0.30.jar SE ./$< $@ ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-SE.fa:2:30:10
 
 
@@ -537,7 +537,7 @@ ecoli_ref.fastq.trimmomatic-trimmed.fastq: ecoli_ref.fastq
 
 ############## diginorm + velvet assembling
 # also use Quast to evaluate contigs
-# 
+#
 assembly: Quast get_missing_kmer get_hist
 
 HASH_120M = -x 3e7 -N 4 -k 20
@@ -634,7 +634,7 @@ Quast:  e.coli_reference.fa.gz  e.coli_genes.gff  e.coli_operons.gff \
 	velvet.240M/contigs.fa \
 	velvet.2400M/contigs.fa \
 	velvet.all/contigs.fa
-	python /usr/local/src/quast-2.3/quast.py velvet.10M/contigs.fa velvet.20M/contigs.fa  velvet.40M/contigs.fa velvet.60M/contigs.fa velvet.120M/contigs.fa velvet.240M/contigs.fa velvet.2400M/contigs.fa velvet.all/contigs.fa -R e.coli_reference.fa.gz -G e.coli_genes.gff -O e.coli_operons.gff 
+	python /usr/local/src/quast-2.3/quast.py velvet.10M/contigs.fa velvet.20M/contigs.fa  velvet.40M/contigs.fa velvet.60M/contigs.fa velvet.120M/contigs.fa velvet.240M/contigs.fa velvet.2400M/contigs.fa velvet.all/contigs.fa -R e.coli_reference.fa.gz -G e.coli_genes.gff -O e.coli_operons.gff
 
 
 # get the missing k-mers
@@ -645,16 +645,16 @@ get_missing_kmer: ecoli_ref.fastq.keep10M.fq.kh.e_coli_ref_hist \
 	ecoli_ref.fastq.keep120M.fq.kh.e_coli_ref_hist \
 	ecoli_ref.fastq.keep240M.fq.kh.e_coli_ref_hist \
 	ecoli_ref.fastq.keep2400M.fq.kh.e_coli_ref_hist \
-	ecoli_ref.fastq.kh.e_coli_ref_hist 
+	ecoli_ref.fastq.kh.e_coli_ref_hist
 
 
 %.kh: %
 	python ${KHMER}/scripts/load-into-counting.py -x 4e9 -N 4 -k 20 $@ $<
 
-# get the kmer abundance of ecoli genome in assembled contigs. the number of kmers with 
+# get the kmer abundance of ecoli genome in assembled contigs. the number of kmers with
 # frequency is the number of missing kmers.
-%.e_coli_ref_hist: % e.coli_reference.fa.gz  
-	${KHMER}/scripts/abundance-dist.py $^ $@ 
+%.e_coli_ref_hist: % e.coli_reference.fa.gz
+	${KHMER}/scripts/abundance-dist.py $^ $@
 
 
 # for number of retained total k-mers
@@ -666,12 +666,3 @@ get_hist: ecoli_ref.fastq.keep10M.fq.hist \
 	ecoli_ref.fastq.keep120M.fq.hist \
 	ecoli_ref.fastq.keep240M.fq.hist \
 	ecoli_ref.fastq.keep2400M.fq.hist \
-
-
-
-
-
-
-
-
-

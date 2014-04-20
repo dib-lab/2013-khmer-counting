@@ -305,6 +305,48 @@ differs from the true count --- depends on the k-mer frequency
 distribution, which must be determined empirically.  We analyze the
 effects of this below.
 
+
+\subsection*{choosing number and size of hash tables used for k-mer counting} 
+
+We have discussed the
+false positive rate: \[f=(1-e^{-N/H})^{Z}\]
+
+So it depends on number of hash tables Z and size of hash table H.
+Suppose that we have certain memory M ($M=H*Z$), we want to find the
+optimal number of hash tables to minimize the false positive rate $f$.
+Using more hash tables will increase the chance to get a counter without
+collision representing true occurrence of a k-mer. Using fewer hash
+tables will increase the size of hash table and decrease the
+individual collision rate. We can get the optimal number of hash tables
+by taking the derivative. \[f=(1-e^{-N/H})^{Z}=exp(Zln(1-e^{-ZN/M}))\]
+
+When $Z=ln2*(M/N)$, the derivative is 0 and the corresponding false positive rate $f$
+is a global minimum, which is $(1/2)^Z\approx(0.6185)^{M/N}$ \cite{broder2004network}. 
+
+Given a sequencing reads data set and available memory size, we can use this formula to 
+get the optimal number of hash tables to get the lowest false positive rate.
+
+On the other hand, the optimal number of hash tables $Z$ is determined by expected false positive 
+rate only. \[ Z=\log_{0.5}f\]
+Practically $Z$ must be an integer, and a smaller, suboptimal $Z$ will be chosen 
+to reduce the number of hash tables.
+For example, to get expected false positive rate as 1\%, 5\% or 20\%, the 
+optimal number of hash tables is 6, 4, 2 separately. Using the optimal number of hash 
+tables, the minimal required memory can be deducted from expected false positive rate
+and number of unique k-mers. \[ M=\log_{0.6185}f\times N\]
+The size of hash tables $H$ can be determined as $M/Z$.
+
+This feature is quite useful for actual usage scenario, when the user has an 
+expected false positive rate that fits the purpose of counting and do not have to use
+more memory than necessary to achieve lower false positive rate. This will guarantee a 
+most efficient counting to achieve specific goal.
+Note the number of
+unique k-mers, which is required in the estimation above, can be acquired by estimation or
+by separate faster counting algorithm like HyperLogLog.
+
+% We may want to mention the feature will be implemented in khmer package. -QP
+
+
 \subsection*{khmer efficiently calculates k-mer abundance histograms}
 
 We measured time and memory required to calculate k-mer abundance
@@ -314,7 +356,12 @@ Tallymer, Jellyfish, and DSK (Table \ref{table:datasets}; Figures \ref{fig:cmp_t
 this functionality is common to all four software packages, and is a
 common analysis approach for determining assembly parameters \cite{Chikhi:2014aa}.
 We applied each package to increasingly large subsets of a 50m read soil
-metagenome data set \cite{Howe2012}.
+metagenome data set \cite{Howe2012}. For other package like BFCounter, KMC, Turtle and 
+KAnalyze, which does not has function to generate
+k-mer abundance distribution directly, we output the frequency of each k-mer 
+in an output file.
+% will doublecheck this -QP
+
 
 Figure \ref{fig:cmp_time} shows that the time usage of our khmer approach
 is comparable to Jellyfish and DSK, and, as expected, increases linearly
@@ -823,8 +870,11 @@ This behavior is configurable via a compile-time option.
 
 \subsection*{Comparing with other k-mer counting programs}
 
-We generated k-mer abundance histograms from five soil metagenomic reads
-data sets of different sizes using khmer, Tallymer, Jellyfish, and DSK.
+We generated k-mer abundance distribution from five soil metagenomic reads
+data sets of different sizes using khmer, Tallymer, Jellyfish, DSK, BFCounter, 
+KMC, Turtle and KAnalyze. If the software 
+does not include function to generate k-mer abundance distribution directly, we output the
+frequency of each k-mer in an output file.
 We fixed k at 22 unless otherwise noted.
 
 \paragraph{khmer:}
@@ -837,18 +887,19 @@ database file and then used the Python API to query each k-mer
 individually.
 
 \paragraph{Tallymer:}
-Tallymer is from the genometools package version 1.3.4. For the suffixerator subroutine 
+Tallymer is from the genometools package version 1.3.4. For the {\tt suffixerator} subroutine 
 we used:
-{\tt -dna -pl -tis -suf -lcp -parts 4}.
+{\tt -dna -pl -tis -suf -lcp}.
 
-For the mkindex subroutine, we used: {\tt -mersize 31} and {\tt -mersize 22}.
+We use the {\tt mkindex} subroutine to generate k-mer abundance distribution, we used:
+{\tt -mersize 22}.
 
 The Tallymer random access k-mer counting benchmark was done using the
 'tallymer search' routine against both strands; see the script
 {\tt tallymer-search.sh}.
 
 \paragraph{Jellyfish:}
-Jellyfish is version 1.1.2 and the multithreading option is set to 8 threads.
+Jellyfish is version 1.1.10 and the multithreading option is set to 8 threads.
 
 Jellyfish uses a hash table to store the k-mers and the size of the
 hash table can be modified by the user.  When the specified hash table
@@ -867,9 +918,39 @@ The Jellyfish random access k-mer counting benchmark was performed
 using the 'query' routine and querying against both strands; see
 the script {\tt jelly-search.sh}.
 
-\paragraph{DSK:} We ran DSK with default parameters.
+\paragraph{DSK:} We ran DSK with default parameters with {\tt -histo} option to generate
+k-mer abundance distribution. Version is 1.5031.
+
+\paragraph{BFCounter:} BFcounter is version 1.0 and the multithreading option is set to 8
+ threads.
+ 
+We ran BFCounter {\tt count} subroutine with the options as below:
+ 
+ {\tt BFCounter count -k 22 -t 8 -c 100000}.
+ {\tt -n} option representing the estimated number of k-mers is adjusted to the different 
+ test data sets.
+ 
+ This subroutine can do the actual count of k-mers in input files.
+ 
+We ran BFCounter {\tt dump} subroutine with the options as below:
+ {\tt BFCounter dump -k 22}.
+ 
+This subroutine can write k-mer occurences into a ab-separated text file.
+
+\paragraph{KMC:} KMC is version 0.3. We ran both {\tt kmc} and {\tt kmc\_dump} subroutines 
+with default parameters.
 
 
+\paragraph{Turtle:} Turtle is version 0.3. We ran {\tt scTurtle32} with the multithreading 
+option set to 8 threads and {\tt -n} option representing expected number of frequent k-mers
+is adjusted to different test data sets.
+
+\paragraph{KAnalyze:} KAnalyze is version 0.9.3. We ran {\tt count} subroutine 
+with default parameters.
+
+% more discussion of how to calculate sum time? -QP
+
+ 
 % Do NOT remove this, even if you are not including acknowledgments
 \section*{Acknowledgments}
 
