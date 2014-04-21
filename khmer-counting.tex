@@ -531,53 +531,56 @@ short reads based on saturating coverage of a de Bruijn graph
 \cite{Brown2012}.  While several non-streaming implementations exist,
 including Trinity's {\em in silico} normalization
 \cite{Haas2013,Brown2012blog}, digital normalization can be
-efficiently implemented as a {\em streaming} algorithm.In the
+efficiently implemented as a {\em streaming} algorithm. In the
 streaming implementation, if a read is not kept, it is not loaded into
 the CountMin Sketch structure, and the false positive rate does not
-increase; this is particularly important for an initial pass across a
-large data set.
-
-For high-coverage data, we recommend a three step protocol that first
-applies digital normalization to a coverage of 20, then trims
-low-abundance k-mers in a second pass across the normalized data set,
-and finally runs a normalization to a coverage of 5. The first pass
-typically eliminates the majority of the data (80\% or more for a
-100x-coverage genome), and so in effect this is ``few pass'' algorithm
-for genome assembly.
-
-So the majority of k-mers in a data set are never loaded into the
-counting structure and the remaining two passes are typically much
-more efficient if the data set is high coverage. This has the
+increase.  For high coverage data sets, the digital normalization
+algorithm is sublinear in memory because it does not collect the
+majority of k-mers in those data sets \cite{Brown2012}.  This has the
 advantage of enabling low-memory preprocessing of both high-coverage
-genomic data sets and mRNAseq or metagenomic data sets with
-high-coverage components \cite{Brown2012, Howe2012}.  While digital
-normalization is already implemented inside khmer, previous work did
-not explore the lower bound on memory usage for effective digital
-normalization.
+genomic data sets, as well as mRNAseq or metagenomic data sets with
+high-coverage components \cite{Brown2012, Howe2012}.
+
+While digital normalization is already implemented inside khmer,
+previous work did not explore the lower bound on memory usage for
+effective digital normalization.  In particular, the effects of high
+false positive rates have not been examined in any prior work.
 
 We applied digital normalization to the {\em E. coli} data set used
-above; choosing three different CountMin Sketch sizes yielded three
-different error rates: 40 MB RAM (82.9\%), 80 MB RAM (39.3\%), and 800
-MB RAM (0.00\%).  Data sets were normalized to a k-mer coverage of 20
-and the resulting data were evaluated for retention of true and
-erroneous k-mers, as in \cite{Brown2012} (Table
-\ref{table:loop_norm}).  The results show that digital normalization
-retains the same set of underlying k-mers even at the highest error
-rate (Table \ref{table:loop_norm}, column 3), while discarding only
-about 2\% additional reads (Table \ref{table:loop_norm}, column 4).
+above, and chose seven different CountMin Sketch sizes to yield three
+different false positive rates \ref{table:loop_norm}.  The data set
+was normalized to a k-mer coverage of 20 and the resulting data were
+evaluated for retention of true and erroneous k-mers, as in
+\cite{Brown2012} (Table \ref{table:loop_norm}).  The results show that
+digital normalization retains the same set of underlying ``true''
+k-mers until the highest false positive rate of 100\% (Table
+\ref{table:loop_norm}, column 5), while discarding only about 2\%
+additional reads (Table \ref{table:loop_norm}, column 6).
 
-To evaluate the effect on actual genome assembly, we next performed
-error trimming and normalization to a coverage of 5 (the
-``three-pass'' protocol from \cite{Brown2012} recommended for genome
-assembly), staying within the specified memory bounds.  We then
-assembled this data with Velvet \cite{Zerbino2008} and compared the
-resulting assemblies to the known {\em E. coli} MG1655 genome (Table
-\ref{table:assembly}.  In terms of overall size and genome content,
-all three assemblies were nearly identical (table
-\ref{table:assembly}, column 4).  Thus digital normalization is
-surprisingly refractory to high error rates even for practical
-assembly outcomes.  (Note that the Velvet assembler itself used
-considerably more memory than digital normalization.)
+To evaluate the effect of digital normalization with high false
+positive rates on actual genome assembly, we next performed
+normalization to a coverage of 20 with the same range of false
+positive rates as above.  We then assembled this data with Velvet
+\cite{Zerbino2008} and compared the resulting assemblies to the known
+     {\em E. coli} MG1655 genome using QUAST (Table
+     \ref{table:assembly}.  To our surprise, we found that even after
+     executing digital normalization with a false positive rate of
+     83.2\%, a nearly complete assembly was generated.  No progressive
+     increase in misassemblies (measured against the real genome with
+     QUAST) was seen across the different false positive rates (data
+     not shown). This suggests that below 83.2\% FP rate, the false
+     positive rate of digital normalization has little to no effect on
+     assembly quality with Velvet.  (Note that the Velvet assembler
+     itself used considerably more memory than digital normalization.)
+
+%@CTB quast ref
+
+While these results are specific to Velvet and the coverage parameters
+used in digital normalization, they do suggest that no significant
+information loss occurs due to false positive rates below 80\%.
+Further evaluation of assembly quality in response to different
+normalizaiton parameters and assemblers is beyond the scope of of this
+paper.
 
 \section*{Discussion}
 
@@ -719,7 +722,7 @@ straightforward to measure, the user can be warned that the results
 should be invalidated when too little memory is used.  When combined
 with the graceful degradation of performance for both error trimming
 and digital normalization, khmer readily enables analysis of extremely
-large and diverse data sets \cite{adina2013} In an experiment to
+large and diverse data sets \cite{adina2013}. In an experiment to
 assemble the reads of a soil metagenomic sample collected from Iowa
 prairie, the number of reads to assemble drops from 3.3 million to 2.2
 million and the size of data set drops from 245GB to 145GB accordingly
@@ -1179,21 +1182,21 @@ filter by seqtk(-b 3 -e 5)          &      -  &  8.0\% & 34.5m & 27.7m & 25.3\% 
   normalizing a 5m read {\em E. coli} data set to C=20 with k=20 under
   several memory usage/error rates.  The error rate
   (column 1) is empirically determined.  We measured reads remaining,
-  number of ``true'' k-mers that were removed during the normalization
-  process, and the number of total k-mers remaining.  Note: at high
+  number of ``true'' k-mers missing from the data at each step,
+  and the number of total k-mers remaining.  Note: at high
   error rates, reads are erroneously removed due to inflation
   of k-mer counts.}}
 \begin{tabular}{ | c | c | c | c | c | c | c |}
-memory   & FP rate & retained reads & retained reads \% & true k-mers removed & retained total k-mers \\
+memory   & FP rate & retained reads & retained reads \% & true k-mers missing & total k-mers \\
 \hline \\
 before diginorm   &  -      & 5,000,000   & 100.0\%    & 170  &  41.6m \\
-10 MB             & 100.0\% & 1,076,958   &  21.0\%    & 185  &  20.9m \\
-20 MB             &  98.8\% & 1,460,936   &  29.0\%    & 172  &  25.7m \\
-40 MB             &  83.2\% & 1,602,437   &  32.0\%    & 172  &  27.6m \\
-60 MB             &  59.1\% & 1,633,182   &  32.0\%    & 172  &  27.9m \\
-120 MB            &  18.0\% & 1,652,273   &  33.0\%    & 172  &  28.1m \\
-240 MB            &   2.8\% & 1,655,988   &  33.0\%    & 172  &  28.1m \\
 2400 MB           &   0.0\% & 1,656,518   &  33.0\%    & 172  &  28.1m \\
+240 MB            &   2.8\% & 1,655,988   &  33.0\%    & 172  &  28.1m \\
+120 MB            &  18.0\% & 1,652,273   &  33.0\%    & 172  &  28.1m \\
+60 MB             &  59.1\% & 1,633,182   &  32.0\%    & 172  &  27.9m \\
+40 MB             &  83.2\% & 1,602,437   &  32.0\%    & 172  &  27.6m \\
+20 MB             &  98.8\% & 1,460,936   &  29.0\%    & 172  &  25.7m \\
+10 MB             & 100.0\% & 1,076,958   &  21.0\%    & 185  &  20.9m \\
 \end{tabular}
 \begin{flushleft}
 \end{flushleft}
@@ -1207,27 +1210,6 @@ before diginorm   &  -      & 5,000,000   & 100.0\%    & 170  &  41.6m \\
 \caption{
 \bf{{\em E. coli} genome assembly after low-memory digital normalization.
   A comparison of assembling reads digitally normalized with low memory/high
-  error rates.  The reads were digitally normalized using 3-pass methods  (normalization to C=20, followed by
-  low-abundance k-mer trimming, followed by normalization to C=5; see
-  \cite{Brown2012} for more information) and were assembled using Velvet.
-  We measured total sequence recovered,
-  as well as percent of true MG1655 genome covered by the assembly.}}
-\begin{tabular}{ | c | c | c | c | c | c |}
-memory/FP rate & N contigs & total sequence & \% of true genome covered \\
-\hline \\
-      800 MB/0.0\% & 617 & 4,571,174 & 99.75\% \\
-      80 MB/39.3\% & 613 & 4,570,562 & 99.75\% \\
-      40 MB/82.9\% & 612 & 4,570,924 & 99.73\% \\
-\end{tabular}
-\begin{flushleft}
-\end{flushleft}
-\label{table:assembly}
-\end{table}
-
-\begin{table}[!ht]
-\caption{
-\bf{{\em E. coli} genome assembly after low-memory digital normalization.
-  A comparison of assembling reads digitally normalized with low memory/high
   error rates.  The reads were digitally normalized to 
   C=20 (see
   \cite{Brown2012} for more information) and were assembled using Velvet.
@@ -1237,13 +1219,13 @@ memory/FP rate & N contigs & total sequence & \% of true genome covered \\
 memory   & FP rate & N contigs & total length(bases) & \% of true genome covered \\
 \hline \\
 before diginorm  &-   & 106 & 4,546,051 & 97.84\% \\
-      10 MB  &100.0\% &  97 & 4,545,871 & 97.97\% \\
-      20 MB  & 98.8\% &  85 & 4,550,014 & 98.04\% \\
-      40 MB  & 83.2\% &  89 & 4,550,599 & 98.11\% \\
-      60 MB  & 59.1\% &  90 & 4,548,619 & 98.03\% \\
-     120 MB  & 18.0\% &  86 & 4,549,335 & 98.04\% \\
-     240 MB  &  2.8\% &  87 & 4,549,253 & 98.04\% \\
     2400 MB  &  0.0\% & 617 & 4,549,235 & 98.05\% \\
+     240 MB  &  2.8\% &  87 & 4,549,253 & 98.04\% \\
+     120 MB  & 18.0\% &  86 & 4,549,335 & 98.04\% \\
+      60 MB  & 59.1\% &  90 & 4,548,619 & 98.03\% \\
+      40 MB  & 83.2\% &  89 & 4,550,599 & 98.11\% \\
+      20 MB  & 98.8\% &  85 & 4,550,014 & 98.04\% \\
+      10 MB  &100.0\% &  97 & 4,545,871 & 97.97\% \\
 \end{tabular}
 \begin{flushleft}
 \end{flushleft}
