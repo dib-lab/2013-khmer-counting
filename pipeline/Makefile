@@ -553,31 +553,31 @@ HASH_10M = -x 0.25e7 -N 4 -k 20
 # fp rate and retained reads in normXX.out
 
 ecoli_ref.fastq.keep10M.fq: ecoli_ref.fastq
-	${KHMER}/scripts/normalize-by-median.py $(HASH_10M) -C 20 $< > norm10M.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py $(HASH_10M) -C 20 $< > norm10M.out 2>&1
 	mv ecoli_ref.fastq.keep $@
 
 ecoli_ref.fastq.keep20M.fq: ecoli_ref.fastq
-	${KHMER}/scripts/normalize-by-median.py $(HASH_20M) -C 20 $< > norm20M.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py $(HASH_20M) -C 20 $< > norm20M.out 2>&1
 	mv ecoli_ref.fastq.keep $@
 
 ecoli_ref.fastq.keep40M.fq: ecoli_ref.fastq
-	${KHMER}/scripts/normalize-by-median.py $(HASH_40M) -C 20 $< > norm40M.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py $(HASH_40M) -C 20 $< > norm40M.out 2>&1
 	mv ecoli_ref.fastq.keep $@
 
 ecoli_ref.fastq.keep60M.fq: ecoli_ref.fastq
-	${KHMER}/scripts/normalize-by-median.py $(HASH_60M) -C 20 $< > norm60M.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py $(HASH_60M) -C 20 $< > norm60M.out 2>&1
 	mv ecoli_ref.fastq.keep $@
 
 ecoli_ref.fastq.keep120M.fq: ecoli_ref.fastq
-	${KHMER}/scripts/normalize-by-median.py $(HASH_120M) -C 20 $< > norm120M.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py $(HASH_120M) -C 20 $< > norm120M.out 2>&1
 	mv ecoli_ref.fastq.keep $@
 
 ecoli_ref.fastq.keep240M.fq: ecoli_ref.fastq
-	${KHMER}/scripts/normalize-by-median.py $(HASH_240M) -C 20 $< > norm240M.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py $(HASH_240M) -C 20 $< > norm240M.out 2>&1
 	mv ecoli_ref.fastq.keep $@
 
 ecoli_ref.fastq.keep2400M.fq: ecoli_ref.fastq
-	${KHMER}/scripts/normalize-by-median.py $(HASH_2400M) -C 20 $< > norm2400M.out 2>&1
+	-${KHMER}/scripts/normalize-by-median.py $(HASH_2400M) -C 20 $< > norm2400M.out 2>&1
 	mv ecoli_ref.fastq.keep $@
 
 
