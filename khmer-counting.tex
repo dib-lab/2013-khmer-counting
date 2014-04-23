@@ -130,7 +130,7 @@ also compare the performance of khmer to several other k-mer counting
 packages, including Tallymer, Jellyfish, and DSK.  Finally, we examine
 the effectiveness of profiling sequencing error, k-mer abundance
 trimming, and digital normalization of reads in the context of high
-khmer error rates. Khmer is implemented in C++ wrapped with a Python
+khmer false positive rates. Khmer is implemented in C++ wrapped with a Python
 interface, offers a tested and robust API, and is freely available
 under the BSD license at github.com/ged-lab/khmer.
 
@@ -282,7 +282,7 @@ code for a simple threadsafe implementation.  (Note that we have
 described how khmer scales with multiple threads in
 \cite{McDonald2013}.)
 
-To determine the expected error rate --- the average frequency with
+To determine the expected false positive rate --- the average frequency with
 which a given k-mer count will be incorrect when retrieved --- we can
 look at the hash table load. Suppose N unique k-mers have been counted
 using Z hash tables, each with size H.  The probability that no
@@ -293,52 +293,41 @@ collision rate, which is the probability that a collision occurred in
 each entry where a k-mer maps to in all Z hash tables, is $\approx
 (1-e^{-N/H})^{Z}$.
 
-While the error rate can easily be calculated from the hash table
+While the false positive rate can easily be calculated from the hash table
 load, the average {\em miscount} --- the degree to which the measured
 count differs from the true count --- depends on the k-mer frequency
 distribution, which must be determined empirically.  We analyze the
 effects of this below.
 
 
-\subsection*{choosing number and size of hash tables used for k-mer counting} 
+\subsection*{Choosing number and size of hash tables used for k-mer counting}
 
-We have discussed the false positive rate: \[f=(1-e^{-N/H})^{Z}\]
+The false positive rate depends on the number of unique k-mers $N$,
+the number of hash tables $Z$, and the size of the hash tables $H$: $f
+\approx (1-e^{-N/H})^{Z}$, with an associated memory usage of $M = H
+Z$.  We face two common scenarios: one in which we have a set number
+of k-mers $N$ and fixed memory $M$ and we want to calculate the
+optimal number of hash tables $Z$; and one in which we have a desired
+maximum false positive rate $f$ and a fixed number of k-mers $N$, and
+we want to calculate the minimum memory usage required to achieve $f$.
 
-So it depends on number of hash tables Z and size of hash table H.
-Suppose that we have certain memory M ($M=H*Z$), we want to find the
-optimal number of hash tables to minimize the false positive rate $f$.
-Using more hash tables will increase the chance to get a counter
-without collision representing true occurrence of a k-mer. Using fewer
-hash tables will increase the size of hash table and decrease the
-individual collision rate. We can get the optimal number of hash
-tables by taking the
-derivative. \[f=(1-e^{-N/H})^{Z}=exp(Zln(1-e^{-ZN/M}))\]
+For fixed memory $M$ and number of unique k-mers $N$, the optimal
+number of hash tables can be found by minimizing $f$; taking the
+derivative, $df/dZ=\exp(Z \log(1-\exp(-ZN/M)))$ and solving
+for 0, we find that $f$ is minimized when $Z = \log(M/N)$ (see
+\cite{broder2004network} for details).
 
-When $Z=ln2*(M/N)$, the derivative is 0 and the corresponding false
-positive rate $f$ is a global minimum, which is
-$(1/2)^Z\approx(0.6185)^{M/N}$ \cite{broder2004network}.
+Given a desired false positive rate $f$ and a fixed number of k-mers
+$N$, the optimal memory usage can be calculated as follows.  First,
+the optimal number of hash tables is determined by the expected false
+positive rate alone: $Z = \log_{0.5}f$.  Using this $Z$, the minimum
+average hash table size $H$ necessary to achieve $f$ can be calculated
+as $H = \log{0.6185} f N / Z$.
 
-Given a sequencing reads data set and available memory size, we can
-use this formula to get the optimal number of hash tables to get the
-lowest false positive rate.
-
-On the other hand, the optimal number of hash tables $Z$ is determined
-by expected false positive rate only. \[ Z=\log_{0.5}f\] Practically
-$Z$ must be an integer, and a smaller, suboptimal $Z$ will be chosen
-to reduce the number of hash tables.  For example, to get expected
-false positive rate as 1\%, 5\% or 20\%, the optimal number of hash
-tables is 6, 4, 2 separately. Using the optimal number of hash tables,
-the minimal required memory can be deducted from expected false
-positive rate and number of unique k-mers. \[ M=\log_{0.6185}f\times
-N\] The size of hash tables $H$ can be determined as $M/Z$.
-
-This feature is quite useful for actual usage scenario, when the user
-has an expected false positive rate that fits the purpose of counting
-and do not have to use more memory than necessary to achieve lower
-false positive rate. This will guarantee a most efficient counting to
-achieve specific goal.  Note the number of unique k-mers, which is
-required in the estimation above, can be acquired by estimation or by
-separate faster counting algorithm like HyperLogLog.
+A remaining problem is that the number of unique k-mers $N$ is
+typically not known.  However, memory- and time-efficient algorithms
+for calculating $N$ do exist and we are planning to implement this in
+khmer in the future \cite{HyperLogLog}.
 
 % We may want to mention the feature will be implemented in khmer package. -@QP
 
@@ -372,13 +361,14 @@ all of the other programs for large data sets, but at the cost of more
 limited functionality (discussed below).
 
 In addition, the memory usage of khmer also increases linearly with
-data set size as long as we hold the error rate constant.  However,
-the memory usage of khmer varies substantially with the desired error
-rate: we can decrease the memory usage by increasing the error rate,
-as shown in Figure \ref{fig:cmp_memory}.  We also see that with a low
-error rate of 1\%, the memory usage is competitive with Tallymer and
-Jellyfish; with a higher 5\% error rate, the memory usage is lower
-than all but the disk-based DSK; with an error rate as high as 20\%,
+data set size as long as we hold the false positive rate constant.
+However, the memory usage of khmer varies substantially with the
+desired false positive rate: we can decrease the memory usage by
+increasing the false positive rate as shown in Figure
+\ref{fig:cmp_memory}.  We also see that with a low false positive of
+1\%, the memory usage is competitive with Tallymer and Jellyfish; with
+a higher 5\% false positive rate, the memory usage is lower than all
+but the disk-based DSK; with an false positive rate as high as 20\%,
 the memory usage is further lower, close to DSK.
 
 The memory usage of Jellyfish is dependent on the k-mer size, because
@@ -415,7 +405,7 @@ disk (data not shown).  In particular, khmer is independent of the
 size of the database in retrieval time once the hash tables are loaded
 into memory.
 
-\subsection*{The measured counting error rate is low on short-read data}
+\subsection*{The measured counting error is low on short-read data}
 
 Due to the use of CountMin Sketch and its lack of collision tracking,
 khmer will report some incorrect counts for k-mers; these counts are
@@ -433,27 +423,27 @@ both real and simulated data sets to evaluate the counting performance
 in practice.
 
 Figure \ref{fig:average_offset_vs_fpr} shows the relationship between
-average miscount and counting error rate for five different test data
+average miscount and counting false positive rate for five different test data
 sets with similar numbers of distinct k-mers: one metagenome data set;
 a simulated set of random k-mers; a simulated set of reads, chosen
 with 3x coverage and 1\% error; a simulated set of reads (3x) with no
 error; and a set of {\em E. coli} reads (Table
-\ref{table:random_data}).  Even when the counting error rate is as
+\ref{table:random_data}).  Even when the counting false positive rate is as
 high as 0.9 --- where 90\% of k-mers have an incorrect count --- the
 average miscount is still below 4.
 
 We separately analyzed the average {\em percentage} miscount between
 true and false k-mers; e.g. an miscount of 4 for a k-mer whose true
 count is 1 would be 400\%.  Figure \ref{fig:percent_offset_vs_fpr}
-shows the relationship between average miscount and counting error
-rate for the same five data sets as in Figure
-\ref{fig:average_offset_vs_fpr}.  For an error rate of 0.1 (10\% of
+shows the relationship between average miscount and counting false
+positive rate for the same five data sets as in Figure
+\ref{fig:average_offset_vs_fpr}.  For a false positive rate of 0.1 (10\% of
 k-mer counts are incorrect), the average percentage miscount is less
 than 10\% for all five data sets; this will of course generally be
 true, because the average miscount is bounded by the product of the
-error rate times k-mer abundance.
+false positive rate with k-mer abundance.
 
-We see here that for a fixed counting error rate, the simulated reads
+We see here that for a fixed false positive rate, the simulated reads
 without error have the highest average miscount, and the randomly
 generated k-mers have the lowest average miscount.  This is because
 these two abundance distributions have the least and most left-skew,
@@ -485,8 +475,8 @@ In Figure \ref{fig:perc_unique_pos}, we use khmer to examine the
 sequencing error pattern of a 5m-read subset of an Illumina reads data
 set from single-colony sequencing of {\em E. coli}
 \cite{pubmed21926975}.  The high rate of occurrence of unique k-mers
-close to the 3' end of reads is due to the increased error rate at the
-3' end of reads.
+close to the 3' end of reads is due to the increased sequencing error
+rate at the 3' end of reads.
 
 \subsection*{khmer can be applied iteratively to read trimming}
 
@@ -502,27 +492,28 @@ false positive rates for the same memory usage.
 
 We performed four iterations of unique k-mer trimming on 5 million
 Illumina reads from sequencing of {\em E. coli}, with a maximum memory
-usage of 40 MB.  For each iteration we measured empirical error rate
-compared with number of bases trimmed as well as the total number of
-k-mers (Table \ref{table:loop_trim}).  In the first round, the
-estimated error rate was 78.1\%, and 22\% of the total bases were
-removed by trimming reads at low-abundance k-mers; the second
-iteration had an error rate of 10\%, and removed only 2.9\% additional
-data; and by the fourth iteration the error rate was down to 3.1\%
-with 0.0\% of the data removed.
+usage of 40 MB.  For each iteration we measured empirical false
+positive rate compared with number of bases trimmed as well as the
+total number of k-mers (Table \ref{table:loop_trim}).  In the first
+round, the estimated false positive rate was 78.1\%, and 22\% of the
+total bases were removed by trimming reads at low-abundance k-mers;
+the second iteration had a false positive rate of 10\%, and removed
+only 2.9\% additional data; and by the fourth iteration the false
+positive rate was down to 3.1\% with 0.0\% of the data removed.
 
 The elimination of so many unique k-mers (column 5) in the first pass
-was unexpected: the high error rate should have resulted in fewer
-unique k-mers being identified as unique, were the erroneous k-mers
-independent of each other. Upon examination, we realized that in
-Illumina data erroneous k-mers typically come from substitution errors
-that yield runs of up to k erroneous k-mers in a row
-\cite{Kelley2010}.  When trimming reads with high error rates, these
-runs are typically trimmed after the first few unique k-mers, leaving
-unique k-mers at the 3' end.  Because of this we hypothesized that
-high-FP rate trimming would result in the retention of many unique
-k-mers at the 3' end of the read, and this was confirmed upon
-measurement (Table \ref{table:loop_trim}, column 6, pass 1 vs pass 2).
+was unexpected: the high false positive rate should have resulted in
+fewer unique k-mers being identified as unique, were the erroneous
+k-mers independent of each other. Upon examination, we realized that
+in Illumina data erroneous k-mers typically come from substitution
+errors that yield runs of up to k erroneous k-mers in a row
+\cite{Kelley2010}.  When trimming reads with high false positive
+rates, these runs are typically trimmed after the first few unique
+k-mers, leaving unique k-mers at the 3' end.  Because of this we
+hypothesized that high-FP rate trimming would result in the retention
+of many unique k-mers at the 3' end of the read, and this was
+confirmed upon measurement (Table \ref{table:loop_trim}, column 6,
+pass 1 vs pass 2).
 
 \subsection*{Using khmer for digital normalization, a streaming algorithm}
 
@@ -628,12 +619,12 @@ The memory usage of the basic CountMin Sketch approach is fixed:
 khmer's memory usage does not increase as data is loaded. While this
 means that khmer will never crash due to memory limitations, and all
 operations can be performed in main memory without recourse to disk
-storage, the error rate may grow to be too high.  Therefore the memory
-size must be chosen in light of the error rate and miscount acceptable
-for a given application.  In practice, we recommend choosing the
-maximum available memory, because the false positive rate decreases
-with increasing memory and there are no negative effects to minimizing
-the false positive rate.
+storage, the false positive rate may grow too high.  Therefore the
+memory size must be chosen in light of the false positive rate and
+miscount acceptable for a given application.  In practice, we
+recommend choosing the maximum available memory, because the false
+positive rate decreases with increasing memory and there are no
+negative effects to minimizing the false positive rate.
 
 For any given data set, the size and number of hash tables will
 determine the accuracy of k-mer counting with khmer.  Thus, the user
@@ -652,7 +643,7 @@ necessary beyond that required for the read data sets.  This is no
 surprise: the information theoretic comparison in \cite{Pell2012}
 shows that, for sparse sequencing data sets, Bloom filters require
 considerably less memory than any possible exact information storage
-for a wide range of error rates and data set sparseness.
+for a wide range of false positive rates and data set sparseness.
 
 In our implementation we use 1 byte to store the count of each k-mer
 in the data structure. Thus the maximum count for a k-mer will be 255.
@@ -663,22 +654,21 @@ future, we may extend khmer to counters of arbitrary bit sizes.
 
 % @CTB discuss flexible container paper?
 
-\subsection*{Error rates in k-mer counting are low and predictable}
+\subsection*{False positive rates in k-mer counting are low and predictable}
 
 The CountMin Sketch is a probabilistic data structure with a one-sided
 error that results in random overestimates of k-mer frequency, but
 does not generate underestimates.
 
-The CountMin Sketch is a probabilistic data structure in which the
-total memory usage is fixed; the memory usage, the hash functions, and
-the total number of distinct objects counted all influence the
-accuracy of the count.  While the probability of an inaccurate count
-can easily be estimated based on the hash table load, the miscount
-size is dependent on details of the frequency distribution of k-mers
-\cite{Cormode2005}.
+In the CountMin Sketch, the total memory usage is fixed; the memory
+usage, the hash functions, and the total number of distinct objects
+counted all influence the accuracy of the count.  While the
+probability of an inaccurate count can easily be estimated based on
+the hash table load, the miscount size is dependent on details of the
+frequency distribution of k-mers \cite{Cormode2005}.
 
 More specifically, in the analysis of the CountMin Sketch, the
-miscount between the incorrect count and actual count is related to
+difference between the incorrect count and actual count is related to
 the total number of k-mers in a data set and the size of each hash
 table \cite{Cormode2005}. Further study has shown that the behavior of
 CountMin Sketch depends on specific characteristics of the data set
@@ -706,29 +696,30 @@ resulting data set falsely.  If RAM-limited we can do the filtering
 iteratively so that at each step we are making more effective use of
 the available memory.
 
-In practice, we have found that an error rate of between 1\% and 10\%
-offers acceptable miscount performance for a wide range of tasks,
-including error profiling, digital normalization and low-abundance
-read-trimming.  Somewhat surprisingly, error rates of up to 80\% can
-still be used for both read trimming and digital normalization in
-memory-limited circumstances, although multiple passes across the data
-may be needed.
+In practice, we have found that an false positive rate of between 1\%
+and 10\% offers acceptable miscount performance for a wide range of
+tasks, including error profiling, digital normalization and
+low-abundance read-trimming.  Somewhat surprisingly, error rates of up
+to 80\% can still be used for both read trimming and digital
+normalization in memory-limited circumstances, although multiple
+passes across the data may be needed.
 
 For many applications, the fact that khmer does not break an imposed
 memory bound is extremely useful, since for many data sets ---
 especially metagenomic data sets --- high memory demands constrain
-analysis \cite{Howe2012,Luo2009}.  Moreover, because the error rate is
-straightforward to measure, the user can be warned that the results
-should be invalidated when too little memory is used.  When combined
-with the graceful degradation of performance for both error trimming
-and digital normalization, khmer readily enables analysis of extremely
-large and diverse data sets \cite{adina2013}. In an experiment to
-assemble the reads of a soil metagenomic sample collected from Iowa
-prairie, the number of reads to assemble drops from 3.3 million to 2.2
-million and the size of data set drops from 245GB to 145GB accordingly
-after digital normalization \cite{Howe2012}.  240GB memory was used in
-the process. This also shows khmer works well to analyze real-world
-large metagenomic data sets.
+analysis \cite{Howe2012,Luo2009}.  Moreover, because the false
+positive rate is straightforward to measure, the user can be warned
+that the results should be invalidated when too little memory is used.
+When combined with the graceful degradation of performance for both
+error trimming and digital normalization, khmer readily enables
+analysis of extremely large and diverse data sets \cite{adina2013}. In
+an experiment to assemble the reads of a soil metagenomic sample
+collected from Iowa prairie, the number of reads to assemble drops
+from 3.3 million to 2.2 million and the size of data set drops from
+245GB to 145GB accordingly after digital normalization
+\cite{Howe2012}.  240GB memory was used in the process. This also
+shows khmer works well to analyze real-world large metagenomic data
+sets.
 
 \subsection*{Conclusion}
 
@@ -756,7 +747,7 @@ be an acceptable tradeoff.
 
 Applying khmer to extremely large data sets with many unique k-mers
 requires a large amount of memory: approximately 446 GB of memory is
-required to achieve an error rate of 1\% for $50\times 10^9$
+required to achieve an false positive rate of 1\% for $50\times 10^9$
 k-mers. It is possible to reduce the required memory by dividing k-mer
 space into multiple partitions and counting k-mers separately for each
 partition. Partitioning k-mer space into $M$ partitions results in a
@@ -817,8 +808,8 @@ each read is longer than 30 bp.  The exact data sets used for the
 paper are available on Amazon S3 and the instructions to acquire these
 data sets are available in the paper repository on github.com.
 
-We also generated four short-read data sets to assess the error
-rate and miscount distribution. One is a subset of a real
+We also generated four short-read data sets to assess the false
+positive rate and miscount distribution. One is a subset of a real
 metagenomics data set from the MH0001 data set, above. The second
 consists of randomly generated reads. The third and fourth contain
 reads simulated from a random, 1 Mbp long genome.  The third has a
@@ -872,7 +863,7 @@ frequency of each k-mer in an output file.
 We fixed k at 22 unless otherwise noted.
 
 \paragraph{khmer:}
-For khmer, we set hash table sizes to fix the error rate at
+For khmer, we set hash table sizes to fix the false positive rate at
 either 1\%, 5\% or 20\%, and used 8 threads in loading the data.
 
 We did the khmer random-access k-mer counting benchmark with a
@@ -1036,7 +1027,7 @@ being queried (x axis).  DSK does not support this functionality.}
 \centerline{\includegraphics[width=5in]{./figure/average_offset_vs_fpr}}
 \caption{\bf Relation between average miscount --- amount by which
 the average count for k-mers is incorrect --- on the y axis, plotted against
-error rate (x axis), for four data sets.  The four data
+false positive rate (x axis), for four data sets.  The four data
 sets were chosen to have the same total number of k-mers: one
 metagenome data set; a set of randomly generated k-mers; a set
 of reads, chosen with 3x coverage and 1\% error, from a randomly generated
@@ -1047,21 +1038,22 @@ generated genome.}
 
 \begin{figure}[!ht]
 \centerline{\includegraphics[width=5in]{./figure/percent_offset_vs_fpr}}
-\caption{\bf Relation between percent miscount --- amount by which
-the count for k-mers is incorrect relative to its true count --- on the y axis, plotted 
-against
-error rate (x axis), for four data sets.  The four data
-sets are the same as in Figure \ref{fig:average_offset_vs_fpr}.}
+\caption{\bf Relation between percent miscount --- amount by which the
+  count for k-mers is incorrect relative to its true count --- on the
+  y axis, plotted against false positive rate (x axis), for four data
+  sets.  The four data sets are the same as in Figure
+  \ref{fig:average_offset_vs_fpr}.}
 \label{fig:percent_offset_vs_fpr}
 \end{figure}
 
 \begin{figure}[!ht]
 \centerline{\includegraphics[width=5in]{./figure/perc_unique_pos}}
-\caption{\bf Number of unique k-mers (y axis) by starting position within read (x axis) in 
-an untrimmed {\em E. coli} 100-bp Illumina shotgun data set, for k=17 and k=32.  The 
-increasing numbers of unique k-mers are a sign of the increasing sequencing error 
-towards the 3' end of reads.  Note that there are only 69 starting positions for 32-mers 
-in a 100 base read.}
+\caption{\bf Number of unique k-mers (y axis) by starting position
+  within read (x axis) in an untrimmed {\em E. coli} 100-bp Illumina
+  shotgun data set, for k=17 and k=32.  The increasing numbers of
+  unique k-mers are a sign of the increasing sequencing error towards
+  the 3' end of reads.  Note that there are only 69 starting positions
+  for 32-mers in a 100 base read.}
 \label{fig:perc_unique_pos}
 \end{figure}
 
@@ -1177,15 +1169,14 @@ filter by seqtk(-b 3 -e 5)          &      -  &  8.0\% & 34.5m & 27.7m & 25.3\% 
 % data in pipeline/keep*.x.mg*.hist (true k-mers)
 % @CTB address -2 issue
 \begin{table}[!ht]
-\caption{
-\bf{Low-memory digital normalization. The results of digitally
-  normalizing a 5m read {\em E. coli} data set to C=20 with k=20 under
-  several memory usage/error rates.  The error rate
-  (column 1) is empirically determined.  We measured reads remaining,
-  number of ``true'' k-mers missing from the data at each step,
-  and the number of total k-mers remaining.  Note: at high
-  error rates, reads are erroneously removed due to inflation
-  of k-mer counts.}}
+\caption{ \bf{Low-memory digital normalization. The results of
+    digitally normalizing a 5m read {\em E. coli} data set to C=20
+    with k=20 under several memory usage/false positive rates.  The
+    false positive rate (column 1) is empirically determined.  We
+    measured reads remaining, number of ``true'' k-mers missing from
+    the data at each step, and the number of total k-mers remaining.
+    Note: at high false positive rates, reads are erroneously removed due to
+    inflation of k-mer counts.}}
 \begin{tabular}{ | c | c | c | c | c | c | c |}
 memory   & FP rate & retained reads & retained reads \% & true k-mers missing & total k-mers \\
 \hline \\
@@ -1210,7 +1201,7 @@ before diginorm   &  -      & 5,000,000   & 100.0\%    & 170  &  41.6m \\
 \caption{
 \bf{{\em E. coli} genome assembly after low-memory digital normalization.
   A comparison of assembling reads digitally normalized with low memory/high
-  error rates.  The reads were digitally normalized to 
+  false positive rates.  The reads were digitally normalized to 
   C=20 (see
   \cite{Brown2012} for more information) and were assembled using Velvet.
   We measured total length of assembly,
