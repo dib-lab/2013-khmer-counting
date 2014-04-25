@@ -170,20 +170,21 @@ includes Tallymer, Jellyfish, BFCounter, DSK, KMC, Turtle and KAnalyze
 \cite{Kurtz2008, Marcais2011, Melsted2011, Rizk2013, Deorowicz2013,
   Roy2014, Audano2014}.
 
-% @CTB add citations in this paragraph
 These approaches and implementations each offer different algorithmic
 trade-offs and enable a non-overlapping set of functionality.
 Tallymer uses a suffix tree to store k-mer counts in memory and on
-disk.  Jellyfish stores k-mer counts in in-memory hash tables, and
-makes use of disk storage to scale to larger data sets.  BFCounter
-uses a Bloom filter as a pre-filter to avoid counting unique k-mers,
-and is the first published probabilistic approach to k-mer counting.
-DSK adopts an online approach to k-mer counting that enables time- and
+disk \cite{Kurtz2008}.  Jellyfish stores k-mer counts in in-memory
+hash tables, and makes use of disk storage to scale to larger data
+sets \cite{Marcais2011}.  BFCounter uses a Bloom filter as a
+pre-filter to avoid counting unique k-mers, and is the first published
+probabilistic approach to k-mer counting \cite{Melsted2011}.  DSK
+adopts an online approach to k-mer counting that enables time- and
 memory-efficient k-mer counting with an explicit trade-off between
-disk and memory usage.  KMC relies primarily on fast and inexpensive
-disk access to count k-mers in low memory.  Turtle provides several
+disk and memory usage \cite{Rizk2013}.  KMC and KAnalyze rely
+primarily on fast and inexpensive disk access to count k-mers in low
+memory \cite{Deorowicz2013,Audano2014}.  Turtle provides several
 different containers that offer different false positive and false
-negative tradeoffs when counting k-mers.
+negative tradeoffs when counting k-mers \cite{Roy2014}.
 
 Our motivation for exploring efficient k-mer counting comes from our
 work with metagenomic data, where we routinely encounter data sets
@@ -206,6 +207,7 @@ storing the frequency distributions of distinct elements
 implementation of a Bloom filter, which has been previously used for
 both k-mer counting and de Bruijn graph storage and traversal
 \cite{Bloom70,BroderM03,Melsted2011,Pell2012,Rizk2013,Jones:2012aa}
+% @@CTB this would be the place to extend CMS/CBF discussion.
 
 Probabilistic approaches can be particularly memory efficient for
 certain problems, with memory usage significantly lower than any exact
@@ -249,7 +251,7 @@ assembly \cite{Brown2012}.
 
 \subsection*{Implementing a CountMin Sketch for k-mers}
 
-The two basic operations supported by khmer are {\tt c =
+The two basic operations supported by khmer are {\tt
   increment\_count(kmer) } and {\tt c = get\_count(kmer). } Both
 operate on the data structure in memory, such that neither
 incrementing a count nor retrieving a count involves disk access.
@@ -278,7 +280,7 @@ there is no collision for a particular k-mer, the count is correct.
 
 An additional benefit of the CountMin Sketch is that it is extremely
 easy to implement correctly, needing only about 3 dozen lines of C++
-code for a simple threadsafe implementation.  (Note that we have
+code for a simple threadsafe implementation.  (We have
 described how khmer scales with multiple threads in
 \cite{McDonald2013}.)
 
@@ -290,7 +292,7 @@ collisions happened in a specific entry in one hash table is
 $(1-1/H)^{N}$, or approximately $e^{-N/H}$. The individual collision
 rate in one hash table is then $\approx 1-e^{-N/H}$. The total
 collision rate, which is the probability that a collision occurred in
-each entry where a k-mer maps to in all Z hash tables, is $\approx
+each entry where a k-mer maps across all Z hash tables, is $\approx
 (1-e^{-N/H})^{Z}$.
 
 While the false positive rate can easily be calculated from the hash table
@@ -322,11 +324,11 @@ $N$, the optimal memory usage can be calculated as follows.  First,
 the optimal number of hash tables is determined by the expected false
 positive rate alone: $Z = \log_{0.5}f$.  Using this $Z$, the minimum
 average hash table size $H$ necessary to achieve $f$ can be calculated
-as $H = \log{0.6185} f N / Z$.
+as $H = \log{0.6185} (f N / Z$).
 
 A remaining problem is that the number of unique k-mers $N$ is
 typically not known.  However, memory- and time-efficient algorithms
-for calculating $N$ do exist and we are planning to implement this in
+for calculating $N$ do exist and we plan to implement this in
 khmer in the future \cite{HyperLogLog}.
 
 % We may want to mention the feature will be implemented in khmer package. -@QP
@@ -336,46 +338,39 @@ khmer in the future \cite{HyperLogLog}.
 
 We measured time and memory required to calculate k-mer abundance
 histograms in five soil metagenomic read data sets using khmer,
-Tallymer, Jellyfish, and DSK (Table \ref{table:datasets}; Figures
-\ref{fig:cmp_time} and \ref{fig:cmp_memory}).  We chose to benchmark
-abundance histograms because this functionality is common to all four
-software packages, and is a common analysis approach for determining
-assembly parameters \cite{Chikhi:2014aa}.  We applied each package to
-increasingly large subsets of a 50m read soil metagenome data set
-\cite{Howe2012}. For other package like BFCounter, KMC, Turtle and
-KAnalyze, which does not has function to generate k-mer abundance
-distribution directly, we output the frequency of each k-mer in an
-output file.
-% will doublecheck this -@QP
+Tallymer, Jellyfish, DSK, KMC, Turtle, and KAnalyze (Table
+\ref{table:datasets}; Figures \ref{fig:cmp_time} and
+\ref{fig:cmp_memory}).  We chose to benchmark abundance histograms
+because this functionality is common to all the software packages, and
+is a common analysis approach for determining assembly parameters
+\cite{Chikhi:2014aa}.  We applied each package to increasingly large
+subsets of a 50m read soil metagenome data set \cite{Howe2012}. For
+the BFCounter, KMC, Turtle and KAnalyze packages, which do not
+generate k-mer abundance distribution directly, we output the
+frequency of each k-mer to a file but do no further analysis.x
 
-
-Figure \ref{fig:cmp_time} shows that the time usage of our khmer
-approach is comparable to Jellyfish and DSK, and, as expected,
+Figure \ref{fig:cmp_time} shows that the time usage of the khmer
+approach is comparable to DSK and BFCounter, and, as expected,
 increases linearly with data set size. Tallymer is the slowest of the
-four tools in this testing.
+four tools in this testing, while KMC, Turtle, and Jellyfish are
+the fastest.
 
 From Figure \ref{fig:cmp_memory}, we see that the memory usage of both
 Jellyfish and Tallymer increases linearly with data set size. Tallymer
-uses more memory than Jellyfish generally.  DSK uses less memory than
-all of the other programs for large data sets, but at the cost of more
-limited functionality (discussed below).
+uses more memory than Jellyfish generally.  DSK, KMC, and KAnalyze use
+constant memory across the data sets, but at the cost of more limited
+functionality (discussed below).
 
-In addition, the memory usage of khmer also increases linearly with
-data set size as long as we hold the false positive rate constant.
-However, the memory usage of khmer varies substantially with the
-desired false positive rate: we can decrease the memory usage by
-increasing the false positive rate as shown in Figure
-\ref{fig:cmp_memory}.  We also see that with a low false positive of
-1\%, the memory usage is competitive with Tallymer and Jellyfish; with
-a higher 5\% false positive rate, the memory usage is lower than all
-but the disk-based DSK; with an false positive rate as high as 20\%,
-the memory usage is further lower, close to DSK.
-
-The memory usage of Jellyfish is dependent on the k-mer size, because
-it uses hash tables to store k-mer counts and must store the exact
-k-mer to track collisions; however, khmer's memory usage is
-independent of k, because k-mers are stored implicitly in the data
-structure and khmer does not track collisions.
+The memory usage of khmer also increases linearly with data set size
+as long as we hold the false positive rate constant.  However, the
+memory usage of khmer varies substantially with the desired false
+positive rate: we can decrease the memory usage by increasing the
+false positive rate as shown in Figure \ref{fig:cmp_memory}.  We also
+see that with a low false positive of 1\%, the memory usage is
+competitive with Tallymer and Jellyfish; with a higher 5\% false
+positive rate, the memory usage is lower than all but the disk-based
+DSK; with an false positive rate as high as 20\%, the memory usage is
+further lower, close to DSK, KAnalyze, and KMC.
 
 We also measured disk usage during counting.  Figure
 \ref{fig:cmp_disk} shows that the disk usage also increases linearly
@@ -554,7 +549,7 @@ normalization to a coverage of 20 with the same range of false
 positive rates as above.  We then assembled this data with Velvet
 \cite{Zerbino2008} and compared the resulting assemblies to the known
      {\em E. coli} MG1655 genome using QUAST (Table
-     \ref{table:assembly}.  To our surprise, we found that even after
+     \ref{table:assembly}).  To our surprise, we found that even after
      executing digital normalization with a false positive rate of
      83.2\%, a nearly complete assembly was generated.  No progressive
      increase in misassemblies (measured against the real genome with
@@ -570,7 +565,7 @@ While these results are specific to Velvet and the coverage parameters
 used in digital normalization, they do suggest that no significant
 information loss occurs due to false positive rates below 80\%.
 Further evaluation of assembly quality in response to different
-normalizaiton parameters and assemblers is beyond the scope of of this
+normalization parameters and assemblers is beyond the scope of of this
 paper.
 
 \section*{Discussion}
@@ -594,15 +589,15 @@ performance tradeoffs for disk I/O, time and memory.  From the
 performance comparison between khmer and other k-mer counting packages
 in calculating k-mer abundance distributions, khmer is comparable with
 existing packages.  In time, khmer performs competitively with DSK and
-Jellyfish (Figure \ref{fig:cmp_time}); khmer also provides a way to
+BFCounter (Figure \ref{fig:cmp_time}); khmer also provides a way to
 systematically trade memory for miscounts across a wide range of
 parameters (Figure \ref{fig:cmp_memory}).  khmer's uncompressed disk
 storage is competitive with Jellyfish, and, in situations where disk
 space is at a premium, khmer can take advantage of gzip compression to
 provide storage similar to that of DSK (Figure \ref{fig:cmp_disk},
-dashed blue line).
+purple line with boxes).
 
-Interestingly, DSK performs especially well in memory usage for
+KMC, DSK, and KAnalyze perform especially well in memory usage for
 calculating the abundance distribution of k-mers. However, in exchange
 for this efficiency, retrieving specific k-mer counts at random is
 likely to be quite slow, as DSK is optimized for iterating across
@@ -696,7 +691,7 @@ resulting data set falsely.  If RAM-limited we can do the filtering
 iteratively so that at each step we are making more effective use of
 the available memory.
 
-In practice, we have found that an false positive rate of between 1\%
+In practice, we have found that a false positive rate of between 1\%
 and 10\% offers acceptable miscount performance for a wide range of
 tasks, including error profiling, digital normalization and
 low-abundance read-trimming.  Somewhat surprisingly, error rates of up
@@ -718,7 +713,7 @@ collected from Iowa prairie, the number of reads to assemble drops
 from 3.3 million to 2.2 million and the size of data set drops from
 245GB to 145GB accordingly after digital normalization
 \cite{Howe2012}.  240GB memory was used in the process. This also
-shows khmer works well to analyze real-world large metagenomic data
+shows that khmer works well to analyze large, real-world metagenomic data
 sets.
 
 \subsection*{Conclusion}
@@ -733,15 +728,15 @@ and its implementation in khmer.
 
 The khmer software implementation offers good performance, a robust
 and well-tested Python API, and a number of useful and well-documented
-scripts.  While Jellyfish and DSK also offer good performance, khmer
-is competitive, and, because it provides a Python API for online
-counting, is flexible.  In memory-limited situations with poor I/O
-performance, khmer is particularly useful, because it will not break
-an imposed memory bound and does not require disk access to store or
-retrieve k-mer counts.  However, in exchange for this memory
-guarantee, counting becomes increasingly incorrect as less memory is
-used or as the data set size grows large; in many situations this may
-be an acceptable tradeoff.
+scripts.  While Jellyfish, DSK, KMC, and Turtle also offer good
+performance, khmer is competitive, and, because it provides a Python
+API for online counting, is flexible.  In memory-limited situations
+with poor I/O performance, khmer is particularly useful, because it
+will not break an imposed memory bound and does not require disk
+access to store or retrieve k-mer counts.  However, in exchange for
+this memory guarantee, counting becomes increasingly incorrect as less
+memory is used or as the data set size grows large; in many situations
+this may be an acceptable tradeoff.
 
 \subsection*{Future considerations}
 
@@ -897,7 +892,7 @@ We ran Jellyfish with the options as below:
 
 {\tt jellyfish count -m 22 -c 2 -C} for k=22.
 
-{\tt jellyfish count -m 31 -c 2 -C} for k=31.
+%{\tt jellyfish count -m 31 -c 2 -C} for k=31.
 
 The Jellyfish random access k-mer counting benchmark was performed
 using the 'query' routine and querying against both strands; see
@@ -915,12 +910,12 @@ We ran BFCounter {\tt count} subroutine with the options as below:
  {\tt -n} option representing the estimated number of k-mers is adjusted to the different 
  test data sets.
  
- This subroutine can do the actual count of k-mers in input files.
+ This subroutine produces the actual count of k-mers in input files.
  
 We ran BFCounter {\tt dump} subroutine with the options as below:
  {\tt BFCounter dump -k 22}.
  
-This subroutine can write k-mer occurences into a ab-separated text file.
+This subroutine can write k-mer occurrences into a tab-separated text file.
 
 \paragraph{KMC:} KMC is version 0.3. We ran both {\tt kmc} and {\tt kmc\_dump} subroutines 
 with default parameters.
@@ -973,7 +968,7 @@ We thank Eric McDonald for technical assistance with optimizing the khmer codeba
 \centerline{\includegraphics[width=5in]{./figure/time_benchmark}}
 
 \caption{\bf Comparison of the time it takes for k-mer counting tools
-  to calculatie k-mer abundance histograms, with time (y axis, in
+  to calculate k-mer abundance histograms, with time (y axis, in
   seconds) against data set size (in number of reads, x axis).  The
   top plot shows the faster programs, while the bottom plot shows the
   slower programs, with scTurtle (brown) and khmer (red) shown on both
@@ -997,8 +992,7 @@ We thank Eric McDonald for technical assistance with optimizing the khmer codeba
   scale with total number of distinct k-mers.  khmer is included in
   both plots for scale and comparison. Tallymer memory usage is
   substantially larger than all other programs and cannot easily be
-  shown on the same axes, so we did not include it.  K-mer size is 22
-  unless otherwise noted.}
+  shown on the same axes, so we did not include it.}
 
 \label{fig:cmp_memory}
 \end{figure}
@@ -1008,7 +1002,7 @@ We thank Eric McDonald for technical assistance with optimizing the khmer codeba
 
 \caption{\bf Disk storage usage of different k-mer counting tools to
   calculate k-mer abundance histograms in GB (y axis), plotted against
-  the number of distinct k-mers in the data set (x axis).  ($^*$) Note
+  the number of distinct k-mers in the data set (x axis).  $^*$Note
   that khmer does not use the disk during counting or retrieval,
   although its hash tables can be saved for reuse.}
 
@@ -1017,16 +1011,17 @@ We thank Eric McDonald for technical assistance with optimizing the khmer codeba
 
 \begin{figure}[!ht]
 \centerline{\includegraphics[width=5in]{./figure/count_benchmark}}
-\caption{\bf Time for several k-mer counting tools to retrieve the counts of 9.7m randomly 
-chosen k-mers (y axis), plotted against the number of unique k-mers in the data set 
-being queried (x axis).  DSK does not support this functionality.}
+\caption{\bf Time for several k-mer counting tools to retrieve the
+  counts of 9.7m randomly chosen k-mers (y axis), plotted against the
+  number of unique k-mers in the data set being queried (x axis).
+  DSK, Turtle, KAnalyze, and KMC do not support this functionality.}
 \label{fig:cmp_count}
 \end{figure}
 
 \begin{figure}[!ht]
 \centerline{\includegraphics[width=5in]{./figure/average_offset_vs_fpr}}
 \caption{\bf Relation between average miscount --- amount by which
-the average count for k-mers is incorrect --- on the y axis, plotted against
+the count for k-mers is incorrect --- on the y axis, plotted against
 false positive rate (x axis), for four data sets.  The four data
 sets were chosen to have the same total number of k-mers: one
 metagenome data set; a set of randomly generated k-mers; a set
