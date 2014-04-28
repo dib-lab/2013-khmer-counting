@@ -475,7 +475,10 @@ trimming: ecoli_ref.fastq.hist ecoli_ref.fastq.endcount  \
 
 
 HASH_FILTER = -x 3e7 -N 4 -k 20
-HASH_HIST =  -x 3e9 -N 4 -k 20
+#HASH_HIST =  -x 3e9 -N 4 -k 20 # original hash table, not optimal
+HASH_HIST =  -x 25818513 -N 1 -k 20 # for optimal hash table to get 0.8 fpr, with minimum 
+# memory
+
 
 # do filter abund for each round
 TARGET_FQ = ecoli_ref.fastq.r1.fq ecoli_ref.fastq.r2.fq ecoli_ref.fastq.r3.fq ecoli_ref.fastq.r4.fq \
