@@ -1,10 +1,10 @@
 
 PARAMETERS:
  - kmer size =    20 		(-k)
- - n hashes =     4 		(-N)
- - min hashsize = 3e+07 	(-x)
+ - n hashes =     1 		(-N)
+ - min hashsize = 2.6e+07 	(-x)
 
-Estimated memory usage is 1.2e+08 bytes (n_hashes x min_hashsize)
+Estimated memory usage is 2.6e+07 bytes (n_hashes x min_hashsize)
 --------
 starting threads
 starting writer
@@ -15,87 +15,87 @@ loading...
 ... filtering 300000
 ... filtering 400000
 ... filtering 500000
-processed 500000 / wrote 465661 / removed 34339
-processed 50000000 bp / wrote 42877690 bp / removed 7122310 bp
-discarded 14.2%
+processed 500000 / wrote 468548 / removed 31452
+processed 50000000 bp / wrote 43530343 bp / removed 6469657 bp
+discarded 12.9%
 ... filtering 600000
 ... filtering 700000
 ... filtering 800000
 ... filtering 900000
 ... filtering 1000000
-processed 1000000 / wrote 928626 / removed 71374
-processed 100000000 bp / wrote 85201098 bp / removed 14798902 bp
-discarded 14.8%
+processed 1000000 / wrote 934505 / removed 65495
+processed 100000000 bp / wrote 86548924 bp / removed 13451076 bp
+discarded 13.5%
 ... filtering 1100000
 ... filtering 1200000
 ... filtering 1300000
 ... filtering 1400000
 ... filtering 1500000
-processed 1500000 / wrote 1391605 / removed 108395
-processed 150000000 bp / wrote 127569902 bp / removed 22430098 bp
-discarded 15.0%
+processed 1500000 / wrote 1400203 / removed 99797
+processed 150000000 bp / wrote 129592048 bp / removed 20407952 bp
+discarded 13.6%
 ... filtering 1600000
 ... filtering 1700000
 ... filtering 1800000
 ... filtering 1900000
 ... filtering 2000000
-processed 2000000 / wrote 1857611 / removed 142389
-processed 200000000 bp / wrote 170474969 bp / removed 29525031 bp
-discarded 14.8%
+processed 2000000 / wrote 1868850 / removed 131150
+processed 200000000 bp / wrote 173142641 bp / removed 26857359 bp
+discarded 13.4%
 ... filtering 2100000
 ... filtering 2200000
 ... filtering 2300000
 ... filtering 2400000
 ... filtering 2500000
-processed 2500000 / wrote 2320574 / removed 179426
-processed 250000000 bp / wrote 212891132 bp / removed 37108868 bp
-discarded 14.8%
+processed 2500000 / wrote 2334606 / removed 165394
+processed 250000000 bp / wrote 216229960 bp / removed 33770040 bp
+discarded 13.5%
 ... filtering 2600000
 ... filtering 2700000
 ... filtering 2800000
 ... filtering 2900000
 ... filtering 3000000
-processed 3000000 / wrote 2783763 / removed 216237
-processed 300000000 bp / wrote 255410194 bp / removed 44589806 bp
-discarded 14.9%
+processed 3000000 / wrote 2800466 / removed 199534
+processed 300000000 bp / wrote 259400661 bp / removed 40599339 bp
+discarded 13.5%
 ... filtering 3100000
 ... filtering 3200000
 ... filtering 3300000
 ... filtering 3400000
 ... filtering 3500000
-processed 3500000 / wrote 3249637 / removed 250363
-processed 350000000 bp / wrote 298312407 bp / removed 51687593 bp
-discarded 14.8%
+processed 3500000 / wrote 3268953 / removed 231047
+processed 350000000 bp / wrote 302940404 bp / removed 47059596 bp
+discarded 13.4%
 ... filtering 3600000
 ... filtering 3700000
 ... filtering 3800000
 ... filtering 3900000
 ... filtering 4000000
-processed 4000000 / wrote 3713170 / removed 286830
-processed 400000000 bp / wrote 340719028 bp / removed 59280972 bp
-discarded 14.8%
+processed 4000000 / wrote 3735158 / removed 264842
+processed 400000000 bp / wrote 346019116 bp / removed 53980884 bp
+discarded 13.5%
 ... filtering 4100000
 ... filtering 4200000
 ... filtering 4300000
 ... filtering 4400000
 ... filtering 4500000
-processed 4500000 / wrote 4176520 / removed 323480
-processed 450000000 bp / wrote 383151034 bp / removed 66848966 bp
-discarded 14.9%
+processed 4500000 / wrote 4201289 / removed 298711
+processed 450000000 bp / wrote 389123334 bp / removed 60876666 bp
+discarded 13.5%
 ... filtering 4600000
 ... filtering 4700000
 ... filtering 4800000
 ... filtering 4900000
 done loading in sequences
-processed 5000000 / wrote 4641853 / removed 358147
-processed 500000000 bp / wrote 425727643 bp / removed 74272357 bp
-discarded 14.9%
+processed 5000000 / wrote 4669462 / removed 330538
+processed 500000000 bp / wrote 432377037 bp / removed 67622963 bp
+discarded 13.5%
 DONE writing.
-processed 5000000 / wrote 4641853 / removed 358147
-processed 500000000 bp / wrote 425727643 bp / removed 74272357 bp
-discarded 14.9%
+processed 5000000 / wrote 4669462 / removed 330538
+processed 500000000 bp / wrote 432377037 bp / removed 67622963 bp
+discarded 13.5%
 making hashtable
 consuming input, round 1 -- ecoli_ref.fastq
-fp rate estimated to be 0.316
+fp rate estimated to be 0.800
 filtering ecoli_ref.fastq
 output in ecoli_ref.fastq.abundfilt

@@ -1,10 +1,10 @@
 
 PARAMETERS:
  - kmer size =    20 		(-k)
- - n hashes =     4 		(-N)
- - min hashsize = 3e+07 	(-x)
+ - n hashes =     1 		(-N)
+ - min hashsize = 2.6e+07 	(-x)
 
-Estimated memory usage is 1.2e+08 bytes (n_hashes x min_hashsize)
+Estimated memory usage is 2.6e+07 bytes (n_hashes x min_hashsize)
 --------
 starting threads
 starting writer
@@ -15,48 +15,51 @@ loading...
 ... filtering 300000
 ... filtering 400000
 ... filtering 500000
-processed 500000 / wrote 499999 / removed 1
-processed 46025726 bp / wrote 46025652 bp / removed 74 bp
+processed 500000 / wrote 499650 / removed 350
+processed 46035449 bp / wrote 46020386 bp / removed 15063 bp
 discarded 0.0%
 ... filtering 600000
 ... filtering 700000
 ... filtering 800000
 ... filtering 900000
 ... filtering 1000000
-processed 1000000 / wrote 999998 / removed 2
-processed 91944932 bp / wrote 91944770 bp / removed 162 bp
+processed 1000000 / wrote 999268 / removed 732
+processed 91958246 bp / wrote 91927177 bp / removed 31069 bp
 discarded 0.0%
 ... filtering 1100000
 ... filtering 1200000
 ... filtering 1300000
 ... filtering 1400000
 ... filtering 1500000
-processed 1500000 / wrote 1499996 / removed 4
-processed 137707112 bp / wrote 137706849 bp / removed 263 bp
-discarded 0.0%
 ... filtering 1600000
 ... filtering 1700000
 ... filtering 1800000
 ... filtering 1900000
 ... filtering 2000000
-processed 2000000 / wrote 1999994 / removed 6
-processed 183602051 bp / wrote 183601683 bp / removed 368 bp
-discarded 0.0%
 ... filtering 2100000
 ... filtering 2200000
 ... filtering 2300000
 ... filtering 2400000
 ... filtering 2500000
+processed 2500000 / wrote 2498197 / removed 1803
+processed 229629483 bp / wrote 229552599 bp / removed 76884 bp
+discarded 0.0%
 ... filtering 2600000
 ... filtering 2700000
 ... filtering 2800000
 ... filtering 2900000
 ... filtering 3000000
+processed 3000000 / wrote 2997864 / removed 2136
+processed 275668351 bp / wrote 275577312 bp / removed 91039 bp
+discarded 0.0%
 ... filtering 3100000
 ... filtering 3200000
 ... filtering 3300000
 ... filtering 3400000
 ... filtering 3500000
+processed 3500000 / wrote 3497528 / removed 2472
+processed 321646318 bp / wrote 321540237 bp / removed 106081 bp
+discarded 0.0%
 ... filtering 3600000
 ... filtering 3700000
 ... filtering 3800000
@@ -67,17 +70,14 @@ discarded 0.0%
 ... filtering 4300000
 ... filtering 4400000
 ... filtering 4500000
-processed 4500000 / wrote 4499978 / removed 22
-processed 413017386 bp / wrote 413015867 bp / removed 1519 bp
-discarded 0.0%
 ... filtering 4600000
 done loading in sequences
 DONE writing.
-processed 4615660 / wrote 4615638 / removed 22
-processed 423711457 bp / wrote 423709912 bp / removed 1545 bp
+processed 4626998 / wrote 4623779 / removed 3219
+processed 424870049 bp / wrote 424730788 bp / removed 139261 bp
 discarded 0.0%
 making hashtable
 consuming input, round 1 -- ecoli_ref.fastq.r3.fq
-fp rate estimated to be 0.002
+fp rate estimated to be 0.232
 filtering ecoli_ref.fastq.r3.fq
 output in ecoli_ref.fastq.r3.fq.abundfilt

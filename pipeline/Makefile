@@ -474,13 +474,15 @@ trimming: ecoli_ref.fastq.hist ecoli_ref.fastq.endcount  \
 
 
 
-HASH_FILTER = -x 3e7 -N 4 -k 20
-#HASH_HIST =  -x 3e9 -N 4 -k 20 # original hash table, not optimal
-HASH_HIST =  -x 25818513 -N 1 -k 20 # for optimal hash table to get 0.8 fpr, with minimum 
+HASH_FILTER = -x 25818513 -N 1 -k 20 # for optimal hash table to get 0.8 fpr, with minimum 
 # memory
+
+HASH_HIST =  -x 3e9 -N 4 -k 20 #big hash table, for histogram and end unqiue k-mer counting 
 
 
 # do filter abund for each round
+# filtered by filter-abund-single.py
+# also get number of bases processed for other trimming method
 TARGET_FQ = ecoli_ref.fastq.r1.fq ecoli_ref.fastq.r2.fq ecoli_ref.fastq.r3.fq ecoli_ref.fastq.r4.fq \
 	ecoli_ref.fastq.r5.fq ecoli_ref.fastq.r6.fq ecoli_ref-trim.fastq.r1.fq \
 	ecoli_ref.fastq.seqtk-trimmed.r1.fastq ecoli_ref.fastq.seqtk-trimmed-q001.r1.fastq \
@@ -493,7 +495,7 @@ ecoli_ref.fastq.r4.fq: ecoli_ref.fastq.r3.fq
 ecoli_ref.fastq.r5.fq: ecoli_ref.fastq.r4.fq
 ecoli_ref.fastq.r6.fq: ecoli_ref.fastq.r5.fq
 
-# to get number of bases processed.
+# to get number of bases processed. using filter-abund-single.py for other trimming method
 ecoli_ref-trim.fastq.r1.fq: ecoli_ref-trim.fastq
 ecoli_ref.fastq.seqtk-trimmed.r1.fastq: ecoli_ref.fastq.seqtk-trimmed.fastq
 ecoli_ref.fastq.seqtk-trimmed-q001.r1.fastq: ecoli_ref.fastq.seqtk-trimmed-q001.fastq
@@ -528,9 +530,6 @@ ecoli_ref.fastq.seqtk-trimmed-q001.fastq: ecoli_ref.fastq
 ecoli_ref.fastq.seqtk-trimmed-b3e5.fastq: ecoli_ref.fastq
 	seqtk trimfq -b 3 -e 5  $< > $@
 
-# using trimmomatic to trim reads
-ecoli_ref.fastq.trimmomatic-trimmed.fastq: ecoli_ref.fastq
-	java -jar /usr/local/bin/trimmomatic-0.30.jar SE ./$< $@ ILLUMINACLIP:/usr/local/share/adapters/TruSeq3-SE.fa:2:30:10
 
 
 
