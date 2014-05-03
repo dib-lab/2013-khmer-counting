@@ -203,10 +203,13 @@ Below, we describe an implementation of a simple probabilistic data
 structure for k-mer counting. This data structure is based on a
 CountMin Sketch, a generalized probabilistic data structure for
 storing the frequency distributions of distinct elements
-\cite{Cormode2005}.  Our implementation extends an earlier
+\cite{Cormode2005}, which is also similar to the concept of 
+counting Bloom filter\cite{Fan:2000:SCS:343571.343572}.  
+Our implementation extends an earlier
 implementation of a Bloom filter, which has been previously used for
 both k-mer counting and de Bruijn graph storage and traversal
-\cite{Bloom70,BroderM03,Melsted2011,Pell2012,Rizk2013,Jones:2012aa}
+\cite{Bloom70,BroderM03,Melsted2011,Pell2012,Rizk2013,Jones:2012aa}.
+
 % @@CTB this would be the place to extend CMS/CBF discussion.
 
 Probabilistic approaches can be particularly memory efficient for
@@ -324,15 +327,12 @@ $N$, the optimal memory usage can be calculated as follows.  First,
 the optimal number of hash tables is determined by the expected false
 positive rate alone: $Z = \log_{0.5}f$.  Using this $Z$, the minimum
 average hash table size $H$ necessary to achieve $f$ can be calculated
-as $H = \log{0.6185} (f N / Z$).
+as $H = (\log_{0.6185}f\times N)/Z$.
 
 A remaining problem is that the number of unique k-mers $N$ is
 typically not known.  However, memory- and time-efficient algorithms
 for calculating $N$ do exist and we plan to implement this in
-khmer in the future \cite{HyperLogLog}.
-
-% We may want to mention the feature will be implemented in khmer package. -@QP
-
+khmer in the future \cite{flajolet2008hyperloglog}.
 
 \subsection*{khmer efficiently calculates k-mer abundance histograms}
 
@@ -1126,12 +1126,11 @@ Real {\em E. coli} reads                                        & 4.85M  & 4,004
 
 %%%%%%%%%%%%%%%%%%%%%%%
 
-% data in pipeline/ecoli_ref.fastq.ka.r?.fq.out
 \begin{table}[!ht]
 \caption{
 \bf{Iterative low-memory k-mer trimming.  The results of trimming
-  reads at unique (erroneous) k-mers from a 165 Mbp short-read data
-  set in under 40 MB of RAM.  After each iteration, we measured the
+  reads at unique (erroneous) k-mers from a 5m read {\em E. coli} data set (1.4 GB)
+  in under 30 MB of RAM.  After each iteration, we measured the
   total number of distinct k-mers in the data set, the total number
   of unique (and likely erroneous) k-mers remaining, and the
   number of unique k-mers present at the 3' end of reads.}}
@@ -1140,12 +1139,12 @@ iteration & FP rate & bases trimmed & total k-mers & unique k-mers &
 unique k-mers at 3' end \\
 \hline \\
 untrimmed                           &      -  &      - & 41.6m & 34.1m & 30.4\%  \\
-khmer iteration 1                   & 31.6\%  & 14.9\% &  7.9m &  1.2m & 13.0\% \\
-khmer iteration 2                   &  0.3\%  &  0.5\% &  6.7m & 23.5k &  0.2\% \\
-khmer iteration 3                   &  0.2\%  &  0.0\% &  6.6m &  3.4k &  0.1\% \\
-khmer iteration 4                   &  0.2\%  &  0.0\% &  6.6m &  2.7k &  0.1\% \\
-khmer iteration 5                   &  0.2\%  &  0.0\% &  6.6m &  2.7k &  0.1\% \\
-khmer iteration 6                   &  0.2\%  &  0.0\% &  6.6m &  2.6k &  0.1\% \\
+khmer iteration 1                   & 80.0\%  & 13.5\% & 13.3m &  6.5m & 29.8\% \\
+khmer iteration 2                   & 37.7\%  &  1.5\% &  8.1m &  1.4m & 16.4\% \\
+khmer iteration 3                   & 24.9\%  &  0.2\% &  7.5m & 818.7k & 11.7\% \\
+khmer iteration 4                   & 23.2\%  &  0.0\% &  7.4m & 752.9k & 11.0\% \\
+khmer iteration 5                   & 23.1\%  &  0.0\% &  7.4m & 745.3k & 11.0\% \\
+khmer iteration 6                   & 23.0\%  &  0.0\% &  7.4m & 744.5k & 11.0\% \\
 filter by FASTX                     &      -  &  9.1\% & 26.6m & 20.3m & 26.3\% \\
 filter by seqtk(default)            &      -  &  8.9\% & 17.7m & 12.1m & 12.3\% \\
 filter by seqtk(-q 0.01)            &      -  & 15.4\% &  9.9m &  5.1m &  5.2\% \\
@@ -1165,7 +1164,7 @@ filter by seqtk(-b 3 -e 5)          &      -  &  8.0\% & 34.5m & 27.7m & 25.3\% 
 % @CTB address -2 issue
 \begin{table}[!ht]
 \caption{ \bf{Low-memory digital normalization. The results of
-    digitally normalizing a 5m read {\em E. coli} data set to C=20
+    digitally normalizing a 5m read {\em E. coli} data set (1.4 GB) to C=20
     with k=20 under several memory usage/false positive rates.  The
     false positive rate (column 1) is empirically determined.  We
     measured reads remaining, number of ``true'' k-mers missing from
