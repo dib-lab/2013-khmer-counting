@@ -318,8 +318,8 @@ we want to calculate the minimum memory usage required to achieve $f$.
 
 For fixed memory $M$ and number of unique k-mers $N$, the optimal
 number of hash tables can be found by minimizing $f$; taking the
-derivative, $df/dZ=\exp(Z \log(1-\exp(-ZN/M)))$ and solving
-for 0, we find that $f$ is minimized when $Z = \log(M/N)$ (see
+derivative, $df/dZ$, with $f \approx exp(Zln(1-e^{-ZN/M}))$ and solving
+for 0, we find that $f$ is minimized when $Z=ln2*(M/N)$ (see
 \cite{broder2004network} for details).
 
 Given a desired false positive rate $f$ and a fixed number of k-mers
