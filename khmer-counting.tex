@@ -201,14 +201,19 @@ our exploration of efficient in-memory k-mer counting techniques.
 
 Below, we describe an implementation of a simple probabilistic data
 structure for k-mer counting. This data structure is based on a
-CountMin Sketch, a generalized probabilistic data structure for
-storing the frequency distributions of distinct elements
-\cite{Cormode2005}, which is also similar to the concept of 
-counting Bloom filter\cite{Fan:2000:SCS:343571.343572}.  
+CountMin Sketch \cite{Cormode2005} , a generalized probabilistic data structure for
+storing the frequency distributions of distinct elements.
 Our implementation extends an earlier
-implementation of a Bloom filter, which has been previously used for
-both k-mer counting and de Bruijn graph storage and traversal
-\cite{Bloom70,BroderM03,Melsted2011,Pell2012,Rizk2013,Jones:2012aa}.
+implementation of a Bloom filter \cite{Bloom70}, which has been previously used 
+in bioinformatics applications, such as
+sequence matching \cite{DBLP:conf/padl/MaldeO09}, k-mer counting \cite{Melsted2011}, 
+de Bruijn graph storage and traversal \cite{Pell2012,Jones:2012aa}.
+Many other variations of Bloom filters have been proposed \cite{BroderM03}, including
+counting Bloom filters \cite{Fan:2000:SCS:343571.343572}, 
+multistage filters \cite{DBLP:conf/sigcomm/EstanV02}, 
+and spectral Bloom filters \cite{DBLP:conf/sigmod/CohenM03}, which 
+are related to CountMin Sketch and our khmer implementation. 
+ 
 
 % @@CTB this would be the place to extend CMS/CBF discussion.
 

@@ -2,12 +2,86 @@
 %% http://bibdesk.sourceforge.net/
 
 
-%% Created for Qingpeng Zhang at 2014-05-02 22:19:26 -0400 
+%% Created for Qingpeng Zhang at 2014-05-06 18:32:27 -0400 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@inproceedings{DBLP:conf/padl/MaldeO09,
+	Abstract = {Analysis of biological data often involves large data sets and computationally expensive algorithms. Databases of biological data continue to grow, leading to an increasing demand for improved algorithms and data structures. Despite having many advantages over more traditional indexing structures, the Bloom filter is almost unused in bioinformatics. Here we present a robust and efficient Bloom filter implementation in Haskell, and implement a simple bioinformatics application for indexing and matching sequence data. We use this to index the chromosomes that make up the human genome, and map all available gene sequences to it. Our experiences with developing and tuning our application suggest that for bioinformatics applications, Haskell offers a compelling combination of rapid development, quality assurance, and high performance.},
+	Author = {Ketil Malde and Bryan O'Sullivan},
+	Bibsource = {DBLP, http://dblp.uni-trier.de},
+	Booktitle = {PADL},
+	Crossref = {DBLP:conf/padl/2009},
+	Date-Added = {2014-05-06 22:27:05 +0000},
+	Date-Modified = {2014-05-06 22:27:05 +0000},
+	Pages = {183-194},
+	Title = {Using Bloom Filters for Large Scale Gene Sequence Analysis in Haskell},
+	Year = {2009},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1007/978-3-540-92995-6_13}}
+
+@proceedings{DBLP:conf/padl/2009,
+	Bibsource = {DBLP, http://dblp.uni-trier.de},
+	Booktitle = {PADL},
+	Date-Added = {2014-05-06 22:27:05 +0000},
+	Date-Modified = {2014-05-06 22:27:05 +0000},
+	Editor = {Andy Gill and Terrance Swift},
+	Isbn = {978-3-540-92994-9},
+	Publisher = {Springer},
+	Series = {Lecture Notes in Computer Science},
+	Title = {Practical Aspects of Declarative Languages, 11th International Symposium, PADL 2009, Savannah, GA, USA, January 19-20, 2009. Proceedings},
+	Volume = {5418},
+	Year = {2009},
+	Bdsk-Url-1 = {http://dx.doi.org/10.1007/978-3-540-92995-6}}
+
+@inproceedings{DBLP:conf/sigmod/CohenM03,
+	Abstract = {A Bloom Filter is a space-efficient randomized data structure allowing membership queries over sets with certain allowable errors. It is widely used in many applications which take advantage of its ability to compactly represent a set, and filter out effectively any element that does not belong to the set, with small error probability. This paper introduces the Spectral Bloom Filter (SBF), an extension of the original Bloom Filter to multi-sets, allowing the filtering of elements whose multiplicities are below a threshold given at query time. Using memory only slightly larger than that of the original Bloom Filter, the SBF supports queries on the multiplicities of individual keys with a guaranteed, small error probability. The SBF also supports insertions and deletions over the data set. We present novel methods for reducing the probability and magnitude of errors. We also present an efficient data structure and algorithms to build it incrementally and maintain it over streaming data, as well as over materialized data with arbitrary insertions and deletions. The SBF does not assume any a priori filtering threshold and effectively and efficiently maintains information over the entire data-set, allowing for ad-hoc queries with arbitrary parameters and enabling a range of new applications.},
+	Author = {Saar Cohen and Yossi Matias},
+	Bibsource = {DBLP, http://dblp.uni-trier.de},
+	Booktitle = {SIGMOD Conference},
+	Crossref = {DBLP:conf/sigmod/2003},
+	Date-Added = {2014-05-06 22:23:00 +0000},
+	Date-Modified = {2014-05-06 22:23:00 +0000},
+	Pages = {241-252},
+	Title = {Spectral Bloom Filters},
+	Year = {2003},
+	Bdsk-Url-1 = {http://doi.acm.org/10.1145/872757.872787}}
+
+@proceedings{DBLP:conf/sigmod/2003,
+	Bibsource = {DBLP, http://dblp.uni-trier.de},
+	Booktitle = {SIGMOD Conference},
+	Date-Added = {2014-05-06 22:23:00 +0000},
+	Date-Modified = {2014-05-06 22:23:00 +0000},
+	Editor = {Alon Y. Halevy and Zachary G. Ives and AnHai Doan},
+	Isbn = {1-58113-634-X},
+	Publisher = {ACM},
+	Title = {Proceedings of the 2003 ACM SIGMOD International Conference on Management of Data, San Diego, California, USA, June 9-12, 2003},
+	Year = {2003}}
+
+@inproceedings{DBLP:conf/sigcomm/EstanV02,
+	Abstract = {Accurate network traffic measurement is required for accounting, bandwidth provisioning and detecting DoS attacks. These applications see the traffic as a collection of flows they need to measure. As link speeds and the number of flows increase, keeping a counter for each flow is too expensive (using SRAM) or slow (using DRAM). The current state-of-the-art methods (Cisco's sampled NetFlow) which log periodically sampled packets are slow, inaccurate and resource-intensive. Previous work showed that at different granularities a small number of heavy hitters accounts for a large share of traffic. Our paper introduces a paradigm shift for measurement by concentrating only on large flows --- those above some threshold such as 0.1% of the link capacity.We propose two novel and scalable algorithms for identifying the large flows: sample and hold and multistage filters, which take a constant number of memory references per packet and use a small amount of memory. If $M$ is the available memory, we show analytically that the errors of our new algorithms are proportional to $1/M$; by contrast, the error of an algorithm based on classical sampling is proportional to $1/sqrtM$, thus providing much less accuracy for the same amount of memory. We also describe further optimizations such as early removal and conservative update that further improve the accuracy of our algorithms, as measured on real traffic traces, by an order of magnitude. Our schemes allow a new form of accounting called threshold accounting in which only flows above a threshold are charged by usage while the rest are charged a fixed fee. Threshold accounting generalizes usage-based and duration based pricing.},
+	Author = {Cristian Estan and George Varghese},
+	Bibsource = {DBLP, http://dblp.uni-trier.de},
+	Booktitle = {SIGCOMM},
+	Crossref = {DBLP:conf/sigcomm/2002},
+	Date-Added = {2014-05-06 22:21:14 +0000},
+	Date-Modified = {2014-05-06 22:21:14 +0000},
+	Pages = {323-336},
+	Title = {New directions in traffic measurement and accounting},
+	Year = {2002},
+	Bdsk-Url-1 = {http://doi.acm.org/10.1145/633025.633056}}
+
+@proceedings{DBLP:conf/sigcomm/2002,
+	Bibsource = {DBLP, http://dblp.uni-trier.de},
+	Booktitle = {SIGCOMM},
+	Date-Added = {2014-05-06 22:21:14 +0000},
+	Date-Modified = {2014-05-06 22:21:14 +0000},
+	Isbn = {1-58113-570-X},
+	Publisher = {ACM},
+	Title = {Proceedings of the ACM SIGCOMM 2002 Conference on Applications, Technologies, Architectures, and Protocols for Computer Communication, August 19-23, 2002, Pittsburgh, PA, USA},
+	Year = {2002}}
 
 @article{flajolet2008hyperloglog,
 	Author = {Flajolet, Philippe and Fusy, {\'E}ric and Gandouet, Olivier and Meunier, Fr{\'e}d{\'e}ric},
