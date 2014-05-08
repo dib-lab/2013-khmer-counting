@@ -117,11 +117,11 @@ software package for fast and memory efficient {\em online} counting
 of k-mers in sequencing data sets. Unlike previous methods based on
 data structures such as hash tables, suffix arrays, and trie
 structures, khmer relies entirely on a simple probabilistic data
-structure, a CountMin Sketch.  The CountMin Sketch permits online
+structure, a Count-Min Sketch.  The Count-Min Sketch permits online
 updating and retrieval of k-mer counts in memory which is necessary to
 support online k-mer analysis algorithms.  On sparse data sets this
 data structure is considerably more memory efficient than any exact
-data structure.  In exchange, the use of a CountMin Sketch introduces
+data structure.  In exchange, the use of a Count-Min Sketch introduces
 a systematic overcount for k-mers; moreover, only the counts, and not
 the k-mers, are stored.  Here we analyze the speed, the memory usage,
 and the miscount rate of khmer for generating k-mer frequency
@@ -207,7 +207,7 @@ our exploration of efficient in-memory k-mer counting techniques.
 
 Below, we describe an implementation of a simple probabilistic data
 structure for k-mer counting. This data structure is based on a
-CountMin Sketch \cite{Cormode2005} , a generalized probabilistic data structure for
+Count-Min Sketch \cite{Cormode2005} , a generalized probabilistic data structure for
 storing the frequency distributions of distinct elements.
 Our implementation extends an earlier
 implementation of a Bloom filter \cite{Bloom70}, which has been previously used 
@@ -218,7 +218,7 @@ Many other variations of Bloom filters have been proposed \cite{BroderM03}, incl
 counting Bloom filters \cite{Fan:2000:SCS:343571.343572}, 
 multistage filters \cite{DBLP:conf/sigcomm/EstanV02}, 
 and spectral Bloom filters \cite{DBLP:conf/sigmod/CohenM03}, which 
-are related to CountMin Sketch and our khmer implementation. 
+are related to Count-Min Sketch and our khmer implementation. 
  
 
 % @@CTB this would be the place to extend CMS/CBF discussion.
@@ -228,7 +228,7 @@ certain problems, with memory usage significantly lower than any exact
 data structure \cite{Pell2012}.  However, their use introduces set
 membership or counting false positives, which have effects that must
 be analyzed in the context of specific problems.  Moreover, unlike
-existing techniques, the CountMin Sketch stores only counts; k-mers
+existing techniques, the Count-Min Sketch stores only counts; k-mers
 must be retrieved from the original data set.  In exchange, the low
 memory footprint enabled by this probabilistic approach enables online
 updating and retrieval of k-mer counts entirely in memory, which in
@@ -263,7 +263,7 @@ assembly \cite{Brown2012}.
 % Results and Discussion can be combined.
 \section*{Results}
 
-\subsection*{Implementing a CountMin Sketch for k-mers}
+\subsection*{Implementing a Count-Min Sketch for k-mers}
 
 The two basic operations supported by khmer are {\tt
   increment\_count(kmer) } and {\tt c = get\_count(kmer). } Both
@@ -288,12 +288,12 @@ standard Bloom filter, which uses a single hash table with many
 hash functions, the performance details are identical \cite{Pell2012}.
 % bloom filter? starndard CMS uses different hash functions for differnt tables -QP
 % 
-One particularly important feature of the CountMin Sketch is that the
+One particularly important feature of the Count-Min Sketch is that the
 counting error is {\em one-sided} \cite{Cormode2005}.  Because counts
 are only incremented, collisions result in inflated miscounts; if
 there is no collision for a particular k-mer, the count is correct.
 
-An additional benefit of the CountMin Sketch is that it is extremely
+An additional benefit of the Count-Min Sketch is that it is extremely
 easy to implement correctly, needing only about 3 dozen lines of C++
 code for a simple threadsafe implementation.  (We have
 described how khmer scales with multiple threads in
@@ -417,7 +417,7 @@ into memory.
 
 \subsection*{The measured counting error is low on short-read data}
 
-Due to the use of CountMin Sketch and its lack of collision tracking,
+Due to the use of Count-Min Sketch and its lack of collision tracking,
 khmer will report some incorrect counts for k-mers; these counts are
 always higher than the true counts, up to the bound of 255 (a limit
 imposed by our use of 8-bit counters). The frequency with which
@@ -476,7 +476,7 @@ random sequencing errors.
 A variety of read trimming and error correcting tools use k-mer
 counting to reduce the error content of the read data set, independent
 of quality scores or reference genomes \cite{Kelley2010}.  This is an
-application where the counting error of the CountMin Sketch approach
+application where the counting error of the Count-Min Sketch approach
 used by khmer may be particularly tolerable: it will never falsely
 call a high-abundance k-mer as low-abundance because khmer never
 underestimates counts.
@@ -492,7 +492,7 @@ rate at the 3' end of reads.
 
 We next evaluated the effect of false-positive induced miscounts on
 read trimming, in which reads are truncated at the first low-abundance
-k-mer.  Because the CountMin Sketch never undercounts k-mers, reads
+k-mer.  Because the Count-Min Sketch never undercounts k-mers, reads
 will never be erroneously trimmed at truly high-abundance k-mers;
 however, reads may not be trimmed correctly when miscounts inflate the
 count of low-abundance k-mers.  In cases where many errors remain,
@@ -536,7 +536,7 @@ including Trinity's {\em in silico} normalization
 \cite{Haas2013,Brown2012blog}, digital normalization can be
 efficiently implemented as a {\em streaming} algorithm. In the
 streaming implementation, if a read is not kept, it is not loaded into
-the CountMin Sketch structure, and the false positive rate does not
+the Count-Min Sketch structure, and the false positive rate does not
 increase.  For high coverage data sets, the digital normalization
 algorithm is sublinear in memory because it does not collect the
 majority of k-mers in those data sets \cite{Brown2012}.  This has the
@@ -550,7 +550,7 @@ effective digital normalization.  In particular, the effects of high
 false positive rates have not been examined in any prior work.
 
 We applied digital normalization to the {\em E. coli} data set used
-above, and chose seven different CountMin Sketch sizes to yield seven
+above, and chose seven different Count-Min Sketch sizes to yield seven
 different false positive rates \ref{table:loop_norm}.  The data set
 was normalized to a k-mer coverage of 20 and the resulting data were
 evaluated for retention of true and erroneous k-mers, as in
@@ -629,7 +629,7 @@ since this was a primary motivation for the development of khmer.
 
 \subsection*{khmer memory usage is fixed and low}
 
-The memory usage of the basic CountMin Sketch approach is fixed:
+The memory usage of the basic Count-Min Sketch approach is fixed:
 khmer's memory usage does not increase as data is loaded. While this
 means that khmer will never crash due to memory limitations, and all
 operations can be performed in main memory without recourse to disk
@@ -670,22 +670,22 @@ future, we may extend khmer to counters of arbitrary bit sizes.
 
 \subsection*{False positive rates in k-mer counting are low and predictable}
 
-The CountMin Sketch is a probabilistic data structure with a one-sided
+The Count-Min Sketch is a probabilistic data structure with a one-sided
 error that results in random overestimates of k-mer frequency, but
 does not generate underestimates.
 
-In the CountMin Sketch, the total memory usage is fixed; the memory
+In the Count-Min Sketch, the total memory usage is fixed; the memory
 usage, the hash functions, and the total number of distinct objects
 counted all influence the accuracy of the count.  While the
 probability of an inaccurate count can easily be estimated based on
 the hash table load, the miscount size is dependent on details of the
 frequency distribution of k-mers \cite{Cormode2005}.
 
-More specifically, in the analysis of the CountMin Sketch, the
+More specifically, in the analysis of the Count-Min Sketch, the
 difference between the incorrect count and actual count is related to
 the total number of k-mers in a data set and the size of each hash
 table \cite{Cormode2005}. Further study has shown that the behavior of
-CountMin Sketch depends on specific characteristics of the data set
+Count-Min Sketch depends on specific characteristics of the data set
 under consideration, especially left-skewness \cite{Rusu2008,
   CormodeM05}.  These probabilistic properties suit short reads from
 next generation sequencing data sets: the miscounts are low because of
@@ -742,7 +742,7 @@ data set sizes increase, graceful degradation of data structures in
 the face of large amounts of data has become important.  This is
 especially true when the theoretical and practical effects of the
 degradation can be predicted (see e.g. \cite{Melsted2011, Pell2012,
-  Roy2014}).  This is a key property of the CountMin Sketch approach,
+  Roy2014}).  This is a key property of the Count-Min Sketch approach,
 and its implementation in khmer.
 
 The khmer software implementation offers good performance, a robust
@@ -832,9 +832,9 @@ four data sets were chosen to contain identical numbers of unique
 22-mers.  The scripts necessary to regenerate these data are available
 in the paper repository on github.com.
 
-\subsection*{CountMin Sketch implementation}
+\subsection*{Count-Min Sketch implementation}
 
-We implemented the CountMin Sketch data structure, a simple
+We implemented the Count-Min Sketch data structure, a simple
 probabilistic data structure for counting distinct elements
 \cite{Cormode2005}.  Our implementation uses $Z$ independent hash
 tables, each containing a prime number of counters $H_i$.  The hashing
