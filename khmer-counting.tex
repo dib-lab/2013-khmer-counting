@@ -128,7 +128,7 @@ and the miscount rate of khmer for generating k-mer frequency
 distributions and retrieving k-mer counts for individual k-mers.  We
 also compare the performance of khmer to several other k-mer counting
 packages, including Tallymer, Jellyfish, BFCounter, DSK, KMC, Turtle
- and KAnalyze. % Is this list too long? -QP
+ and KAnalyze.
 Finally, we examine
 the effectiveness of profiling sequencing error, k-mer abundance
 trimming, and digital normalization of reads in the context of high
@@ -136,7 +136,7 @@ khmer false positive rates. Khmer is implemented in C++ wrapped with a Python
 interface, offers a tested and robust API, and is freely available
 under the BSD license at github.com/ged-lab/khmer.
 % rewrite to emphasize more on online counting, random k-mer frequency retrieval? 
-% -QP
+% @QP
 
 
 % Please keep the Author Summary between 150 and 200 words
@@ -183,7 +183,7 @@ hash tables, and makes use of disk storage to scale to larger data
 sets \cite{Marcais2011}.  BFCounter uses a Bloom filter as a
 pre-filter to avoid counting unique k-mers, and is the first published
 probabilistic approach to k-mer counting \cite{Melsted2011}.  DSK
-adopts an %online not online? -QP
+adopts an
 approach to k-mer counting that enables time- and
 memory-efficient k-mer counting with an explicit trade-off between
 disk and memory usage \cite{Rizk2013}.  KMC and KAnalyze rely
@@ -213,15 +213,13 @@ Our implementation extends an earlier
 implementation of a Bloom filter \cite{Bloom70}, which has been previously used 
 in bioinformatics applications, such as
 sequence matching \cite{DBLP:conf/padl/MaldeO09}, k-mer counting \cite{Melsted2011}, 
-de Bruijn graph storage and traversal \cite{Pell2012,Jones:2012aa}.
+and de Bruijn graph storage and traversal \cite{Pell2012,Jones:2012aa}.
 Many other variations of Bloom filters have been proposed \cite{BroderM03}, including
 counting Bloom filters \cite{Fan:2000:SCS:343571.343572}, 
 multistage filters \cite{DBLP:conf/sigcomm/EstanV02}, 
 and spectral Bloom filters \cite{DBLP:conf/sigmod/CohenM03}, which 
 are related to Count-Min Sketch and our khmer implementation. 
  
-
-% @@CTB this would be the place to extend CMS/CBF discussion.
 
 Probabilistic approaches can be particularly memory efficient for
 certain problems, with memory usage significantly lower than any exact
@@ -286,7 +284,6 @@ the same hash is computed and the minimum count across all hash tables
 is computed. While different in implementation detail from the
 standard Bloom filter, which uses a single hash table with many
 hash functions, the performance details are identical \cite{Pell2012}.
-% bloom filter? starndard CMS uses different hash functions for differnt tables -QP
 % 
 One particularly important feature of the Count-Min Sketch is that the
 counting error is {\em one-sided} \cite{Cormode2005}.  Because counts
@@ -373,7 +370,7 @@ uses more memory than Jellyfish generally.  DSK, KMC, and KAnalyze use
 constant memory across the data sets, but at the cost of more limited
 functionality (discussed below).
 
-% Tallymer is not shown in figure, may need modification here - QP
+% Tallymer is not shown in figure, may need modification here - @QP
 
 The memory usage of khmer also increases linearly with data set size
 as long as we hold the false positive rate constant.  However, the
@@ -525,7 +522,16 @@ of many unique k-mers at the 3' end of the read, and this was
 confirmed upon measurement (Table \ref{table:loop_trim}, column 6,
 pass 1 vs pass 2).
 
-% discussion of fastx, seqtk? - QP
+In comparison to quality-based trimming software such as seqtk and
+FASTX, trimming at unique k-mers performed very well: in this data
+set, all unique k-mers represent errors, and even with an initial
+false positive rate of 80\%, khmer outperformed all but the most
+stringent seqtk run (Table \ref{table:loop_trim}).  With a lower false
+positive rate or multiple passes, khmer eliminates more erroneous
+k-mers than seqtk or FASTX.  The tradeoff here is in memory usage:
+for larger data sets, seqtk and FASTX will consume
+the same amount of memory as on smaller data sets, while khmer's memory
+usage will need to grow with the data set size.
 
 \subsection*{Using khmer for digital normalization, a streaming algorithm}
 
@@ -598,7 +604,7 @@ updating of k-mer counts can be done directly as data is being loaded,
 with no need for disk access or an indexing step, khmer can also
 perform well in situations with poor disk I/O performance.  (Note that
 BFCounter also supports online k-mer counting \cite{Melsted2011}.)
-% Jellyfish , Turtle ? -QP
+% Jellyfish , Turtle ? -@QP
 
 
 \subsection*{khmer is a generally useful k-mer counting approach}
@@ -842,7 +848,6 @@ function for each hash table is fixed, and reversibly converts each
 DNA k-mer (for $k \le 32$) into a 64-bit number to which the modulus of
 the hash table size is applied.  This provides $Z$ distinct hash
 functions.
-% (see also \cite{adina2013}). seems the wrong citation? -QP
 
 To increment the count associated with a k-mer, the counter associated
 with the hashed k-mer in each of the $N$ hash tables is incremented.
@@ -1047,7 +1052,7 @@ sets were chosen to have the same total number of unique k-mers: one
 metagenome data set; a set of randomly generated k-mers; a set
 of reads, chosen with 3x coverage and 1\% error, from a randomly generated
 genome; a simulated set of error-free reads (3x) chosen from a randomly
-generated genome and a set of E. coli reads.}
+generated genome and a set of {\em E. coli} reads.}
 \label{fig:average_offset_vs_fpr}
 \end{figure}
 
@@ -1091,9 +1096,10 @@ generated genome and a set of E. coli reads.}
 \bf{Benchmark soil metagenome data sets for k-mer counting performance, taken from
 \cite{Howe2012}.}}
 \begin{tabular}{ |c | c |c| c|c| }
+\hline
 Data set & size of file (GB) & number of reads & number of distinct
 k-mers & total number of k-mers \\
-\hline \\
+\hline
 subset 1        & 1.90 &  9,744,399 &   561,178,082 &   630,207,985 \\
 subset 2        & 2.17 & 19,488,798 & 1,060,354,144 & 1,259,079,821 \\
 subset 3        & 3.14 & 29,233,197 & 1,445,923,389 & 1,771,614,378 \\
@@ -1125,8 +1131,9 @@ entire data set & 5.00 & 48,721,995 & 2,121,474,237 & 2,743,130,683 \\
 \caption{
 \bf{Data sets used for analyzing miscounts.}}
 \begin{tabular}{ | p{5cm} | c | c | c |}
+\hline
 Data set & Size of data set file & Number of total k-mers & Number of unique k-mers \\
-\hline \\
+\hline
 Real metagenomics reads                                  & 7.01M  & 2,917,200  & 1,944,996 \\
 \hline
 Totally random reads with randomly generated k-mers      & 3.53M  & 2,250,006  & 1,973,059 \\
@@ -1155,9 +1162,10 @@ Real {\em E. coli} reads                                        & 4.85M  & 4,004
   of unique (and likely erroneous) k-mers remaining, and the
   number of unique k-mers present at the 3' end of reads.}}
 \begin{tabular}{ | c | c | c | c | c | c |}
+\hline
 iteration & FP rate & bases trimmed & total k-mers & unique k-mers & 
 unique k-mers at 3' end \\
-\hline \\
+\hline
 untrimmed                           &      -  &      - & 41.6m & 34.1m & 30.4\%  \\
 khmer iteration 1                   & 80.0\%  & 13.5\% & 13.3m &  6.5m & 29.8\% \\
 khmer iteration 2                   & 37.7\%  &  1.5\% &  8.1m &  1.4m & 16.4\% \\
@@ -1192,8 +1200,9 @@ filter by seqtk(-b 3 -e 5)          &      -  &  8.0\% & 34.5m & 27.7m & 25.3\% 
     Note: at high false positive rates, reads are erroneously removed due to
     inflation of k-mer counts.}}
 \begin{tabular}{ | c | c | c | c | c | c | c |}
+\hline
 memory   & FP rate & retained reads & retained reads \% & true k-mers missing & total k-mers \\
-\hline \\
+\hline
 before diginorm   &  -      & 5,000,000   & 100.0\%    & 170  &  41.6m \\
 2400 MB           &   0.0\% & 1,656,518   &  33.0\%    & 172  &  28.1m \\
 240 MB            &   2.8\% & 1,655,988   &  33.0\%    & 172  &  28.1m \\
@@ -1221,8 +1230,9 @@ before diginorm   &  -      & 5,000,000   & 100.0\%    & 170  &  41.6m \\
   We measured total length of assembly,
   as well as percent of true MG1655 genome covered by the assembly using QUAST.}}
 \begin{tabular}{ | c | c | c | c | c | c |}
+\hline
 memory   & FP rate & N contigs & total length(bases) & \% of true genome covered \\
-\hline \\
+\hline
 before diginorm  &-   & 106 & 4,546,051 & 97.84\% \\
     2400 MB  &  0.0\% & 617 & 4,549,235 & 98.05\% \\
      240 MB  &  2.8\% &  87 & 4,549,253 & 98.04\% \\
