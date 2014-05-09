@@ -132,7 +132,7 @@ packages, including Tallymer, Jellyfish, BFCounter, DSK, KMC, Turtle
 Finally, we examine
 the effectiveness of profiling sequencing error, k-mer abundance
 trimming, and digital normalization of reads in the context of high
-khmer false positive rates. Khmer is implemented in C++ wrapped with a Python
+khmer false positive rates. khmer is implemented in C++ wrapped with a Python
 interface, offers a tested and robust API, and is freely available
 under the BSD license at github.com/ged-lab/khmer.
 % rewrite to emphasize more on online counting, random k-mer frequency retrieval? 
@@ -207,7 +207,7 @@ our exploration of efficient in-memory k-mer counting techniques.
 
 Below, we describe an implementation of a simple probabilistic data
 structure for k-mer counting. This data structure is based on a
-Count-Min Sketch \cite{Cormode2005} , a generalized probabilistic data structure for
+Count-Min Sketch \cite{Cormode2005}, a generalized probabilistic data structure for
 storing the frequency distributions of distinct elements.
 Our implementation extends an earlier
 implementation of a Bloom filter \cite{Bloom70}, which has been previously used 
@@ -218,7 +218,7 @@ Many other variations of Bloom filters have been proposed \cite{BroderM03}, incl
 counting Bloom filters \cite{Fan:2000:SCS:343571.343572}, 
 multistage filters \cite{DBLP:conf/sigcomm/EstanV02}, 
 and spectral Bloom filters \cite{DBLP:conf/sigmod/CohenM03}, which 
-are related to Count-Min Sketch and our khmer implementation. 
+are related to the Count-Min Sketch and our khmer implementation. 
  
 
 Probabilistic approaches can be particularly memory efficient for
@@ -327,8 +327,8 @@ we want to calculate the minimum memory usage required to achieve $f$.
 
 For fixed memory $M$ and number of unique k-mers $N$, the optimal
 number of hash tables can be found by minimizing $f$; taking the
-derivative, $df/dZ$, with $f \approx exp(Zln(1-e^{-ZN/M}))$ and solving
-for 0, we find that $f$ is minimized when $Z=ln2*(M/N)$ (see
+derivative, $df/dZ$, with $f \approx \exp(Z \log(1-e^{-ZN/M}))$ and solving
+for 0, we find that $f$ is minimized when $Z=\log_2*(M/N)$ (see
 \cite{broder2004network} for details).
 
 Given a desired false positive rate $f$ and a fixed number of k-mers
@@ -364,11 +364,12 @@ increases linearly with data set size. Tallymer is the slowest of the
 four tools in this testing, while KMC, Turtle, and Jellyfish are
 the fastest.
 
-From Figure \ref{fig:cmp_memory}, we see that the memory usage of both
-Jellyfish and Tallymer increases linearly with data set size. Tallymer
-uses more memory than Jellyfish generally.  DSK, KMC, and KAnalyze use
-constant memory across the data sets, but at the cost of more limited
-functionality (discussed below).
+From Figure \ref{fig:cmp_memory}, we see that the memory usage of
+Jellyfish, Tallymer, BFCounter, and Turtle increases linearly with
+data set size. Tallymer uses more memory than Jellyfish generally,
+while BFCounter and Turtle have considerably lower memory usage.
+DSK, KMC, and KAnalyze use constant memory across the data sets, but
+at the cost of more limited functionality (discussed below).
 
 % Tallymer is not shown in figure, may need modification here - @QP
 
@@ -735,7 +736,7 @@ error trimming and digital normalization, khmer readily enables
 analysis of extremely large and diverse data sets \cite{adina2013}. In
 an experiment to assemble the reads of a soil metagenomic sample
 collected from Iowa prairie, the number of reads to assemble drops
-from 3.3 million to 2.2 million and the size of data set drops from
+from 3.3 million to 2.2 million and the size of the data set drops from
 245GB to 145GB accordingly after digital normalization
 \cite{Howe2012}.  240GB memory was used in the process. This also
 shows that khmer works well to analyze large, real-world metagenomic data
