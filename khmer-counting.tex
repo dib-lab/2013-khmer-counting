@@ -110,7 +110,7 @@ $\ast$ E-mail: ctb@msu.edu
 % Please keep the abstract between 250 and 300 words
 \section*{Abstract}
 
-K-mer abundance analysis is widely used for many purposes in sequence
+K-mer abundance analysis is widely used for many purposes in nucleotide sequence
 analysis, including data preprocessing for de novo assembly, repeat
 detection, and sequencing coverage estimation.  We present the khmer
 software package for fast and memory efficient {\em online} counting
@@ -132,7 +132,7 @@ packages, including Tallymer, Jellyfish, BFCounter, DSK, KMC, Turtle
 Finally, we examine
 the effectiveness of profiling sequencing error, k-mer abundance
 trimming, and digital normalization of reads in the context of high
-khmer false positive rates. khmer is implemented in C++ wrapped with a Python
+khmer false positive rates. khmer is implemented in C++ wrapped in a Python
 interface, offers a tested and robust API, and is freely available
 under the BSD license at github.com/ged-lab/khmer.
 % rewrite to emphasize more on online counting, random k-mer frequency retrieval? 
@@ -247,7 +247,7 @@ khmer's miscount performance in the context of two specific
 applications: low-abundance k-mer trimming of reads, and digital
 normalization.
 
-The khmer software \cite{khmer} is implemented in C++ with a Python
+The khmer software \cite{khmer} is implemented in C++ in a Python
 wrapper, enabling flexible use and reuse by users with a wide range of
 computational expertise.  The software package is freely available for
 academic and commercial use and redistribution under the BSD license
@@ -905,7 +905,7 @@ The Tallymer random access k-mer counting benchmark was done using the
 {\tt tallymer-search.sh}.
 
 \paragraph{Jellyfish:}
-Jellyfish is version 1.1.10 and the multithreading option is set to 8 threads.
+The Jellyfish version used was 1.1.10 and the multithreading option is set to 8 threads.
 
 Jellyfish uses a hash table to store the k-mers and the size of the
 hash table can be modified by the user.  When the specified hash table
@@ -925,9 +925,9 @@ using the 'query' routine and querying against both strands; see
 the script {\tt jelly-search.sh}.
 
 \paragraph{DSK:} We ran DSK with default parameters with {\tt -histo} option to generate
-k-mer abundance distribution. Version is 1.5031.
+k-mer abundance distribution. The DSK version used was 1.5031.
 
-\paragraph{BFCounter:} BFcounter is version 1.0 and the multithreading option is set to 8
+\paragraph{BFCounter:} The BFcounter version used was 1.0 and the multithreading option is set to 8
  threads.
  
 We ran BFCounter {\tt count} subroutine with the options as below:
@@ -943,15 +943,15 @@ We ran BFCounter {\tt dump} subroutine with the options as below:
  
 This subroutine can write k-mer occurrences into a tab-separated text file.
 
-\paragraph{KMC:} KMC is version 0.3. We ran both {\tt kmc} and {\tt kmc\_dump} subroutines 
+\paragraph{KMC:} The KMC version used was 0.3. We ran both {\tt kmc} and {\tt kmc\_dump} subroutines 
 with default parameters.
 
 
-\paragraph{Turtle:} Turtle is version 0.3. We ran {\tt scTurtle32} with the multithreading 
+\paragraph{Turtle:} The Turtle version used was 0.3. We ran {\tt scTurtle32} with the multithreading 
 option set to 8 threads and {\tt -n} option representing expected number of frequent k-mers
 is adjusted to different test data sets.
 
-\paragraph{KAnalyze:} KAnalyze is version 0.9.3. We ran {\tt count} subroutine 
+\paragraph{KAnalyze:} The KAnalyze version used was 0.9.3. We ran {\tt count} subroutine 
 with default parameters.
 
 % more discussion of how to calculate sum time? -QP
