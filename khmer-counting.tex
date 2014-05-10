@@ -1164,16 +1164,16 @@ Real {\em E. coli} reads                                        & 4.85M  & 4,004
   number of unique k-mers present at the 3' end of reads.}}
 \begin{tabular}{ | c | c | c | c | c | c |}
 \hline
-iteration & FP rate & bases trimmed & total k-mers & unique k-mers & 
+ & FP rate & bases trimmed & total k-mers & unique k-mers & 
 unique k-mers at 3' end \\
 \hline
 untrimmed                           &      -  &      - & 41.6m & 34.1m & 30.4\%  \\
 khmer iteration 1                   & 80.0\%  & 13.5\% & 13.3m &  6.5m & 29.8\% \\
-khmer iteration 2                   & 37.7\%  &  1.5\% &  8.1m &  1.4m & 16.4\% \\
-khmer iteration 3                   & 24.9\%  &  0.2\% &  7.5m & 818.7k & 11.7\% \\
-khmer iteration 4                   & 23.2\%  &  0.0\% &  7.4m & 752.9k & 11.0\% \\
-khmer iteration 5                   & 23.1\%  &  0.0\% &  7.4m & 745.3k & 11.0\% \\
-khmer iteration 6                   & 23.0\%  &  0.0\% &  7.4m & 744.5k & 11.0\% \\
+khmer iteration 2                   & 40.2\%  &  1.7\% &  7.6m & 909.9k & 12.3\% \\
+khmer iteration 3                   & 25.4\%  &  0.3\% &  6.8m & 168.1k & 3.1\% \\
+khmer iteration 4                   & 23.2\%  &  0.1\% &  6.7m &  35.8k & 0.7\% \\
+khmer iteration 5                   & 22.8\%  &  0.0\% &  6.6m &   7.9k & 0.2\% \\
+khmer iteration 6                   & 22.7\%  &  0.0\% &  6.6m &   1.9k & 0.0\% \\
 filter by FASTX                     &      -  &  9.1\% & 26.6m & 20.3m & 26.3\% \\
 filter by seqtk(default)            &      -  &  8.9\% & 17.7m & 12.1m & 12.3\% \\
 filter by seqtk(-q 0.01)            &      -  & 15.4\% &  9.9m &  5.1m &  5.2\% \\
