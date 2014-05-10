@@ -470,44 +470,69 @@ trimming: ecoli_ref.fastq.hist ecoli_ref.fastq.endcount  \
 	ecoli_ref.fastq.seqtk-trimmed-b3e5.r1.fastq
 
 
+trimming_newround:ecoli_ref.fastq.r1.fq.hist ecoli_ref.fastq.r1.fq.endcount \
+	ecoli_ref.fastq.r2.fq.hist ecoli_ref.fastq.r2.fq.endcount \
+	ecoli_ref.fastq.r3.fq.hist ecoli_ref.fastq.r3.fq.endcount \
+ 	ecoli_ref.fastq.r4.fq.hist ecoli_ref.fastq.r4.fq.endcount \
+	ecoli_ref.fastq.r5.fq.hist ecoli_ref.fastq.r5.fq.endcount \
+ 	ecoli_ref.fastq.r6.fq.hist ecoli_ref.fastq.r6.fq.endcount \
 
 
-
-
-HASH_FILTER = -x 25818513 -N 1 -k 20 # for optimal hash table to get 0.8 fpr, with minimum 
-# memory
-
-HASH_HIST =  -x 3e9 -N 4 -k 20 #big hash table, for histogram and end unqiue k-mer counting 
-
+HASH_FILTER1 = -x 25818513 -N 1 -k 20 # for optimal hash table to get 0.8 fpr, with minimum 
+# memory  
+HASH_FILTER2 = -x 25818613 -N 1 -k 20 # to get different primer number
+HASH_FILTER3 = -x 25818713 -N 1 -k 20
+HASH_FILTER4 = -x 25818813 -N 1 -k 20
+HASH_FILTER5 = -x 25818913 -N 1 -k 20
+HASH_FILTER6 = -x 25818413 -N 1 -k 20
 
 # do filter abund for each round
 # filtered by filter-abund-single.py
-# also get number of bases processed for other trimming method
-TARGET_FQ = ecoli_ref.fastq.r1.fq ecoli_ref.fastq.r2.fq ecoli_ref.fastq.r3.fq ecoli_ref.fastq.r4.fq \
-	ecoli_ref.fastq.r5.fq ecoli_ref.fastq.r6.fq ecoli_ref-trim.fastq.r1.fq \
-	ecoli_ref.fastq.seqtk-trimmed.r1.fastq ecoli_ref.fastq.seqtk-trimmed-q001.r1.fastq \
-	ecoli_ref.fastq.seqtk-trimmed-b3e5.r1.fastq
 
 ecoli_ref.fastq.r1.fq: ecoli_ref.fastq
-ecoli_ref.fastq.r2.fq: ecoli_ref.fastq.r1.fq
-ecoli_ref.fastq.r3.fq: ecoli_ref.fastq.r2.fq
-ecoli_ref.fastq.r4.fq: ecoli_ref.fastq.r3.fq
-ecoli_ref.fastq.r5.fq: ecoli_ref.fastq.r4.fq
-ecoli_ref.fastq.r6.fq: ecoli_ref.fastq.r5.fq
+	${KHMER}/scripts/filter-abund-single.py $(HASH_FILTER1) $< > $@.out 2>&1
+	mv $<.abundfilt $@
 
-# to get number of bases processed. using filter-abund-single.py for other trimming method
+ecoli_ref.fastq.r2.fq: ecoli_ref.fastq.r1.fq
+	${KHMER}/scripts/filter-abund-single.py $(HASH_FILTER2) $< > $@.out 2>&1
+	mv $<.abundfilt $@
+
+ecoli_ref.fastq.r3.fq: ecoli_ref.fastq.r2.fq
+	${KHMER}/scripts/filter-abund-single.py $(HASH_FILTER3) $< > $@.out 2>&1
+	mv $<.abundfilt $@
+
+ecoli_ref.fastq.r4.fq: ecoli_ref.fastq.r3.fq
+	${KHMER}/scripts/filter-abund-single.py $(HASH_FILTER4) $< > $@.out 2>&1
+	mv $<.abundfilt $@
+
+ecoli_ref.fastq.r5.fq: ecoli_ref.fastq.r4.fq
+	${KHMER}/scripts/filter-abund-single.py $(HASH_FILTER5) $< > $@.out 2>&1
+	mv $<.abundfilt $@
+
+ecoli_ref.fastq.r6.fq: ecoli_ref.fastq.r5.fq
+	${KHMER}/scripts/filter-abund-single.py $(HASH_FILTER6) $< > $@.out 2>&1
+	mv $<.abundfilt $@
+
+# also get number of bases processed for other trimming method, using side effect of filter-abund-single.py
+TARGET_FQ = ecoli_ref-trim.fastq.r1.fq \
+	ecoli_ref.fastq.seqtk-trimmed.r1.fastq \
+	ecoli_ref.fastq.seqtk-trimmed-q001.r1.fastq \
+	ecoli_ref.fastq.seqtk-trimmed-b3e5.r1.fastq
+	
+# to get number of bases processed. using filter-abund-single.py just for other trimming method
 ecoli_ref-trim.fastq.r1.fq: ecoli_ref-trim.fastq
 ecoli_ref.fastq.seqtk-trimmed.r1.fastq: ecoli_ref.fastq.seqtk-trimmed.fastq
 ecoli_ref.fastq.seqtk-trimmed-q001.r1.fastq: ecoli_ref.fastq.seqtk-trimmed-q001.fastq
 ecoli_ref.fastq.seqtk-trimmed-b3e5.r1.fastq: ecoli_ref.fastq.seqtk-trimmed-b3e5.fastq
 
-
 $(TARGET_FQ):
-	${KHMER}/scripts/filter-abund-single.py $(HASH_FILTER) $< > $@.out 2>&1
+	${KHMER}/scripts/filter-abund-single.py $(HASH_FILTER1) $< > $@.out 2>&1
 	mv $<.abundfilt $@
 
 
 # get k-mer abundance distribution to get total number of k-mers
+HASH_HIST =  -x 3e9 -N 4 -k 20 #big hash table, for histogram and end unqiue k-mer counting 
+
 %.hist: %
 	${KHMER}/scripts/abundance-dist-single.py $(HASH_HIST) $< $@
 

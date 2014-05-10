@@ -15,19 +15,25 @@ loading...
 ... filtering 300000
 ... filtering 400000
 ... filtering 500000
-processed 500000 / wrote 499950 / removed 50
-processed 46052334 bp / wrote 46050409 bp / removed 1925 bp
+processed 500000 / wrote 499951 / removed 49
+processed 46025442 bp / wrote 46021038 bp / removed 4404 bp
 discarded 0.0%
 ... filtering 600000
 ... filtering 700000
 ... filtering 800000
 ... filtering 900000
 ... filtering 1000000
+processed 1000000 / wrote 999900 / removed 100
+processed 91944236 bp / wrote 91935225 bp / removed 9011 bp
+discarded 0.0%
 ... filtering 1100000
 ... filtering 1200000
 ... filtering 1300000
 ... filtering 1400000
 ... filtering 1500000
+processed 1500000 / wrote 1499858 / removed 142
+processed 137706814 bp / wrote 137693582 bp / removed 13232 bp
+discarded 0.0%
 ... filtering 1600000
 ... filtering 1700000
 ... filtering 1800000
@@ -38,19 +44,22 @@ discarded 0.0%
 ... filtering 2300000
 ... filtering 2400000
 ... filtering 2500000
+processed 2500000 / wrote 2499755 / removed 245
+processed 229565031 bp / wrote 229542929 bp / removed 22102 bp
+discarded 0.0%
 ... filtering 2600000
 ... filtering 2700000
 ... filtering 2800000
 ... filtering 2900000
 ... filtering 3000000
+processed 3000000 / wrote 2999708 / removed 292
+processed 275589657 bp / wrote 275563281 bp / removed 26376 bp
+discarded 0.0%
 ... filtering 3100000
 ... filtering 3200000
 ... filtering 3300000
 ... filtering 3400000
 ... filtering 3500000
-processed 3500000 / wrote 3499676 / removed 324
-processed 321768986 bp / wrote 321755856 bp / removed 13130 bp
-discarded 0.0%
 ... filtering 3600000
 ... filtering 3700000
 ... filtering 3800000
@@ -61,17 +70,14 @@ discarded 0.0%
 ... filtering 4300000
 ... filtering 4400000
 ... filtering 4500000
-processed 4500000 / wrote 4499591 / removed 409
-processed 413275255 bp / wrote 413258502 bp / removed 16753 bp
-discarded 0.0%
 ... filtering 4600000
 done loading in sequences
 DONE writing.
-processed 4623779 / wrote 4623361 / removed 418
-processed 424730788 bp / wrote 424713569 bp / removed 17219 bp
+processed 4616192 / wrote 4615748 / removed 444
+processed 423759832 bp / wrote 423718393 bp / removed 41439 bp
 discarded 0.0%
 making hashtable
 consuming input, round 1 -- ecoli_ref.fastq.r4.fq
-fp rate estimated to be 0.231
+fp rate estimated to be 0.228
 filtering ecoli_ref.fastq.r4.fq
 output in ecoli_ref.fastq.r4.fq.abundfilt

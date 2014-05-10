@@ -32,7 +32,7 @@ discarded 13.5%
 ... filtering 1400000
 ... filtering 1500000
 processed 1500000 / wrote 1400203 / removed 99797
-processed 150000000 bp / wrote 129592048 bp / removed 20407952 bp
+processed 150000000 bp / wrote 129591976 bp / removed 20408024 bp
 discarded 13.6%
 ... filtering 1600000
 ... filtering 1700000
@@ -71,16 +71,16 @@ discarded 13.4%
 ... filtering 3800000
 ... filtering 3900000
 ... filtering 4000000
-processed 4000000 / wrote 3735158 / removed 264842
-processed 400000000 bp / wrote 346019116 bp / removed 53980884 bp
+processed 4000000 / wrote 3735155 / removed 264845
+processed 400000000 bp / wrote 346018603 bp / removed 53981397 bp
 discarded 13.5%
 ... filtering 4100000
 ... filtering 4200000
 ... filtering 4300000
 ... filtering 4400000
 ... filtering 4500000
-processed 4500000 / wrote 4201289 / removed 298711
-processed 450000000 bp / wrote 389123334 bp / removed 60876666 bp
+processed 4500000 / wrote 4201290 / removed 298710
+processed 450000000 bp / wrote 389123484 bp / removed 60876516 bp
 discarded 13.5%
 ... filtering 4600000
 ... filtering 4700000
