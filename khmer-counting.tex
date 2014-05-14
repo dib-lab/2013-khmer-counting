@@ -298,7 +298,7 @@ described how khmer scales with multiple threads in
 
 To determine the expected false positive rate --- the average frequency with
 which a given k-mer count will be incorrect when retrieved --- we can
-look at the hash table load. Suppose N unique k-mers have been counted
+look at the hash table load. Suppose N distinct k-mers have been counted
 using Z hash tables, each with size H.  The probability that no
 collisions happened in a specific entry in one hash table is
 $(1-1/H)^{N}$, or approximately $e^{-N/H}$. The individual collision
@@ -316,7 +316,7 @@ effects of this below.
 
 \subsection*{Choosing number and size of hash tables used for k-mer counting}
 
-The false positive rate depends on the number of unique k-mers $N$,
+The false positive rate depends on the number of distinct k-mers $N$,
 the number of hash tables $Z$, and the size of the hash tables $H$: $f
 \approx (1-e^{-N/H})^{Z}$, with an associated memory usage of $M = H
 Z$.  We face two common scenarios: one in which we have a fixed number
@@ -325,7 +325,7 @@ optimal number of hash tables $Z$; and one in which we have a desired
 maximum false positive rate $f$ and a fixed number of k-mers $N$, and
 we want to calculate the minimum memory usage required to achieve $f$.
 
-For fixed memory $M$ and number of unique k-mers $N$, the optimal
+For fixed memory $M$ and number of distinct k-mers $N$, the optimal
 number of hash tables can be found by minimizing $f$; taking the
 derivative, $df/dZ$, with $f \approx \exp(Z \log(1-e^{-ZN/M}))$ and solving
 for 0, we find that $f$ is minimized when $Z=\log_2*(M/N)$ (see
@@ -338,7 +338,7 @@ positive rate alone: $Z = \log_{0.5}f$.  Using this $Z$, the minimum
 average hash table size $H$ necessary to achieve $f$ can be calculated
 as $H = (\log_{0.6185}f\times N)/Z$.
 
-A remaining problem is that the number of unique k-mers $N$ is
+A remaining problem is that the number of distinct k-mers $N$ is
 typically not known.  However, memory- and time-efficient algorithms
 for calculating $N$ do exist and we plan to implement this in
 khmer in the future \cite{flajolet2008hyperloglog}.
@@ -511,7 +511,7 @@ positive rate was down to 23.2\% with 0.0\% of the data removed.
 
 The elimination of so many unique k-mers (column 5) in the first pass
 was unexpected: the high false positive rate should have resulted in
-fewer unique k-mers being identified as unique, were the erroneous
+fewer k-mers being identified as unique, were the erroneous
 k-mers independent of each other. Upon examination, we realized that
 in Illumina data erroneous k-mers typically come from substitution
 errors that yield runs of up to k erroneous k-mers in a row
@@ -766,7 +766,7 @@ this may be an acceptable tradeoff.
 
 \subsection*{Future considerations}
 
-Applying khmer to extremely large data sets with many unique k-mers
+Applying khmer to extremely large data sets with many distinct k-mers
 requires a large amount of memory: approximately 446 GB of memory is
 required to achieve an false positive rate of 1\% for $50\times 10^9$
 k-mers. It is possible to reduce the required memory by dividing k-mer
@@ -835,7 +835,7 @@ metagenomics data set from the MH0001 data set, above. The second
 consists of randomly generated reads. The third and fourth contain
 reads simulated from a random, 1 Mbp long genome.  The third has a
 substitution error rate of 3\%, and the fourth contains no errors. The
-four data sets were chosen to contain identical numbers of unique
+four data sets were chosen to contain identical numbers of distinct
 22-mers.  The scripts necessary to regenerate these data are available
 in the paper repository on github.com.
 
@@ -1039,7 +1039,7 @@ We thank Eric McDonald for technical assistance with optimizing the khmer codeba
 \centerline{\includegraphics[width=5in]{./figure/count_benchmark}}
 \caption{\bf Time for several k-mer counting tools to retrieve the
   counts of 9.7m randomly chosen k-mers (y axis), plotted against the
-  number of unique k-mers in the data set being queried (x axis).
+  number of distinct k-mers in the data set being queried (x axis).
   BFCounter, DSK, Turtle, KAnalyze, and KMC do not support this functionality.}
 \label{fig:cmp_count}
 \end{figure}
@@ -1049,7 +1049,7 @@ We thank Eric McDonald for technical assistance with optimizing the khmer codeba
 \caption{\bf Relation between average miscount --- amount by which
 the count for k-mers is incorrect --- on the y axis, plotted against
 false positive rate (x axis), for five data sets.  The five data
-sets were chosen to have the same total number of unique k-mers: one
+sets were chosen to have the same total number of distinct k-mers: one
 metagenome data set; a set of randomly generated k-mers; a set
 of reads, chosen with 3x coverage and 1\% error, from a randomly generated
 genome; a simulated set of error-free reads (3x) chosen from a randomly
@@ -1116,7 +1116,7 @@ entire data set & 5.00 & 48,721,995 & 2,121,474,237 & 2,743,130,683 \\
 
 % These numbers are got by running these commands: (to be integrated in Makefile)
 
-% to get number of unique k-mers:
+% to get number of distinct k-mers:
 % python bloom_count.py ecoli_ref_head45000.fasta 12 100000000 4
 % python bloom_count.py random_kmers_1M_3c.fa 12 100000000 4
 % python bloom_count.py random_reads_1.67M_3c_0.03e.fa 12 100000000 4
@@ -1133,7 +1133,7 @@ entire data set & 5.00 & 48,721,995 & 2,121,474,237 & 2,743,130,683 \\
 \bf{Data sets used for analyzing miscounts.}}
 \begin{tabular}{ | p{5cm} | c | c | c |}
 \hline
-Data set & Size of data set file & Number of total k-mers & Number of unique k-mers \\
+Data set & Size of data set file & Number of total k-mers & Number of distinct k-mers \\
 \hline
 Real metagenomics reads                                  & 7.01M  & 2,917,200  & 1,944,996 \\
 \hline
@@ -1164,7 +1164,7 @@ Real {\em E. coli} reads                                        & 4.85M  & 4,004
   number of unique k-mers present at the 3' end of reads.}}
 \begin{tabular}{ | c | c | c | c | c | c |}
 \hline
- & FP rate & bases trimmed & total k-mers & unique k-mers & 
+ & FP rate & bases trimmed & distinct k-mers & unique k-mers & 
 unique k-mers at 3' end \\
 \hline
 untrimmed                           &      -  &      - & 41.6m & 34.1m & 30.4\%  \\
