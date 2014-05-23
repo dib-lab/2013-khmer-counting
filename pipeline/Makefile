@@ -10,25 +10,26 @@ KHMER=/usr/local/src/khmer
 #	MH0001.trimmed.fa
 #	ecoli_ref.fastq
 
-all: benchmark jellyfish tallymer dsk kmc kmc_dump turtle check_fp_rate check_error trimming assembly
-modify_0210: kmc kmc_dump  turtle dsk jellyfish
+all: benchmark  check_fp_rate check_error trimming assembly 
 
 copydata:
 	rm -fr ../data/
 	mkdir ../data/
-	cp jelly_*_22.hist *.time* ecoli_ref.fastq.pos*.abund1 fp_assessment.out *.wc ../data/
+	cp *.time* ls.log fp_assessment.out ecoli_ref.fastq.pos*.abund1 \
+	*hist *.endcount  *.f*.out norm*.out ../data/
 
 
 clean:
 	rm -fr `cat clean-list.txt`
 
-counts: bloom_1_1_22.count.time bloom_2_1_22.count.time bloom_3_1_22.count.time bloom_4_1_22.count.time bloom_5_1_22.count.time jelly_1_22.count.time jelly_2_22.count.time jelly_3_22.count.time jelly_4_22.count.time jelly_5_22.count.time 1_part1_22.count.time 2_part1_22.count.time 3_part1_22.count.time 4_part1_22.count.time 5_part1_22.count.time
 
-benchmark: bloom_1_1_22.hist bloom_2_1_22.hist bloom_3_1_22.hist bloom_4_1_22.hist bloom_5_1_22.hist \
-    bloom_1_5_22.hist bloom_2_5_22.hist bloom_3_5_22.hist bloom_4_5_22.hist bloom_5_5_22.hist \
-    bloom_1_20_22.hist bloom_2_20_22.hist bloom_3_20_22.hist bloom_4_20_22.hist bloom_5_20_22.hist \
-	bloom_1_5_22.kh bloom_2_5_22.kh bloom_3_5_22.kh bloom_4_5_22.kh bloom_5_5_22.kh
+	
+####### STEP1: benchmark of different tools
+benchmark: khmer jellyfish tallymer dsk kanalyze kmc_two_steps turtle BFCount ls.log
 
+ls.log: 
+	ls -l >ls.log
+	
 kmerlist2.fa:
 	cut -c 1-22 iowa_prairie_0920.fa.1 > kmerlist2.fa
 
@@ -37,14 +38,7 @@ kmerlist2: kmerlist2.fa
 
 
 # khmer benchmark
-#khmer_benchmark: $(BLOOM_HIST) $(BLOOM_COUNT)
-
-khmer_benchmark: bloom_1_1_22.hist bloom_2_1_22.hist bloom_3_1_22.hist bloom_4_1_22.hist bloom_5_1_22.hist \
-	bloom_1_5_22.hist bloom_2_5_22.hist bloom_3_5_22.hist bloom_4_5_22.hist bloom_5_5_22.hist \
-	bloom_1_20_22.hist bloom_2_20_22.hist bloom_3_20_22.hist bloom_4_20_22.hist bloom_5_20_22.hist \
-	bloom_1_1_22.count.time bloom_2_1_22.count.time bloom_3_1_22.count.time bloom_4_1_22.count.time \
-	bloom_5_1_22.count.time
-
+khmer: $(BLOOM_HIST) $(BLOOM_COUNT)
 
 # error rate = 0.01
 bloom_1_1_22.hist bloom_1_1_22.kh: HASH =  --threads 8 -k 22 -N 6 -x 896487446
@@ -104,16 +98,14 @@ bloom_%_1_22.kh: iowa_prairie_0920.fa.%
 
 
 
-
+# jellyfish benchmark
 jellyfish: jelly_1_22.hist jelly_2_22.hist jelly_3_22.hist jelly_4_22.hist jelly_5_22.hist\
-    jelly_1_31.hist jelly_2_31.hist jelly_3_31.hist jelly_4_31.hist jelly_5_31.hist
+    jelly_1_31.hist jelly_2_31.hist jelly_3_31.hist jelly_4_31.hist jelly_5_31.hist \
+    jelly_1_22.count.time jelly_2_22.count.time jelly_3_22.count.time \
+    jelly_4_22.count.time jelly_5_22.count.time 
+    
 	# Jellyfish benchmark k=22 and k=31
 
-jelly_1_22.hist:
-	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_1_22.time1 jellyfish count -m 22 -c 2 -C -s 701472602 -t 8 -o jelly_1_22 iowa_prairie_0920.fa.1
-	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_1_22.time2 jellyfish histo -t 8 -o jelly_1_22.hist ./jelly_1_22_0
 
 jelly_1_22.count.time: jelly_1_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
@@ -127,10 +119,19 @@ jelly_3_22.count.time: jelly_3_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_22.count.time bash jelly-search.sh jelly_3_22_0 kmerlist2
 
-
 jelly_4_22.count.time: jelly_4_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_22.count.time bash jelly-search.sh jelly_4_22_0 kmerlist2
+
+jelly_5_22.count.time: jelly_5_22.hist kmerlist2
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o jelly_5_22.count.time bash jelly-search.sh jelly_5_22_0 kmerlist2
+	
+jelly_1_22.hist:
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o jelly_1_22.time1 jellyfish count -m 22 -c 2 -C -s 701472602 -t 8 -o jelly_1_22 iowa_prairie_0920.fa.1
+	-echo 3 > /proc/sys/vm/drop_caches
+	time -o jelly_1_22.time2 jellyfish histo -t 8 -o jelly_1_22.hist ./jelly_1_22_0
 
 jelly_2_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
@@ -156,9 +157,6 @@ jelly_5_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_22.time2 jellyfish histo -t 8 -o jelly_5_22.hist ./jelly_5_22_0
 
-jelly_5_22.count.time: jelly_5_22.hist kmerlist2
-	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_5_22.count.time bash jelly-search.sh jelly_5_22_0 kmerlist2
 
 jelly_1_31.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
@@ -191,7 +189,9 @@ jelly_5_31.hist:
 	time -o jelly_5_31.time2 jellyfish histo -t 8 -o jelly_5_31.hist ./jelly_5_31_0
 
 	# Tallymer benchmark part=1,k =22
-tallymer: 1_part1_22.hist 2_part1_22.hist 3_part1_22.hist 4_part1_22.hist 5_part1_22.hist
+tallymer: 1_part1_22.hist 2_part1_22.hist 3_part1_22.hist 4_part1_22.hist 5_part1_22.hist\
+    1_part1_22.count.time 2_part1_22.count.time 3_part1_22.count.time \
+    4_part1_22.count.time 5_part1_22.count.time
 
 1_part1_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
@@ -302,10 +302,11 @@ kanalyze_5.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o kanalyze_5.time /usr/local/src/java/jre1.7.0_51/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_5.out -f fasta -l 8 iowa_prairie_0920.fa.5
 
-
+# kmc benchmark k=22 including two steps
+kmc_two_steps: $(kmc) $(kmc_dump)
 
 kmc: kmc_1_22.time kmc_2_22.time kmc_3_22.time kmc_4_22.time kmc_5_22.time
-	# kmc benchmark k=22
+
 kmc_1_22.time:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o kmc_1_22.time kmc -fa iowa_prairie_0920.fa.1 kmc_1_22.out ./
@@ -373,6 +374,7 @@ turtle_5_22.time:
 #	time -o turtle_5_22.time aTurtle64 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -s 32
 	time -o turtle_5_22.time scTurtle32 -i iowa_prairie_0920.fa.5 -o turtle_5_22.out -k 22 -n 292338258 -t 8
 
+# BFCount benchmark
 BFCount: BF_count_1.time BF_count_2.time BF_count_3.time BF_count_4.time BF_count_5.time BF_dump_1.time BF_dump_2.time BF_dump_3.time BF_dump_4.time BF_dump_5.time
 
 BF_count_1.time:
@@ -405,10 +407,10 @@ BF_count_5.time:
 BF_dump_5.time:
 	time -o BF_dump_5.time BFCounter dump -k 22 -i iowa.5 -o iowa.5.txt
 
+####### STEP2:  Assessment of false positive rate and miscount distribution
 
 check_fp_rate: fp_assessment.out
-	# Assessment of false positive rate and miscount distribution
-
+	#
 random_kmers_1M_3c.fa:
 	python get_random_kmers_1M_C3.py >random_kmers_1M_3c.fa
 
@@ -430,8 +432,11 @@ ecoli_ref_head200000.fasta:
 fp_assessment.out: random_kmers_1M_3c.fa random_reads_1.67M_3c_0.03e.fa random_reads_2.54M_3c_0.00e.fa MH0001.trimmed.head176800.fa ecoli_ref_head45000.fasta
 	python fp_assessment.py fp_assessment.out
 
+
+
+####### STEP3:  Investigation of sequencing error pattern by k-mer abundance distribution
 check_error: ecoli_ref.fastq.pos17.abund1 ecoli_ref.fastq.pos32.abund1
-# Investigation of sequencing error pattern by k-mer abundance distribution
+# 
 # raw data:ecoli_ref.fastq
 
 ecoli_ref.fastq.ht.k17: ecoli_ref.fastq
@@ -452,7 +457,7 @@ ecoli_ref.fastq.pos32.abund1: ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 
 
 
-####### low-memory k-mer trimming
+#######  STEP 4: low-memory k-mer trimming
 
 trimming: ecoli_ref.fastq.hist ecoli_ref.fastq.endcount  \
 	ecoli_ref.fastq.r1.fq.hist ecoli_ref.fastq.r1.fq.endcount \
@@ -469,13 +474,6 @@ trimming: ecoli_ref.fastq.hist ecoli_ref.fastq.endcount  \
 	ecoli_ref.fastq.seqtk-trimmed.r1.fastq ecoli_ref.fastq.seqtk-trimmed-q001.r1.fastq \
 	ecoli_ref.fastq.seqtk-trimmed-b3e5.r1.fastq
 
-
-trimming_newround:ecoli_ref.fastq.r1.fq.hist ecoli_ref.fastq.r1.fq.endcount \
-	ecoli_ref.fastq.r2.fq.hist ecoli_ref.fastq.r2.fq.endcount \
-	ecoli_ref.fastq.r3.fq.hist ecoli_ref.fastq.r3.fq.endcount \
- 	ecoli_ref.fastq.r4.fq.hist ecoli_ref.fastq.r4.fq.endcount \
-	ecoli_ref.fastq.r5.fq.hist ecoli_ref.fastq.r5.fq.endcount \
- 	ecoli_ref.fastq.r6.fq.hist ecoli_ref.fastq.r6.fq.endcount \
 
 
 HASH_FILTER1 = -x 25818513 -N 1 -k 20 # for optimal hash table to get 0.8 fpr, with minimum 
@@ -562,7 +560,7 @@ ecoli_ref.fastq.seqtk-trimmed-b3e5.fastq: ecoli_ref.fastq
 
 
 
-############## diginorm + velvet assembling
+#######  STEP 5:diginorm + velvet assembling
 # also use Quast to evaluate contigs
 #
 assembly: Quast get_missing_kmer get_hist
