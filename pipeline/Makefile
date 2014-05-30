@@ -303,7 +303,7 @@ kanalyze_5.time:
 	time -o kanalyze_5.time /usr/local/src/java/jre1.7.0_51/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_5.out -f fasta -l 8 iowa_prairie_0920.fa.5
 
 # kmc benchmark k=22 including two steps
-kmc_two_steps: $(kmc) $(kmc_dump)
+kmc_two_steps: kmc kmc_dump
 
 kmc: kmc_1_22.time kmc_2_22.time kmc_3_22.time kmc_4_22.time kmc_5_22.time
 
