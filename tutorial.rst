@@ -120,7 +120,7 @@ Once it successfully completes, copy the data over to the ../data/ directory::
 Run the ipython notebook server::
 
  cd ../notebook
- ipython notebook --pylab=inline --no-browser --ip=* --port=80 &
+ ipython notebook --no-browser --ip=* --port=80 &
 
 Connect into the ipython notebook (it will be running at 'http://<your EC2 hostname>'); if the above command succeeded but you can't connect in, you probably forgot to enable port 80 on your EC2 firewall.
 
