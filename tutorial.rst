@@ -22,7 +22,8 @@ First, start up an EC2 instance using starcluster::
  starcluster start -o -s 1 -i m2.2xlarge -n ami-999d49f0 pipeline
 
 You can also do this via the AWS console; just use ami-999d49f0, and
-start an instance with 30gb or more of memory.
+start an instance with 30gb or more of memory .
+.. here m2.2xlarge, the most memory:cost efficient
 
 Make sure that port 22 (SSH) and port 80 (HTTP) are open; you'll need
 the first one to log in, and the second one to connect to the ipython
@@ -33,9 +34,10 @@ Now, log in! ::
  starcluster sshmaster pipeline
 
 (or just ssh in however you would normally do it.)
+.. Here- ubuntu
 
 First go to /mnt/ because we do not have enough space in home directory::
-
+ sudo -i
  cd /mnt
  
 Now, check out the source repository and grab the initial data
@@ -81,7 +83,7 @@ To do so, run::
 Next you'll need to install our packages 'screed' and 'khmer'.
 In this case we're going to use the versions tagged for the paper ::
 
- cd /usr/local/src
+ cd /usr/local/share
 
  git clone git://github.com/ged-lab/screed.git
  cd screed
@@ -89,17 +91,13 @@ In this case we're going to use the versions tagged for the paper ::
  python setup.py install
  cd ..
 
- git clone http://github.com/ged-lab/khmer.git
+ git clone https://github.com/ged-lab/khmer.git
  cd khmer
- git checkout 2013-khmer-counting
- make test
- cd ..
+ git checkout v1.0.1
+ make install
 
- echo 'export PYTHONPATH=/usr/local/src/khmer/python' >> ~/.bashrc
- echo 'export PATH=$PATH:/usr/local/src/khmer/scripts' >> ~/.bashrc
- echo 'export PATH=$PATH:/usr/local/src/khmer/sandbox' >> ~/.bashrc
- source ~/.bashrc
 
+ 
 OK, now all your software is installed, hurrah!
 
 
@@ -111,7 +109,7 @@ hours hours, so you might want to do it in 'screen' (see `"Running long jobs on
 UNIX" <http://ged.msu.edu/angus/tutorials-2011/unix_long_jobs.html>`__). ::
 
  cd /mnt/2013-khmer-counting/pipeline
- make KHMER=/usr/local/src/khmer
+ make KHMER=/usr/local/share/khmer
 
 Once it successfully completes, copy the data over to the ../data/ directory::
 
