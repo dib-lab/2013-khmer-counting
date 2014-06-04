@@ -101,32 +101,34 @@ cd seqtk
 make
 cp seqtk /usr/local/bin
 
+#The softwares related to ipython were installed manually in virtualenv. scipy added as not previously installed.
+#The following scripts may need modification depending on the versions required.
 
 # Install ipython
-cd /usr/local/src
-git clone https://github.com/ipython/ipython.git
-cd ipython
-python setup.py install
+#cd /usr/local/src
+#git clone https://github.com/ipython/ipython.git
+#cd ipython
+#python setup.py install
 
 # Upgrade pyzmq, which is required by ipython notebook
-pip install pyzmq --upgrade
+#pip install pyzmq --upgrade
 
 # Upgrade some other packages required by ipython notebook to draw figures
 
 # numpy
-cd /usr/local/src
-git clone git://github.com/numpy/numpy.git numpy
-cd numpy
-python setup.py install
+#cd /usr/local/src
+#git clone git://github.com/numpy/numpy.git numpy
+#cd numpy
+#python setup.py install
 
-pip install pandas
-pip install --upgrade patsy
-apt-get install libfreetype6-dev
-apt-get install libpng-dev
-pip install matplotlib
-pip install seaborn
-pip install --upgrade six
-pip install --upgrade statsmodels
+#pip install pandas
+#pip install --upgrade patsy
+#apt-get install libfreetype6-dev
+#apt-get install libpng-dev
+#pip install matplotlib
+#pip install seaborn
+#pip install --upgrade six
+#pip install --upgrade statsmodels
 
 
 
