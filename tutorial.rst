@@ -36,7 +36,7 @@ Now, log in! ::
 
 First go to /mnt/ because we do not have enough space in home directory::
 
-  cd /mnt
+ cd /mnt
  
 Now, check out the source repository and grab the initial data
 sets::
