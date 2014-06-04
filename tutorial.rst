@@ -35,8 +35,8 @@ Now, log in! ::
 (or just ssh in however you would normally do it. Here- ubuntu)
 
 First go to /mnt/ because we do not have enough space in home directory::
- i
- cd /mnt
+
+  cd /mnt
  
 Now, check out the source repository and grab the initial data
 sets::
