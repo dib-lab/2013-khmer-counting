@@ -102,34 +102,35 @@ make
 cp seqtk /usr/local/bin
 
 #The softwares related to ipython were installed manually in virtualenv. scipy added as not previously installed.
-#The following scripts may need modification depending on the versions required.
 
 # Install ipython
-#cd /usr/local/src
-#git clone https://github.com/ipython/ipython.git
-#cd ipython
-#python setup.py install
+cd /usr/local/src
+pip install ipython
 
-# Upgrade pyzmq, which is required by ipython notebook
-#pip install pyzmq --upgrade
+# Install pyzmq (not available in Ubuntu 14.04), which is required by ipython notebook
+pip install pyzmq
 
 # Upgrade some other packages required by ipython notebook to draw figures
 
 # numpy
-#cd /usr/local/src
-#git clone git://github.com/numpy/numpy.git numpy
-#cd numpy
-#python setup.py install
+cd /usr/local/src
+pip install numpy
 
-#pip install pandas
-#pip install --upgrade patsy
+apt-get build-dep python-scipy
+pip install python-scipy
+apt-get build-dep python-matplotlib
+pip install python-matplotlib
+pip install jinja2
+sudo apt-get install python-pandas
+pip install python-pandas
+pip install --upgrade patsy
+pip install statsmodels
+pip install seaborn
+pip install --upgrade six
+
+#Haven't installed the following, don't know whether we need these or not.
 #apt-get install libfreetype6-dev
 #apt-get install libpng-dev
-#pip install matplotlib
-#pip install seaborn
-#pip install --upgrade six
-#pip install --upgrade statsmodels
-
 
 
 # Upgrade the latex install with a few recommended packages
