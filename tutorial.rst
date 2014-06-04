@@ -22,8 +22,7 @@ First, start up an EC2 instance using starcluster::
  starcluster start -o -s 1 -i m2.2xlarge -n ami-999d49f0 pipeline
 
 You can also do this via the AWS console; just use ami-999d49f0, and
-start an instance with 30gb or more of memory .
-.. here m2.2xlarge, the most memory:cost efficient
+start an instance with 30gb or more of memory .(here m2.2xlarge, the most memory:cost efficient)
 
 Make sure that port 22 (SSH) and port 80 (HTTP) are open; you'll need
 the first one to log in, and the second one to connect to the ipython
@@ -33,8 +32,7 @@ Now, log in! ::
 
  starcluster sshmaster pipeline
 
-(or just ssh in however you would normally do it.)
-.. Here- ubuntu
+(or just ssh in however you would normally do it. Here- ubuntu)
 
 First go to /mnt/ because we do not have enough space in home directory::
  sudo -i
