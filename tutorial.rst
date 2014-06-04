@@ -36,6 +36,7 @@ Now, log in! ::
 
 First go to /mnt/ because we do not have enough space in home directory::
 
+ sudo -i
  cd /mnt
  
 Now, check out the source repository and grab the initial data
