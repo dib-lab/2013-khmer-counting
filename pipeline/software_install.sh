@@ -116,22 +116,14 @@ pip install pyzmq
 cd /usr/local/src
 pip install numpy
 
-apt-get build-dep python-scipy
-pip install python-scipy
-apt-get build-dep python-matplotlib
-pip install python-matplotlib
-pip install jinja2
+apt-get build-dep python-scipy python-matplotlib
 sudo apt-get install python-pandas
-pip install python-pandas
-pip install --upgrade patsy
-pip install statsmodels
-pip install seaborn
-pip install --upgrade six
+pip install python-scipy python-matplotlib jinja2 python-pandas statsmodels seaborn
+pip install --upgrade patsy --upgrade six
 
 #Haven't installed the following, don't know whether we need these or not.
 #apt-get install libfreetype6-dev
 #apt-get install libpng-dev
-
 
 # Upgrade the latex install with a few recommended packages
 apt-get -y install texlive-latex-recommended
