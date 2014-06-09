@@ -536,7 +536,7 @@ HASH_HIST =  -x 3e9 -N 4 -k 20 #big hash table, for histogram and end unqiue k-m
 
 # count the unique k-mer in 3'end of reads
 %.endcount: %
-	python count-singleton-kmers-at-end.py $(HASH_HIST) $< | grep ^singletons > $@
+	python count-singleton-kmers-at-end_v1.1.py $(HASH_HIST) $< | grep ^singletons > $@
 
 # using fastx to quality-filter reads
 ecoli_ref-trim.fastq: ecoli_ref.fastq
