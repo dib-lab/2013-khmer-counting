@@ -610,42 +610,42 @@ ecoli_ref.fastq.keep2400M.fq: ecoli_ref.fastq
 
 # velvet assembly
 velvet.all/contigs.fa: ecoli_ref.fastq
-	python ${KHMER}/sandbox/strip-and-split-for-assembly.py $<
+	python ${KHMER}/scripts/extract-paired-reads.py $<
 	velveth velvet.all 37 -fastq -shortPaired $<.pe -short $<.se
 	velvetg velvet.all -exp_cov auto
 
 velvet.10M/contigs.fa: ecoli_ref.fastq.keep10M.fq
-	python ${KHMER}/sandbox/strip-and-split-for-assembly.py $<
+	python ${KHMER}/scripts/extract-paired-reads.py $<
 	velveth velvet.10M 37 -fastq -shortPaired $<.pe -short $<.se
 	velvetg velvet.10M -exp_cov auto
 
 velvet.20M/contigs.fa: ecoli_ref.fastq.keep20M.fq
-	python ${KHMER}/sandbox/strip-and-split-for-assembly.py $<
+	python ${KHMER}/scripts/extract-paired-reads.py $<
 	velveth velvet.20M 37 -fastq -shortPaired $<.pe -short $<.se
 	velvetg velvet.20M -exp_cov auto
 
 velvet.40M/contigs.fa: ecoli_ref.fastq.keep40M.fq
-	python ${KHMER}/sandbox/strip-and-split-for-assembly.py $<
+	python ${KHMER}/scripts/extract-paired-reads.py $<
 	velveth velvet.40M 37 -fastq -shortPaired $<.pe -short $<.se
 	velvetg velvet.40M -exp_cov auto
 
 velvet.60M/contigs.fa: ecoli_ref.fastq.keep60M.fq
-	python ${KHMER}/sandbox/strip-and-split-for-assembly.py $<
+	python ${KHMER}/scripts/extract-paired-reads.py $<
 	velveth velvet.60M 37 -fastq -shortPaired $<.pe -short $<.se
 	velvetg velvet.60M -exp_cov auto
 
 velvet.120M/contigs.fa: ecoli_ref.fastq.keep120M.fq
-	python ${KHMER}/sandbox/strip-and-split-for-assembly.py $<
+	python ${KHMER}/scripts/extract-paired-reads.py $<
 	velveth velvet.120M 37 -fastq -shortPaired $<.pe -short $<.se
 	velvetg velvet.120M -exp_cov auto
 
 velvet.240M/contigs.fa: ecoli_ref.fastq.keep240M.fq
-	python ${KHMER}/sandbox/strip-and-split-for-assembly.py $<
+	python ${KHMER}/scripts/extract-paired-reads.py $<
 	velveth velvet.240M 37 -fastq -shortPaired $<.pe -short $<.se
 	velvetg velvet.240M -exp_cov auto
 
 velvet.2400M/contigs.fa: ecoli_ref.fastq.keep2400M.fq
-	python ${KHMER}/sandbox/strip-and-split-for-assembly.py $<
+	python ${KHMER}/scripts/extract-paired-reads.py $<
 	velveth velvet.2400M 37 -fastq -shortPaired $<.pe -short $<.se
 	velvetg velvet.2400M -exp_cov auto
 
