@@ -1,4 +1,4 @@
-KHMER=/usr/local/src/khmer
+KHMER=/usr/local/share/khmer
 
 # khmer paper pipeline
 # raw data:
