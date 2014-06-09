@@ -1,4 +1,4 @@
-KHMER=/usr/local/src/khmer
+KHMER=/usr/local/share/khmer
 
 # khmer paper pipeline
 # raw data:
@@ -440,7 +440,7 @@ check_error: ecoli_ref.fastq.pos17.abund1 ecoli_ref.fastq.pos32.abund1
 # raw data:ecoli_ref.fastq
 
 ecoli_ref.fastq.ht.k17: ecoli_ref.fastq
-	${KHMER}/scripts/load-into-counting.py --ksize 17 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
+	${KHMER}/scripts/load-into-counting.py -ksize 17 -x 1e9 ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 
 
 ecoli_ref.fastq.pos17.abund1: ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
@@ -448,7 +448,7 @@ ecoli_ref.fastq.pos17.abund1: ecoli_ref.fastq.ht.k17 ecoli_ref.fastq
 	mv ecoli_ref.fastq.pos.abund\=1 ecoli_ref.fastq.pos17.abund1
 
 ecoli_ref.fastq.ht.k32: ecoli_ref.fastq
-	${KHMER}/scripts/load-into-counting.py --ksize 32 --n_hashes 4 --hashsize 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
+	${KHMER}/scripts/load-into-counting.py -ksize 32 -x 1e9 ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 
 ecoli_ref.fastq.pos32.abund1: ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
 	python ${KHMER}/sandbox/hi-lo-abundance-by-position.py ecoli_ref.fastq.ht.k32 ecoli_ref.fastq
@@ -536,7 +536,7 @@ HASH_HIST =  -x 3e9 -N 4 -k 20 #big hash table, for histogram and end unqiue k-m
 
 # count the unique k-mer in 3'end of reads
 %.endcount: %
-	python count-singleton-kmers-at-end.py $(HASH_HIST) $< | grep ^singletons > $@
+	python count-singleton-kmers-at-end_v1.1.py $(HASH_HIST) $< | grep ^singletons > $@
 
 # using fastx to quality-filter reads
 ecoli_ref-trim.fastq: ecoli_ref.fastq

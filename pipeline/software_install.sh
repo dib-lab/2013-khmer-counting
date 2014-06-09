@@ -16,8 +16,7 @@ cd /usr/local/src
 wget http://genometools.org/pub/genometools-1.5.1.tar.gz
 tar zxvf genometools-1.5.1.tar.gz
 cd genometools-1.5.1/
-make 64bit=yes curses=no cairo=no
-make 64bit=yes curses=no cairo=no install
+make 64bit=yes curses=no cairo=no errorcheck=no install
 
 
 
@@ -101,34 +100,29 @@ cd seqtk
 make
 cp seqtk /usr/local/bin
 
+#The softwares related to ipython were installed manually in virtualenv. scipy added as not previously installed.
 
 # Install ipython
 cd /usr/local/src
-git clone https://github.com/ipython/ipython.git
-cd ipython
-python setup.py install
+pip install ipython
 
-# Upgrade pyzmq, which is required by ipython notebook
-pip install pyzmq --upgrade
+# Install pyzmq (not available in Ubuntu 14.04), which is required by ipython notebook
+pip install pyzmq
 
 # Upgrade some other packages required by ipython notebook to draw figures
 
 # numpy
 cd /usr/local/src
-git clone git://github.com/numpy/numpy.git numpy
-cd numpy
-python setup.py install
+pip install numpy
 
-pip install pandas
-pip install --upgrade patsy
-apt-get install libfreetype6-dev
-apt-get install libpng-dev
-pip install matplotlib
-pip install seaborn
-pip install --upgrade six
-pip install --upgrade statsmodels
+apt-get build-dep python-scipy python-matplotlib
+sudo apt-get install python-pandas
+pip install python-scipy python-matplotlib jinja2 python-pandas statsmodels seaborn
+pip install --upgrade patsy --upgrade six
 
-
+#Haven't installed the following, don't know whether we need these or not.
+#apt-get install libfreetype6-dev
+#apt-get install libpng-dev
 
 # Upgrade the latex install with a few recommended packages
 apt-get -y install texlive-latex-recommended
