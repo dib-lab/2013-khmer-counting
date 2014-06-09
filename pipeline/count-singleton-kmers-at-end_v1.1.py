@@ -23,8 +23,8 @@ def main():
     report_on_config(args)
 
     K = args.ksize
-    HT_SIZE = args.min_hashsize
-    N_HT = args.n_hashes
+    HT_SIZE = args.min_tablesize
+    N_HT = args.n_tables
     n_threads = int(args.n_threads)
 
     config = khmer.get_config()
