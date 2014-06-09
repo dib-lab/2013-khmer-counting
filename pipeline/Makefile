@@ -425,7 +425,7 @@ random_reads_2.54M_3c_0.00e.fa:
 MH0001.trimmed.head176800.fa:
 	head -176800 MH0001.trimmed.fa >MH0001.trimmed.head176800.fa
 
-ecoli_ref_head200000.fasta:
+ecoli_ref_head45000.fasta:
 	# length of reads  = 100bp
 	python get_ecoli_reads.py ecoli_ref.fastq ecoli_ref_head45000.fasta
 
