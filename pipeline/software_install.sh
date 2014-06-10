@@ -117,7 +117,7 @@ pip install numpy
 
 apt-get build-dep python-scipy python-matplotlib
 sudo apt-get install python-pandas
-pip install python-scipy python-matplotlib jinja2 python-pandas statsmodels seaborn
+pip install scipy matplotlib jinja2 python-pandas statsmodels seaborn
 pip install --upgrade patsy --upgrade six
 
 #Haven't installed the following, don't know whether we need these or not.
