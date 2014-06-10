@@ -95,6 +95,10 @@ In this case we're going to use the versions tagged for the paper ::
  git checkout v1.0.1
  make install
 
+ echo 'export PYTHONPATH=/usr/local/share/khmer/python' >> ~/.bashrc
+ echo 'export PATH=$PATH:/usr/local/share/khmer/scripts' >> ~/.bashrc
+ echo 'export PATH=$PATH:/usr/local/share/khmer/sandbox' >> ~/.bashrc
+ source ~/.bashrc
 
  
 OK, now all your software is installed, hurrah!
