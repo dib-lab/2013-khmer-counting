@@ -2,7 +2,7 @@
 Running the khmer paper script pipeline
 =======================================
 
-:Date: June 20, 2013
+:Date: June 9, 2014
 
 Here are some brief notes on how to run the pipeline for our 2013
 khmer counting paper on an Amazon EC2 rental instance.  Using these
@@ -10,9 +10,6 @@ commands you should be able to completely recapitulate the paper.
 
 The instructions below will reproduce all of the figures in the paper,
 and will then compile the paper from scratch using the new figures.
-
-(Note that you can also start with ami-61885608, which has all the
-below software installed.) % not yet
 
 Starting up a machine and get necessary data for reproduction 
 -------------------------------------------------------------
@@ -53,7 +50,7 @@ sets::
 Installing necessary software
 -----------------------------
 
-Before we get started, we need to install all the necessary software, including:
+Before we get started, we need to install all the necessary software(including khmer), including:
 
  - Tallymer
  - Jellyfish
@@ -67,38 +64,14 @@ Before we get started, we need to install all the necessary software, including:
  - ipython
  - LaTex
  - Velvet
+ - Java
+ - screed
+ - khmer
 
 To do so, run::
 
  cd /mnt/2013-khmer-counting/pipeline
  bash software_install.sh
-
-.. @CTB fix tags
-
-   
-   
-   
-Next you'll need to install our packages 'screed' and 'khmer'.
-In this case we're going to use the versions tagged for the paper ::
-
- cd /usr/local/src
-
- git clone git://github.com/ged-lab/screed.git
- cd screed
- git checkout 2013-khmer-counting
- python setup.py install
- cd ..
-
- git clone http://github.com/ged-lab/khmer.git
- cd khmer
- git checkout 2013-khmer-counting
- make test
- cd ..
-
- echo 'export PYTHONPATH=/usr/local/src/khmer/python' >> ~/.bashrc
- echo 'export PATH=$PATH:/usr/local/src/khmer/scripts' >> ~/.bashrc
- echo 'export PATH=$PATH:/usr/local/src/khmer/sandbox' >> ~/.bashrc
- source ~/.bashrc
 
 OK, now all your software is installed, hurrah!
 
@@ -120,7 +93,7 @@ Once it successfully completes, copy the data over to the ../data/ directory::
 Run the ipython notebook server::
 
  cd ../notebook
- ipython notebook --pylab=inline --no-browser --ip=* --port=80 &
+ ipython notebook --no-browser --ip=* --port=80 &
 
 Connect into the ipython notebook (it will be running at 'http://<your EC2 hostname>'); if the above command succeeded but you can't connect in, you probably forgot to enable port 80 on your EC2 firewall.
 

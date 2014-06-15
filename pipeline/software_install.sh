@@ -6,7 +6,7 @@ set -x
 # Install pre-requisites (these are included with Starcluster)
 
 apt-get -y update && apt-get -y install git make gcc g++ bc zlib1g-dev python-pip \
-                    python-dev python-jinja2 python-tornado python-nose screen blast2 \
+                    python-dev python-jinja2 python-tornado python-nose screen  \
                     python-numpy python-matplotlib
 
 
@@ -101,6 +101,11 @@ cd seqtk
 make
 cp seqtk /usr/local/bin
 
+# install Java
+cd /usr/local/src
+wget http://uni-smr.ac.ru/archive/dev/java/JRE/7/JRE-7.51/jre-7u51-linux-x64.tar.gz 
+tar zxvf jre-7u51-linux-x64.tar.gz 
+
 
 # Install ipython
 cd /usr/local/src
@@ -119,6 +124,7 @@ git clone git://github.com/numpy/numpy.git numpy
 cd numpy
 python setup.py install
 
+cd /usr/local/src
 pip install pandas
 pip install --upgrade patsy
 apt-get install libfreetype6-dev
@@ -127,12 +133,13 @@ pip install matplotlib
 pip install seaborn
 pip install --upgrade six
 pip install --upgrade statsmodels
-
+pip install --upgrade tornado
 
 
 # Upgrade the latex install with a few recommended packages
 apt-get -y install texlive-latex-recommended
 
+cd /usr/local/src
 # Install Velvet
 curl -O http://www.ebi.ac.uk/~zerbino/velvet/velvet_1.2.10.tgz
 tar xvzf velvet_1.2.10.tgz
@@ -141,5 +148,21 @@ make 'MAXKMERLENGTH=49'
 cp velveth /usr/bin
 cp velvetg /usr/bin
 
-# Install Blast
-apt-get install blast2
+cd /usr/local/src
+
+git clone git://github.com/ged-lab/screed.git
+cd screed
+git checkout 2013-khmer-counting
+python setup.py install
+
+cd /usr/local/src
+git clone http://github.com/ged-lab/khmer.git
+cd khmer
+git checkout 2013-khmer-counting
+make test
+
+cd /usr/local/src
+echo 'export PYTHONPATH=/usr/local/src/khmer/python' >> ~/.bashrc
+echo 'export PATH=$PATH:/usr/local/src/khmer/scripts' >> ~/.bashrc
+echo 'export PATH=$PATH:/usr/local/src/khmer/sandbox' >> ~/.bashrc
+source ~/.bashrc
