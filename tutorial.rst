@@ -42,6 +42,8 @@ First go to /mnt/ because we do not have enough space in home directory::
 Now, check out the source repository and grab the initial data
 sets::
 
+ apt-get git install
+ 
  git clone https://github.com/ngs-docs/ngs-scripts
 
  git clone https://github.com/ged-lab/2013-khmer-counting.git
