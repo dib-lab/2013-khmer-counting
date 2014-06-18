@@ -22,9 +22,9 @@ make 64bit=yes curses=no cairo=no errorcheck=no install
 
 # Install Jellyfish
 cd /usr/local/src
-wget http://www.cbcb.umd.edu/software/jellyfish/jellyfish-1.1.10.tar.gz
-tar zxvf jellyfish-1.1.10.tar.gz
-cd jellyfish-1.1.10/
+wget ftp://ftp.genome.umd.edu/pub/jellyfish/jellyfish-2.1.3.tar.gz
+tar zxvf jellyfish-2.1.3.tar.gz
+cd jellyfish-2.1.3/
 ./configure
 make
 make install
