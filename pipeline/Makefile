@@ -109,84 +109,84 @@ jellyfish: jelly_1_22.hist jelly_2_22.hist jelly_3_22.hist jelly_4_22.hist jelly
 
 jelly_1_22.count.time: jelly_1_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_1_22.count.time bash jelly-search.sh jelly_1_22_0 kmerlist2
+	time -o jelly_1_22.count.time bash jelly-search.sh jelly_1_22 kmerlist2
 
 jelly_2_22.count.time: jelly_2_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_2_22.count.time bash jelly-search.sh jelly_2_22_0 kmerlist2
+	time -o jelly_2_22.count.time bash jelly-search.sh jelly_2_22 kmerlist2
 
 jelly_3_22.count.time: jelly_3_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_3_22.count.time bash jelly-search.sh jelly_3_22_0 kmerlist2
+	time -o jelly_3_22.count.time bash jelly-search.sh jelly_3_22 kmerlist2
 
 jelly_4_22.count.time: jelly_4_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_4_22.count.time bash jelly-search.sh jelly_4_22_0 kmerlist2
+	time -o jelly_4_22.count.time bash jelly-search.sh jelly_4_22 kmerlist2
 
 jelly_5_22.count.time: jelly_5_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_5_22.count.time bash jelly-search.sh jelly_5_22_0 kmerlist2
+	time -o jelly_5_22.count.time bash jelly-search.sh jelly_5_22 kmerlist2
 	
 jelly_1_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_22.time1 jellyfish count -m 22 -c 2 -C -s 701472602 -t 8 -o jelly_1_22 iowa_prairie_0920.fa.1
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_1_22.time2 jellyfish histo -t 8 -o jelly_1_22.hist ./jelly_1_22_0
+	time -o jelly_1_22.time2 jellyfish histo -t 8 -o jelly_1_22.hist ./jelly_1_22
 
 jelly_2_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_22.time1 jellyfish count -m 22 -c 2 -C -s 1325442680 -t 8 -o jelly_2_22 iowa_prairie_0920.fa.2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_2_22.time2 jellyfish histo -t 8 -o jelly_2_22.hist ./jelly_2_22_0
+	time -o jelly_2_22.time2 jellyfish histo -t 8 -o jelly_2_22.hist ./jelly_2_22
 
 jelly_3_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_22.time1 jellyfish count -m 22 -c 2 -C -s 1807404236 -t 8 -o jelly_3_22 iowa_prairie_0920.fa.3
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_3_22.time2 jellyfish histo -t 8 -o jelly_3_22.hist ./jelly_3_22_0
+	time -o jelly_3_22.time2 jellyfish histo -t 8 -o jelly_3_22.hist ./jelly_3_22
 
 jelly_4_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_22.time1 jellyfish count -m 22 -c 2 -C -s 2213236520 -t 8 -o jelly_4_22 iowa_prairie_0920.fa.4
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_4_22.time2 jellyfish histo -t 8 -o jelly_4_22.hist ./jelly_4_22_0
+	time -o jelly_4_22.time2 jellyfish histo -t 8 -o jelly_4_22.hist ./jelly_4_22
 
 jelly_5_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_22.time1 jellyfish count -m 22 -c 2 -C -s 2651842796 -t 8 -o jelly_5_22 iowa_prairie_0920.fa.5
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_5_22.time2 jellyfish histo -t 8 -o jelly_5_22.hist ./jelly_5_22_0
+	time -o jelly_5_22.time2 jellyfish histo -t 8 -o jelly_5_22.hist ./jelly_5_22
 
 
 jelly_1_31.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_1_31.time1 jellyfish count -m 31 -c 2 -C -s 701472602 -t 8 -o jelly_1_31 iowa_prairie_0920.fa.1
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_1_31.time2 jellyfish histo -t 8 -o jelly_1_31.hist ./jelly_1_31_0
+	time -o jelly_1_31.time2 jellyfish histo -t 8 -o jelly_1_31.hist ./jelly_1_31
 
 jelly_2_31.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_2_31.time1 jellyfish count -m 31 -c 2 -C -s 1325442680 -t 8 -o jelly_2_31 iowa_prairie_0920.fa.2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_2_31.time2 jellyfish histo -t 8 -o jelly_2_31.hist ./jelly_2_31_0
+	time -o jelly_2_31.time2 jellyfish histo -t 8 -o jelly_2_31.hist ./jelly_2_31
 
 jelly_3_31.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_3_31.time1 jellyfish count -m 31 -c 2 -C -s 1807404236 -t 8 -o jelly_3_31 iowa_prairie_0920.fa.3
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_3_31.time2 jellyfish histo -t 8 -o jelly_3_31.hist ./jelly_3_31_0
+	time -o jelly_3_31.time2 jellyfish histo -t 8 -o jelly_3_31.hist ./jelly_3_31
 
 jelly_4_31.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_4_31.time1 jellyfish count -m 31 -c 2 -C -s 2213236520 -t 8 -o jelly_4_31 iowa_prairie_0920.fa.4
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_4_31.time2 jellyfish histo -t 8 -o jelly_4_31.hist ./jelly_4_31_0
+	time -o jelly_4_31.time2 jellyfish histo -t 8 -o jelly_4_31.hist ./jelly_4_31
 
 jelly_5_31.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
 	time -o jelly_5_31.time1 jellyfish count -m 31 -c 2 -C -s 2651842796 -t 8 -o jelly_5_31 iowa_prairie_0920.fa.5
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_5_31.time2 jellyfish histo -t 8 -o jelly_5_31.hist ./jelly_5_31_0
+	time -o jelly_5_31.time2 jellyfish histo -t 8 -o jelly_5_31.hist ./jelly_5_31
 
 	# Tallymer benchmark part=1,k =22
 tallymer: 1_part1_22.hist 2_part1_22.hist 3_part1_22.hist 4_part1_22.hist 5_part1_22.hist\
