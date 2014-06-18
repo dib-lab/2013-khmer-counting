@@ -284,23 +284,23 @@ dsk_5_22.time:
 kanalyze: kanalyze_1.time kanalyze_2.time kanalyze_3.time kanalyze_4.time kanalyze_5.time
 kanalyze_1.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o kanalyze_1.time /usr/local/src/java/jre1.7.0_51/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_1.out -f fasta -l 8 iowa_prairie_0920.fa.1
+	time -o kanalyze_1.time /usr/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_1.out -f fasta -l 8 iowa_prairie_0920.fa.1
 
 kanalyze_2.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o kanalyze_2.time /usr/local/src/java/jre1.7.0_51/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_2.out -f fasta -l 8 iowa_prairie_0920.fa.2
+	time -o kanalyze_2.time /usr/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_2.out -f fasta -l 8 iowa_prairie_0920.fa.2
 
 kanalyze_3.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o kanalyze_3.time /usr/local/src/java/jre1.7.0_51/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_3.out -f fasta -l 8 iowa_prairie_0920.fa.3
+	time -o kanalyze_3.time /usr/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_3.out -f fasta -l 8 iowa_prairie_0920.fa.3
 
 kanalyze_4.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o kanalyze_4.time /usr/local/src/java/jre1.7.0_51/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_4.out -f fasta -l 8 iowa_prairie_0920.fa.4
+	time -o kanalyze_4.time /usr/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_4.out -f fasta -l 8 iowa_prairie_0920.fa.4
 
 kanalyze_5.time:
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o kanalyze_5.time /usr/local/src/java/jre1.7.0_51/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_5.out -f fasta -l 8 iowa_prairie_0920.fa.5
+	time -o kanalyze_5.time /usr/bin/java -jar /usr/local/src/kanalyze/kanalyze.jar count -k 22 -o kanalyze_5.out -f fasta -l 8 iowa_prairie_0920.fa.5
 
 # kmc benchmark k=22 including two steps
 kmc_two_steps: kmc kmc_dump
