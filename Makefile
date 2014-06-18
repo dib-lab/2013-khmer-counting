@@ -1,4 +1,4 @@
-all: khmer-counting.pdf tutorial.html
+all: khmer-counting.pdf
 
 khmer-counting.pdf: khmer-counting.tex khmer-counting.bib
 	pdflatex khmer-counting.tex
@@ -6,8 +6,6 @@ khmer-counting.pdf: khmer-counting.tex khmer-counting.bib
 	pdflatex khmer-counting.tex
 	pdflatex khmer-counting.tex
 
-tutorial.html: tutorial.rst
-	rst2html.py tutorial.rst tutorial.html
 
 clean:
 	rm *.aux *.bbl *.blg *.log *.pdf

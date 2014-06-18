@@ -305,7 +305,7 @@ $(1-1/H)^{N}$, or approximately $e^{-N/H}$. The individual collision
 rate in one hash table is then $\approx 1-e^{-N/H}$. The total
 collision rate, which is the probability that a collision occurred in
 each entry where a k-mer maps across all Z hash tables, is $\approx
-(1-e^{-N/H})^{Z}$.
+(1-e^{-N/H})^{Z}$, which is also the expected false positive rate.
 
 While the false positive rate can easily be calculated from the hash table
 load, the average {\em miscount} --- the degree to which the measured
@@ -336,7 +336,7 @@ $N$, the optimal memory usage can be calculated as follows.  First,
 the optimal number of hash tables is determined by the expected false
 positive rate alone: $Z = \log_{0.5}f$.  Using this $Z$, the minimum
 average hash table size $H$ necessary to achieve $f$ can be calculated
-as $H = (\log_{0.6185}f\times N)/Z$.
+as $H = (\log_{0.6185}(f)\times N)/Z$.
 
 A remaining problem is that the number of distinct k-mers $N$ is
 typically not known.  However, memory- and time-efficient algorithms
@@ -720,7 +720,7 @@ the available memory.
 In practice, we have found that a false positive rate of between 1\%
 and 10\% offers acceptable miscount performance for a wide range of
 tasks, including error profiling, digital normalization and
-low-abundance read-trimming.  Somewhat surprisingly, error rates of up
+low-abundance read-trimming.  Somewhat surprisingly, false positive rates of up
 to 80\% can still be used for both read trimming and digital
 normalization in memory-limited circumstances, although multiple
 passes across the data may be needed.
