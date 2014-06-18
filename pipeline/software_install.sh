@@ -16,7 +16,7 @@ cd /usr/local/src
 wget http://genometools.org/pub/genometools-1.5.1.tar.gz
 tar zxvf genometools-1.5.1.tar.gz
 cd genometools-1.5.1/
-make 64bit=yes curses=no cairo=no install
+make 64bit=yes curses=no cairo=no errorcheck=no install
 
 
 
