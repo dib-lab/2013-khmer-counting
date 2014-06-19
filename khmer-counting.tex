@@ -328,7 +328,7 @@ we want to calculate the minimum memory usage required to achieve $f$.
 For fixed memory $M$ and number of distinct k-mers $N$, the optimal
 number of hash tables can be found by minimizing $f$; taking the
 derivative, $df/dZ$, with $f \approx \exp(Z \log(1-e^{-ZN/M}))$ and solving
-for 0, we find that $f$ is minimized when $Z=\log_2*(M/N)$ (see
+for 0, we find that $f$ is minimized when $Z=\log(2)*(M/N)$ (see
 \cite{broder2004network} for details).
 
 Given a desired false positive rate $f$ and a fixed number of k-mers
@@ -336,7 +336,8 @@ $N$, the optimal memory usage can be calculated as follows.  First,
 the optimal number of hash tables is determined by the expected false
 positive rate alone: $Z = \log_{0.5}f$.  Using this $Z$, the minimum
 average hash table size $H$ necessary to achieve $f$ can be calculated
-as $H = (\log_{0.6185}(f)\times N)/Z$.
+as $H = (\log_{0.6185}(f)\times N)/Z$ (see
+\cite{broder2004network} for details).
 
 A remaining problem is that the number of distinct k-mers $N$ is
 typically not known.  However, memory- and time-efficient algorithms
@@ -995,10 +996,8 @@ We thank Eric McDonald for technical assistance with optimizing the khmer codeba
 
 \caption{\bf Comparison of the time it takes for k-mer counting tools
   to calculate k-mer abundance histograms, with time (y axis, in
-  seconds) against data set size (in number of reads, x axis).  The
-  top plot shows the faster programs, while the bottom plot shows the
-  slower programs, with scTurtle (brown) and khmer (red) shown on both
-  for scale.  All programs executed in time approximately linear with
+  seconds) against data set size (in number of reads, x axis).  
+  All programs executed in time approximately linear with
   the number of input reads.}
 
 \label{fig:cmp_time}
@@ -1010,15 +1009,7 @@ We thank Eric McDonald for technical assistance with optimizing the khmer codeba
 \caption{\bf Memory usage of k-mer counting tools when calculating
   k-mer abundance histograms, with maximum resident program size (y
   axis, in GB) plotted against the total number of distinct k-mers in
-  the data set (x axis, billions of k-mers). The top plot shows the
-  DSK, KMC, and KAnalyze tools, which use disk space to store k-mers
-  and are constant in memory use, with generally lower memory use than
-  other programs.  The bottom plot shows memory use for the Jellyfish,
-  BFCounter, and scTurtle tools, which store k-mers in memory and
-  scale with total number of distinct k-mers.  khmer is included in
-  both plots for scale and comparison. Tallymer memory usage is
-  substantially larger than all other programs and cannot easily be
-  shown on the same axes, so we did not include it.}
+  the data set (x axis, billions of k-mers). }
 
 \label{fig:cmp_memory}
 \end{figure}
