@@ -20,27 +20,31 @@ def process_file(filename,HT_SIZE_array):
         print HT_SIZE
         ht = khmer.new_counting_hash(K, HT_SIZE, N_HT)
         ht.consume_fasta(filename)
-                
-        ktable = khmer.new_ktable(K)
-        f = screed.open(filename)
-        for record in f:
-            sequence = record['sequence']
-            ktable.consume(sequence)
+
+        ht2 = khmer.new_counting_hash(K, 600000000, N_HT)
+        ht2.consume_fasta(filename)
+        
+        
+#        ktable = khmer.new_ktable(K)
+#        f = screed.open(filename)
+#        for record in f:
+#            sequence = record['sequence']
+#            ktable.consume(sequence)
 
         list_miscount = []
         list_miscount_perc = []
         total_kmer = 0 # total number of unique k-mers
         miscount0 = 0
         
-        for i in range(0, ktable.n_entries()):
-            n = ktable.get(i)
+        for i in range(0, ht2.n_entries()):
+            n = ht2.get(i)
             if n:
                 total_kmer = total_kmer + 1
-                kmer2 = ktable.reverse_hash(i)
-                miscount = ht.get(kmer2) - ktable.get(kmer2)######
+ #               kmer2 = ht2.reverse_hash(i)
+                miscount = ht.get(i) - ht2.get(i)######
 #                if ht.get(kmer2)<ktable.get(kmer2):
 #                    print kmer2,ht.get(kmer2),ktable.get(kmer2)
-                miscount_perc = miscount/ktable.get(kmer2)
+                miscount_perc = miscount/ht2.get(i)
                 list_miscount.append(miscount)
                 list_miscount_perc.append(miscount_perc)
                 if miscount > 0:
