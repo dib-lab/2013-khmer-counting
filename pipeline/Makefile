@@ -109,23 +109,23 @@ jellyfish: jelly_1_22.hist jelly_2_22.hist jelly_3_22.hist jelly_4_22.hist jelly
 
 jelly_1_22.count.time: jelly_1_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_1_22.count.time bash jelly-search.sh jelly_1_22 kmerlist2
+	time -o jelly_1_22.count.time bash jelly-search.sh jelly_1_22 kmerlist2.fa
 
 jelly_2_22.count.time: jelly_2_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_2_22.count.time bash jelly-search.sh jelly_2_22 kmerlist2
+	time -o jelly_2_22.count.time bash jelly-search.sh jelly_2_22 kmerlist2.fa
 
 jelly_3_22.count.time: jelly_3_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_3_22.count.time bash jelly-search.sh jelly_3_22 kmerlist2
+	time -o jelly_3_22.count.time bash jelly-search.sh jelly_3_22 kmerlist2.fa
 
 jelly_4_22.count.time: jelly_4_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_4_22.count.time bash jelly-search.sh jelly_4_22 kmerlist2
+	time -o jelly_4_22.count.time bash jelly-search.sh jelly_4_22 kmerlist2.fa
 
 jelly_5_22.count.time: jelly_5_22.hist kmerlist2
 	-echo 3 > /proc/sys/vm/drop_caches
-	time -o jelly_5_22.count.time bash jelly-search.sh jelly_5_22 kmerlist2
+	time -o jelly_5_22.count.time bash jelly-search.sh jelly_5_22 kmerlist2.fa
 	
 jelly_1_22.hist:
 	-echo 3 > /proc/sys/vm/drop_caches
