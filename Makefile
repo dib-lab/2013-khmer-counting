@@ -10,7 +10,7 @@ khmer-counting.pdf: khmer-counting.tex khmer-counting.bib
 clean:
 	rm *.aux *.bbl *.blg *.log *.pdf
 
-plosone:
+plosone: khmer-counting-plosone.tex
 	mv khmer-counting.tex khmer-counting.tex.temp
 	cp khmer-counting-plosone.tex khmer-counting.tex
 	pdflatex khmer-counting.tex
