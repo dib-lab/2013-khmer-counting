@@ -80,7 +80,7 @@ Running the pipeline
 --------------------
 
 Now go into the pipeline directory and run the pipeline.  This will take a few
-hours hours, so you might want to do it in 'screen' (see `"Running long jobs on
+hours, so you might want to do it in 'screen' (see `"Running long jobs on
 UNIX" <http://ged.msu.edu/angus/tutorials-2011/unix_long_jobs.html>`__). ::
 
  cd /mnt/2013-khmer-counting/pipeline
